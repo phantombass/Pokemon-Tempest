@@ -1,0 +1,29 @@
+[1]
+Name="New Job"
+Stage1="Go show Altemper to Professor Metto's colleague in the North."
+Stage2="Just one more colleague to speak to! Head south of Shira Town!"
+StageLocation1="nil"
+StageLocation2="nil"
+QuestDescription="Go show Altemper to Professor Metto's colleagues."
+CompletedMessage="Quest Complete!"
+FailedMessage="You failed this quest"
+#====================================
+[2]
+Name="Readout Hunt"
+Stage1="Find all the Weather Readouts!"
+Stage2=" "
+StageLocation1="nil"
+StageLocation2="nil"
+QuestDescription="Find all the Weather Readouts!"
+CompletedMessage="You found all the Weather Readouts!"
+FailedMessage="You failed this quest"
+#====================================
+[3]
+Name="Rampaging Pokémon"
+Stage1="Calm the angry Pokémon inside the Valley Mine."
+Stage2="Calm the angry Pokémon at..."
+StageLocation1="nil"
+StageLocation2="nil"
+QuestDescription="Calm all the angry Pokémon!"
+CompletedMessage="Quest Complete!"
+FailedMessage="You failed this quest"

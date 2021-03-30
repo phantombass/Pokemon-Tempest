@@ -1,0 +1,71 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+# Rival Battles
+#-------------------------------
+[RIVAL3,Akron]
+LoseText = "Hmmph. I guess you're not that bad."
+Pokemon = DROWZEE,5
+  Ability = 2
+Pokemon = BAGON,6
+  Form = 2
+  Ability = 0
+Pokemon = CASTFORM,7
+#-------------------------------
+# Zephyr Hills
+#-------------------------------
+[CAMPER,Aaron]
+LoseText = "Very nice!"
+Pokemon = STARLY,7
+Pokemon = HOOTHOOT,7
+#-------------------------------
+[PICNICKER,Erin]
+LoseText = "You're so strong!"
+Pokemon = PIDGEY,7
+Pokemon = WINGULL,7
+#-------------------------------
+[YOUNGSTER,Timmy]
+LoseText = "Whoa..."
+Pokemon = ROOKIDEE,7
+Pokemon = PIDOVE,7
+#-------------------------------
+[LASS,Tara]
+LoseText = "Hey now!"
+Pokemon = PIKIPEK,7
+Pokemon = FLETCHLING,7
+#-------------------------------
+# Zephyr Hills
+#-------------------------------
+[WORKER,Roger]
+LoseText = "Back to work!"
+Pokemon = ROGGENROLA,12
+Pokemon = DRILBUR,12
+#-------------------------------
+[WORKER,John]
+LoseText = "Oof."
+Pokemon = SNEASEL,13
+  Form = 1
+#-------------------------------
+[WORKER,Brian]
+LoseText = "Hahaha nice!"
+Pokemon = WHISMUR,11
+Pokemon = NOIBAT,11
+Pokemon = WHISMUR,11
+#-------------------------------
+# Ashen Beach
+#-------------------------------
+[YOUNGSTER,Tommy]
+LoseText = "SAND!"
+Pokemon = SANDYGAST,15
+#-------------------------------
+[TUBER_F,Gina]
+LoseText = "Oh no! My cute Pokémon!"
+Pokemon = HIPPOPOTAS,13
+  Form = 1
+Pokemon = MAGIKARP,14
+#-------------------------------
+[FISHERMAN,Andy]
+LoseText = "Ah lost it!"
+Pokemon = MAGIKARP,12
+Pokemon = ARROKUDA,13
+Pokemon = MAGIKARP,14
+#-------------------------------

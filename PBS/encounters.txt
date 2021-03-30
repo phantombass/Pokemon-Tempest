@@ -1,0 +1,50 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+048 # Zephyr Hills
+25,10,10
+Land
+    STARLY,5,7
+    PIDGEY,5,7
+    STARLY,5,7
+    PIDGEY,5,7
+    HOOTHOOT,5,7
+    HOOTHOOT,5,7
+    WINGULL,5,7
+    WINGULL,5,7
+    PIDOVE,5,7
+    FLETCHLING,5,7
+    PIKIPEK,5,7
+    ROOKIDEE,5,7
+#-------------------------------
+076 # Snowcap Alps
+25,10,10
+Land
+    SWINUB,2,4
+    SNOVER,2,4
+    SWINUB,2,4
+    SNOVER,2,4
+    VANILLITE,2,4
+    VANILLITE,2,4
+    SNOM,2,4
+    SNOM,2,4
+    SMOOCHUM,2,4
+    SNORUNT,2,4
+    SMOOCHUM,2,4
+    SNORUNT,2,4
+#-------------------------------
+084 # Valley Mine
+25,10,10
+Cave
+    ROGGENROLA,9,11
+    ZUBAT,9,11
+    ROGGENROLA,9,11
+    ZUBAT,9,11
+    WHISMUR,9,11
+    WHISMUR,9,11
+    DRILBUR,9,11
+    DRILBUR,9,11
+    NOIBAT,9,12
+    CHINGLING,9,11
+    NOIBAT,9,12
+    CHINGLING,9,11
+#-------------------------------

@@ -1,0 +1,34 @@
+Gen 7 (Alola) Overworld Sprites
+_______________________________
+
+The Silvally types are ordered as such:
+00-Normal
+01-Grass
+02-Fire
+03-Water
+04-Electric
+05-Fighting
+06-Bug
+07-Fairy
+08-Psychic
+09-Ground
+10-Rock
+11-Dark
+12-Poison
+13-Flying
+14-Steel
+15-Ghost
+16-Ice
+17-Dragon
+
+Sprites mady by Larryturbo, Princess-Phoenix, Kidkatt, Zender1752, SageDeoxys.
+
+Find us at:
+larryturbo.deviantart.com
+princess-phoenix.deviantart.com
+kidkatt.deviantart.com
+zender1752.deviantart.com
+sagedeoxys.deviantart.com
+
+-Free to use assets-
+-Please Give Proper Credit-

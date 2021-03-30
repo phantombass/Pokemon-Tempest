@@ -1,0 +1,536 @@
+############################################
+#    Simple Encounter List Window by raZ   #
+#     Additions from Nuri Yuri, Vendily    #
+#                  v1.2                    #
+#   Icon edits + NatDex iter. by Zaffre    #
+############################################
+#    To use it, call EncounterListUI       #
+#    like any other screen:                #
+#                                          #
+#    screen = EncounterListUI.new          #
+#                                          #
+#   PLEASE NOTE: Icon version only works   #
+#       with 3 rows of encounters!         #
+############################################
+ 
+# just note that the species text is using whatever colour ID 0 is, black by default
+# if your message box background is dark, you can either edit the default colour
+# to be white, or add in a <c2> where it says <al>%s</al> with the white colour
+
+  # Method that checks whether a specific form has been seen by the player
+  def pbFormSeen?(species,form)
+    return $Trainer.formseen[species][0][form] || 
+      $Trainer.formseen[species][1][form]
+  end
+  
+  # Method that checks whether a specific form is owned by the player
+  def pbFormOwned?(species,form)
+    return $Trainer.formowned[species][0][form] || 
+      $Trainer.formowned[species][1][form]
+  end
+    
+##############################################
+### Setting up the new formowned variable  ###
+##############################################
+
+# In this class, we add a new bit of data that checks whether a specific form is owned by the player
+class PokeBattle_Trainer
+    attr_accessor :formowned
+
+  # I'm not sure if this method is needed, but it's here anyway
+  def numFormsOwned(species)
+    species=getID(PBSpecies,species)
+    return 0 if species<=0
+    ret=0
+    array=@formowned[species]
+    for i in 0...[array[0].length,array[1].length].max
+      ret+=1 if array[0][i] || array[1][i]
+    end
+    return ret
+  end
+  
+  # Initiate empty arrays
+  def clearPokedex
+    @seen         = []
+    @owned        = []
+    @formseen     = []
+    @formowned    = []
+    @formlastseen = []
+    for i in 1..PBSpecies.maxValue
+      @seen[i]         = false
+      @owned[i]        = false
+      @formlastseen[i] = []
+      @formseen[i]     = [[],[]]
+      @formowned[i]     = [[],[]]
+    end
+  end
+
+end
+
+  # Need to add this method to all existing methods that updates the Pokédex
+  # Being given a Pokémon, Pokémon evolving, catching a Pokémon, trading, eggs
+  def pbOwnedForm(pkmn,gender=0,form=0)
+  $Trainer.formowned     = [] if !$Trainer.formowned
+  if pkmn.is_a?(PokeBattle_Pokemon)
+    gender  = pkmn.gender
+    form    = (pkmn.form rescue 0)
+    species = pkmn.species
+  else
+    species = getID(PBSpecies,pkmn)
+  end
+  return if !species || species<=0
+  fSpecies = pbGetFSpeciesFromForm(species,form)
+  species, form = pbGetSpeciesFromFSpecies(fSpecies)
+  gender = 0 if gender>1
+  dexForm = pbGetSpeciesData(species,form,SpeciesPokedexForm)
+  form = dexForm if dexForm>0
+  fSpecies = pbGetFSpeciesFromForm(species,form)
+  formName = pbGetMessage(MessageTypes::FormNames,fSpecies)
+  form = 0 if !formName || formName==""
+  $Trainer.formowned[species] = [[],[]] if !$Trainer.formowned[species]
+  $Trainer.formowned[species][gender][form] = true
+  end
+  
+###############################################################################
+### The following methods have been edited to update the formowned variable ###
+###############################################################################
+
+  # Gift Pokémon
+  def pbAddPokemon(pokemon,level=nil,seeform=true,ownform=true)
+  return if !pokemon
+  if pbBoxesFull?
+    pbMessage(_INTL("There's no more room for Pokémon!\1"))
+    pbMessage(_INTL("The Pokémon Boxes are full and can't accept any more!"))
+    return false
+  end
+  pokemon = getID(PBSpecies,pokemon)
+  if pokemon.is_a?(Integer) && level.is_a?(Integer)
+    pokemon = pbNewPkmn(pokemon,level)
+  end
+  speciesname = PBSpecies.getName(pokemon.species)
+  pbMessage(_INTL("\\me[Pkmn get]{1} obtained {2}!\1",$Trainer.name,speciesname))
+  pbNicknameAndStore(pokemon)
+  pbSeenForm(pokemon) if seeform
+  pbOwnedForm(pokemon) if ownform # Edit
+  return true
+  end
+
+  # Silent gift Pokémon
+  def pbAddPokemonSilent(pokemon,level=nil,seeform=true,ownform=true)
+  return false if !pokemon || pbBoxesFull?
+  pokemon = getID(PBSpecies,pokemon)
+  if pokemon.is_a?(Integer) && level.is_a?(Integer)
+    pokemon = pbNewPkmn(pokemon,level)
+  end
+  $Trainer.seen[pokemon.species]  = true
+  $Trainer.owned[pokemon.species] = true
+  pbSeenForm(pokemon) if seeform
+  pbOwnedForm(pokemon) if ownform # Edit
+  pokemon.pbRecordFirstMoves
+  if $Trainer.party.length<6
+    $Trainer.party[$Trainer.party.length] = pokemon
+  else
+    $PokemonStorage.pbStoreCaught(pokemon)
+  end
+  return true
+  end
+  
+  # Adding Pokémon to party
+  def pbAddToParty(pokemon,level=nil,seeform=true,ownform=true)
+  return false if !pokemon || $Trainer.party.length>=6
+  pokemon = getID(PBSpecies,pokemon)
+  if pokemon.is_a?(Integer) && level.is_a?(Integer)
+    pokemon = pbNewPkmn(pokemon,level)
+  end
+  speciesname = PBSpecies.getName(pokemon.species)
+  pbMessage(_INTL("\\me[Pkmn get]{1} obtained {2}!\1",$Trainer.name,speciesname))
+  pbNicknameAndStore(pokemon)
+  pbSeenForm(pokemon) if seeform
+  pbOwnedForm(pokemon) if ownform # Edit
+  return true
+  end
+
+  def pbAddToPartySilent(pokemon,level=nil,seeform=true,ownform=true)
+  return false if !pokemon || $Trainer.party.length>=6
+  pokemon = getID(PBSpecies,pokemon)
+  if pokemon.is_a?(Integer) && level.is_a?(Integer)
+    pokemon = pbNewPkmn(pokemon,level)
+  end
+  $Trainer.seen[pokemon.species]  = true
+  $Trainer.owned[pokemon.species] = true
+  pbSeenForm(pokemon) if seeform
+  pbOwnedForm(pokemon) if ownform # Edit
+  pokemon.pbRecordFirstMoves
+  $Trainer.party[$Trainer.party.length] = pokemon
+  return true
+  end
+
+  def pbAddForeignPokemon(pokemon,level=nil,ownerName=nil,nickname=nil,ownerGender=0,seeform=true,ownform=true)
+  return false if !pokemon || $Trainer.party.length>=6
+  pokemon = getID(PBSpecies,pokemon)
+  if pokemon.is_a?(Integer) && level.is_a?(Integer)
+    pokemon = pbNewPkmn(pokemon,level)
+  end
+  # Set original trainer to a foreign one (if ID isn't already foreign)
+  if pokemon.trainerID==$Trainer.id
+    pokemon.trainerID = $Trainer.getForeignID
+    pokemon.ot        = ownerName if ownerName && ownerName!=""
+    pokemon.otgender  = ownerGender
+  end
+  # Set nickname
+  pokemon.name = nickname[0,PokeBattle_Pokemon::MAX_POKEMON_NAME_SIZE] if nickname && nickname!=""
+  # Recalculate stats
+  pokemon.calcStats
+  if ownerName
+    pbMessage(_INTL("\\me[Pkmn get]{1} received a Pokémon from {2}.\1",$Trainer.name,ownerName))
+  else
+    pbMessage(_INTL("\\me[Pkmn get]{1} received a Pokémon.\1",$Trainer.name))
+  end
+  pbStorePokemon(pokemon)
+  $Trainer.seen[pokemon.species]  = true
+  $Trainer.owned[pokemon.species] = true
+  pbSeenForm(pokemon) if seeform
+  pbOwnedForm(pokemon) if ownform # Edit
+  return true
+  end
+
+  # Hatching an egg
+  def pbHatch(pokemon)
+  speciesname = pokemon.speciesName
+  pokemon.name           = speciesname
+  pokemon.trainerID      = $Trainer.id
+  pokemon.ot             = $Trainer.name
+  pokemon.happiness      = 120
+  pokemon.timeEggHatched = pbGetTimeNow
+  pokemon.obtainMode     = 1   # hatched from egg
+  pokemon.hatchedMap     = $game_map.map_id
+  $Trainer.seen[pokemon.species]  = true
+  $Trainer.owned[pokemon.species] = true
+  pbSeenForm(pokemon)
+  pbOwnedForm(pokemon) # Edit
+  pokemon.pbRecordFirstMoves
+  if !pbHatchAnimation(pokemon)
+    pbMessage(_INTL("Huh?\1"))
+    pbMessage(_INTL("...\1"))
+    pbMessage(_INTL("... .... .....\1"))
+    pbMessage(_INTL("{1} hatched from the Egg!",speciesname))
+    if pbConfirmMessage(_INTL("Would you like to nickname the newly hatched {1}?",speciesname))
+      nickname = pbEnterPokemonName(_INTL("{1}'s nickname?",speciesname),
+         0,PokeBattle_Pokemon::MAX_POKEMON_NAME_SIZE,"",pokemon)
+      pokemon.name = nickname if nickname!=""
+    end
+  end
+end
+
+class PokemonEvolutionScene
+
+  # Evolution
+  def pbEvolutionSuccess
+    # Play cry of evolved species
+    frames = pbCryFrameLength(@newspecies,@pokemon.form)
+    pbBGMStop
+    pbPlayCrySpecies(@newspecies,@pokemon.form)
+    frames.times do
+      Graphics.update
+      pbUpdate
+    end
+    # Success jingle/message
+    pbMEPlay("Evolution success")
+    newspeciesname = PBSpecies.getName(@newspecies)
+    oldspeciesname = PBSpecies.getName(@pokemon.species)
+    pbMessageDisplay(@sprites["msgwindow"],
+       _INTL("\\se[]Congratulations! Your {1} evolved into {2}!\\wt[80]",
+       @pokemon.name,newspeciesname)) { pbUpdate }
+    @sprites["msgwindow"].text = ""
+    # Check for consumed item and check if Pokémon should be duplicated
+    pbEvolutionMethodAfterEvolution
+    # Modify Pokémon to make it evolved
+    @pokemon.species = @newspecies
+    @pokemon.name    = newspeciesname if @pokemon.name==oldspeciesname
+    @pokemon.form    = 0 if @pokemon.isSpecies?(:MOTHIM)
+    @pokemon.calcStats
+    # See and own evolved species
+    $Trainer.seen[@newspecies]  = true
+    $Trainer.owned[@newspecies] = true
+    pbSeenForm(@pokemon)
+    pbOwnedForm(@pokemon) # Edit
+    # Learn moves upon evolution for evolved species
+    movelist = @pokemon.getMoveList
+    for i in movelist
+      next if i[0]!=0 && i[0]!=@pokemon.level   # 0 is "learn upon evolution"
+      pbLearnMove(@pokemon,i[1],true) { pbUpdate }
+    end
+  end
+  
+  # I think this is for Pokémon like Shedinja?
+  def self.pbDuplicatePokemon(pkmn, new_species)
+    new_pkmn = pkmn.clone
+    new_pkmn.species  = new_species
+    new_pkmn.name     = PBSpecies.getName(new_species)
+    new_pkmn.markings = 0
+    new_pkmn.ballused = 0
+    new_pkmn.setItem(0)
+    new_pkmn.clearAllRibbons
+    new_pkmn.calcStats
+    new_pkmn.heal
+    # Add duplicate Pokémon to party
+    $Trainer.party.push(new_pkmn)
+    # See and own duplicate Pokémon
+    $Trainer.seen[new_species]  = true
+    $Trainer.owned[new_species] = true
+    pbSeenForm(new_pkmn)
+    pbOwnedForm(new_pkmn) # Edit
+  end
+  
+end
+
+  # Trading
+  def pbStartTrade(pokemonIndex,newpoke,nickname,trainerName,trainerGender=0)
+  myPokemon = $Trainer.party[pokemonIndex]
+  opponent = PokeBattle_Trainer.new(trainerName,trainerGender)
+  opponent.setForeignID($Trainer)
+  yourPokemon = nil; resetmoves = true
+  if newpoke.is_a?(PokeBattle_Pokemon)
+    newpoke.trainerID = opponent.id
+    newpoke.ot        = opponent.name
+    newpoke.otgender  = opponent.gender
+    newpoke.language  = opponent.language
+    yourPokemon = newpoke
+    resetmoves = false
+  else
+    if newpoke.is_a?(String) || newpoke.is_a?(Symbol)
+      raise _INTL("Species does not exist ({1}).",newpoke) if !hasConst?(PBSpecies,newpoke)
+      newpoke = getID(PBSpecies,newpoke)
+    end
+    yourPokemon = pbNewPkmn(newpoke,myPokemon.level,opponent)
+  end
+  yourPokemon.name       = nickname
+  yourPokemon.obtainMode = 2   # traded
+  yourPokemon.resetMoves if resetmoves
+  yourPokemon.pbRecordFirstMoves
+  $Trainer.seen[yourPokemon.species]  = true
+  $Trainer.owned[yourPokemon.species] = true
+  pbSeenForm(yourPokemon)
+  pbOwnedForm(yourPokemon) # Edit
+  pbFadeOutInWithMusic {
+    evo = PokemonTrade_Scene.new
+    evo.pbStartScreen(myPokemon,yourPokemon,$Trainer.name,opponent.name)
+    evo.pbTrade
+    evo.pbEndScreen
+  }
+  $Trainer.party[pokemonIndex] = yourPokemon
+  end
+
+module PokeBattle_BattleCommon
+  # Catching
+  def pbRecordAndStoreCaughtPokemon
+    @caughtPokemon.each do |pkmn|
+      pbSeenForm(pkmn)   # In case the form changed upon leaving battle
+      pbOwnedForm(pkmn) # Edit
+      # Record the Pokémon's species as owned in the Pokédex
+      if !pbPlayer.hasOwned?(pkmn.species)
+        pbPlayer.setOwned(pkmn.species)
+        if $Trainer.pokedex
+          pbDisplayPaused(_INTL("{1}'s data was added to the Pokédex.",pkmn.name))
+          @scene.pbShowPokedex(pkmn.species)
+        end
+      end
+      # Record a Shadow Pokémon's species as having been caught
+      if pkmn.shadowPokemon?
+        pbPlayer.shadowcaught = [] if !pbPlayer.shadowcaught
+        pbPlayer.shadowcaught[pkmn.species] = true
+      end
+      # Store caught Pokémon
+      pbStorePokemon(pkmn)
+    end
+    @caughtPokemon.clear
+  end
+end
+
+##########################
+### Encounter list UI  ###
+##########################
+
+# This is the name of a graphic in your Graphics/Windowskins folder that changes the look of the UI
+WINDOWSKIN = "encounters"
+
+class EncounterListUI_withforms
+  def initialize
+    @viewport1 = Viewport.new(0, 0, Graphics.width, Graphics.height)
+    @viewport1.z = 99999
+    @viewport2 = Viewport.new(30, 120, Graphics.width, Graphics.height)
+    @viewport2.z = 999999
+    @viewport3 = Viewport.new(0, 0, Graphics.width, Graphics.height)
+    @viewport3.z = 999999
+    @sprites = {}
+    @encarray1 = []
+    @encarray2 = []
+    @pkmnsprite = []
+  end
+ 
+  def pbStartMenu(type=0)
+    getEncData(type)
+    formdata = pbLoadFormToSpecies # Load form data
+    @name = [EncounterTypes::Names].flatten[type]
+    loctext = _INTL("<ac><c2=43F022E8>{1}: {2}</c2></ac>", $game_map.name,@name)
+    temparray = @encarray2.dup  # Doing `if @encarray.pop==7` actually pops the last species off before the loop!
+    if temparray.pop==7
+      loctext += sprintf("<al><c2=7FF05EE8>This area has no encounters!</c2></al>")
+      loctext += sprintf("<c2=63184210>-----------------------------------------</c2>")
+    elsif temparray.pop ==0
+      loctext += sprintf("<al><c2=7FF05EE8>No encounters of that type in this area!</c2></al>")
+      loctext += sprintf("<c2=63184210>-----------------------------------------</c2>")
+    else
+      i = 0
+      @encarray2.each do |specie| # Loops over internal IDs of encounters on current map     
+      fSpecies = pbGetSpeciesFromFSpecies(specie) # Array of internal ID of base form and form ID of specie
+      if !pbFormSeen?(fSpecies[0],fSpecies[1]) && !pbFormOwned?(fSpecies[0],fSpecies[1])
+        @pkmnsprite[i] = PokemonSpeciesIconSprite.new(0,@viewport2)
+      elsif !pbFormOwned?(fSpecies[0],fSpecies[1])
+        @pkmnsprite[i] = PokemonSpeciesIconSprite.new(fSpecies[0],@viewport2)
+        @pkmnsprite[i].form = fSpecies[1]
+        @pkmnsprite[i].tone = Tone.new(0, 0, 0, 255)
+      else
+        @pkmnsprite[i] = PokemonSpeciesIconSprite.new(fSpecies[0],@viewport2)
+        @pkmnsprite[i].form = fSpecies[1] # Get form ID from species ID
+      end
+        if i > 6 && i < 14
+          @pkmnsprite[i].y += 64
+          @pkmnsprite[i].x = (64 * (i-7))
+        elsif i > 13
+          @pkmnsprite[i].y += 128
+          @pkmnsprite[i].x = (64 * (i-14))
+        else
+          @pkmnsprite[i].x += 64 * i
+        end
+          i +=1         
+      end
+      loctext += sprintf("<al><c2=7FF05EE8>Total encounters for area: %s</c2></al>",@encarray2.length)
+      loctext += sprintf("<c2=63184210>-----------------------------------------</c2>")
+    end
+    @sprites["locwindow"]=Window_AdvancedTextPokemon.new(loctext)
+    @sprites["locwindow"].viewport=@viewport1
+    @sprites["locwindow"].x=0
+    @sprites["locwindow"].y=20
+    @sprites["locwindow"].width=512 #if @sprites["locwindow"].width<420
+    @sprites["locwindow"].height=344
+    @sprites["locwindow"].visible=true
+    @sprites["locwindow"].setSkin("Graphics/Windowskins/"+WINDOWSKIN)
+    @sprites["locwindow"].opacity = 200
+    @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport3)
+    @sprites["rightarrow"].x=472
+    @sprites["rightarrow"].y=(Graphics.height/2)-14
+    @sprites["rightarrow"].visible=false
+    @sprites["rightarrow"].play
+    @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/leftarrow",8,40,28,2,@viewport3)
+    @sprites["leftarrow"].x=0
+    @sprites["leftarrow"].y=(Graphics.height/2)-14
+    @sprites["leftarrow"].visible=false
+    @sprites["leftarrow"].play
+    main
+  end
+ 
+  def pbListOfEncounters(encounter) # This method is from Nuri Yuri.
+    return [] unless encounter
+   
+    encable = encounter.compact # Remove nils.
+    #encable.map! { |enc_list| enc_list.map { |enc| enc[0] } }
+    encable.map! {|enc| enc[0]} # Pull first element from each array.
+    encable.flatten! # Transform array of arrays into array.
+    encable.uniq! # Prevent duplication.
+   
+    return encable
+  end
+ 
+  def getEncData(type=0)
+    encdata = load_data("Data/encounters.dat")
+    mapid = $game_map.map_id
+    if encdata.is_a?(Hash) && encdata[mapid]
+      enctypes = encdata[mapid][1][type]
+      @encarray1 = pbListOfEncounters(enctypes)
+      @temp = []
+      @encarray1.each do |s|
+        fSpecies = pbGetSpeciesFromFSpecies(s)
+        @temp.push(fSpecies[0] + fSpecies[1]*0.001)
+      end
+      @temp_sort = @temp.sort
+      id = @temp_sort.map{|s| @temp.index(s)}
+      @encarray2 = []
+      for i in 0..@encarray1.length-1
+        @encarray2[i] = @encarray1[id[i]]
+      end
+      # I'm honestly not sure what this code did differently to just sorting
+#      @temp = 0
+#      for i in 0..@encarray.length-1
+#        j = @encarray.length-2
+#        while (j >= i)
+#          if getID(PBSpecies,pbGetSpeciesConst(@encarray[j])) > getID(PBSpecies,pbGetSpeciesConst(@encarray[j+1]))
+            #Kernel.pbMessage(_INTL("{1}",PBSpecies::pbGetSpeciesConst(@encarray[j])))
+#            @temp = @encarray[j]
+#            @encarray[j] = @encarray[j+1]
+#            @encarray[j+1] = @temp
+#          end
+#          j -= 1
+#        end
+#      end
+    else
+      @encarray2 = [7]
+    end
+  end
+  
+  def pbUpdate
+    pbUpdateSpriteHash(@sprites)
+  end
+  
+  # Need to work out how to get more pages if there are more than 21 encounters on a map
+  def main
+    @type=0
+    @length=[EncounterTypes::Names].flatten.length
+    loop do
+      Graphics.update
+      Input.update
+      pbUpdate
+        if @type == 0 && @length >1
+          @sprites["leftarrow"].visible=false
+          @sprites["rightarrow"].visible=true
+        elsif @type == @length && @length >1
+          @sprites["leftarrow"].visible=true
+          @sprites["rightarrow"].visible=false
+        end
+        if Input.trigger?(Input::RIGHT) && @length >1 && @type< @length
+          pbPlayCursorSE
+          @type += 1
+          # How do I get the UI to refresh when I press right or left?
+          #pbStartMenu(@type)
+          @sprites["leftarrow"].visible=true
+          @sprites["rightarrow"].visible=true
+        end
+        if Input.trigger?(Input::LEFT) && @length >1 && @type !=0
+          pbPlayCursorSE
+          @type -= 1
+          @sprites["leftarrow"].visible=true
+          @sprites["rightarrow"].visible=true
+        end
+      if Input.trigger?(Input::C) || Input.trigger?(Input::B)
+        pbPlayCloseMenuSE
+        break
+      end
+    end
+    dispose
+  end
+ 
+  def dispose
+    pbDisposeSpriteHash(@sprites)
+    @viewport1.dispose
+    @viewport2.dispose
+    @viewport3.dispose
+  end
+end
+
+###############################################
+### Cleaner way of calling the class method ###
+###############################################
+
+  def pbEncounterListUI
+    EncounterListUI_withforms.new.pbStartMenu
+  end
