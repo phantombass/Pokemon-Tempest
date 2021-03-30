@@ -270,26 +270,68 @@ class PokeBattle_AI
     shouldSwitch = forceSwitch
     batonPass = -1
     moveType = -1
+		faster = false
     skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill || 0
     battler = @battle.battlers[idxBattler]
     # If Pokémon is within 6 levels of the foe, and foe's last move was
     # super-effective and powerful
-    if !shouldSwitch && battler.turnCount>0 && skill>=PBTrainerAI.highSkill
+    if !shouldSwitch && battler.turnCount>-1 && skill>=PBTrainerAI.highSkill
       target = battler.pbDirectOpposing(true)
-      if !target.fainted? && target.lastMoveUsed>0 &&
-         (target.level-battler.level).abs<=6
+					type1Battler = PBTypes.getCombinedEffectiveness(battler.type1,target.type1,target.type2)
+				if battler.type1 != battler.type2
+					type2Battler = PBTypes.getCombinedEffectiveness(battler.type2,target.type1,target.type2)
+				end
+				type1Target = PBTypes.getCombinedEffectiveness(target.type1,battler.type1,battler.type2)
+				if target.type1 != target.type2
+					type2Target = PBTypes.getCombinedEffectiveness(target.type2,battler.type1,battler.type2)
+				end
+				if skill>=PBTrainerAI.beastMode
+				if type1Target == PBTypeEffectiveness::SUPER_EFFECTIVE_ONE || type2Target == PBTypeEffectiveness::SUPER_EFFECTIVE_ONE
+					if faster
+						if type1Battler == PBTypeEffectiveness::SUPER_EFFECTIVE_ONE || type2Battler == PBTypeEffectiveness::SUPER_EFFECTIVE_ONE
+							shouldSwitch = false
+						else
+							switchChance = 30
+							shouldSwitch = (pbAIRandom(100)<switchChance)
+						end
+					else
+						switchChance = 50
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+					end
+				end
+			end
+      if !target.fainted? && target.lastMoveUsed>0
         moveData = pbGetMoveData(target.lastMoveUsed)
+				moveData2 = pbGetMoveData(battler.lastMoveUsed)
         moveType = moveData[MOVE_TYPE]
+				moveType2 = moveData2[MOVE_TYPE]
         typeMod = pbCalcTypeMod(moveType,target,battler)
+				typeMod2 = pbCalcTypeMod(moveType2,target,battler)
         if PBTypes.superEffective?(typeMod) && moveData[MOVE_BASE_DAMAGE]>50
-          switchChance = (moveData[MOVE_BASE_DAMAGE]>70) ? 30 : 20
-          shouldSwitch = (pbAIRandom(100)<switchChance)
+					if skill>=PBTrainerAI.beastMode
+          	switchChance = 75
+          	shouldSwitch = (pbAIRandom(100)<switchChance)
+					else
+						switchChance = 50
+          	shouldSwitch = (pbAIRandom(100)<switchChance)
+					end
         end
+				if !PBTypes.superEffective?(typeMod2) && target.hp > target.totalhp/3
+					next if faster
+					if skill>=PBTrainerAI.beastMode
+          	switchChance = 50
+          	shouldSwitch = (pbAIRandom(100)<switchChance)
+					else
+						switchChance = 30
+          	shouldSwitch = (pbAIRandom(100)<switchChance)
+					end
+				end
       end
     end
     # Pokémon can't do anything (must have been in battle for at least 5 rounds)
     if !@battle.pbCanChooseAnyMove?(idxBattler) &&
-       battler.turnCount && battler.turnCount>=5
+       battler.turnCount && battler.turnCount>=0
+
       shouldSwitch = true
     end
     # Pokémon is Perish Songed and has Baton Pass
@@ -367,17 +409,17 @@ class PokeBattle_AI
         end
         # moveType is the type of the target's last used move
         if moveType>=0 && PBTypes.ineffective?(pbCalcTypeMod(moveType,battler,battler))
-          weight = 65
+          weight = 80
           typeMod = pbCalcTypeModPokemon(pkmn,battler.pbDirectOpposing(true))
-          if PBTypes.superEffective?(typeMod.to_f/PBTypeEffectivenesss::NORMAL_EFFECTIVE)
+          if PBTypes.superEffective?(typeMod.to_f/PBTypeEffectiveness::NORMAL_EFFECTIVE)
             # Greater weight if new Pokemon's type is effective against target
-            weight = 85
+            weight = 100
           end
           list.unshift(i) if pbAIRandom(100)<weight   # Put this Pokemon first
         elsif moveType>=0 && PBTypes.resistant?(pbCalcTypeMod(moveType,battler,battler))
           weight = 40
           typeMod = pbCalcTypeModPokemon(pkmn,battler.pbDirectOpposing(true))
-          if PBTypes.superEffective?(typeMod.to_f/PBTypeEffectivenesss::NORMAL_EFFECTIVE)
+          if PBTypes.superEffective?(typeMod.to_f/PBTypeEffectiveness::NORMAL_EFFECTIVE)
             # Greater weight if new Pokemon's type is effective against target
             weight = 60
           end
@@ -420,7 +462,11 @@ end
 		enemies.each do |i|
 			pkmn = party[i]
 			sum  = 0
-			pkmn.moves.each do |m|
+			sum2 = 0
+			pkmn.each do |t|
+				next if t.fainted
+				eTypes = t.pbTypes(true)
+				pkmn.moves.each do |m|
 				next if m.id==0
 				moveData = movesData[m.id]
 				next if moveData[MOVE_BASE_DAMAGE]==0
@@ -428,11 +474,13 @@ end
 					bTypes = b.pbTypes(true)
 					sum += PBTypes.getCombinedEffectiveness(moveData[MOVE_TYPE],
 						bTypes[0],bTypes[1],bTypes[2])
+					sum2 += (PBTypes.getCombinedEffectiveness(eTypes[0],bTypes[0],bTypes[1],bTypes[2]) * PBTypes.getCombinedEffectiveness(eTypes[1],bTypes[0],bTypes[1],bTypes[2]) * PBTypes.getCombinedEffectiveness(eTypes[2],bTypes[0],bTypes[1],bTypes[2]))
 				end
 			end
-			if best==-1 || sum>bestSum
+			if best == -1 || (sum - sum2) > bestSum
 				best = i
-				bestSum = sum
+				bestSum = sum - sum2
+				end
 			end
 		end
 		return best
@@ -517,11 +565,10 @@ class PokeBattle_AI
 		# Decide whether all choices are bad, and if so, try switching instead
 		if !wildBattler && skill>=PBTrainerAI.highSkill
 			badMoves = false
-			if (maxScore<=20 && user.turnCount>2) ||
-				(maxScore<=40 && user.turnCount>5)
-				badMoves = true if pbAIRandom(100)<80
+			if (maxScore<=100 && user.turnCount>0)
+				badMoves = true
 			end
-			if !badMoves && totalScore<100 && user.turnCount>1
+			if !badMoves && totalScore<100 && user.turnCount>0
 				badMoves = true
 				choices.each do |c|
 					next if !user.moves[c[0]].damagingMove?
@@ -532,7 +579,7 @@ class PokeBattle_AI
 			end
 			if badMoves && pbEnemyShouldWithdrawEx?(idxBattler,true)
 				if $INTERNAL
-					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves lol. you should have better moves tbh")
+					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves.")
 				end
 				return
 			end
@@ -644,7 +691,7 @@ class PokeBattle_AI
 				if !(skill>=PBTrainerAI.highSkill && @battle.pbAbleNonActiveCount(target.idxOwnSide)>0)
 					if move.statusMove?
 						score /= 1.5
-					elsif target.hp<=target.totalhp/2
+					elsif target.hp<=target.totalhp/3
 						score *= 1.5
 					end
 				end
@@ -672,7 +719,10 @@ class PokeBattle_AI
 			end
 			# Pick a good move for the Choice items
 			if user.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
-				if move.baseDamage>=60;     score += 60
+				if user.effects[PBEffects::ChoiceBand]>=0 && move.id == user.effects[PBEffects::ChoiceBand]
+					score += 100
+					shouldSwitch = false if @battle.pbSideSize(battler.index)==1
+			  elsif move.baseDamage>=60;     score += 60
 				elsif move.damagingMove?;   score += 30
 				elsif move.function=="0F2"; score += 70   # Trick
 				else;                       score -= 60
@@ -705,6 +755,13 @@ class PokeBattle_AI
 					next if m.thawsUser?
 					score -= 60
 					break
+				end
+			end
+		end
+		if target.effects[PBEffects::Substitute]>0
+			user.eachMove do |m|
+				if move.soundMove?
+					score += 40
 				end
 			end
 		end
