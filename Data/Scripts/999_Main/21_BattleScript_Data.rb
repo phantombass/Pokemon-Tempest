@@ -393,7 +393,24 @@ module DialogueModule
                     battle.decision=3
                     pbMessage("Hmph! Just when he finally gets a lucky break. He decides to be a nice guy too.")
                   }
-
+#=============================RIVAL BATTLES=================================
+Rival_Start = Proc.new{|battle|
+                  battle.scene.appearBar
+                  battle.scene.pbShowOpponent(0)
+                  pbMessage("A little punk like you can't defeat me. I've worked too hard and studied too much.")
+                  battle.scene.pbHideOpponent
+                  pbWait(16)
+                  battle.scene.disappearBar
+                }
+Rival_Last = Proc.new{|battle|
+                  battle.scene.appearBar
+                  battle.scene.pbShowOpponent(0)
+                  pbMessage("Just give up! You're no match for my last Pokémon!")
+                  pbWait(8)
+                  battle.scene.pbHideOpponent
+                  pbWait(16)
+                  battle.scene.disappearBar
+                }
 
 
 # DONT DELETE THIS END

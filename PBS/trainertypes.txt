@@ -72,6 +72,6 @@
 69,ELITEFOUR_Agatha,Elite Four,100,Battle Elite,Battle victory leader,,Female,,
 70,ELITEFOUR_Lance,Elite Four,100,Battle Elite,Battle victory leader,,Male,,
 71,CHAMPION,Champion,100,Battle Elite,Battle victory leader,,Male,,
-72,RIVAL3,Rival,36,HGSS-138-RivalBattle,,,Male,200,
+72,RIVAL3,Rival,36,HGSS-138-RivalBattle,,,Male,199,
 73,SCIENTIST1,Scientist,0,,,,Male,,
 74,NURSE,Nurse,0,160,,,Female,100,

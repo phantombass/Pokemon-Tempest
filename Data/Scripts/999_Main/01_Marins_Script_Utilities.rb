@@ -6,7 +6,7 @@ PluginManager.register({
 })
 
 # Whether or not you want the custom/better errors message.
-SPECIAL_ERRORS = true
+SPECIAL_ERRORS = false
 
 
 
@@ -27,7 +27,7 @@ class Object
   def get_variables
     return self.instance_variables.map { |v| [v,self.method(v.to_s.gsub(/@/, "").to_sym).call] }
   end
-  
+
   def set_variables(vars)
     vars.each do |v|
       self.method((v[0].to_s.gsub(/@/, "") + "=").to_sym).call(v[1])
@@ -58,7 +58,7 @@ class Numeric
     a = self.to_s.split('').reverse.breakup(3)
     return a.map { |e| e.join('') }.join(separator).reverse
   end
-  
+
   # Makes sure the returned string is at least n characters long
   # (e.g. 4   -> to_digits -> "004")
   # (e.g. 19  -> to_digits -> "019")
@@ -70,12 +70,12 @@ class Numeric
     (n - str.size).times { ret += "0" }
     return ret + str
   end
-  
+
   # n root of self. Defaults to 2 => square root.
   def root(n = 2)
     return (self ** (1.0 / n))
   end
-  
+
   # Factorial
   # 4 -> fact -> (4 * 3 * 2 * 1) -> 24
   def fact
@@ -86,26 +86,26 @@ class Numeric
     end
     return tot
   end
-  
+
   # Combinations
   def ncr(k)
     return (self.fact / (k.fact * (self - k).fact))
   end
-  
+
   # k permutations of n (self)
   def npr(k)
     return (self.fact / (self - k).fact)
   end
-  
+
   # Converts number to binary number (returns as string)
   def to_b
     return self.to_s(2)
   end
-  
+
   def empty?
     return false
   end
-  
+
   def numeric?
     return true
   end
@@ -142,12 +142,12 @@ class Array
   def random
     return self[Object.method(:rand).call(self.size)]
   end
-  
+
   # Returns whether or not the array is empty.
   def empty?
     return self.size == 0
   end
-  
+
   # Shuffles the order of the array
   def shuffle
     indexes = []
@@ -163,12 +163,12 @@ class Array
     end
     return new
   end
-  
+
   # Shuffles the order of the array and replaces itself
   def shuffle!
     self.replace(shuffle)
   end
-  
+
   # Breaks the array up every n elements
   def breakup(n)
     ret = []
@@ -178,12 +178,12 @@ class Array
     end
     return ret
   end
-  
+
   # Breaks the array up every n elements and replaces itself
   def breakup!(n)
     self.replace(breakup(n))
   end
-  
+
   # Swaps two elements' indexes
   def swap(index1, index2)
     new = self.clone
@@ -192,22 +192,22 @@ class Array
     new[index1] = tmp
     return new
   end
-  
+
   # Swaps two elements' indexes and replaces itself
   def swap!(index1, index2)
     self.replace(swap(index1, index2))
   end
-  
+
   # Returns whether or not the first element is equal to the passed argument
   def starts_with?(e)
     return self.first == e
   end
-  
+
   # Returns whether or not the last element is equal to the passed argument
   def ends_with?(e)
     return self.last == e
   end
-  
+
   # Converts itself to a hash where possible
   def to_hash(delete_nil_entries = false)
     ret = {}
@@ -217,7 +217,7 @@ class Array
     end
     return ret
   end
-  
+
   # If you have 8 elements, if true, grabs the 5th element, the 4th if false.
   # If you have 7 elements, grabs the 4th.
   def mid(round_up = true)
@@ -225,7 +225,7 @@ class Array
     i = i.ceil if round_up
     return self[i].floor
   end
-  
+
   # Returns the average of all elements in the array. Will throw errors on non-numerics.
   # Skips <nil> entries.
   def average
@@ -233,12 +233,12 @@ class Array
     self.each { |n| total += n unless n.nil? }
     return total / self.compact.size.to_f
   end
-  
+
   # Adds some aliases for <include?>: <has?>, <includes?>, <contains?>
   alias has? include?
   alias includes? include?
   alias contains? include?
-  
+
   # Evaluates the block you pass it for every number between 0 and "slots".
   # Example usage:
   # Array.make_table { |i| i ** 2 }
@@ -249,13 +249,13 @@ class Array
   def self.make_table(range = 1..10, &proc)
     return range.map { |n| next proc.call(n) }
   end
-  
+
   # If true:
   # [0, 1, 3, 4, 5]  --  etc
   # If false:
   # [0,1,2,3,4,5]  --  etc
   Json_Extra_Space_After_Entry = false
-  
+
   # Converts _self_ to a JSON string with an indent of Json_Indent_Width per layer.
   def to_json(indent = Hash::Json_Indent_Width, inline = false)
     return "[]" unless self.size > 0
@@ -294,7 +294,7 @@ class Hash
     end
     return ret
   end
-  
+
   def compact
     new = {}
     for key in self.keys
@@ -302,14 +302,14 @@ class Hash
     end
     return new
   end
-  
+
   def compact!
     self.replace(compact)
   end
-  
+
   # Amount of spaces per "layer" in the JSON.
   Json_Indent_Width = 4
-  
+
   # Converts _self_ to a JSON string with an indent of Json_Indent_Width per layer.
   def to_json(indent = Json_Indent_Width, _ = nil)
     return "{}" if self.size == 0
@@ -364,32 +364,32 @@ class String
   def to_b
     return self.unpack('b*')[0]
   end
-  
+
   # Converts to bits and replaces itself
   def to_b!
     self.replace(to_b)
   end
-  
+
   # Converts from bits
   def from_b
     return [self].pack('b*')
   end
-  
+
   # Convert from bits and replaces itself
   def from_b!
     self.replace(from_b)
   end
-  
+
   # Returns a random character from the string
   def random
     return self[rand(self.size)]
   end
-  
+
   # Shuffles the order of the characters
   def shuffle
     return self.split("").shuffle.join("")
   end
-  
+
   # Breaks the string up every _n_ characters
   def breakup(n)
     new = []
@@ -399,11 +399,11 @@ class String
     end
     return new
   end
-  
+
   def empty?
     return (self.size == 0)
   end
-  
+
   def numeric?
     i = 0
     for e in self.split("")
@@ -412,27 +412,27 @@ class String
     end
     return true
   end
-  
+
   # Deflates itself and returns the result
   def deflate
     return Zlib::Deflate.deflate(self)
   end
-  
+
   # Deflates and replaces itself
   def deflate!
     self.replace(deflate)
   end
-  
+
   # Inflates itself and returns the result
   def inflate
     return Zlib::Inflate.inflate(self)
   end
-  
+
   # Inflates and replaces itself
   def inflate!
     self.replace(inflate)
   end
-  
+
   # Adds some aliases for <include?>: <has?>, <includes?>, <contains?>
   alias has? include?
   alias includes? include?
@@ -459,18 +459,18 @@ class File
     f.write data
     f.close
   end
-  
+
   # Renames the old file to be the new file. //exact same as File::move
   def self.rename(old, new)
     File.move(old, new)
   end
-  
+
   # Copies the source to the destination and deletes the source.
   def self.move(source, destination)
     File.copy(source, destination)
     File.delete(source)
   end
-  
+
   # Reads the file's data and inflates it with Zlib
   def self.inflate(file)
     data = ""
@@ -491,7 +491,7 @@ class File
     f.close
     return data
   end
-  
+
   # Reads the file's data and deflates it with Zlib
   def self.deflate(file)
     data = ""
@@ -512,7 +512,7 @@ class File
     f.close
     return data
   end
-  
+
   # Note: This is VERY basic compression and should NOT serve as encryption.
   # Compresses all specified files into one, big package
   def self.compress(outfile, files, delete_files = true)
@@ -551,7 +551,7 @@ class File
     f.close
     return Time.now - start
   end
-  
+
   # Decompresses files compressed with File.compress
   def self.decompress(filename, delete_package = true)
     start = Time.now
@@ -582,7 +582,7 @@ class File
     File.delete(filename) if delete_package
     return Time.now - start
   end
-  
+
   # Creates all directories that don't exist in the given path, as well as the
   # file. If given a second argument, it'll write that to the file.
   def self.create(path, data = nil)
@@ -605,12 +605,12 @@ class Dir
   def self.get_files(path, recursive = true)
     return Dir.get_all(path, recursive).select { |path| File.file?(path) }
   end
-  
+
   # Returns all directories in the targeted path
   def self.get_dirs(path, recursive = true)
     return Dir.get_all(path, recursive).select { |path| File.directory?(path) }
   end
-  
+
   # Returns all files and directories in the targeted path
   def self.get_all(path, recursive = true)
     files = []
@@ -623,7 +623,7 @@ class Dir
     end
     return files
   end
-  
+
   # Deletes a directory and all files/directories within, unless non_empty is false
   def self.delete(path, non_empty = true)
     if non_empty
@@ -637,7 +637,7 @@ class Dir
   end
     marin_delete(path)
   end
-  
+
   # Creates all directories that don't exist in the given path.
   def self.create(path)
     split = path.split('/')
@@ -669,13 +669,13 @@ class Sprite
       return self.bitmap
     end
   end
-  
+
   # Alternative to bmp(path):
   # -> bmp = "Graphics/Pictures/bag"
   def bmp=(arg1)
     bmp(arg1)
   end
-  
+
   # Usage:
   # -> [x]             # Sets sprite.x to x
   # -> [x,y]           # Sets sprite.x to x and sprite.y to y
@@ -689,24 +689,24 @@ class Sprite
     self.y = args[1] || self.y
     self.z = args[2] || self.z
   end
-  
+
   # Returns the x, y, and z coordinates in the xyz=(args) format, [x,y,z]
   def xyz
     return [self.x,self.y,self.z]
   end
-  
+
   # Centers the sprite by setting the origin points to half the width and height
   def center_origins
     return if !self.bitmap
     self.ox = self.bitmap.width / 2
     self.oy = self.bitmap.height / 2
   end
-  
+
   # Returns the sprite's full width, taking zoom_x into account
   def fullwidth
     return self.bitmap.width.to_f * self.zoom_x
   end
-  
+
   # Returns the sprite's full height, taking zoom_y into account
   def fullheight
     return self.bitmap.height.to_f * self.zoom_y
@@ -732,13 +732,13 @@ class TextSprite < Sprite
       end
     end
   end
-  
+
   # Clears the bitmap (and thus all drawn text)
   def clear
     self.bmp.clear
     pbSetSystemFont(self.bmp)
   end
-  
+
   # You can also pass text to draw either an array of arrays, or an array
   # containing the normal "parameters" for drawing text:
   # [text,x,y,align,basecolor,shadowcolor]
@@ -750,7 +750,7 @@ class TextSprite < Sprite
       pbDrawTextPositions(self.bmp,[text])
     end
   end
-  
+
   # Draws text with outline
   # [text,x,y,align,basecolor,shadowcolor]
   def draw_outline(text, clear = false)
@@ -766,7 +766,7 @@ class TextSprite < Sprite
       pbDrawOutlineText(self.bmp,e[1],e[2],640,480,e[0],e[4],e[5],e[3])
     end
   end
-  
+
   # Draws and breaks a line if the width is exceeded
   # [text,x,y,width,numlines,basecolor,shadowcolor]
   def draw_ex(text, clear = false)
@@ -780,7 +780,7 @@ class TextSprite < Sprite
       drawTextEx(self.bmp,e[1],e[2],e[3],e[4],e[0],e[5],e[6])
     end
   end
-  
+
   # Clears and disposes the sprite
   def dispose
     clear
@@ -795,7 +795,7 @@ class SpriteHash
   attr_reader :z
   attr_reader :visible
   attr_reader :opacity
-  
+
   def initialize
     @hash = {}
     @x = 0
@@ -804,42 +804,42 @@ class SpriteHash
     @visible = true
     @opacity = 255
   end
-  
+
   # Returns the object in the specified key
   def [](key)
     key = key.to_sym if key.respond_to?(:to_sym) && !key.is_a?(Numeric)
     return @hash[key]
   end
-  
+
   # Sets an object in specified key to the specified value
   def []=(key, value)
   key = key.to_sym if key.respond_to?(:to_sym) && !key.is_a?(Numeric)
     add(key, value)
   end
-  
+
   # Returns the raw hash
   def raw
     return @hash
   end
-  
+
   # Returns the keys in the hash
   def keys
     return @hash.keys
   end
-  
+
   def length; return self.size; end
   def count; return self.size; end
-  
+
   # Returns the amount of keys in the hash
   def size
     return @hash.keys.size
   end
-  
+
   # Clones the hash
   def clone
     return @hash.clone
   end
-  
+
   # Adds an object to the specified key
   def add(key, value)
     clear_disposed
@@ -848,20 +848,20 @@ class SpriteHash
     @hash[key] = value
     clear_disposed
   end
-  
+
   # Deletes an object in the specified key
   def delete(key)
     key = key.to_sym if key.respond_to?(:to_sym) && !key.is_a?(Numeric)
     @hash[key] = nil
     clear_disposed
   end
-  
+
   # Iterates over all sprites
   def each
     clear_disposed
     @hash.each { |s| yield s[1] if block_given? }
   end
-  
+
   # Updates all sprites
   def update
     clear_disposed
@@ -869,7 +869,7 @@ class SpriteHash
       @hash[key].update if @hash[key].respond_to?(:update)
     end
   end
-  
+
   # Disposes all sprites
   def dispose
     clear_disposed
@@ -878,12 +878,12 @@ class SpriteHash
     end
     clear_disposed
   end
-  
+
   # Compatibility
   def disposed?
     return false
   end
-  
+
   # Changes x on all sprites
   def x=(value)
     clear_disposed
@@ -892,7 +892,7 @@ class SpriteHash
     end
     @x = value
   end
-  
+
   # Changes y on all sprites
   def y=(value)
     clear_disposed
@@ -901,7 +901,7 @@ class SpriteHash
     end
     @y = value
   end
-  
+
   # Changes z on all sprites
   def z=(value)
     clear_disposed
@@ -910,7 +910,7 @@ class SpriteHash
     end
     @z = value
   end
-  
+
   # Changes visibility on all sprites
   def visible=(value)
     clear_disposed
@@ -918,7 +918,7 @@ class SpriteHash
       @hash[key].visible = value
     end
   end
-  
+
   # Changes opacity on all sprites
   def opacity=(value)
     clear_disposed
@@ -927,7 +927,7 @@ class SpriteHash
     end
     @opacity = [0,value,255].sort[1]
   end
-  
+
   # Fades out all sprites
   def hide(frames = 16)
     clear_disposed
@@ -940,7 +940,7 @@ class SpriteHash
     end
     @opacity = 0
   end
-  
+
   # Fades in all sprites
   def show(frames = 16)
     clear_disposed
@@ -953,7 +953,7 @@ class SpriteHash
     end
     @opacity = 255
   end
-  
+
   # Deletes all disposed sprites from the hash
   def clear_disposed
     for key in @hash.keys
@@ -963,7 +963,7 @@ class SpriteHash
       end
     end
   end
-  
+
   # Renames the old key to the new key
   def rename(old, new)
     self[new] = self[old]
@@ -975,11 +975,11 @@ class ByteWriter
   def initialize(filename)
     @file = File.new(filename, "wb")
   end
- 
+
   def <<(*data)
     write(*data)
   end
- 
+
   def write(*data)
     data.each do |e|
       if e.is_a?(Array)
@@ -991,16 +991,16 @@ class ByteWriter
       end
     end
   end
- 
+
   def write_int(int)
     self << ByteWriter.to_bytes(int)
   end
- 
+
   def close
     @file.close
     @file = nil
   end
- 
+
   def self.to_bytes(int)
     return [
       (int >> 24) & 0xFF,
@@ -1010,11 +1010,11 @@ class ByteWriter
     ]
   end
 end
- 
+
 class Bitmap
   def save_to_png(filename)
     f = ByteWriter.new(filename)
-   
+
     #============================= Writing header ===============================#
     # PNG signature
     f << [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]
@@ -1023,17 +1023,17 @@ class Bitmap
     # IHDR
     headertype = [0x49, 0x48, 0x44, 0x52]
     f << headertype
-   
+
     # Width, height, compression, filter, interlacing
     headerdata = ByteWriter.to_bytes(self.width).
       concat(ByteWriter.to_bytes(self.height)).
       concat([0x08, 0x06, 0x00, 0x00, 0x00])
     f << headerdata
-   
+
     # CRC32 checksum
     sum = headertype.concat(headerdata)
     f.write_int Zlib::crc32(sum.pack("C*"))
-   
+
     #============================== Writing data ================================#
     data = []
     for y in 0...self.height
@@ -1057,7 +1057,7 @@ class Bitmap
     f << smoldata
     # CRC32 checksum
     f.write_int Zlib::crc32([0x49, 0x44, 0x41, 0x54].concat(smoldata).pack("C*"))
-   
+
     #============================== End Of File =================================#
     # Empty chunk
     f << [0x00, 0x00, 0x00, 0x00]
