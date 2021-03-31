@@ -687,8 +687,7 @@ MultipleForms.register(:BAGON,{
   "getFormOnCreation" => proc { |pkmn|
     next if pkmn.formSimple>=3
     mapPos = pbGetMetadata($game_map.map_id,MetadataMapPosition)
-    $formNav = 2 if mapPos && mapPos[0] == 0
-    next 2 if mapPos && mapPos[0]==0   # Zharo region
+    next 2 if mapPos && mapPos[0]==0   # Ufara region
     next 0
   }
 })
@@ -698,13 +697,10 @@ MultipleForms.copy(:SHELGON,:SALAMENCE)
 MultipleForms.register(:DREEPY,{
   "getFormOnCreation" => proc { |pkmn|
     next if pkmn.formSimple>=2
-    maps = pbGetMetadata($game_map.map_id,MetadataMapPosition)   # Map IDs for Zharonian Forme
-    if maps && maps[0]==0
-      $formNav = 1
-      next 1
-    end
+    mapPos = pbGetMetadata($game_map.map_id,MetadataMapPosition)   # Map IDs for Ufaran Forme
+    next 1 if mapPos && mapPos[0]==0
     next 0
   }
 })
 
-MultipleForms.copy(:DRAKLOAK,:DRAGAPULT)
+MultipleForms.copy(:DRAKLOAK,:DRAGAPULT,:HIPPOPOTAS,:HIPPOWDON)

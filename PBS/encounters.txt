@@ -48,3 +48,19 @@ Cave
     NOIBAT,9,12
     CHINGLING,9,11
 #-------------------------------
+086 # Ashen Beach
+25,10,10
+Land
+    MARILL,11,13
+    TIMBURR,11,13
+    MARILL,11,13
+    TIMBURR,11,13
+    POLIWAG,12,14
+    POLIWAG,12,14
+    HIPPOPOTAS,11,13
+    HIPPOPOTAS,11,13
+    MEDITITE,12,14
+    RIOLU,12,14
+    MEDITITE,12,14
+    RIOLU,12,14
+#-------------------------------

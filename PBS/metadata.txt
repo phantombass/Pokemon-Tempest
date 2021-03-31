@@ -1,14 +1,14 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [000]
+PlayerB = POKEMONTRAINER_Leaf,trchar001,girl_bike,girl_surf,girl_run,girl_surf,girl_fish_offset,girl_fish_offset
+PlayerA = POKEMONTRAINER_Red,trchar000,boy_bike,boy_surf,boy_run,boy_surf,boy_fish_offset,boy_fish_offset
 WildBattleBGM = HGSS-110-BattleWild.ogg
+SurfBGM = Surfing.mid
+WildVictoryME = Battle victory wild.ogg
 Home = 3,7,5,8
 BicycleBGM = Bicycle.mid
 TrainerVictoryME = Battle victory trainer.ogg
-WildVictoryME = Battle victory wild.ogg
-PlayerB = POKEMONTRAINER_Leaf,trchar001,girl_bike,girl_surf,girl_run,girl_surf,girl_fish_offset,girl_fish_offset
-PlayerA = POKEMONTRAINER_Red,trchar000,boy_bike,boy_surf,boy_run,boy_surf,boy_fish_offset,boy_fish_offset
-SurfBGM = Surfing.mid
 TrainerBattleBGM = HGSS-118-BattleTrainer.ogg
 #-------------------------------
 [001]
@@ -17,9 +17,9 @@ TrainerBattleBGM = HGSS-118-BattleTrainer.ogg
 [002]
 # Lappet Town
 BattleBack = field
-MapPosition = 0,13,12
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,13,12
 #-------------------------------
 [003]
 # \PN's house
@@ -28,15 +28,15 @@ MapPosition = 0,13,12
 #-------------------------------
 [004]
 # Pokémon Lab
-MapPosition = 0,13,12
 ShowArea = false
+MapPosition = 0,13,12
 #-------------------------------
 [005]
 # Route 1
 BattleBack = field
-MapPosition = 0,13,11
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,13,11
 #-------------------------------
 [006]
 # Kurt's house
@@ -44,10 +44,10 @@ MapPosition = 0,13,11
 #-------------------------------
 [007]
 # Cedolan City
-MapPosition = 0,13,10
+ShowArea = true
 Outdoor = true
 MapSize = 2,11
-ShowArea = true
+MapPosition = 0,13,10
 #-------------------------------
 [008]
 # Daisy's house
@@ -107,24 +107,24 @@ MapPosition = 0,13,10
 [021]
 # Route 2
 BattleBack = field
-MapPosition = 0,14,8
-Outdoor = true
-Weather = Rain,100
-MapSize = 1,11
 ShowArea = true
+Outdoor = true
+MapSize = 1,11
+Weather = Rain,100
+MapPosition = 0,14,8
 #-------------------------------
 [022]
 # Shira Town
-Outdoor = true
-Weather = Rain,0
-SnapEdges = true
 ShowArea = true
+Outdoor = true
+SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [023]
 # Lerucean Town
-MapPosition = 0,15,8
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,15,8
 #-------------------------------
 [024]
 # Lerucean Town Poké Center
@@ -146,14 +146,14 @@ MapPosition = 0,15,8
 [028]
 # Natural Park
 BattleBack = field
-MapPosition = 0,16,8
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,16,8
 #-------------------------------
 [029]
 # Natural Park Entrance
-MapPosition = 0,16,8
 Bicycle = true
+MapPosition = 0,16,8
 #-------------------------------
 [030]
 # Natural Park Pavillion
@@ -162,10 +162,10 @@ MapPosition = 0,16,8
 [031]
 # Route 3
 BattleBack = field
-MapPosition = 0,14,6
+ShowArea = true
 Outdoor = true
 MapSize = 2,1101
-ShowArea = true
+MapPosition = 0,14,6
 #-------------------------------
 [032]
 # Houses
@@ -173,23 +173,23 @@ SnapEdges = true
 #-------------------------------
 [033]
 # Weather Lab
-Outdoor = false
-Weather = Rain,0
-SnapEdges = true
 ShowArea = false
+Outdoor = false
+SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [034]
 # Ice Cave
 BattleBack = cave1
 Environment = Cave
-MapPosition = 0,15,6
 Bicycle = true
+MapPosition = 0,15,6
 #-------------------------------
 [035]
 # Ingido Plateau
-MapPosition = 0,13,6
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,13,6
 #-------------------------------
 [036]
 # Pokémon League
@@ -208,91 +208,91 @@ MapPosition = 0,13,6
 [039]
 # Route 4
 BattleBack = field
-MapPosition = 0,11,6
+ShowArea = true
 Outdoor = true
 MapSize = 2,11
-ShowArea = true
+MapPosition = 0,11,6
 #-------------------------------
 [040]
 # Route 4
+ShowArea = true
+Outdoor = true
 BicycleAlways = true
 MapPosition = 0,11,6
-Outdoor = true
-ShowArea = true
 #-------------------------------
 [041]
 # Route 5
-BicycleAlways = true
-MapPosition = 0,11,7
-Outdoor = true
-MapSize = 1,111
 ShowArea = true
+Outdoor = true
+BicycleAlways = true
+MapSize = 1,111
+MapPosition = 0,11,7
 #-------------------------------
 [044]
 # Route 6
 BattleBack = field
-MapPosition = 0,11,10
+ShowArea = true
 Outdoor = true
 MapSize = 2,11
-ShowArea = true
+MapPosition = 0,11,10
 #-------------------------------
 [045]
 # Route 6
+ShowArea = true
+Outdoor = true
 BicycleAlways = true
 MapPosition = 0,11,10
-Outdoor = true
-ShowArea = true
 #-------------------------------
 [046]
 # Cycling Road gate
-MapPosition = 0,12,6
 Bicycle = true
+MapPosition = 0,12,6
 #-------------------------------
 [047]
 # Route 7
 BattleBack = rocky
 Environment = Rock
-MapPosition = 0,15,10
-Outdoor = true
-Weather = Rain,0
-MapSize = 2,11
 ShowArea = true
+Outdoor = true
+MapSize = 2,11
+Weather = Rain,0
+MapPosition = 0,15,10
 #-------------------------------
 [048]
 # Zephyr Hills
-Outdoor = true
-Weather = Rain,0
-SnapEdges = true
 ShowArea = true
+Outdoor = true
+SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [049]
 # Rock Cave
 BattleBack = cave1
 Environment = Cave
-MapPosition = 0,16,10
 Bicycle = true
+MapPosition = 0,16,10
 #-------------------------------
 [050]
 # Rock Cave
 BattleBack = cave3
-Environment = Cave
 DarkMap = true
-MapPosition = 0,16,10
+Environment = Cave
 Bicycle = true
+MapPosition = 0,16,10
 #-------------------------------
 [051]
 # Dungeon
-Dungeon = true
 BattleBack = cave2
+Dungeon = true
 Environment = Cave
-MapPosition = 0,16,10
 Bicycle = true
+MapPosition = 0,16,10
 #-------------------------------
 [052]
 # Battle Frontier
-MapPosition = 0,17,10
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,17,10
 #-------------------------------
 [053]
 # Battle Frontier Poké Center
@@ -355,9 +355,9 @@ MapPosition = 0,17,10
 [066]
 # Safari Zone
 BattleBack = field
-MapPosition = 0,12,12
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,12,12
 #-------------------------------
 [067]
 # Safari Zone gate
@@ -367,18 +367,18 @@ MapPosition = 0,12,12
 # Safari Zone
 BattleBack = forest
 Environment = Forest
-MapPosition = 0,12,12
-Outdoor = true
 SafariMap = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,12,12
 #-------------------------------
 [069]
 # Route 8
 BattleBack = field
+ShowArea = true
+Outdoor = true
 DiveMap = 70
 MapPosition = 0,13,13
-Outdoor = true
-ShowArea = true
 #-------------------------------
 [070]
 # Underwater
@@ -393,43 +393,43 @@ MapPosition = 0,13,13
 [072]
 # Berth Island
 BattleBack = field
-MapPosition = 0,18,17
+ShowArea = true
 Outdoor = true
 Weather = Storm,50
-ShowArea = true
+MapPosition = 0,18,17
 #-------------------------------
 [073]
 # Faraday Island
 BattleBack = field
-MapPosition = 0,22,16
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 0,22,16
 #-------------------------------
 [074]
 # Cycling Road gate
-MapPosition = 0,12,10
 Bicycle = true
+MapPosition = 0,12,10
 #-------------------------------
 [075]
 # Tiall Region
 BattleBack = city
-MapPosition = 1,13,16
-Outdoor = true
 ShowArea = true
+Outdoor = true
+MapPosition = 1,13,16
 #-------------------------------
 [076]
 # Snowcap Alps
-Outdoor = true
-Weather = Rain,0
-SnapEdges = true
 ShowArea = true
+Outdoor = true
+SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [077]
 # Snowcap Heights
-Outdoor = true
-Weather = Rain,0
-SnapEdges = true
 ShowArea = true
+Outdoor = true
+SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [078]
 # Lab
@@ -442,16 +442,16 @@ SnapEdges = true
 #-------------------------------
 [080]
 # Wind-Torn Valley
-Outdoor = true
-Weather = Rain,0
-SnapEdges = true
 ShowArea = true
+Outdoor = true
+SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [081]
 # Wind-Torn PMC
+SafariMap = false
 Outdoor = false
 SnapEdges = true
-SafariMap = false
 #-------------------------------
 [082]
 # Lab
@@ -464,16 +464,16 @@ ShowArea = true
 #-------------------------------
 [085]
 # Coastal Tunnel
-SnapEdges = true
 ShowArea = true
+SnapEdges = true
 #-------------------------------
 [086]
 # Ashen Beach
-Outdoor = true
-Weather = Rain,0
-SnapEdges = true
 SafariMap = false
 ShowArea = true
+Outdoor = true
+SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [087]
 # Coastal Steppes Gate
@@ -482,8 +482,8 @@ SnapEdges = true
 [088]
 # Coastal Steppes
 Outdoor = true
-Weather = Rain,0
 SnapEdges = true
+Weather = Rain,0
 #-------------------------------
 [089]
 # Coastal Steppes PMC

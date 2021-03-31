@@ -913,6 +913,8 @@ BattlerEnemyY = 9
 [MEDICHAM,1]
 FormName = Mega Medicham
 MegaStone = MEDICHAMITE
+Type1 = FIGHTING
+Type2 = COSMIC
 BaseStats = 60,100,85,100,80,85
 HiddenAbility = PUREPOWER
 BattlerPlayerY = 16
