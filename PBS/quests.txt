@@ -21,7 +21,7 @@ FailedMessage="You failed this quest"
 [3]
 Name="Rampaging Pokémon"
 Stage1="Calm the angry Pokémon inside the Valley Mine."
-Stage2="Calm the angry Pokémon at..."
+Stage2="Calm the angry Pokémon at Coastal Steppes!"
 StageLocation1="nil"
 StageLocation2="nil"
 QuestDescription="Calm all the angry Pokémon!"
