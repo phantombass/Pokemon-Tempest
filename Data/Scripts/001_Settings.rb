@@ -231,7 +231,7 @@ def pbDexNames; return [
   [_INTL("Ufara Pokédex"), 0],
   _INTL("National Pokédex")
 ]; end
-DEX_SHOWS_ALL_FORMS = false
+DEX_SHOWS_ALL_FORMS = true
 DEXES_WITH_OFFSETS  = []
 
 #===============================================================================

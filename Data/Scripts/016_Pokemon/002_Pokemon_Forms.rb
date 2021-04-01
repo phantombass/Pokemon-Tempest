@@ -692,15 +692,17 @@ MultipleForms.register(:BAGON,{
   }
 })
 
-MultipleForms.copy(:SHELGON,:SALAMENCE)
+MultipleForms.copy(:BAGON,:SHELGON,:SALAMENCE,:GASTLY,:HAUNTER,:GENGAR)
 
 MultipleForms.register(:DREEPY,{
   "getFormOnCreation" => proc { |pkmn|
     next if pkmn.formSimple>=2
     mapPos = pbGetMetadata($game_map.map_id,MetadataMapPosition)   # Map IDs for Ufaran Forme
-    next 1 if mapPos && mapPos[0]==0
+    if mapPos && mapPos[0]==0
+      next 1
+    end
     next 0
   }
 })
 
-MultipleForms.copy(:DRAKLOAK,:DRAGAPULT,:HIPPOPOTAS,:HIPPOWDON)
+MultipleForms.copy(:DREEPY,:DRAKLOAK,:DRAGAPULT,:SNEASEL,:WEAVILE,:HIPPOPOTAS,:HIPPOWDON,:NIDORANmA,:NIDORINO,:NIDOKING,:NIDORANfE,:NIDORINA,:NIDOQUEEN)

@@ -466,30 +466,69 @@ def pbRockSmashRandomItem
   randItem = rand(100)+1
   return nil if randItem < 51
   if randItem < 76
+    rand1 = rand(3)
     pbExclaim(get_character(-1))
     pbWait(8)
     Kernel.pbMessage(_INTL("Oh, there was an item!"))
-    Kernel.pbItemBall(:HARDSTONE)
+    if rand1 == 0
+      Kernel.pbItemBall(:HARDSTONE)
+    elsif rand1 == 1
+      Kernel.pbItemBall(:SOFTSAND)
+    else
+      Kernel.pbItemBall(:STARDUST)
+    end
   elsif randItem < 86
+    rand2 = rand(3)
     pbExclaim(get_character(-1))
     pbWait(8)
     Kernel.pbMessage(_INTL("Oh, there was an item!"))
-    Kernel.pbItemBall(:NUGGET)
+    if rand2 == 0
+      Kernel.pbItemBall(:NUGGET)
+    elsif rand2 == 1
+      Kernel.pbItemBall(:STARPIECE)
+    else
+      Kernel.pbItemBall(:PPUP)
+    end
   elsif randItem < 96
     pbExclaim(get_character(-1))
     pbWait(8)
     Kernel.pbMessage(_INTL("Oh, there was an item!"))
-    randFossil = rand(2)
+    randFossil = rand(11)
       if randFossil == 1
-        Kernel.pbItemBall(:TOMBSEAL)
+        Kernel.pbItemBall(:OLDAMBER)
+      elsif randFossil == 2
+        Kernel.pbItemBall(:HELIXFOSSIL)
+      elsif randFossil == 3
+        Kernel.pbItemBall(:DOMEFOSSIL)
+      elsif randFossil == 4
+        Kernel.pbItemBall(:ROOTFOSSIL)
+      elsif randFossil == 5
+        Kernel.pbItemBall(:CLAWFOSSIL)
+      elsif randFossil == 6
+        Kernel.pbItemBall(:SKULLFOSSIL)
+      elsif randFossil == 7
+        Kernel.pbItemBall(:SHIELDFOSSIL)
+      elsif randFossil == 8
+        Kernel.pbItemBall(:COVERFOSSIL)
+      elsif randFossil == 9
+        Kernel.pbItemBall(:PLUMEFOSSIL)
+      elsif randFossil == 10
+        Kernel.pbItemBall(:SAILFOSSIL)
       else
-        Kernel.pbItemBall(:ANCIENTTOTEM)
+        Kernel.pbItemBall(:JAWFOSSIL)
       end
     else
+      rand3 = rand(3)
       pbExclaim(get_character(-1))
       pbWait(8)
       Kernel.pbMessage(_INTL("Oh, there was an item!"))
-      Kernel.pbItemBall(:BIGNUGGET)
+      if rand3 == 0
+        Kernel.pbItemBall(:BIGNUGGET)
+      elsif rand3 == 1
+        Kernel.pbItemBall(:PPMAX)
+      else
+        Kernel.pbItemBall(:IVMAXSTONE)
+      end
   end
 end
 
