@@ -1005,7 +1005,7 @@ BattleHandlers::DamageCalcUserAbility.add(:FLASHFIRE,
 BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
     w = user.battle.pbWeather
-    if move.physicalMove? && (w==PBWeather::Sun || w==PBWeather::HarshSun)
+    if (w==PBWeather::Sun || w==PBWeather::HarshSun || w==PBWeather::Rainbow)
       mults[ATK_MULT] = (mults[ATK_MULT]*1.5).round
     end
   }
@@ -1246,7 +1246,7 @@ BattleHandlers::DamageCalcUserAllyAbility.add(:BATTERY,
 BattleHandlers::DamageCalcUserAllyAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
     w = user.battle.pbWeather
-    if move.physicalMove? && (w==PBWeather::Sun || w==PBWeather::HarshSun)
+    if (w==PBWeather::Sun || w==PBWeather::HarshSun || w==PBWeather::Rainbow)
       mults[ATK_MULT] = (mults[ATK_MULT]*1.5).round
     end
   }
@@ -1277,7 +1277,7 @@ BattleHandlers::DamageCalcTargetAbility.copy(:FILTER,:SOLIDROCK)
 BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
     w = user.battle.pbWeather
-    if move.specialMove? && (w==PBWeather::Sun || w==PBWeather::HarshSun)
+    if (w==PBWeather::Sun || w==PBWeather::HarshSun||w==PBWeather::Rainbow)
       mults[DEF_MULT] = (mults[DEF_MULT]*1.5).round
     end
   }
@@ -1375,7 +1375,7 @@ BattleHandlers::DamageCalcTargetAbilityNonIgnorable.add(:SHADOWSHIELD,
 BattleHandlers::DamageCalcTargetAllyAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
     w = user.battle.pbWeather
-    if move.specialMove? && (w==PBWeather::Sun || w==PBWeather::HarshSun)
+    if (w==PBWeather::Sun || w==PBWeather::HarshSun || w==PBWeather::Rainbow)
       mults[DEF_MULT] = (mults[DEF_MULT]*1.5).round
     end
   }
@@ -2651,6 +2651,13 @@ BattleHandlers::AbilityOnSwitchIn.add(:DRIZZLE,
   proc { |ability,battler,battle|
     next if battle.field.weather == PBWeather::Rain
     pbBattleWeatherAbility(PBWeather::Rain,battler,battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:FLOWERGIFT,
+  proc { |ability,battler,battle|
+    next if battle.field.weather == PBWeather::Rainbow
+    pbBattleWeatherAbility(PBWeather::Rainbow,battler,battle)
   }
 )
 
