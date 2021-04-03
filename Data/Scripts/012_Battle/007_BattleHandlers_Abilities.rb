@@ -2654,6 +2654,34 @@ BattleHandlers::AbilityOnSwitchIn.add(:DRIZZLE,
   }
 )
 
+BattleHandlers::AbilityOnSwitchIn.add(:URBANCLOUD,
+  proc { |ability,battler,battle|
+    next if battle.field.weather == PBWeather::AcidRain
+    pbBattleWeatherAbility(PBWeather::AcidRain,battler,battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:FIGHTERSWRATH,
+  proc { |ability,battler,battle|
+    next if battle.field.weather == PBWeather::DAshfall
+    pbBattleWeatherAbility(PBWeather::DAshfall,battler,battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:MUGGYAIR,
+  proc { |ability,battler,battle|
+    next if battle.field.weather == PBWeather::Humid
+    pbBattleWeatherAbility(PBWeather::Humid,battler,battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:ELECTROSTATIC,
+  proc { |ability,battler,battle|
+    next if battle.field.weather == PBWeather::HeatLight
+    pbBattleWeatherAbility(PBWeather::HeatLight,battler,battle)
+  }
+)
+
 BattleHandlers::AbilityOnSwitchIn.add(:FLOWERGIFT,
   proc { |ability,battler,battle|
     next if battle.field.weather == PBWeather::Rainbow
@@ -2707,6 +2735,13 @@ BattleHandlers::AbilityOnSwitchIn.add(:SHROUD,
   proc { |ability,battler,battle|
     next if battle.field.weather == PBWeather::Fog
     pbBattleWeatherAbility(PBWeather::Fog,battler,battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:RAGINGSEA,
+  proc { |ability,battler,battle|
+    next if battle.field.weather == PBWeather::Storm
+    pbBattleWeatherAbility(PBWeather::Storm,battler,battle)
   }
 )
 
