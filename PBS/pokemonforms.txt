@@ -3419,7 +3419,7 @@ Kind = Sharp Claw
 Pokedex = They live in cold regions, forming groups of four or five that hunt prey with impressive coordination.
 WildItemUncommon = QUICKCLAW
 #-------------------------------
-[HIPPOPOTAS,1]
+[HIPPOPOTAS,2]
 Type1 = WATER
 BaseStats = 68,72,78,32,38,42
 GenderRate = Female50Percent
@@ -3447,6 +3447,36 @@ BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
 Evolutions = HIPPOWDON,Level,34
+#-------------------------------
+[GIBLE,2]
+Type1 = ICE
+Type2 = GROUND
+BaseStats = 58,70,45,42,40,45
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 60
+EffortPoints = 0,1,0,0,0,0
+Rareness = 45
+Happiness = 70
+Abilities = SNOWCLOAK
+HiddenAbility = HAILSTORM
+Moves = 1,TACKLE,3,SANDATTACK,7,ICICLESPEAR,13,HAIL,15,TAKEDOWN,19,SANDTOMB,25,SLASH,27,ICEFANG,31,DIG,37,AVALANCHE
+EggMoves = BODYSLAM,DOUBLEEDGE,ICYWIND,IRONHEAD,IRONTAIL,METALCLAW,MUDSHOT,OUTRAGE,ROCKCLIMB,SANDTOMB,MIST,THRASH,POWDERSNOW
+Compatibility = Monster,Dragon
+StepsToHatch = 10240
+Height = 0.7
+Weight = 20.5
+Color = Blue
+Shape = 6
+Kind = Land Shark
+Pokedex = It nests in small, horizontal holes in cave walls. It pounces to catch prey that stray too close.
+BattlerPlayerX = -2
+BattlerPlayerY = 0
+BattlerEnemyX = -1
+BattlerEnemyY = 18
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Evolutions = GABITE,Level,24
 #-------------------------------
 [SQUALTEMPER,21]
 FormName = Mega Squaltemper

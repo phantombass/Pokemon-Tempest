@@ -19,18 +19,18 @@ Land
 076 # Snowcap Alps
 25,10,10
 Land
-    SWINUB,2,4
+    SNORUNT,2,4
     SNOVER,2,4
-    SWINUB,2,4
+    SNORUNT,2,4
     SNOVER,2,4
     VANILLITE,2,4
     VANILLITE,2,4
     SNOM,2,4
     SNOM,2,4
     SMOOCHUM,2,4
-    SNORUNT,2,4
+    GIBLE,2,4
     SMOOCHUM,2,4
-    SNORUNT,2,4
+    GIBLE,2,4
 #-------------------------------
 084 # Valley Mine
 25,10,10
