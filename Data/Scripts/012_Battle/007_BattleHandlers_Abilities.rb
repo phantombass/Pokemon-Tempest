@@ -1186,6 +1186,14 @@ BattleHandlers::DamageCalcUserAbility.add(:TECHNICIAN,
   }
 )
 
+BattleHandlers::DamageCalcUserAbility.add(:SUBWOOFER,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if user.index!=target.index && move.id>0 && move.soundMove? && baseDmg*mults[BASE_DMG_MULT]/0x1000<=70
+      mults[BASE_DMG_MULT] = (mults[BASE_DMG_MULT]*1.5).round
+    end
+  }
+)
+
 BattleHandlers::DamageCalcUserAbility.add(:TIGHTFOCUS,
   proc { |ability,user,target,move,mults,baseDmg,type|
     mults[BASE_DMG_MULT] = (mults[BASE_DMG_MULT]*1.5).round if move.beamMove?

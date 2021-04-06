@@ -316,3 +316,4 @@
 314,FIGHTERSWRATH,Fighter's Wrath,"Summons Distorted Ashfall Weather on entry."
 315,MUGGYAIR,Muggy Air,"Summons Humid Weather on entry."
 316,ELECTROSTATIC,ElectroStatic,"Summons Heat Lightning on entry."
+317,SUBWOOFER,Subwoofer,"Weaker sound-based moves gain power."
