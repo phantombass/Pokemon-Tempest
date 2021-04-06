@@ -56,77 +56,16 @@ ALWAYS_ANIMATE  = true
 
 #Regardless of the above setting,the species in this array will always animate
 ALWAYS_ANIMATED_FOLLOWERS = [
-  # GEN I
-  12,15,17,18,22,41,42,49,63,74,81,92,93,109,110,120,121,137,142,144,145,
-  146,149,150,151,
-  # GEN II
-  164,165,166,169,176,187,188,189,193,200,201,207,226,227,233,
-  249,250,251,
-  # GEN III
-  267,269,277,278,279,284,291,292,307,313,314,330,333,334,
-  337,338,343,344,351,353,355,358,362,374,375,
-  380,381,384,385,
-  # GEN IV
-  397,398,414,415,416,425,426,429,433,436,437,442,455,458,
-  462,468,469,472,474,476,477,478,479,480,481,482,487,488,489,490,491,
-  # GEN V
-  517,518,520,521,527,528,561,562,563,567,577,578,
-  579,581,582,583,584,592,593,605,606,608,609,
-  615,628,630,635,637,641,642,643,644,
-  # GEN VI
-  662,663,666,682,691,703,707,708,714,715,717,719,720,
-  # GEN VII
-  738,742,743,764,774,781,785,786,787,788,789,790,792,
-  793,797,798,800,801,803,804,
-  #GEN VIII
-  822,823,826,841,845,854,855,873,885,886,887,890,894,895,898
+976,977
 ]
 
 #===============================================================================
 # These are used to define whether the follower should appear or disappear when
 # refreshing it. "next true" will let it stay and "next false" will make it disappear
 #===============================================================================
-Events.FollowerRefresh += proc{|pkmn|
-# The Pokemon disappears if the player is cycling
-  next false if $PokemonGlobal.bicycle
-# Pokeride Compatibility
-  next false if $PokemonGlobal.mount if defined?($PokemonGlobal.mount)
-}
-
-Events.FollowerRefresh += proc{|pkmn|
-# The Pokemon disappears if the name of the map is Cedolan Gym
-  next false if $game_map.name == "Cedolan Gym"
-}
-
-Events.FollowerRefresh += proc{|pkmn|
-  if $PokemonGlobal.surfing
-    next true if pkmn.hasType?(:WATER)
-    next true if pkmn.hasType?(:FLYING) || pkmn.hasAbility?(:LEVITATE)
-    next true if ALWAYS_ANIMATED_FOLLOWERS.include?(pkmn.species)
-    next false
-  end
-}
-
-Events.FollowerRefresh += proc{|pkmn|
-  if $PokemonGlobal.diving
-    next true if pkmn.hasType?(:WATER)
-    next false
-  end
-}
-
-Events.FollowerRefresh += proc{|pkmn|
-  if pbGetMetadata($game_map.map_id,MetadataOutdoor) != true
-# The Pokemon disappears if it's height is greater than 2.5 meters and there are no encounters ie a building or something
-    height =  pbGetSpeciesData(pkmn.species,pkmn.form)[SpeciesHeight]
-    next false if (height/10.0) > 2.5 && !$PokemonEncounters.isEncounterPossibleHere?
-  end
-}
-
 # Animate if has Levitate, is a flying type or always animates
 Events.FollowerRefresh += proc{|pkmn|
-  next true if pkmn.hasType?(:FLYING)
-  next true if pkmn.hasAbility?(:LEVITATE)
-  next true if ALWAYS_ANIMATED_FOLLOWERS.include?(pkmn.species)
+  next true if ALWAYS_ANIMATED_FOLLOWERS.include?(pkmn)
 }
 
 #-------------------------------------------------------------------------------

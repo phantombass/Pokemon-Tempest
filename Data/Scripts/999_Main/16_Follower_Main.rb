@@ -16,7 +16,7 @@
 # The Pokemon turns Right, waits 4 frames, and then jumps
 #-------------------------------------------------------------------------------
 def followingMoveRoute(commands,waitComplete=false)
-  return if !$Trainer.firstAblePokemon || !$PokemonGlobal.followerToggled
+  return if !$Trainer.hasAltemper? || !$PokemonGlobal.followerToggled
   $PokemonTemp.dependentEvents.setMoveRoute(commands,waitComplete)
 end
 
@@ -25,7 +25,7 @@ end
 #-------------------------------------------------------------------------------
 def pbToggleFollowingPokemon(forced = nil,anim = true)
   return if !pbGetDependency("FollowerPkmn")
-  return if !$Trainer.firstAblePokemon
+  return if !$Trainer.hasAltemper?
   if !nil_or_empty?(forced)
     $PokemonGlobal.followerToggled = false if forced.downcase == "on"
     $PokemonGlobal.followerToggled = true if forced.downcase ==  "off"
@@ -46,13 +46,35 @@ end
 # Script Command to start Pokemon Following. x is the Event ID that will be the follower
 #-------------------------------------------------------------------------------
 def pbPokemonFollow(x)
-  return false if !$Trainer.firstAblePokemon
+  return false if !$Trainer.hasAltemper?
   $PokemonTemp.dependentEvents.removeEventByName("FollowerPkmn") if pbGetDependency("FollowerPkmn")
   pbAddDependency2(x,"FollowerPkmn",Follower_Common_Event)
   $PokemonGlobal.followerToggled = true
   event = pbGetDependency("FollowerPkmn")
   $PokemonTemp.dependentEvents.pbFollowEventAcrossMaps($game_player,event,true,false)
   $PokemonTemp.dependentEvents.come_back(true)
+  if ALWAYS_ANIMATE
+    $PokemonTemp.dependentEvents.update_stepping
+  elsif $PokemonTemp.dependentEvents.refresh_sprite(false) == -1
+    $PokemonTemp.dependentEvents.stop_stepping
+  elsif !$PokemonTemp.dependentEvents.refresh_sprite(false)
+    $PokemonTemp.dependentEvents.stop_stepping
+  end
+end
+
+#-------------------------------------------------------------------------------
+# Script Command to start Altemper Following. x is the Event ID that will be the follower
+#-------------------------------------------------------------------------------
+
+def pbAltemperFollow(x)
+  return false if !$Trainer.hasAltemper?
+  $PokemonTemp.dependentEvents.removeEventByName("FollowerPkmn") if pbGetDependency("FollowerPkmn")
+  pbAddDependency2(x,"FollowerPkmn",Follower_Common_Event)
+  $PokemonGlobal.followerToggled = true
+  firstPkmn = $Trainer.indexAltemper(true)
+  $PokemonTemp.dependentEvents.change_sprite([firstPkmn.species, firstPkmn.female?,
+        firstPkmn.shiny?, firstPkmn.form,
+        firstPkmn.shadowPokemon?])
   if ALWAYS_ANIMATE
     $PokemonTemp.dependentEvents.update_stepping
   elsif $PokemonTemp.dependentEvents.refresh_sprite(false) == -1
@@ -73,7 +95,7 @@ def pbTalkToFollower
     pbSurf
     return false
   end
-  firstPkmn = $Trainer.firstAblePokemon
+  firstPkmn = $Trainer.indexAltemper(true)
   pbPlayCry(firstPkmn)
   event = pbGetDependency("FollowerPkmn")
   randomVal = rand(6)
@@ -102,7 +124,7 @@ end
 #-------------------------------------------------------------------------------
 def pbPokemonFound(item,quantity = 1,message = "")
   return false if !$PokemonGlobal.followerHoldItem
-  pokename = $Trainer.firstAblePokemon.name
+  pokename = $Trainer.indexAltemper(true).name
   message = "{1} seems to be holding something..." if nil_or_empty?(message)
   pbMessage(_INTL(message,pokename))
   item = getID(PBItems,item)
@@ -162,7 +184,7 @@ class DependentEvents
 #-------------------------------------------------------------------------------
   def add_following_time
     $PokemonGlobal.timeTaken += 1
-    $Trainer.firstAblePokemon.happiness += 1 if ($PokemonGlobal.timeTaken % 5000) == 0
+    $Trainer.indexAltemper(true).happiness += 1 if ($PokemonGlobal.timeTaken % 5000) == 0
     $PokemonGlobal.followerHoldItem = true if ($PokemonGlobal.timeTaken > 15000)
   end
 
@@ -170,7 +192,7 @@ class DependentEvents
   def refresh_sprite(anim = true,check = false)
     return false if !pbGetDependency("FollowerPkmn")
     return false if !$PokemonGlobal.followerToggled
-    firstPkmn = $Trainer.firstAblePokemon
+    firstPkmn = $Trainer.indexAltemper
     return false if !firstPkmn
     refresh = Events.FollowerRefresh.trigger(firstPkmn)
     refresh = true if refresh == -1 && check
@@ -296,7 +318,7 @@ class DependentEvents
 # Command to update follower/ make it reappear
   def come_back(anim=nil)
     return if !$PokemonGlobal.followerToggled
-    firstPkmn = $Trainer.firstAblePokemon
+    firstPkmn = $Trainer.indexAltemper(true)
     return if !firstPkmn
     remove_sprite(false)
     ret = refresh_sprite(anim)
@@ -1300,7 +1322,7 @@ class Scene_Map
       pbToggleFollowingPokemon
     end
     if $PokemonGlobal.followerToggled
-      firstPkmn = $Trainer.firstAblePokemon
+      firstPkmn = $Trainer.indexAltemper
       # Pokemon always move if switch is on, have flying type, or are in a settings array
       if ALWAYS_ANIMATE || Input.dir4!=0
         $PokemonTemp.dependentEvents.update_stepping
@@ -1374,6 +1396,25 @@ Events.onStepTaken += proc { |_sender,_e|
     $PokemonGlobal.callRefresh = [false,false]
   end
 }
+
+class PokeBattle_Trainer
+  def hasAltemper?
+    return true if indexAltemper > -1
+    return false
+  end
+
+  def indexAltemper(pkmn=false)
+    ret = -1
+    @party.each_with_index do |p,i|
+      ret = i if p && (p.isSpecies?(:ALTEMPER) || p.isSpecies?(:SQUALTEMPER)) && (p.able? || $game_switches[399])
+    end
+    if pkmn
+      return @party[ret] if ret >= 0
+      return nil
+    end
+    return ret
+  end
+end
 
 if defined?(PluginManager)
   PluginManager.register({
