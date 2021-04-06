@@ -3319,7 +3319,7 @@ Color = Green
 Shape = 2
 Kind = Lingering
 Pokedex = If this weak Pokémon is by itself, a mere child could defeat it. But if Dreepy has friends to help it train, it can evolve and become much stronger.
-Evolutions = DRAKLOAK,Level,50
+Evolutions = DRAKLOAK,Level,30
 #-------------------------------
 [DRAKLOAK,1]
 Type1 = SOUND
@@ -3342,7 +3342,7 @@ Color = Green
 Shape = 7
 Kind = Vocal
 Pokedex = Without a Dreepy to place on its head and care for, it gets so uneasy it'll try to substitute any Pokémon it finds for the missing Dreepy.
-Evolutions = DRAGAPULT,Level,60
+Evolutions = DRAGAPULT,Item,SOUNDSTONE
 #-------------------------------
 [DRAGAPULT,1]
 Type1 = SOUND

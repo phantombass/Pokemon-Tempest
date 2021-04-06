@@ -298,7 +298,7 @@ class PokeBattle_Battler
       if hasActiveAbility?(:FLOWERGIFT)
         newForm = 0
         case @battle.pbWeather
-        when PBWeather::Sun, PBWeather::HarshSun; newForm = 1
+        when PBWeather::Sun, PBWeather::HarshSun,PBWeather::Rainbow; newForm = 1
         end
         if @form!=newForm
           @battle.pbShowAbilitySplash(self,true)

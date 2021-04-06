@@ -329,11 +329,19 @@ class PokeBattle_AI
       end
     end
     # Pokémon can't do anything (must have been in battle for at least 5 rounds)
+		if skill>=PBTrainerAI.highSkill
     if !@battle.pbCanChooseAnyMove?(idxBattler) &&
        battler.turnCount && battler.turnCount>=0
 
       shouldSwitch = true
     end
+	else
+		if !@battle.pbCanChooseAnyMove?(idxBattler) &&
+       battler.turnCount && battler.turnCount>=5
+
+      shouldSwitch = true
+    end
+	end
     # Pokémon is Perish Songed and has Baton Pass
     if skill>=PBTrainerAI.highSkill && battler.effects[PBEffects::PerishSong]==1
       battler.eachMoveWithIndex do |m,i|
