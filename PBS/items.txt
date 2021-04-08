@@ -752,7 +752,7 @@
 765,TM103,TM103,TM103s,4,30000,"Poisoned spikes are set on the ground on the opposing side.",3,0,0,TOXICSPIKES
 766,TM104,TM104,TM104s,4,30000,"Sticky webs are set on the ground on the opposing side.",3,0,0,STICKYWEB
 767,TM105,TM105,TM105s,4,30000,"Comet shards are set on the opposing side.",3,0,0,COMETSHARDS
-768,TM106,TM106,TM106s,4,30000,"The user roosts to recover its health. The user becomes susceptible to Ground-type attacks this turn.",3,0,0,ROOST
+768,TM106,TM106,TM106s,4,30000,"The user fires special leaves at the opponent. This attack never misses.",3,0,0,MAGICALLEAF
 769,ABILITYPATCH,Ability Patch,Ability Patches,2,20000,"A patch that allows a Pokémon with Hidden Abilities to switch between these and their Normal Abilities when it is used.",1,0,0,
 770,QUIRKYMINT,Quirky Mint,Quirky Mints,1,10000,"When a Pokémon smells this mint, all of its stats will grow at an equal rate.",1,0,0,
 771,DOCILEMINT,Docile Mint,Docile Mints,1,10000,"When a Pokémon smells this mint, all of its stats will grow at an equal rate.",1,0,0,

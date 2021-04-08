@@ -1,15 +1,15 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [000]
-TrainerBattleBGM = HGSS-118-BattleTrainer.ogg
-SurfBGM = Surfing.mid
 PlayerB = POKEMONTRAINER_Leaf,trchar001,girl_bike,girl_surf,girl_run,girl_surf,girl_fish_offset,girl_fish_offset
 PlayerA = POKEMONTRAINER_Red,trchar000,boy_bike,boy_surf,boy_run,boy_surf,boy_fish_offset,boy_fish_offset
-WildBattleBGM = HGSS-110-BattleWild.ogg
 BicycleBGM = Bicycle.mid
-Home = 3,7,5,8
+WildBattleBGM = HGSS-110-BattleWild.ogg
+SurfBGM = Surfing.mid
 WildVictoryME = Battle victory wild.ogg
 TrainerVictoryME = Battle victory trainer.ogg
+TrainerBattleBGM = HGSS-118-BattleTrainer.ogg
+Home = 3,7,5,8
 #-------------------------------
 [001]
 # Intro
@@ -44,8 +44,8 @@ MapPosition = 0,13,11
 #-------------------------------
 [007]
 # Cedolan City
-MapPosition = 0,13,10
 MapSize = 2,11
+MapPosition = 0,13,10
 Outdoor = true
 ShowArea = true
 #-------------------------------
@@ -61,8 +61,8 @@ HealingSpot = 8,17,11
 [010]
 # Cedolan Gym
 MapPosition = 0,13,10
-Environment = Rock
 BattleBack = indoor3
+Environment = Rock
 #-------------------------------
 [011]
 # Pokémon Institute
@@ -106,19 +106,19 @@ MapPosition = 0,13,10
 #-------------------------------
 [021]
 # Route 2
-MapPosition = 0,14,8
 MapSize = 1,11
-Weather = Rain,100
+MapPosition = 0,14,8
 Outdoor = true
 BattleBack = field
+Weather = Rain,100
 ShowArea = true
 #-------------------------------
 [022]
 # Shira Town
 MapPosition = 0,7,11
-Weather = Rain,0
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
 ShowArea = true
 #-------------------------------
 [023]
@@ -153,8 +153,8 @@ ShowArea = true
 #-------------------------------
 [029]
 # Natural Park Entrance
-MapPosition = 0,16,8
 Bicycle = true
+MapPosition = 0,16,8
 #-------------------------------
 [030]
 # Natural Park Pavillion
@@ -162,8 +162,8 @@ MapPosition = 0,16,8
 #-------------------------------
 [031]
 # Route 3
-MapPosition = 0,14,6
 MapSize = 2,1101
+MapPosition = 0,14,6
 Outdoor = true
 BattleBack = field
 ShowArea = true
@@ -176,17 +176,17 @@ SnapEdges = true
 [033]
 # Weather Lab
 MapPosition = 0,7,11
-Weather = Rain,0
 Outdoor = false
 SnapEdges = true
+Weather = Rain,0
 ShowArea = false
 #-------------------------------
 [034]
 # Ice Cave
-MapPosition = 0,15,6
-Environment = Cave
 Bicycle = true
+MapPosition = 0,15,6
 BattleBack = cave1
+Environment = Cave
 #-------------------------------
 [035]
 # Ingido Plateau
@@ -210,8 +210,8 @@ MapPosition = 0,13,6
 #-------------------------------
 [039]
 # Route 4
-MapPosition = 0,11,6
 MapSize = 2,11
+MapPosition = 0,11,6
 Outdoor = true
 BattleBack = field
 ShowArea = true
@@ -219,22 +219,22 @@ ShowArea = true
 [040]
 # Route 4
 MapPosition = 0,11,6
+BicycleAlways = true
 Outdoor = true
 ShowArea = true
-BicycleAlways = true
 #-------------------------------
 [041]
 # Route 5
-MapPosition = 0,11,7
 MapSize = 1,111
+MapPosition = 0,11,7
+BicycleAlways = true
 Outdoor = true
 ShowArea = true
-BicycleAlways = true
 #-------------------------------
 [044]
 # Route 6
-MapPosition = 0,11,10
 MapSize = 2,11
+MapPosition = 0,11,10
 Outdoor = true
 BattleBack = field
 ShowArea = true
@@ -242,55 +242,55 @@ ShowArea = true
 [045]
 # Route 6
 MapPosition = 0,11,10
+BicycleAlways = true
 Outdoor = true
 ShowArea = true
-BicycleAlways = true
 #-------------------------------
 [046]
 # Cycling Road gate
-MapPosition = 0,12,6
 Bicycle = true
+MapPosition = 0,12,6
 #-------------------------------
 [047]
 # Route 7
-MapPosition = 0,15,10
 MapSize = 2,11
-Weather = Rain,0
+MapPosition = 0,15,10
 Outdoor = true
-Environment = Rock
 BattleBack = rocky
+Weather = Rain,0
 ShowArea = true
+Environment = Rock
 #-------------------------------
 [048]
 # Zephyr Hills
 MapPosition = 0,7,13
-Weather = Rain,0
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
 ShowArea = true
 #-------------------------------
 [049]
 # Rock Cave
-MapPosition = 0,16,10
-Environment = Cave
 Bicycle = true
+MapPosition = 0,16,10
 BattleBack = cave1
+Environment = Cave
 #-------------------------------
 [050]
 # Rock Cave
-MapPosition = 0,16,10
-Environment = Cave
 Bicycle = true
-BattleBack = cave3
+MapPosition = 0,16,10
 DarkMap = true
+BattleBack = cave3
+Environment = Cave
 #-------------------------------
 [051]
 # Dungeon
-MapPosition = 0,16,10
-Environment = Cave
 Bicycle = true
-BattleBack = cave2
 Dungeon = true
+MapPosition = 0,16,10
+BattleBack = cave2
+Environment = Cave
 #-------------------------------
 [052]
 # Battle Frontier
@@ -369,26 +369,26 @@ MapPosition = 0,12,12
 #-------------------------------
 [068]
 # Safari Zone
-MapPosition = 0,12,12
 SafariMap = true
+MapPosition = 0,12,12
 Outdoor = true
-Environment = Forest
 BattleBack = forest
 ShowArea = true
+Environment = Forest
 #-------------------------------
 [069]
 # Route 8
 MapPosition = 0,13,13
 Outdoor = true
 BattleBack = field
-DiveMap = 70
 ShowArea = true
+DiveMap = 70
 #-------------------------------
 [070]
 # Underwater
 MapPosition = 0,13,13
-Environment = Underwater
 BattleBack = underwater
+Environment = Underwater
 #-------------------------------
 [071]
 # Harbour
@@ -397,9 +397,9 @@ MapPosition = 0,13,13
 [072]
 # Berth Island
 MapPosition = 0,18,17
-Weather = Storm,50
 Outdoor = true
 BattleBack = field
+Weather = Storm,50
 ShowArea = true
 #-------------------------------
 [073]
@@ -411,8 +411,8 @@ ShowArea = true
 #-------------------------------
 [074]
 # Cycling Road gate
-MapPosition = 0,12,10
 Bicycle = true
+MapPosition = 0,12,10
 #-------------------------------
 [075]
 # Tiall Region
@@ -424,17 +424,17 @@ ShowArea = true
 [076]
 # Snowcap Alps
 MapPosition = 0,10,4
-Weather = Rain,0
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
 ShowArea = true
 #-------------------------------
 [077]
 # Snowcap Heights
 MapPosition = 0,13,4
-Weather = Rain,0
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
 ShowArea = true
 #-------------------------------
 [078]
@@ -451,15 +451,15 @@ SnapEdges = true
 [080]
 # Wind-Torn Valley
 MapPosition = 0,3,13
-Weather = Rain,0
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
 ShowArea = true
 #-------------------------------
 [081]
 # Wind-Torn PMC
-MapPosition = 0,3,13
 SafariMap = false
+MapPosition = 0,3,13
 Outdoor = false
 SnapEdges = true
 #-------------------------------
@@ -475,8 +475,8 @@ MapPosition = 0,3,13
 [084]
 # Valley Mine
 MapPosition = 0,3,13
-Environment = Cave
 ShowArea = true
+Environment = Cave
 #-------------------------------
 [085]
 # Coastal Tunnel
@@ -486,11 +486,11 @@ ShowArea = true
 #-------------------------------
 [086]
 # Ashen Beach
-MapPosition = 0,14,14
 SafariMap = false
-Weather = Rain,0
+MapPosition = 0,14,14
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
 ShowArea = true
 #-------------------------------
 [087]
@@ -501,9 +501,10 @@ SnapEdges = true
 [088]
 # Coastal Steppes
 MapPosition = 0,17,12
-Weather = Rain,0
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
+ShowArea = true
 #-------------------------------
 [089]
 # Coastal Steppes PMC
@@ -531,14 +532,26 @@ SnapEdges = true
 [094]
 # Rainbow Cliffs
 MapPosition = 0,17,11
-Weather = Rain,0
 Outdoor = true
-Environment = Rock
 SnapEdges = true
+Weather = Rain,0
+Environment = Rock
 #-------------------------------
 [095]
 # Rainbow Cliffs - Summit
 MapPosition = 0,17,11
-Weather = Rain,0
 Outdoor = true
 SnapEdges = true
+Weather = Rain,0
+#-------------------------------
+[096]
+# Coastal Steppes Chapel
+MapPosition = 0,17,12
+SnapEdges = true
+#-------------------------------
+[097]
+# Trail of Affliction
+MapPosition = 0,17,9
+Outdoor = true
+SnapEdges = true
+ShowArea = true

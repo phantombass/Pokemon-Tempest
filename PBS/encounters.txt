@@ -64,3 +64,19 @@ Land
     MEDITITE,12,14
     RIOLU,12,14
 #-------------------------------
+094 # Rainbow Cliffs
+25,10,10
+Land
+    CHERUBI,13,15
+    SHROOMISH,13,15
+    CHERUBI,13,15
+    SHROOMISH,13,15
+    BELLSPROUT,14,16
+    BELLSPROUT,14,16
+    HOPPIP,12,15
+    HOPPIP,12,15
+    TROPIUS,14,17
+    HOPPIP,12,15
+    TROPIUS,14,17
+    HOPPIP,12,15
+#-------------------------------

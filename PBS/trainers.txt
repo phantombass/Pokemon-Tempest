@@ -33,7 +33,7 @@ LoseText = "Hey now!"
 Pokemon = PIKIPEK,7
 Pokemon = FLETCHLING,7
 #-------------------------------
-# Zephyr Hills
+# Valley Mine
 #-------------------------------
 [WORKER,Roger]
 LoseText = "Back to work!"
@@ -68,4 +68,31 @@ LoseText = "Ah lost it!"
 Pokemon = MAGIKARP,12
 Pokemon = ARROKUDA,13
 Pokemon = MAGIKARP,14
+#-------------------------------
+# Rainbow Cliffs
+#-------------------------------
+[YOUNGSTER,Vincent]
+LoseText = "Oh wow!"
+Pokemon = SHROOMISH,17
+Pokemon = STARAVIA,18
+#-------------------------------
+[PICNICKER,Vicki]
+LoseText = "Hmmph."
+Pokemon = CHINGLING,16
+Pokemon = CHERUBI,17
+#-------------------------------
+[PICNICKER,Chelsea]
+LoseText = "My cuties!"
+Pokemon = HOPPIP,15
+Pokemon = MARILL,16
+Pokemon = CLEFAIRY,17
+#-------------------------------
+[YOUNGSTER,Spencer]
+LoseText = "Oh..."
+Pokemon = TIMBURR,18
+Pokemon = PIKIPEK,18
+#-------------------------------
+[YOUNGSTER,Eric]
+LoseText = "You're really good!"
+Pokemon = TROPIUS,19
 #-------------------------------

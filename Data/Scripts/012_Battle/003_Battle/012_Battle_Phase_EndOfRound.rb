@@ -170,6 +170,13 @@ class PokeBattle_Battle
         b.pbReduceHP(b.totalhp/8,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
+      when PBWeather::Starstorm
+        next if !b.takesStarstormDamage?
+        pbDisplay(_INTL("{1} is hurt by the Starstorm!",b.pbThis))
+        @scene.pbDamageAnimation(b)
+        b.pbReduceHP(b.totalhp/8,false)
+        b.pbItemHPHealCheck
+        b.pbFaint if b.fainted?
       when PBWeather::ShadowSky
         next if !b.takesShadowSkyDamage?
         pbDisplay(_INTL("{1} is hurt by the shadow sky!",b.pbThis))

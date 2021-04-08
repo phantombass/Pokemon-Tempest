@@ -1406,7 +1406,7 @@ class PokeBattle_Trainer
   def indexAltemper(pkmn=false)
     ret = -1
     @party.each_with_index do |p,i|
-      ret = i if p && (p.isSpecies?(:ALTEMPER) || p.isSpecies?(:SQUALTEMPER)) && (p.able? || $game_switches[399])
+      ret = i if p && (p.isSpecies?(:ALTEMPER) || p.isSpecies?(:SQUALTEMPER)) && p.able?
     end
     if pkmn
       return @party[ret] if ret >= 0

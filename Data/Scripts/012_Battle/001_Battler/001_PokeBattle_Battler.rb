@@ -570,6 +570,15 @@ class PokeBattle_Battler
     return true
   end
 
+  def takesStarstormDamage?
+    return false if !takesIndirectDamage?
+    return false if pbHasType?(:COSMIC) || hasActiveAbility?(:BAROMETRIC)
+    return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
+    return false if hasActiveAbility?(:STARSPRINT)
+    return false if hasActiveItem?(:SAFETYGOGGLES)
+    return true
+  end
+
   def takesShadowSkyDamage?
     return false if fainted?
     return false if shadowPokemon?

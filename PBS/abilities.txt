@@ -317,3 +317,4 @@
 315,MUGGYAIR,Muggy Air,"Summons Humid Weather on entry."
 316,ELECTROSTATIC,ElectroStatic,"Summons Heat Lightning on entry."
 317,SUBWOOFER,Subwoofer,"Weaker sound-based moves gain power."
+318,ASHRUSH,Ash Rush,"Doubles Speed in Ash-based weather."
