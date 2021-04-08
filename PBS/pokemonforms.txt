@@ -877,6 +877,8 @@ BattlerEnemyY = 13
 #-------------------------------
 [SABLEYE,1]
 FormName = Mega Sableye
+Type1 = DARK
+Type2 = COSMIC
 MegaStone = SABLENITE
 BaseStats = 50,85,125,20,85,115
 Abilities = MAGICBOUNCE
@@ -1109,6 +1111,8 @@ BattlerEnemyY = 21
 #-------------------------------
 [ABSOL,1]
 FormName = Mega Absol
+Type1 = DARK
+Type2 = TIME
 MegaStone = ABSOLITE
 BaseStats = 65,150,60,115,115,60
 Abilities = MAGICBOUNCE
@@ -3356,7 +3360,7 @@ Rareness = 45
 Happiness = 50
 Abilities = SUBWOOFER,PINDROP
 HiddenAbility = AMPLIFIER
-Moves = 0,HEXCANNON,1,HEXCANNON,1,DRAGONDANCE,1,HYPERVOICE,1,INFESTATION,1,QUICKATTACK,1,BITE,6,LOCKON,12,ASSURANCE,18,HEX,24,AGILITY,30,DOUBLEHIT,36,UTURN,42,CALMMIND,48,SHADOWBALL,54,WILLOWISP,65,SPECTRALSHRIEK,73,POLARITYPULSE,81,BOOMBURST
+Moves = 0,HEXCANNON,1,HEXCANNON,1,DRAGONDANCE,1,HYPERVOICE,1,INFESTATION,1,QUICKATTACK,1,BITE,6,LOCKON,12,ASSURANCE,18,HEX,24,AGILITY,30,DOUBLEHIT,36,UTURN,42,CALMMIND,48,SHADOWBALL,54,WILLOWISP,65,SPECTRALSHRIEK,73,POLARITYPULSE,81,BOOMBURST,90,SONICSTRIKE,99,ASTRALBARRAGE
 Compatibility = Amorphous,Dragon
 StepsToHatch = 10536
 Height = 1.4
@@ -3448,6 +3452,34 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Evolutions = HIPPOWDON,Level,34
 #-------------------------------
+[HIPPOWDON,2]
+Type1 = WATER
+BaseStats = 108,112,118,47,68,72
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 184
+EffortPoints = 0,0,2,0,0,0
+Rareness = 60
+Happiness = 70
+Abilities = DRIZZLE
+HiddenAbility = VOLTABSORB
+Moves = 0,SLACKOFF,1,ICEFANG,1,FIREFANG,1,THUNDERFANG,1,TACKLE,1,SANDATTACK,1,BITE,1,YAWN,7,BITE,13,YAWN,19,TAKEDOWN,19,DIVE,25,WHIRLPOOL,31,CRUNCH,40,LIQUIDATION,50,DOUBLEEDGE,60,FLIPTURN
+Compatibility = Field
+StepsToHatch = 7680
+Height = 2.0
+Weight = 300.0
+Color = Brown
+Shape = 8
+Kind = Heavyweight
+Pokedex = It blasts internally stored sand from ports on its body to create a towering twister for attack.
+BattlerPlayerX = 2
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 17
+BattlerShadowX = 0
+BattlerShadowSize = 3
+Evolutions =
+#-------------------------------
 [GIBLE,2]
 Type1 = ICE
 Type2 = GROUND
@@ -3478,6 +3510,74 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = GABITE,Level,24
 #-------------------------------
+[GABITE,2]
+Type1 = ICE
+Type2 = GROUND
+BaseStats = 68,90,65,82,50,55
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 144
+EffortPoints = 0,2,0,0,0,0
+Rareness = 45
+Happiness = 70
+Abilities = SNOWCLOAK
+HiddenAbility = HAILSTORM
+Moves = 0,TRIPLEAXEL,1,TRIPLEAXEL,1,TACKLE,1,SANDATTACK,1,ICICLESPEAR,3,SANDATTACK,7,ICICLESPEAR,13,HAIL,15,TAKEDOWN,19,SANDTOMB,28,SLASH,33,ICEFANG,40,DIG,49,AVALANCHE
+Compatibility = Monster,Dragon
+StepsToHatch = 10240
+Height = 1.4
+Weight = 56.0
+Color = Blue
+Shape = 6
+Kind = Cave
+Pokedex = There is a long-held belief that medicine made from its scales will heal even incurable illnesses.
+BattlerPlayerX = -6
+BattlerPlayerY = 0
+BattlerEnemyX = -2
+BattlerEnemyY = 12
+BattlerShadowX = 0
+BattlerShadowSize = 3
+Evolutions = GARCHOMP,Level,48
+#-------------------------------
+[GARCHOMP,2]
+Type1 = ICE
+Type2 = GROUND
+BaseStats = 108,130,95,102,80,85
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 270
+EffortPoints = 0,3,0,0,0,0
+Rareness = 45
+Happiness = 70
+Abilities = SNOWCLOAK
+HiddenAbility = HAILSTORM
+Moves = 0,EARTHQUAKE,1,EARTHQUAKE,1,TRIPLEAXEL,1,FIREFANG,1,TACKLE,1,SANDATTACK,1,ICICLESPEAR,1,HAIL,3,SANDATTACK,7,ICICLESPEAR,13,HAIL,15,TAKEDOWN,19,SANDTOMB,28,SLASH,33,ICEFANG,40,DIG,55,AVALANCHE,62,STEALTHROCK,71,ICICLECRASH,79,FISSURE
+Compatibility = Monster,Dragon
+StepsToHatch = 10240
+Height = 1.9
+Weight = 95.0
+Color = Blue
+Shape = 6
+Kind = Mach
+Pokedex = When it folds up its body and extends its wings, it looks like a jet plane. It flies at sonic speed.
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = -3
+BattlerEnemyY = 6
+BattlerShadowX = 0
+BattlerShadowSize = 3
+Evolutions =
+#-------------------------------
+[GARCHOMP,3]
+FormName = Ufaran Mega Garchomp
+MegaStone = UFARANGARCHOMPITE
+BaseStats = 108,170,115,92,120,95
+Abilities = REFRIGERATE
+HiddenAbility = REFRIGERATE
+Pokedex = Its vaunted wings become scythes, sending it mad with rage. It swings its scythes wildly and slices the ground to pieces.
+BattlerPlayerY = 16
+BattlerEnemyY = 13
+#-------------------------------
 [BELLSPROUT,1]
 Type1 = GRASS
 Type2 = STEEL
@@ -3490,7 +3590,7 @@ Rareness = 255
 Happiness = 70
 Abilities = ASHRUSH
 HiddenAbility = BALLISTIC
-Moves = 1,VINEWHIP,7,GROWTH,11,SPIKECANNON,13,SLEEPPOWDER,15,POISONPOWDER,17,STUNSPORE,23,SPIKES,27,KNOCKOFF,29,SWEETSCENT,35,AUTOTOMIZE,39,RAZORLEAF,41,SEEDBOMB,47,SLAM,50,IRONFANGS
+Moves = 1,VINEWHIP,7,GROWTH,11,SPIKECANNON,13,SLEEPPOWDER,15,POISONPOWDER,17,STUNSPORE,23,SPIKES,27,KNOCKOFF,29,RAZORLEAF,35,AUTOTOMIZE,39,SWEETSCENT,41,SEEDBOMB,47,SLAM,50,IRONFANGS
 EggMoves = SLUDGEBOMB,BELCH,BULLETSEED,CLEARSMOG,ENCORE,GIGADRAIN,INGRAIN,LEECHLIFE,MAGICALLEAF,NATURALGIFT,POWERWHIP,STRENGTHSAP,SYNTHESIS,TICKLE,WEATHERBALL,WORRYSEED,BULLETPUNCH
 Compatibility = Grass
 StepsToHatch = 5120
@@ -3509,6 +3609,68 @@ BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = WEEPINBELL,Level,21
+#-------------------------------
+[WEEPINBELL,1]
+Type1 = GRASS
+Type2 = STEEL
+BaseStats = 65,90,50,55,85,45
+GenderRate = Female50Percent
+GrowthRate = Parabolic
+BaseEXP = 137
+EffortPoints = 0,2,0,0,0,0
+Rareness = 120
+Happiness = 70
+Abilities = ASHRUSH
+HiddenAbility = BALLISTIC
+Moves = 1,VINEWHIP,1,GROWTH,1,WRAP,7,GROWTH,11,SPIKECANNON,13,SLEEPPOWDER,15,POISONPOWDER,17,STUNSPORE,24,SPIKES,29,KNOCKOFF,32,RAZORLEAF,39,AUTOTOMIZE,44,SWEETSCENT,47,SEEDBOMB,54,SLAM,58,IRONFANGS
+Compatibility = Grass
+StepsToHatch = 5120
+Height = 1.0
+Weight = 6.4
+Color = Green
+Shape = 5
+Habitat = Forest
+RegionalNumbers = 129,65
+Kind = Flycatcher
+Pokedex = At night, a Weepinbell hangs on to a tree branch with its hooked rear and sleeps. If it moves around in its sleep, it may wake up to find itself on the ground.
+BattlerPlayerX = 4
+BattlerPlayerY = 0
+BattlerEnemyX = 5
+BattlerEnemyY = 19
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Evolutions = VICTREEBEL,Item,LEAFSTONE
+#-------------------------------
+[VICTREEBEL,1]
+Type1 = GRASS
+Type2 = POISON
+BaseStats = 80,105,65,70,100,70
+GenderRate = Female50Percent
+GrowthRate = Parabolic
+BaseEXP = 221
+EffortPoints = 0,3,0,0,0,0
+Rareness = 45
+Happiness = 70
+Abilities = ASHRUSH
+HiddenAbility = BALLISTIC
+Moves = 0,BULLETPUNCH,1,BULLETPUNCH,1,STOCKPILE,1,SWALLOW,1,SPITUP,1,VINEWHIP,1,SLEEPPOWDER,1,SWEETSCENT,1,RAZORLEAF,32,LEAFBLADE,44,TUNGSTENTOMB
+Compatibility = Grass
+StepsToHatch = 5120
+Height = 1.7
+Weight = 15.5
+Color = Green
+Shape = 5
+Habitat = Forest
+RegionalNumbers = 130,66
+Kind = Flycatcher
+Pokedex = The long vine extending from its head is waved about as if it were a living thing to attract prey. When an unsuspecting victim approaches, it is swallowed whole.
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 2
+BattlerEnemyY = 12
+BattlerShadowX = 0
+BattlerShadowSize = 3
+Evolutions =
 #-------------------------------
 [SQUALTEMPER,21]
 FormName = Mega Squaltemper

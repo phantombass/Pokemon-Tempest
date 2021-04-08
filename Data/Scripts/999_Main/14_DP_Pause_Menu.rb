@@ -63,7 +63,7 @@ class DP_PauseMenu
     pbSetViableDexes
     @options = []
     @options << ["POKéDEX", "pokedexA", "pokedexB", proc {
-      if DEXDEPENDSONLOCATION
+      if USE_CURRENT_REGION_DEX
         pbFadeOutIn(99999) do
           scene = PokemonPokedex_Scene.new
           screen = PokemonPokedexScreen.new(scene)
