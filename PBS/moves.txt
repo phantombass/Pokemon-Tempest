@@ -826,3 +826,4 @@
 965,TEMPESTRAGE,Tempest Rage,087,100,NORMAL,Special,100,25,0,00,0,befn,"An attack move that varies in power and type depending on the weather."
 966,SEPTICSHOT,Septic Shot,000,40,POISON,Physical,100,30,0,00,1,abef,"The user shoots a dart laced with poison. This move usually goes first."
 967,CHILLINGCRY,Chilling Cry,000,85,ICE,Special,100,10,0,AllNearFoes,0,befk,"The user looses a cold shriek with the power to inflict damage."
+968,SNEAKATTACK,Sneak Attack,000,40,DARK,Physical,100,30,0,00,1,abef,"The user sneaks up behind the target before they notice. This move usually goes first."

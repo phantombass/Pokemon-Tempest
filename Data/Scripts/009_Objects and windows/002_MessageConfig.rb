@@ -2,7 +2,7 @@ module MessageConfig
   FontName        = "Power Clear"
   # in Graphics/Windowskins/ (specify empty string to use the default windowskin)
   TextSkinName    = "frlgtextskin"
-  ChoiceSkinName  = "choice dp"
+  ChoiceSkinName  = "frlgtextskin"
   WindowOpacity   = 255
   TextSpeed       = -2   # can be positive to wait frames or negative to
                           # show multiple characters in a single frame

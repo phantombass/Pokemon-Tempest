@@ -18,6 +18,7 @@ BattleHandlers::SpeedCalcAbility.add(:SANDRUSH,
   proc { |ability,battler,mult|
     w = battler.battle.pbWeather
     next mult*2 if w==PBWeather::Sandstorm
+    next mult*2 if w==PBWeather::DustDevil
   }
 )
 
@@ -40,6 +41,13 @@ BattleHandlers::SpeedCalcAbility.add(:ASHRUSH,
     w = battler.battle.pbWeather
     next mult*2 if w==PBWeather::VolcanicAsh
     next mult*2 if w==PBWeather::DAshfall
+  }
+)
+
+BattleHandlers::SpeedCalcAbility.add(:TOXICRUSH,
+  proc { |ability,battler,mult|
+    w = battler.battle.pbWeather
+    next mult*2 if w==PBWeather::AcidRain
   }
 )
 
@@ -150,6 +158,12 @@ BattleHandlers::StatusImmunityAbility.add(:FLOWERVEIL,
   }
 )
 
+BattleHandlers::StatusImmunityAbility.add(:FAIRYBUBBLE,
+  proc { |ability,battler,status|
+    next true if status != 0
+  }
+)
+
 BattleHandlers::StatusImmunityAbility.add(:IMMUNITY,
   proc { |ability,battler,status|
     next true if status==PBStatuses::POISON
@@ -189,7 +203,7 @@ BattleHandlers::StatusImmunityAbility.add(:WATERVEIL,
   }
 )
 
-BattleHandlers::StatusImmunityAbility.copy(:WATERVEIL,:WATERBUBBLE)
+BattleHandlers::StatusImmunityAbility.copy(:WATERVEIL,:WATERBUBBLE,:FEVERPITCH)
 
 #===============================================================================
 # StatusImmunityAbilityNonIgnorable handlers
@@ -374,7 +388,7 @@ BattleHandlers::StatusCureAbility.add(:WATERVEIL,
   }
 )
 
-BattleHandlers::StatusCureAbility.copy(:WATERVEIL,:WATERBUBBLE)
+BattleHandlers::StatusCureAbility.copy(:WATERVEIL,:WATERBUBBLE,:FEVERPITCH)
 
 #===============================================================================
 # StatLossImmunityAbility handlers
@@ -1249,6 +1263,12 @@ BattleHandlers::DamageCalcUserAbility.add(:WATERBUBBLE,
   }
 )
 
+BattleHandlers::DamageCalcUserAbility.add(:FAIRYBUBBLE,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    mults[ATK_MULT] *= 2 if isConst?(type,PBTypes,:FAIRY)
+  }
+)
+
 #===============================================================================
 # DamageCalcUserAllyAbility handlers
 #===============================================================================
@@ -1360,6 +1380,14 @@ BattleHandlers::DamageCalcTargetAbility.add(:THICKFAT,
 BattleHandlers::DamageCalcTargetAbility.add(:WATERBUBBLE,
   proc { |ability,user,target,move,mults,baseDmg,type|
     if isConst?(type,PBTypes,:FIRE)
+      mults[FINAL_DMG_MULT] = (mults[FINAL_DMG_MULT]*0.5).round
+    end
+  }
+)
+
+BattleHandlers::DamageCalcTargetAbility.add(:FEVERPITCH,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if isConst?(type,PBTypes,:PSYCHIC)
       mults[FINAL_DMG_MULT] = (mults[FINAL_DMG_MULT]*0.5).round
     end
   }
@@ -2004,6 +2032,23 @@ BattleHandlers::EORWeatherAbility.add(:RAINDISH,
     battle.pbHideAbilitySplash(battler)
   }
 )
+
+BattleHandlers::EORWeatherAbility.add(:ACIDDRAIN,
+  proc { |ability,weather,battler,battle|
+    next unless weather==PBWeather::AcidRain
+    next if !battler.canHeal?
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP(battler.totalhp/16)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.",battler.pbThis,battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::EORWeatherAbility.copy(:ACIDDRAIN,:POISONHEAL)
 
 BattleHandlers::EORWeatherAbility.add(:SOLARPOWER,
   proc { |ability,weather,battler,battle|
@@ -2774,6 +2819,15 @@ BattleHandlers::AbilityOnSwitchIn.add(:ELECTRICSURGE,
     next if battle.field.terrain==PBBattleTerrains::Electric
     battle.pbShowAbilitySplash(battler)
     battle.pbStartTerrain(battler,PBBattleTerrains::Electric)
+    # NOTE: The ability splash is hidden again in def pbStartTerrain.
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:TOXICSURGE,
+  proc { |ability,battler,battle|
+    next if battle.field.terrain==PBBattleTerrains::Poison
+    battle.pbShowAbilitySplash(battler)
+    battle.pbStartTerrain(battler,PBBattleTerrains::Poison)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }
 )

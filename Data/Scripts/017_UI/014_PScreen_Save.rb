@@ -66,21 +66,21 @@ class PokemonSave_Scene
     hour = totalsec / 60 / 60
     min = totalsec / 60 % 60
     mapname=$game_map.name
-    textColor = ["0070F8,78B8E8","E82010,F8A8B8","0070F8,78B8E8"][$Trainer.gender]
-    locationColor = "209808,90F090"   # green
+    textColor = ["7FE00000","463F0000","7FE00000"][$Trainer.gender]
+    locationColor = "90F090,000000"   # green
     loctext=_INTL("<ac><c3={1}>{2}</c3></ac>",locationColor,mapname)
-    loctext+=_INTL("Player<r><c3={1}>{2}</c3><br>",textColor,$Trainer.name)
+    loctext+=_INTL("Player<r><c2={1}>{2}</c2><br>",textColor,$Trainer.name)
     if hour>0
-      loctext+=_INTL("Time<r><c3={1}>{2}h {3}m</c3><br>",textColor,hour,min)
+      loctext+=_INTL("Time<r><c2={1}>{2}h {3}m</c2><br>",textColor,hour,min)
     else
-      loctext+=_INTL("Time<r><c3={1}>{2}m</c3><br>",textColor,min)
+      loctext+=_INTL("Time<r><c2={1}>{2}m</c2><br>",textColor,min)
     end
-    loctext+=_INTL("Chapter<r><c3={1}>{2}</c3><br>",textColor,$Trainer.numbadges)
+    loctext+=_INTL("Chapter<r><c2={1}>{2}</c2><br>",textColor,$Trainer.numbadges)
     if $Trainer.pokedex
-      loctext+=_INTL("Pokédex<r><c3={1}>{2}/{3}</c3><br>",textColor,$Trainer.pokedexOwned,$Trainer.pokedexSeen)
+      loctext+=_INTL("Pokédex<r><c2={1}>{2}/{3}</c2><br>",textColor,$Trainer.pokedexOwned,$Trainer.pokedexSeen)
     end
     if $game_switches[Readouts::Readout]
-      loctext+=_INTL("Readouts<r><c3={1}>{2}</c3>",textColor,$game_variables[Readouts::Count])
+      loctext+=_INTL("Readouts<r><c2={1}>{2}</c2>",textColor,$game_variables[Readouts::Count])
     end
     @sprites["locwindow"]=Window_AdvancedTextPokemon.new(loctext)
     @sprites["locwindow"].viewport=@viewport

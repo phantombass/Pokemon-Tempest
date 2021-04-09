@@ -80,3 +80,19 @@ Land
     TROPIUS,14,17
     HOPPIP,12,15
 #-------------------------------
+097 # Trail of Affliction
+25,10,10
+Land
+    NIDORANfE,19,21
+    NIDORANmA,19,21
+    POLIWAG,20,22
+    SEVIPER,21,23
+    POLIWAG,20,22
+    DUNSPARCE,21,23
+    YANMA,19,22
+    YANMA,19,22
+    PINSIR,21,23
+    HERACROSS,22,23
+    PINSIR,21,23
+    SCYTHER,22,23
+#-------------------------------

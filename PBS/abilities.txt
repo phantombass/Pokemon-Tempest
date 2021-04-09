@@ -318,3 +318,8 @@
 316,ELECTROSTATIC,ElectroStatic,"Summons Heat Lightning on entry."
 317,SUBWOOFER,Subwoofer,"Weaker sound-based moves gain power."
 318,ASHRUSH,Ash Rush,"Doubles Speed in Ash-based weather."
+319,TOXICRUSH,Toxic Rush,"Doubles Speed in Acid Rain weather."
+320,FEVERPITCH,Fever Pitch,"Poison moves on the field are stronger, while Psychic is weaker."
+321,FAIRYBUBBLE,Fairy Bubble,"Fairy moves are stronger, and this Pokémon is immune to status."
+322,ACIDDRAIN,Acid Drain,"Heals some HP in Acid Rain weather."
+323,TOXICSURGE,Toxic Surge,"Summons Poison Terrain on entry."

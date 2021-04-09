@@ -55,9 +55,9 @@ end
 
 class DP_PauseMenu
   # Base color of the displayed text
-  BaseColor = Color.new(82,82,90)
+  BaseColor = Color.new(248,248,248)
   # Shadow color of the displayed text
-  ShadowColor = Color.new(165,165,173)
+  ShadowColor = Color.new(0,0,0)
 
   def initialize
     pbSetViableDexes

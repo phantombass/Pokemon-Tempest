@@ -153,7 +153,7 @@ class PokeBattle_Move
       user.effects[PBEffects::MicleBerry] = false
       modifiers[ACC_MULT] *= 1.2
     end
-    if @battle.field.weather==PBWeather::Fog
+    if @battle.field.weather==PBWeather::Fog && !user.pbHasType?(:FAIRY)
       modifiers[ACC_MULT] *= 0.75
     end
     modifiers[EVA_STAGE] = 0 if target.effects[PBEffects::Foresight] && modifiers[EVA_STAGE]>0
@@ -269,7 +269,8 @@ class PokeBattle_Move
     # Global abilities
     if (@battle.pbCheckGlobalAbility(:DARKAURA) && isConst?(type,PBTypes,:DARK)) ||
        (@battle.pbCheckGlobalAbility(:FAIRYAURA) && isConst?(type,PBTypes,:FAIRY)) ||
-       (@battle.pbCheckGlobalAbility(:GAIAFORCE) && isConst?(type,PBTypes,:GROUND))
+       (@battle.pbCheckGlobalAbility(:GAIAFORCE) && isConst?(type,PBTypes,:GROUND))||
+       (@battle.pbCheckGlobalAbility(:FEVERPITCH) && isConst?(type,PBTypes,:POISON))
       if @battle.pbCheckGlobalAbility(:AURABREAK)
         multipliers[BASE_DMG_MULT] *= 2/3.0
       else
@@ -359,6 +360,10 @@ class PokeBattle_Move
         end
       when PBBattleTerrains::Grassy
         if isConst?(type,PBTypes,:GRASS)
+          multipliers[BASE_DMG_MULT] *= 1.5
+        end
+      when PBBattleTerrains::Poison
+        if isConst?(type,PBTypes,:POISON)
           multipliers[BASE_DMG_MULT] *= 1.5
         end
       when PBBattleTerrains::Psychic

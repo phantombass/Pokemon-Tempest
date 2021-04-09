@@ -27,6 +27,7 @@ Pokemon = WINGULL,7
 LoseText = "Whoa..."
 Pokemon = ROOKIDEE,7
 Pokemon = PIDOVE,7
+  Form = 1
 #-------------------------------
 [LASS,Tara]
 LoseText = "Hey now!"
