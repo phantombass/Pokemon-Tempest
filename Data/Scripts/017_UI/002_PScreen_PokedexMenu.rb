@@ -46,7 +46,7 @@ class PokemonPokedexMenu_Scene
     @sprites["background"] = IconSprite.new(0,0,@viewport)
     @sprites["background"].setBitmap(_INTL("Graphics/Pictures/Pokedex/bg_menu"))
     @sprites["headings"]=Window_AdvancedTextPokemon.newWithSize(
-       _INTL("<c3=F8F8F8,C02028>SEEN<r>OBTAINED</c3>"),286,136,208,64,@viewport)
+       _INTL("SEEN<r>OBTAINED"),286,136,208,64,@viewport)
     @sprites["headings"].windowskin  = nil
     @sprites["commands"] = Window_DexesList.new(commands,commands2,Graphics.width-84)
     @sprites["commands"].x      = 40

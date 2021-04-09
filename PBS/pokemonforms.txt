@@ -3302,6 +3302,7 @@ Abilities = DESERTSTORM
 HiddenAbility = DESERTSTORM
 #-------------------------------
 [DREEPY,1]
+FormName = Ufaran Form
 Type1 = SOUND
 Type2 = GHOST
 BaseStats = 28,40,30,82,60,30
@@ -3326,6 +3327,7 @@ Pokedex = If this weak Pokémon is by itself, a mere child could defeat it. But 
 Evolutions = DRAKLOAK,Level,30
 #-------------------------------
 [DRAKLOAK,1]
+FormName = Ufaran Form
 Type1 = SOUND
 Type2 = GHOST
 BaseStats = 68,60,50,102,80,50
@@ -3349,6 +3351,7 @@ Pokedex = Without a Dreepy to place on its head and care for, it gets so uneasy 
 Evolutions = DRAGAPULT,Item,SOUNDSTONE
 #-------------------------------
 [DRAGAPULT,1]
+FormName = Ufaran Form
 Type1 = SOUND
 Type2 = GHOST
 BaseStats = 88,100,75,142,120,75
@@ -3372,6 +3375,7 @@ Pokedex = Apparently the Dreepy inside Dragapult's horns eagerly look forward to
 Evolutions =
 #-------------------------------
 [SNEASEL,1]
+FormName = Ufaran Form
 Type1 = POISON
 Type2 = STEEL
 BaseStats = 55,95,55,115,35,75
@@ -3399,6 +3403,7 @@ WildItemUncommon = QUICKCLAW
 Evolutions = WEAVILE_1,Item,ALLOYSTONE
 #-------------------------------
 [WEAVILE,1]
+FormName = Ufaran Form
 Type1 = POISON
 Type2 = STEEL
 BaseStats = 70,120,85,125,45,65
@@ -3424,6 +3429,7 @@ Pokedex = They live in cold regions, forming groups of four or five that hunt pr
 WildItemUncommon = QUICKCLAW
 #-------------------------------
 [HIPPOPOTAS,2]
+FormName = Ufaran Form
 Type1 = WATER
 BaseStats = 68,72,78,32,38,42
 GenderRate = Female50Percent
@@ -3453,6 +3459,7 @@ BattlerShadowSize = 3
 Evolutions = HIPPOWDON,Level,34
 #-------------------------------
 [HIPPOWDON,2]
+FormName = Ufaran Form
 Type1 = WATER
 BaseStats = 108,112,118,47,68,72
 GenderRate = Female50Percent
@@ -3481,6 +3488,7 @@ BattlerShadowSize = 3
 Evolutions =
 #-------------------------------
 [GIBLE,2]
+FormName = Ufaran Form
 Type1 = ICE
 Type2 = GROUND
 BaseStats = 58,70,45,42,40,45
@@ -3511,6 +3519,7 @@ BattlerShadowSize = 2
 Evolutions = GABITE,Level,24
 #-------------------------------
 [GABITE,2]
+FormName = Ufaran Form
 Type1 = ICE
 Type2 = GROUND
 BaseStats = 68,90,65,82,50,55
@@ -3540,6 +3549,7 @@ BattlerShadowSize = 3
 Evolutions = GARCHOMP,Level,48
 #-------------------------------
 [GARCHOMP,2]
+FormName = Ufaran Form
 Type1 = ICE
 Type2 = GROUND
 BaseStats = 108,130,95,102,80,85
@@ -3569,7 +3579,7 @@ BattlerShadowSize = 3
 Evolutions =
 #-------------------------------
 [GARCHOMP,3]
-FormName = Ufaran Mega Garchomp
+FormName = Ufaran Mega Form
 MegaStone = UFARANGARCHOMPITE
 BaseStats = 108,170,115,92,120,95
 Abilities = REFRIGERATE
@@ -3579,6 +3589,7 @@ BattlerPlayerY = 16
 BattlerEnemyY = 13
 #-------------------------------
 [BELLSPROUT,1]
+FormName = Ufaran Form
 Type1 = GRASS
 Type2 = STEEL
 BaseStats = 50,75,35,40,70,30
@@ -3611,6 +3622,7 @@ BattlerShadowSize = 1
 Evolutions = WEEPINBELL,Level,21
 #-------------------------------
 [WEEPINBELL,1]
+FormName = Ufaran Form
 Type1 = GRASS
 Type2 = STEEL
 BaseStats = 65,90,50,55,85,45
@@ -3642,6 +3654,7 @@ BattlerShadowSize = 2
 Evolutions = VICTREEBEL,Item,LEAFSTONE
 #-------------------------------
 [VICTREEBEL,1]
+FormName = Ufaran Form
 Type1 = GRASS
 Type2 = POISON
 BaseStats = 80,105,65,70,100,70

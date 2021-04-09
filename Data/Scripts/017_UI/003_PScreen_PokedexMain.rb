@@ -5,10 +5,9 @@ class Window_Pokedex < Window_DrawableCommand
     @selarrow     = AnimatedBitmap.new("Graphics/Pictures/Pokedex/cursor_list")
     @pokeballOwn  = AnimatedBitmap.new("Graphics/Pictures/Pokedex/icon_own")
     @pokeballSeen = AnimatedBitmap.new("Graphics/Pictures/Pokedex/icon_seen")
-    self.baseColor   = Color.new(96,96,96)
-    self.shadowColor = Color.new(208,208,208)
+    self.baseColor   = Color.new(88,88,80)
+    self.shadowColor = Color.new(168,184,184)
     self.windowskin  = nil
-    self.rowHeight = 36
   end
 
   def commands=(value)
@@ -46,7 +45,7 @@ class Window_Pokedex < Window_DrawableCommand
     else
       text = sprintf("%03d  ----------",indexNumber)
     end
-    pbDrawShadowText(self.contents,rect.x+36,rect.y+6 + ((mkxp?)? 6 : 0),rect.width,rect.height,
+    pbDrawShadowText(self.contents,rect.x+36,rect.y+6,rect.width,rect.height,
        text,self.baseColor,self.shadowColor)
   end
 
@@ -56,11 +55,11 @@ class Window_Pokedex < Window_DrawableCommand
     dheight = self.height-self.borderY
     self.contents = pbDoEnsureBitmap(self.contents,dwidth,dheight)
     self.contents.clear
-    drawCursor(self.index,itemRect(self.index))
     for i in 0...@item_max
       next if i<self.top_item || i>self.top_item+self.page_item_max
       drawItem(i,@item_max,itemRect(i))
     end
+    drawCursor(self.index,itemRect(self.index))
   end
 
   def update
@@ -247,7 +246,7 @@ class PokemonPokedex_Scene
 =end
     addBackgroundPlane(@sprites,"searchbg","Pokedex/bg_search",@viewport)
     @sprites["searchbg"].visible = false
-    @sprites["pokedex"] = Window_Pokedex.new(220,30,306,364,@viewport)
+    @sprites["pokedex"] = Window_Pokedex.new(206,30,276,364,@viewport)
     @sprites["icon"] = PokemonSprite.new(@viewport)
     @sprites["icon"].setOffset(PictureOrigin::Center)
     @sprites["icon"].x = 112
@@ -383,8 +382,8 @@ class PokemonPokedex_Scene
   def pbRefresh
     overlay = @sprites["overlay"].bitmap
     overlay.clear
-    base   = Color.new(72,72,72)
-    shadow = Color.new(208,208,208)
+    base   = Color.new(88,88,80)
+    shadow = Color.new(168,184,184)
     iconspecies = @sprites["pokedex"].species
     iconspecies = 0 if !$Trainer.seen[iconspecies]
     # Write various bits of text
@@ -396,15 +395,17 @@ class PokemonPokedex_Scene
       end
     end
     textpos = [
-       [dexname,Graphics.width/2,2,2,Color.new(208,208,208),Color.new(32,32,32)]
+       [dexname,Graphics.width/2,2,2,Color.new(248,248,248),Color.new(0,0,0)]
     ]
     textpos.push([PBSpecies.getName(iconspecies),112,52,2,base,shadow]) if iconspecies>0
     if @searchResults
       textpos.push([_INTL("Search results"),112,308,2,base,shadow])
       textpos.push([@dexlist.length.to_s,112,340,2,base,shadow])
     else
-      textpos.push([$Trainer.pokedexSeen(pbGetPokedexRegion).to_s,162,308,1,Color.new(248,248,248),Color.new(40,56,64)])
-      textpos.push([$Trainer.pokedexOwned(pbGetPokedexRegion).to_s,162,355,1,Color.new(248,248,248),Color.new(40,56,64)])
+      textpos.push([_INTL("Seen:"),42,308,0,base,shadow])
+      textpos.push([$Trainer.pokedexSeen(pbGetPokedexRegion).to_s,182,308,1,base,shadow])
+      textpos.push([_INTL("Owned:"),42,340,0,base,shadow])
+      textpos.push([$Trainer.pokedexOwned(pbGetPokedexRegion).to_s,182,340,1,base,shadow])
     end
     # Draw all text
     pbDrawTextPositions(overlay,textpos)
@@ -423,11 +424,11 @@ class PokemonPokedex_Scene
     end
     # Draw slider box
     if showslider
-      sliderheight = 318
+      sliderheight = 268
       boxheight = (sliderheight*itemlist.page_row_max/itemlist.row_max).floor
       boxheight += [(sliderheight-boxheight)/2,sliderheight/6].min
       boxheight = [boxheight.floor,40].max
-      y = 50
+      y = 78
       y += ((sliderheight-boxheight)*itemlist.top_row/(itemlist.row_max-itemlist.page_row_max)).floor
       overlay.blt(468,y,@sliderbitmap.bitmap,Rect.new(40,0,40,8))
       i = 0
@@ -1057,9 +1058,9 @@ class PokemonPokedex_Scene
         elsif index==7 || index==8; index += 1
         end
         pbPlayCursorSE if index!=oldindex
-      #elsif Input.trigger?(Input::A)
-      #  index = 8
-      #  pbPlayCursorSE if index!=oldindex
+      elsif Input.trigger?(Input::A)
+        index = 8
+        pbPlayCursorSE if index!=oldindex
       elsif Input.trigger?(Input::B)
         pbPlayCloseMenuSE
         break
