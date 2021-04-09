@@ -14,7 +14,7 @@ class PokemonSystem
   attr_writer   :textinput
 
   def initialize
-    @textspeed   = 1     # Text speed (0=slow, 1=normal, 2=fast)
+    @textspeed   = 2     # Text speed (0=slow, 1=normal, 2=fast)
     @battlescene = 0     # Battle effects (animations) (0=on, 1=off)
     @battlestyle = 0     # Battle style (0=switch, 1=set)
     @frame       = 0     # Default window frame (see also $TextFrames)
@@ -36,10 +36,10 @@ class PokemonSystem
   def textskin;  return @textskin || 0;    end
   def border;    return @border || 0;      end
   def language;  return @language || 0;    end
-  def runstyle;  return @runstyle || 0;    end
+  def runstyle;  return @runstyle || 1;    end
   def bgmvolume; return @bgmvolume || 100; end
   def sevolume;  return @sevolume || 100;  end
-  def textinput; return @textinput || 0;   end
+  def textinput; return @textinput || 1;   end
   def tilemap;   return MAP_VIEW_MODE;     end
 end
 
@@ -501,17 +501,6 @@ class PokemonOption_Scene
            MessageConfig.pbSetSystemFrame($TextFrames[value])
          }
        ),
-       EnumOption.new(_INTL("Font Style"),[_INTL("FRLG"),_INTL("R/S"),_INTL("Em"),_INTL("DP")],
-         proc { $PokemonSystem.font },
-         proc { |value|
-           $PokemonSystem.font = value
-           MessageConfig.pbSetSystemFontName($VersionStyles[value])
-         }
-       ),
-       EnumOption.new(_INTL("Text Entry"),[_INTL("Cursor"),_INTL("Keyboard")],
-         proc { $PokemonSystem.textinput },
-         proc { |value| $PokemonSystem.textinput = value }
-       )
     ]
     if mkxp?
       @PokemonOptions.push(EnumOption.new(_INTL("Screen Size"),[_INTL("S"),_INTL("M"),_INTL("L"),_INTL("XL"),_INTL("Full")],

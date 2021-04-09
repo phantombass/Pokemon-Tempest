@@ -1,10 +1,10 @@
 module MessageConfig
-  FontName        = "Pokemon DP"
+  FontName        = "Power Clear"
   # in Graphics/Windowskins/ (specify empty string to use the default windowskin)
   TextSkinName    = "frlgtextskin"
   ChoiceSkinName  = "choice dp"
   WindowOpacity   = 255
-  TextSpeed       = 2   # can be positive to wait frames or negative to
+  TextSpeed       = -2   # can be positive to wait frames or negative to
                           # show multiple characters in a single frame
   LIGHTTEXTBASE   = Color.new(248,248,248)
   LIGHTTEXTSHADOW = Color.new(72,80,88)
