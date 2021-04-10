@@ -64,9 +64,9 @@ def canItemCraft?(item)
   when "Chainsaw"
     return true if $PokemonBag.pbHasItem?(:CHAINSAW1) && $PokemonBag.pbHasItem?(:CHAINSAW2) && $PokemonBag.pbHasItem?(:CHAINSAW3)
   when "Hammer"
-    return true if $PokemonBag.pbHasItem?(:LEEK) && $PokemonBag.pbHasItem?(:METALCOAT) && $PokemonBag.pbHasItem?(:THICKCLUB)
+    return true if $PokemonBag.pbHasItem?(:HAMMER1) && $PokemonBag.pbHasItem?(:HAMMER2) && $PokemonBag.pbHasItem?(:HAMMER3)
   when "Hovercraft"
-    return true if $PokemonBag.pbHasItem?(:SPLASHPLATE) && $PokemonBag.pbHasItem?(:MYSTICWATER) && $PokemonBag.pbHasItem?(:FRESHWATER)
+    return true if $PokemonBag.pbHasItem?(:HOVER1) && $PokemonBag.pbHasItem?(:HOVER2) && $PokemonBag.pbHasItem?(:HOVER3)
   when "Aqua Rocket"
     return true if $PokemonBag.pbHasItem?(:DESTINYKNOT) && $PokemonBag.pbHasItem?(:EJECTBUTTON) && $PokemonBag.pbHasItem?(:MYSTICWATER)
   when "Scuba Tank"
@@ -110,15 +110,15 @@ def pbItemcraft(item)
     Kernel.pbReceiveItem(:CHAINSAW)
     $game_variables[Items::Chainsaw] = 1
   when "Hammer"
-    $PokemonBag.pbDeleteItem(:LEEK,1)
-    $PokemonBag.pbDeleteItem(:METALCOAT,1)
-    $PokemonBag.pbDeleteItem(:THICKCLUB,1)
+    $PokemonBag.pbDeleteItem(:HAMMER1,1)
+    $PokemonBag.pbDeleteItem(:HAMMER2,1)
+    $PokemonBag.pbDeleteItem(:HAMMER3,1)
     Kernel.pbReceiveItem(:HAMMER)
     $game_variables[Items::Hammer] = 1
   when "Hovercraft"
-    $PokemonBag.pbDeleteItem(:FRESHWATER,1)
-    $PokemonBag.pbDeleteItem(:SPLASHPLATE,1)
-    $PokemonBag.pbDeleteItem(:MYSTICWATER,1)
+    $PokemonBag.pbDeleteItem(:HOVER1,1)
+    $PokemonBag.pbDeleteItem(:HOVER2,1)
+    $PokemonBag.pbDeleteItem(:HOVER3,1)
     Kernel.pbReceiveItem(:HOVERCRAFT)
     $game_variables[Items::Hovercraft] = 1
   when "Aqua Rocket"

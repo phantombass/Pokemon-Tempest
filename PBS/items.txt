@@ -787,3 +787,6 @@
 800,HOVER1,Hovercraft Part 1,Hovercraft Part 1s,8,0,"An part used to craft a Hovercraft",0,0,6,
 801,HOVER2,Hovercraft Part 2,Hovercraft Part 2s,8,0,"An part used to craft a Hovercraft",0,0,6,
 802,HOVER3,Hovercraft Part 3,Hovercraft Part 3s,8,0,"An part used to craft a Hovercraft",0,0,6,
+803,HAMMER1,Hammer Part 1,Hammer Part 1s,8,0,"An part used to craft a Hammer",0,0,6,
+804,HAMMER2,Hammer Part 2,Hammer Part 2s,8,0,"An part used to craft a Hammer",0,0,6,
+805,HAMMER3,Hammer Part 3,Hammer Part 3s,8,0,"An part used to craft a Hammer",0,0,6,
