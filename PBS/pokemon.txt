@@ -95,7 +95,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [4]
 Name = Charmander
@@ -190,7 +190,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [7]
 Name = Squirtle
@@ -284,7 +284,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [10]
 Name = Caterpie
@@ -378,7 +378,7 @@ BattlerEnemyX = 8
 BattlerEnemyY = -2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [13]
 Name = Weedle
@@ -474,7 +474,7 @@ BattlerEnemyX = -8
 BattlerEnemyY = 1
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [16]
 Name = Pidgey
@@ -574,7 +574,7 @@ BattlerEnemyX = 7
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [19]
 Name = Rattata
@@ -639,7 +639,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [21]
 Name = Spearow
@@ -706,7 +706,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = -6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [23]
 Name = Ekans
@@ -769,7 +769,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [25]
 Name = Pikachu
@@ -832,7 +832,7 @@ BattlerEnemyX = 11
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [27]
 Name = Sandshrew
@@ -897,7 +897,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [29]
 Name = Nidoran♀
@@ -995,7 +995,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [32]
 Name = Nidoran♂
@@ -1093,12 +1093,13 @@ BattlerEnemyX = 4
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [35]
 Name = Clefairy
 InternalName = CLEFAIRY
 Type1 = FAIRY
+Type2 = COSMIC
 BaseStats = 70,45,48,35,60,65
 GenderRate = Female75Percent
 GrowthRate = Fast
@@ -1108,7 +1109,7 @@ Rareness = 150
 Happiness = 140
 Abilities = CUTECHARM,MAGICGUARD
 HiddenAbility = FRIENDGUARD
-Moves = 1,SPOTLIGHT,1,DISARMINGVOICE,1,POUND,1,GROWL,1,ENCORE,7,SING,10,DOUBLESLAP,13,DEFENSECURL,16,FOLLOWME,19,BESTOW,22,WAKEUPSLAP,25,MINIMIZE,28,STOREDPOWER,31,METRONOME,34,COSMICPOWER,37,LUCKYCHANT,40,BODYSLAM,43,MOONLIGHT,46,MOONBLAST,49,GRAVITY,50,METEORMASH,55,HEALINGWISH,58,AFTERYOU
+Moves = 1,SPOTLIGHT,1,DISARMINGVOICE,1,POUND,1,GROWL,1,ENCORE,7,SING,10,DOUBLESLAP,13,DEFENSECURL,16,FOLLOWME,19,BESTOW,22,WAKEUPSLAP,25,MINIMIZE,28,STOREDPOWER,31,METRONOME,34,COSMICPOWER,37,LUCKYCHANT,40,BODYSLAM,43,MOONLIGHT,46,MOONBLAST,49,GRAVITY,50,METEORMASH,55,HEALINGWISH,58,AFTERYOU,65,STARBEAM
 Compatibility = Fairy
 StepsToHatch = 2560
 Height = 0.6
@@ -1132,6 +1133,7 @@ Evolutions = CLEFABLE,Item,MOONSTONE
 Name = Clefable
 InternalName = CLEFABLE
 Type1 = FAIRY
+Type2 = COSMIC
 BaseStats = 95,70,73,60,95,90
 GenderRate = Female75Percent
 GrowthRate = Fast
@@ -1141,7 +1143,7 @@ Rareness = 25
 Happiness = 140
 Abilities = CUTECHARM,MAGICGUARD
 HiddenAbility = UNAWARE
-Moves = 1,SPOTLIGHT,1,DISARMINGVOICE,1,SING,1,DOUBLESLAP,1,MINIMIZE,1,METRONOME
+Moves = 1,SPOTLIGHT,1,DISARMINGVOICE,1,SING,1,DOUBLESLAP,1,MINIMIZE,1,METRONOME,1,STARSAP,1,STARBEAM
 Compatibility = Fairy
 StepsToHatch = 2560
 Height = 1.3
@@ -1159,7 +1161,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [37]
 Name = Vulpix
@@ -1224,7 +1226,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [39]
 Name = Jigglypuff
@@ -1290,7 +1292,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [41]
 Name = Zubat
@@ -1457,7 +1459,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [46]
 Name = Paras
@@ -1526,7 +1528,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [48]
 Name = Venonat
@@ -1592,7 +1594,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [50]
 Name = Diglett
@@ -1657,7 +1659,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [52]
 Name = Meowth
@@ -1722,7 +1724,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [54]
 Name = Psyduck
@@ -1785,7 +1787,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [56]
 Name = Mankey
@@ -1848,7 +1850,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [58]
 Name = Growlithe
@@ -1911,7 +1913,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [60]
 Name = Poliwag
@@ -2011,7 +2013,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [63]
 Name = Abra
@@ -2108,7 +2110,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [66]
 Name = Machop
@@ -2208,7 +2210,7 @@ BattlerEnemyX = -9
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [69]
 Name = Bellsprout
@@ -2308,7 +2310,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [72]
 Name = Tentacool
@@ -2375,7 +2377,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 1
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [74]
 Name = Geodude
@@ -2475,7 +2477,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [77]
 Name = Ponyta
@@ -2538,7 +2540,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [79]
 Name = Slowpoke
@@ -2605,7 +2607,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [81]
 Name = Magnemite
@@ -2705,7 +2707,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [84]
 Name = Doduo
@@ -2772,7 +2774,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [86]
 Name = Seel
@@ -2836,7 +2838,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [88]
 Name = Grimer
@@ -2901,7 +2903,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [90]
 Name = Shellder
@@ -2969,7 +2971,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [92]
 Name = Gastly
@@ -3066,7 +3068,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [95]
 Name = Onix
@@ -3164,7 +3166,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [98]
 Name = Krabby
@@ -3227,7 +3229,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [100]
 Name = Voltorb
@@ -3291,7 +3293,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [102]
 Name = Exeggcute
@@ -3357,7 +3359,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [104]
 Name = Cubone
@@ -3422,7 +3424,7 @@ BattlerEnemyX = -8
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [106]
 Name = Hitmonlee
@@ -3453,7 +3455,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [107]
 Name = Hitmonchan
@@ -3484,7 +3486,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [108]
 Name = Lickitung
@@ -3580,7 +3582,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = -2
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [111]
 Name = Rhyhorn
@@ -3742,7 +3744,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [116]
 Name = Horsea
@@ -3872,7 +3874,7 @@ BattlerEnemyX = 8
 BattlerEnemyY = -1
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [120]
 Name = Staryu
@@ -3939,7 +3941,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [122]
 Name = Mr. Mime
@@ -3972,7 +3974,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [123]
 Name = Scyther
@@ -4039,7 +4041,7 @@ BattlerEnemyX = -5
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [125]
 Name = Electabuzz
@@ -4138,7 +4140,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [128]
 Name = Tauros
@@ -4169,7 +4171,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [129]
 Name = Magikarp
@@ -4234,7 +4236,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = -3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [131]
 Name = Lapras
@@ -4270,7 +4272,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [132]
 Name = Ditto
@@ -4303,7 +4305,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 29
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [133]
 Name = Eevee
@@ -4366,7 +4368,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [135]
 Name = Jolteon
@@ -4397,7 +4399,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [136]
 Name = Flareon
@@ -4428,7 +4430,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [137]
 Name = Porygon
@@ -4526,7 +4528,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [140]
 Name = Kabuto
@@ -4593,7 +4595,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [142]
 Name = Aerodactyl
@@ -4627,7 +4629,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = -2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [143]
 Name = Snorlax
@@ -4662,7 +4664,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [144]
 Name = Articuno
@@ -4694,7 +4696,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [145]
 Name = Zapdos
@@ -4726,7 +4728,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [146]
 Name = Moltres
@@ -4758,7 +4760,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 5
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [147]
 Name = Dratini
@@ -4856,7 +4858,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [150]
 Name = Mewtwo
@@ -4887,7 +4889,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [151]
 Name = Mew
@@ -4920,7 +4922,7 @@ BattlerEnemyX = -9
 BattlerEnemyY = -3
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [152]
 Name = Chikorita
@@ -5014,7 +5016,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [155]
 Name = Cyndaquil
@@ -5108,7 +5110,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [158]
 Name = Totodile
@@ -5202,7 +5204,7 @@ BattlerEnemyX = -6
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [161]
 Name = Sentret
@@ -5265,7 +5267,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [163]
 Name = Hoothoot
@@ -5332,7 +5334,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [165]
 Name = Ledyba
@@ -5397,7 +5399,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [167]
 Name = Spinarak
@@ -5462,7 +5464,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [169]
 Name = Crobat
@@ -5495,7 +5497,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = -2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [170]
 Name = Chinchou
@@ -5564,7 +5566,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [172]
 Name = Pichu
@@ -5794,7 +5796,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [179]
 Name = Mareep
@@ -5888,7 +5890,7 @@ BattlerEnemyX = -5
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [182]
 Name = Bellossom
@@ -5920,7 +5922,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [183]
 Name = Marill
@@ -5987,7 +5989,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [185]
 Name = Sudowoodo
@@ -6019,7 +6021,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [186]
 Name = Politoed
@@ -6053,7 +6055,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [187]
 Name = Hoppip
@@ -6153,7 +6155,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [190]
 Name = Aipom
@@ -6248,7 +6250,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [193]
 Name = Yanma
@@ -6348,7 +6350,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [196]
 Name = Espeon
@@ -6379,7 +6381,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [197]
 Name = Umbreon
@@ -6410,7 +6412,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [198]
 Name = Murkrow
@@ -6476,7 +6478,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [200]
 Name = Misdreavus
@@ -6569,7 +6571,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [203]
 Name = Girafarig
@@ -6602,7 +6604,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [204]
 Name = Pineco
@@ -6666,12 +6668,13 @@ BattlerEnemyX = 0
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [206]
 Name = Dunsparce
 InternalName = DUNSPARCE
-Type1 = NORMAL
+Type1 = FAIRY
+Type2 = DRAGON
 BaseStats = 100,70,70,45,65,65
 GenderRate = Female50Percent
 GrowthRate = Medium
@@ -6679,9 +6682,9 @@ BaseEXP = 145
 EffortPoints = 1,0,0,0,0,0
 Rareness = 190
 Happiness = 70
-Abilities = SERENEGRACE,RUNAWAY
-HiddenAbility = RATTLED
-Moves = 1,RAGE,1,DEFENSECURL,3,ROLLOUT,6,SPITE,8,PURSUIT,11,SCREECH,13,MUDSLAP,16,YAWN,18,ANCIENTPOWER,21,BODYSLAM,23,DRILLRUN,26,ROOST,28,TAKEDOWN,31,COIL,33,DIG,36,GLARE,38,DOUBLEEDGE,41,ENDEAVOR,43,AIRSLASH,46,DRAGONRUSH,48,ENDURE,51,FLAIL
+Abilities = SERENEGRACE,PIXILATE
+HiddenAbility = FAIRYAURA
+Moves = 1,RAGE,1,DEFENSECURL,3,FAIRYWIND,6,SPITE,8,TWISTER,11,SCREECH,13,MUDSLAP,16,YAWN,18,SWIFT,21,BODYSLAM,23,DRAGONRAGE,26,ROOST,28,DRAININGKISS,31,COIL,33,PLAYROUGH,36,GLARE,38,DOUBLEEDGE,41,MOONBLAST,43,AIRSLASH,46,DRAGONRUSH,48,ENDURE,51,FLAIL
 EggMoves = AGILITY,ANCIENTPOWER,ASTONISH,BIDE,BITE,CURSE,HEADBUTT,HEX,MAGICCOAT,SECRETPOWER,SLEEPTALK,SNORE,TRUMPCARD
 Compatibility = Field
 StepsToHatch = 5120
@@ -6699,7 +6702,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [207]
 Name = Gligar
@@ -6765,7 +6768,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [209]
 Name = Snubbull
@@ -6828,7 +6831,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [211]
 Name = Qwilfish
@@ -6862,7 +6865,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [212]
 Name = Scizor
@@ -6895,7 +6898,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [213]
 Name = Shuckle
@@ -6931,7 +6934,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [214]
 Name = Heracross
@@ -6965,7 +6968,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [215]
 Name = Sneasel
@@ -7063,7 +7066,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [218]
 Name = Slugma
@@ -7127,7 +7130,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [220]
 Name = Swinub
@@ -7226,7 +7229,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [223]
 Name = Remoraid
@@ -7289,7 +7292,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [225]
 Name = Delibird
@@ -7322,7 +7325,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [226]
 Name = Mantine
@@ -7355,7 +7358,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [227]
 Name = Skarmory
@@ -7389,7 +7392,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [228]
 Name = Houndour
@@ -7454,7 +7457,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [230]
 Name = Kingdra
@@ -7487,7 +7490,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -7
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [231]
 Name = Phanpy
@@ -7550,7 +7553,7 @@ BattlerEnemyX = -10
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [233]
 Name = Porygon2
@@ -7613,7 +7616,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [235]
 Name = Smeargle
@@ -7644,7 +7647,7 @@ BattlerEnemyX = -6
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [236]
 Name = Tyrogue
@@ -7707,7 +7710,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [238]
 Name = Smoochum
@@ -7844,7 +7847,7 @@ BattlerEnemyX = 8
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [242]
 Name = Blissey
@@ -7878,7 +7881,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [243]
 Name = Raikou
@@ -7909,7 +7912,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [244]
 Name = Entei
@@ -7940,7 +7943,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [245]
 Name = Suicune
@@ -7971,7 +7974,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [246]
 Name = Larvitar
@@ -8067,7 +8070,7 @@ BattlerEnemyX = 7
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [249]
 Name = Lugia
@@ -8099,7 +8102,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = -3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [250]
 Name = Ho-Oh
@@ -8134,7 +8137,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -7
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [251]
 Name = Celebi
@@ -8168,7 +8171,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [252]
 Name = Treecko
@@ -8265,7 +8268,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [255]
 Name = Torchic
@@ -8364,7 +8367,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [258]
 Name = Mudkip
@@ -8463,7 +8466,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [261]
 Name = Poochyena
@@ -8526,7 +8529,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [263]
 Name = Zigzagoon
@@ -8593,7 +8596,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [265]
 Name = Wurmple
@@ -8689,7 +8692,7 @@ BattlerEnemyX = 9
 BattlerEnemyY = 1
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [268]
 Name = Cascoon
@@ -8752,7 +8755,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = -6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [270]
 Name = Lotad
@@ -8852,7 +8855,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [273]
 Name = Seedot
@@ -8951,7 +8954,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [276]
 Name = Taillow
@@ -9016,7 +9019,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [278]
 Name = Wingull
@@ -9085,7 +9088,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [280]
 Name = Ralts
@@ -9182,7 +9185,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [283]
 Name = Surskit
@@ -9249,7 +9252,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = -8
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [285]
 Name = Shroomish
@@ -9319,7 +9322,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [287]
 Name = Slakoth
@@ -9410,7 +9413,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [290]
 Name = Nincada
@@ -9476,7 +9479,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [292]
 Name = Shedinja
@@ -9507,7 +9510,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 1
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [293]
 Name = Whismur
@@ -9604,7 +9607,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [296]
 Name = Makuhita
@@ -9669,7 +9672,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [298]
 Name = Azurill
@@ -9800,7 +9803,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [302]
 Name = Sableye
@@ -9835,7 +9838,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [303]
 Name = Mawile
@@ -9869,7 +9872,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [304]
 Name = Aron
@@ -9969,7 +9972,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [307]
 Name = Meditite
@@ -10036,7 +10039,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [309]
 Name = Electrike
@@ -10099,7 +10102,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [311]
 Name = Plusle
@@ -10132,7 +10135,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [312]
 Name = Minun
@@ -10165,7 +10168,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [313]
 Name = Volbeat
@@ -10198,7 +10201,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [314]
 Name = Illumise
@@ -10231,7 +10234,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [315]
 Name = Roselia
@@ -10332,7 +10335,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [318]
 Name = Carvanha
@@ -10399,7 +10402,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [320]
 Name = Wailmer
@@ -10462,7 +10465,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [322]
 Name = Numel
@@ -10527,7 +10530,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [324]
 Name = Torkoal
@@ -10560,7 +10563,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [325]
 Name = Spoink
@@ -10623,7 +10626,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [327]
 Name = Spinda
@@ -10655,7 +10658,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [328]
 Name = Trapinch
@@ -10750,7 +10753,7 @@ BattlerEnemyX = 11
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [331]
 Name = Cacnea
@@ -10816,7 +10819,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [333]
 Name = Swablu
@@ -10881,7 +10884,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [335]
 Name = Zangoose
@@ -10915,7 +10918,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [336]
 Name = Seviper
@@ -10949,7 +10952,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [337]
 Name = Lunatone
@@ -10982,7 +10985,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -1
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [338]
 Name = Solrock
@@ -11015,7 +11018,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = -9
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [339]
 Name = Barboach
@@ -11082,7 +11085,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [341]
 Name = Corphish
@@ -11146,7 +11149,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [343]
 Name = Baltoy
@@ -11210,7 +11213,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [345]
 Name = Lileep
@@ -11279,7 +11282,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 5
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [347]
 Name = Anorith
@@ -11346,7 +11349,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [349]
 Name = Feebas
@@ -11409,7 +11412,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [351]
 Name = Castform
@@ -11446,7 +11449,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [352]
 Name = Kecleon
@@ -11478,7 +11481,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [353]
 Name = Shuppet
@@ -11543,7 +11546,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [355]
 Name = Duskull
@@ -11642,7 +11645,7 @@ BattlerEnemyX = 7
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [358]
 Name = Chimecho
@@ -11677,7 +11680,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [359]
 Name = Absol
@@ -11711,7 +11714,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [360]
 Name = Wynaut
@@ -11809,7 +11812,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [363]
 Name = Spheal
@@ -11906,7 +11909,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [366]
 Name = Clamperl
@@ -11972,7 +11975,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [368]
 Name = Gorebyss
@@ -12004,7 +12007,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [369]
 Name = Relicanth
@@ -12038,7 +12041,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [370]
 Name = Luvdisc
@@ -12071,7 +12074,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [371]
 Name = Bagon
@@ -12172,7 +12175,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [374]
 Name = Beldum
@@ -12274,7 +12277,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [377]
 Name = Regirock
@@ -12305,7 +12308,7 @@ BattlerEnemyX = -6
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [378]
 Name = Regice
@@ -12336,7 +12339,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [379]
 Name = Registeel
@@ -12367,7 +12370,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [380]
 Name = Latias
@@ -12398,7 +12401,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = -9
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [381]
 Name = Latios
@@ -12429,7 +12432,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [382]
 Name = Kyogre
@@ -12460,7 +12463,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [383]
 Name = Groudon
@@ -12491,7 +12494,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [384]
 Name = Rayquaza
@@ -12523,7 +12526,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = -3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [385]
 Name = Jirachi
@@ -12557,7 +12560,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [386]
 Name = Deoxys
@@ -12588,7 +12591,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [387]
 Name = Turtwig
@@ -12683,7 +12686,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [390]
 Name = Chimchar
@@ -12779,7 +12782,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [393]
 Name = Piplup
@@ -12874,7 +12877,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [396]
 Name = Starly
@@ -12971,7 +12974,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [399]
 Name = Bidoof
@@ -13033,7 +13036,7 @@ BattlerEnemyX = 7
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [401]
 Name = Kricketot
@@ -13095,7 +13098,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [403]
 Name = Shinx
@@ -13189,7 +13192,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [406]
 Name = Budew
@@ -13255,7 +13258,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [408]
 Name = Cranidos
@@ -13318,7 +13321,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [410]
 Name = Shieldon
@@ -13383,7 +13386,7 @@ BattlerEnemyX = -5
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [412]
 Name = Burmy
@@ -13447,7 +13450,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 5
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [414]
 Name = Mothim
@@ -13479,7 +13482,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = -1
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [415]
 Name = Combee
@@ -13543,7 +13546,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [417]
 Name = Pachirisu
@@ -13574,7 +13577,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [418]
 Name = Buizel
@@ -13635,7 +13638,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [420]
 Name = Cherubi
@@ -13700,7 +13703,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [422]
 Name = Shellos
@@ -13764,7 +13767,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [424]
 Name = Ambipom
@@ -13794,7 +13797,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [425]
 Name = Drifloon
@@ -13857,7 +13860,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = -6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [427]
 Name = Buneary
@@ -13918,7 +13921,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [429]
 Name = Mismagius
@@ -13947,7 +13950,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = -3
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [430]
 Name = Honchkrow
@@ -13978,7 +13981,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [431]
 Name = Glameow
@@ -14039,7 +14042,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [433]
 Name = Chingling
@@ -14137,7 +14140,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [436]
 Name = Bronzor
@@ -14201,7 +14204,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [438]
 Name = Bonsly
@@ -14333,7 +14336,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [442]
 Name = Spiritomb
@@ -14365,7 +14368,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = -2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [443]
 Name = Gible
@@ -14462,7 +14465,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [446]
 Name = Munchlax
@@ -14561,7 +14564,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [449]
 Name = Hippopotas
@@ -14624,7 +14627,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [451]
 Name = Skorupi
@@ -14689,7 +14692,7 @@ BattlerEnemyX = -11
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [453]
 Name = Croagunk
@@ -14754,7 +14757,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [455]
 Name = Carnivine
@@ -14784,7 +14787,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [456]
 Name = Finneon
@@ -14845,7 +14848,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [458]
 Name = Mantyke
@@ -14945,7 +14948,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [461]
 Name = Weavile
@@ -14978,7 +14981,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [462]
 Name = Magnezone
@@ -15010,7 +15013,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [463]
 Name = Lickilicky
@@ -15041,7 +15044,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [464]
 Name = Rhyperior
@@ -15072,7 +15075,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [465]
 Name = Tangrowth
@@ -15102,7 +15105,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [466]
 Name = Electivire
@@ -15134,7 +15137,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [467]
 Name = Magmortar
@@ -15166,7 +15169,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [468]
 Name = Togekiss
@@ -15197,7 +15200,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [469]
 Name = Yanmega
@@ -15230,7 +15233,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = -1
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [470]
 Name = Leafeon
@@ -15260,7 +15263,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [471]
 Name = Glaceon
@@ -15290,7 +15293,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [472]
 Name = Gliscor
@@ -15321,7 +15324,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [473]
 Name = Mamoswine
@@ -15352,7 +15355,7 @@ BattlerEnemyX = -7
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [474]
 Name = Porygon-Z
@@ -15382,7 +15385,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [475]
 Name = Gallade
@@ -15413,7 +15416,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [476]
 Name = Probopass
@@ -15445,7 +15448,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [477]
 Name = Dusknoir
@@ -15476,7 +15479,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [478]
 Name = Froslass
@@ -15508,7 +15511,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [479]
 Name = Rotom
@@ -15539,7 +15542,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = -1
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [480]
 Name = Uxie
@@ -15568,7 +15571,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [481]
 Name = Mesprit
@@ -15597,7 +15600,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [482]
 Name = Azelf
@@ -15626,7 +15629,7 @@ BattlerEnemyX = 9
 BattlerEnemyY = 5
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [483]
 Name = Dialga
@@ -15658,7 +15661,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [484]
 Name = Palkia
@@ -15690,7 +15693,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [485]
 Name = Heatran
@@ -15721,7 +15724,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [486]
 Name = Regigigas
@@ -15750,7 +15753,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [487]
 Name = Giratina
@@ -15783,7 +15786,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [488]
 Name = Cresselia
@@ -15812,7 +15815,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = -5
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [489]
 Name = Phione
@@ -15841,7 +15844,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [490]
 Name = Manaphy
@@ -15870,7 +15873,7 @@ BattlerEnemyX = 7
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [491]
 Name = Darkrai
@@ -15899,7 +15902,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 1
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [492]
 Name = Shaymin
@@ -15932,7 +15935,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [493]
 Name = Arceus
@@ -15962,7 +15965,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [494]
 Name = Victini
@@ -15992,7 +15995,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [495]
 Name = Snivy
@@ -16083,7 +16086,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [498]
 Name = Tepig
@@ -16176,7 +16179,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [501]
 Name = Oshawott
@@ -16267,7 +16270,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [504]
 Name = Patrat
@@ -16328,7 +16331,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [506]
 Name = Lillipup
@@ -16419,7 +16422,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [509]
 Name = Purrloin
@@ -16480,7 +16483,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [511]
 Name = Pansage
@@ -16543,7 +16546,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [513]
 Name = Pansear
@@ -16606,7 +16609,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [515]
 Name = Panpour
@@ -16669,7 +16672,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [517]
 Name = Munna
@@ -16732,7 +16735,7 @@ BattlerEnemyX = -9
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [519]
 Name = Pidove
@@ -16829,7 +16832,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [522]
 Name = Blitzle
@@ -16990,7 +16993,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [527]
 Name = Woobat
@@ -17053,7 +17056,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [529]
 Name = Drilbur
@@ -17117,7 +17120,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [531]
 Name = Audino
@@ -17150,7 +17153,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [532]
 Name = Timburr
@@ -17244,7 +17247,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [535]
 Name = Tympole
@@ -17337,7 +17340,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [538]
 Name = Throh
@@ -17368,7 +17371,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 25
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [539]
 Name = Sawk
@@ -17399,7 +17402,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [540]
 Name = Sewaddle
@@ -17496,7 +17499,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [543]
 Name = Venipede
@@ -17593,7 +17596,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [546]
 Name = Cottonee
@@ -17658,7 +17661,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [548]
 Name = Petilil
@@ -17721,7 +17724,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [550]
 Name = Basculin
@@ -17754,7 +17757,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [551]
 Name = Sandile
@@ -17851,7 +17854,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [554]
 Name = Darumaka
@@ -17913,7 +17916,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [556]
 Name = Maractus
@@ -18011,7 +18014,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [559]
 Name = Scraggy
@@ -18076,7 +18079,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [561]
 Name = Sigilyph
@@ -18108,7 +18111,7 @@ BattlerEnemyX = -6
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [562]
 Name = Yamask
@@ -18169,7 +18172,7 @@ BattlerEnemyX = -5
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [564]
 Name = Tirtouga
@@ -18234,7 +18237,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [566]
 Name = Archen
@@ -18297,7 +18300,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [568]
 Name = Trubbish
@@ -18361,7 +18364,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [570]
 Name = Zorua
@@ -18420,7 +18423,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [572]
 Name = Minccino
@@ -18481,7 +18484,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [574]
 Name = Gothita
@@ -18572,7 +18575,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [577]
 Name = Solosis
@@ -18663,7 +18666,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [580]
 Name = Ducklett
@@ -18726,7 +18729,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [582]
 Name = Vanillite
@@ -18823,7 +18826,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [585]
 Name = Deerling
@@ -18888,7 +18891,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [587]
 Name = Emolga
@@ -18920,7 +18923,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [588]
 Name = Karrablast
@@ -18982,7 +18985,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [590]
 Name = Foongus
@@ -19049,7 +19052,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 28
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [592]
 Name = Frillish
@@ -19112,7 +19115,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [594]
 Name = Alomomola
@@ -19143,7 +19146,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [595]
 Name = Joltik
@@ -19206,7 +19209,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [597]
 Name = Ferroseed
@@ -19270,7 +19273,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [599]
 Name = Klink
@@ -19360,7 +19363,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [602]
 Name = Tynamo
@@ -19447,7 +19450,7 @@ BattlerEnemyX = -7
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [605]
 Name = Elgyem
@@ -19510,7 +19513,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [607]
 Name = Litwick
@@ -19604,7 +19607,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [610]
 Name = Axew
@@ -19695,7 +19698,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [613]
 Name = Cubchoo
@@ -19759,7 +19762,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [615]
 Name = Cryogonal
@@ -19789,7 +19792,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [616]
 Name = Shelmet
@@ -19850,7 +19853,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 25
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [618]
 Name = Stunfisk
@@ -19883,7 +19886,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 29
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [619]
 Name = Mienfoo
@@ -19944,7 +19947,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [621]
 Name = Druddigon
@@ -19976,7 +19979,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [622]
 Name = Golett
@@ -20040,7 +20043,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [624]
 Name = Pawniard
@@ -20103,7 +20106,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [626]
 Name = Bouffalant
@@ -20134,7 +20137,7 @@ BattlerEnemyX = -10
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [627]
 Name = Rufflet
@@ -20196,7 +20199,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 3
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [629]
 Name = Vullaby
@@ -20259,7 +20262,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [631]
 Name = Heatmor
@@ -20290,7 +20293,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [632]
 Name = Durant
@@ -20322,7 +20325,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 34
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [633]
 Name = Deino
@@ -20413,7 +20416,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [636]
 Name = Larvesta
@@ -20479,7 +20482,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [638]
 Name = Cobalion
@@ -20509,7 +20512,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [639]
 Name = Terrakion
@@ -20539,7 +20542,7 @@ BattlerEnemyX = -4
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [640]
 Name = Virizion
@@ -20569,7 +20572,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [641]
 Name = Tornadus
@@ -20600,7 +20603,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [642]
 Name = Thundurus
@@ -20632,7 +20635,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [643]
 Name = Reshiram
@@ -20662,7 +20665,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [644]
 Name = Zekrom
@@ -20692,7 +20695,7 @@ BattlerEnemyX = 3
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [645]
 Name = Landorus
@@ -20724,7 +20727,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [646]
 Name = Kyurem
@@ -20754,7 +20757,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [647]
 Name = Keldeo
@@ -20785,7 +20788,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [648]
 Name = Meloetta
@@ -20819,7 +20822,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [649]
 Name = Genesect
@@ -20850,7 +20853,7 @@ BattlerEnemyX = -3
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [650]
 Name = Chespin
@@ -20942,7 +20945,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [653]
 Name = Fennekin
@@ -21034,7 +21037,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [656]
 Name = Froakie
@@ -21126,7 +21129,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [659]
 Name = Bunnelby
@@ -21188,7 +21191,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [661]
 Name = Fletchling
@@ -21285,7 +21288,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [664]
 Name = Scatterbug
@@ -21378,7 +21381,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [667]
 Name = Litleo
@@ -21441,7 +21444,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [669]
 Name = Flabébé
@@ -21535,7 +21538,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [672]
 Name = Skiddo
@@ -21596,7 +21599,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [674]
 Name = Pancham
@@ -21660,7 +21663,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [676]
 Name = Furfrou
@@ -21691,7 +21694,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [677]
 Name = Espurr
@@ -21753,7 +21756,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [679]
 Name = Honedge
@@ -21845,7 +21848,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [682]
 Name = Spritzee
@@ -21906,7 +21909,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [684]
 Name = Swirlix
@@ -21967,7 +21970,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [686]
 Name = Inkay
@@ -22030,7 +22033,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [688]
 Name = Binacle
@@ -22093,7 +22096,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [690]
 Name = Skrelp
@@ -22158,7 +22161,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [692]
 Name = Clauncher
@@ -22217,7 +22220,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [694]
 Name = Helioptile
@@ -22280,7 +22283,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [696]
 Name = Tyrunt
@@ -22345,7 +22348,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [698]
 Name = Amaura
@@ -22410,7 +22413,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [700]
 Name = Sylveon
@@ -22440,7 +22443,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [701]
 Name = Hawlucha
@@ -22473,7 +22476,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [702]
 Name = Dedenne
@@ -22505,7 +22508,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [703]
 Name = Carbink
@@ -22536,7 +22539,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [704]
 Name = Goomy
@@ -22629,7 +22632,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [707]
 Name = Klefki
@@ -22661,7 +22664,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [708]
 Name = Phantump
@@ -22724,7 +22727,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [710]
 Name = Pumpkaboo
@@ -22787,7 +22790,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [712]
 Name = Bergmite
@@ -22848,7 +22851,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [714]
 Name = Noibat
@@ -22913,7 +22916,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [716]
 Name = Xerneas
@@ -22943,7 +22946,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [717]
 Name = Yveltal
@@ -22973,7 +22976,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [718]
 Name = Zygarde
@@ -23004,7 +23007,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [719]
 Name = Diancie
@@ -23034,7 +23037,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [720]
 Name = Hoopa
@@ -23065,7 +23068,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [721]
 Name = Volcanion
@@ -23095,7 +23098,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [722]
 Name = Rowlet
@@ -23189,7 +23192,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [725]
 Name = Litten
@@ -23281,7 +23284,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [728]
 Name = Popplio
@@ -23373,7 +23376,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [731]
 Name = Pikipek
@@ -23473,7 +23476,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [734]
 Name = Yungoos
@@ -23536,7 +23539,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [736]
 Name = Grubbin
@@ -23627,7 +23630,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [739]
 Name = Crabrawler
@@ -23691,7 +23694,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [741]
 Name = Oricorio
@@ -23724,7 +23727,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [742]
 Name = Cutiefly
@@ -23789,7 +23792,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [744]
 Name = Rockruff
@@ -23851,7 +23854,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [746]
 Name = Wishiwashi
@@ -23882,7 +23885,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [747]
 Name = Mareanie
@@ -23947,7 +23950,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [749]
 Name = Mudbray
@@ -24010,7 +24013,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [751]
 Name = Dewpider
@@ -24075,7 +24078,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [753]
 Name = Fomantis
@@ -24138,7 +24141,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [755]
 Name = Morelull
@@ -24205,7 +24208,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [757]
 Name = Salandit
@@ -24270,7 +24273,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [759]
 Name = Stufful
@@ -24333,7 +24336,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [761]
 Name = Bounsweet
@@ -24427,7 +24430,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [764]
 Name = Comfey
@@ -24459,7 +24462,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [765]
 Name = Oranguru
@@ -24491,7 +24494,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [766]
 Name = Passimian
@@ -24522,7 +24525,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [767]
 Name = Wimpod
@@ -24583,7 +24586,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [769]
 Name = Sandygast
@@ -24648,7 +24651,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [771]
 Name = Pyukumuku
@@ -24679,7 +24682,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [772]
 Name = Type: Null
@@ -24738,7 +24741,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [774]
 Name = Minior
@@ -24770,7 +24773,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [775]
 Name = Komala
@@ -24800,7 +24803,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [776]
 Name = Turtonator
@@ -24832,7 +24835,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [777]
 Name = Togedemaru
@@ -24865,7 +24868,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [778]
 Name = Mimikyu
@@ -24898,7 +24901,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [779]
 Name = Bruxish
@@ -24931,7 +24934,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [780]
 Name = Drampa
@@ -24964,7 +24967,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [781]
 Name = Dhelmise
@@ -24994,7 +24997,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [782]
 Name = Jangmo-o
@@ -25090,7 +25093,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [785]
 Name = Tapu Koko
@@ -25121,7 +25124,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [786]
 Name = Tapu Lele
@@ -25152,7 +25155,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [787]
 Name = Tapu Bulu
@@ -25183,7 +25186,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [788]
 Name = Tapu Fini
@@ -25214,7 +25217,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [789]
 Name = Cosmog
@@ -25302,7 +25305,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [792]
 Name = Lunala
@@ -25332,7 +25335,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [793]
 Name = Nihilego
@@ -25362,7 +25365,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [794]
 Name = Buzzwole
@@ -25392,7 +25395,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [795]
 Name = Pheromosa
@@ -25422,7 +25425,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [796]
 Name = Xurkitree
@@ -25451,7 +25454,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [797]
 Name = Celesteela
@@ -25481,7 +25484,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [798]
 Name = Kartana
@@ -25511,7 +25514,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [799]
 Name = Guzzlord
@@ -25541,7 +25544,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [800]
 Name = Necrozma
@@ -25570,7 +25573,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [801]
 Name = Magearna
@@ -25600,7 +25603,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [802]
 Name = Marshadow
@@ -25630,7 +25633,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [803]
 Name = Poipole
@@ -25689,7 +25692,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [805]
 Name = Stakataka
@@ -25719,7 +25722,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [806]
 Name = Blacephalon
@@ -25749,7 +25752,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [807]
 Name = Zeraora
@@ -25778,7 +25781,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [808]
 Name = Meltan
@@ -25836,7 +25839,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [810]
 Name = Grookey
@@ -25927,7 +25930,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [813]
 Name = Scorbunny
@@ -26018,7 +26021,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [816]
 Name = Sobble
@@ -26109,7 +26112,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [819]
 Name = Skwovet
@@ -26172,7 +26175,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [821]
 Name = Rookidee
@@ -26267,7 +26270,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [824]
 Name = Blipbug
@@ -26361,7 +26364,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [827]
 Name = Nickit
@@ -26422,7 +26425,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [829]
 Name = Gossifleur
@@ -26483,7 +26486,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [831]
 Name = Wooloo
@@ -26544,7 +26547,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [833]
 Name = Chewtle
@@ -26606,7 +26609,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 28
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [835]
 Name = Yamper
@@ -26667,7 +26670,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [837]
 Name = Rolycoly
@@ -26760,7 +26763,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [840]
 Name = Applin
@@ -26823,7 +26826,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [842]
 Name = Appletun
@@ -26854,7 +26857,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [843]
 Name = Silicobra
@@ -26915,7 +26918,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 25
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [845]
 Name = Cramorant
@@ -26946,7 +26949,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [846]
 Name = Arrokuda
@@ -27007,7 +27010,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 34
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [848]
 Name = Toxel
@@ -27071,7 +27074,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [850]
 Name = Sizzlipede
@@ -27134,7 +27137,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [852]
 Name = Clobbopus
@@ -27195,7 +27198,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [854]
 Name = Sinistea
@@ -27256,7 +27259,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [856]
 Name = Hatenna
@@ -27348,7 +27351,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [859]
 Name = Impidimp
@@ -27441,7 +27444,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [862]
 Name = Obstagoon
@@ -27472,7 +27475,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [863]
 Name = Perrserker
@@ -27502,7 +27505,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [864]
 Name = Cursola
@@ -27532,7 +27535,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [865]
 Name = Sirfetch'd
@@ -27563,7 +27566,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 5
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [866]
 Name = Mr. Rime
@@ -27594,7 +27597,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [867]
 Name = Runerigus
@@ -27624,7 +27627,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [868]
 Name = Milcery
@@ -27655,7 +27658,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 35
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [869]
 Name = Alcremie
@@ -27685,7 +27688,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 25
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [870]
 Name = Falinks
@@ -27715,7 +27718,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [871]
 Name = Pincurchin
@@ -27746,7 +27749,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [872]
 Name = Snom
@@ -27812,7 +27815,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [874]
 Name = Stonjourner
@@ -27842,7 +27845,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [875]
 Name = Eiscue
@@ -27873,7 +27876,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [876]
 Name = Indeedee
@@ -27906,7 +27909,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [877]
 Name = Morpeko
@@ -27938,7 +27941,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 27
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [878]
 Name = Cufant
@@ -28001,7 +28004,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [880]
 Name = Dracozolt
@@ -28032,7 +28035,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [881]
 Name = Arctozolt
@@ -28063,7 +28066,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [882]
 Name = Dracovish
@@ -28094,7 +28097,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [883]
 Name = Arctovish
@@ -28125,7 +28128,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [884]
 Name = Duraludon
@@ -28157,7 +28160,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [885]
 Name = Dreepy
@@ -28254,7 +28257,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [888]
 Name = Zacian
@@ -28287,7 +28290,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [889]
 Name = Zamazenta
@@ -28320,7 +28323,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [890]
 Name = Eternatus
@@ -28350,7 +28353,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [891]
 Name = Kubfu
@@ -28410,7 +28413,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [893]
 Name = Zarude
@@ -28440,7 +28443,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [894]
 Name = Regieleki
@@ -28469,7 +28472,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [895]
 Name = Regidrago
@@ -28498,7 +28501,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [896]
 Name = Glastrier
@@ -28527,7 +28530,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [897]
 Name = Spectrier
@@ -28556,7 +28559,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [898]
 Name = Calyrex
@@ -28586,7 +28589,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [900]
 Name = Hoppalm
@@ -28868,7 +28871,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [909]
 Name = Specidae
@@ -28932,7 +28935,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [911]
 Name = Scareub
@@ -29028,7 +29031,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [914]
 Name = Stonat
@@ -29124,7 +29127,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 1
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [917]
 Name = Tablu
@@ -29218,7 +29221,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [920]
 Name = Jerbuzz
@@ -29284,7 +29287,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [922]
 Name = Stellavamp
@@ -29413,7 +29416,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [926]
 Name = Friocuda
@@ -29445,7 +29448,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [927]
 Name = Flarocuda
@@ -29477,7 +29480,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [928]
 Name = Fearocuda
@@ -29509,7 +29512,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [929]
 Name = Fairicuda
@@ -29541,7 +29544,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [930]
 Name = Floracuda
@@ -29573,7 +29576,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [931]
 Name = Temporift
@@ -29638,7 +29641,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [933]
 Name = Imotomb
@@ -29703,7 +29706,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [935]
 Name = Grimmera
@@ -29800,7 +29803,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [938]
 Name = Discorona
@@ -29832,7 +29835,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [939]
 Name = Persephydra
@@ -29865,7 +29868,7 @@ BattlerEnemyX = 9
 BattlerEnemyY = -1
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [940]
 Name = Eyeroglyph
@@ -29896,7 +29899,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [941]
 Name = Gongaia
@@ -29928,7 +29931,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [942]
 Name = Cactamborine
@@ -29960,7 +29963,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [943]
 Name = Reverbell
@@ -29993,7 +29996,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 6
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [944]
 Name = Hyenasty
@@ -30025,7 +30028,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [945]
 Name = Tinsnare
@@ -30057,7 +30060,7 @@ BattlerEnemyX = 11
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [946]
 Name = Satellydra
@@ -30089,7 +30092,7 @@ BattlerEnemyX = 11
 BattlerEnemyY = -4
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [947]
 Name = Phanfair
@@ -30121,7 +30124,7 @@ BattlerEnemyX = -10
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [948]
 Name = Formeteos
@@ -30156,7 +30159,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [949]
 Name = Zeboltra
@@ -30187,7 +30190,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [950]
 Name = Yesomnia
@@ -30219,7 +30222,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [951]
 Name = Pegasoot
@@ -30251,7 +30254,7 @@ BattlerEnemyX = 5
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [952]
 Name = Belloom
@@ -30283,7 +30286,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = 
+Evolutions =
 #-------------------------------
 [953]
 Name = Subwinder
@@ -30380,7 +30383,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [956]
 Name = Spookloth
@@ -30472,7 +30475,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [959]
 Name = Hypixie
@@ -30569,7 +30572,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [962]
 Name = Osiram
@@ -30601,7 +30604,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [963]
 Name = Bastungsten
@@ -30633,7 +30636,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [964]
 Name = Fenixet
@@ -30665,7 +30668,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [965]
 Name = Mauselynx
@@ -30697,7 +30700,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [966]
 Name = Centisepa
@@ -30729,7 +30732,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [967]
 Name = Meritempo
@@ -30761,7 +30764,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [968]
 Name = Caninpu
@@ -30793,7 +30796,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [969]
 Name = Sobekodile
@@ -30825,7 +30828,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [970]
 Name = Orrustorm
@@ -30857,7 +30860,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [971]
 Name = Neflora
@@ -30888,7 +30891,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [972]
 Name = Phirenix
@@ -30919,7 +30922,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [973]
 Name = Saturabtu
@@ -30950,7 +30953,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [974]
 Name = Apophicary
@@ -30981,7 +30984,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [975]
 Name = Falkmunra
@@ -31012,7 +31015,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [976]
 Name = Altemper
@@ -31084,7 +31087,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 11
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = 
+Evolutions =
 #-------------------------------
 [978]
 Name = Fyuricane
@@ -31116,7 +31119,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [979]
 Name = Scornado
@@ -31148,7 +31151,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [980]
 Name = Baromast
@@ -31180,7 +31183,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 37
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [1062]
 Name = Drakeon
@@ -31211,7 +31214,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [1063]
 Name = Alkaleon
@@ -31242,7 +31245,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [1064]
 Name = Astreon
@@ -31273,7 +31276,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [1065]
 Name = Archaeon
@@ -31304,7 +31307,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =
 #-------------------------------
 [1066]
 Name = Phoneon
@@ -31335,4 +31338,4 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = 
+Evolutions =

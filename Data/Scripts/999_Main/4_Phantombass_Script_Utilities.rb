@@ -7,6 +7,22 @@ Events.onWildPokemonCreate += proc {| sender, e |
   end
 }
 
+module Level
+  Cap = 106
+end
+
+Events.onMapUpdate += proc {| sender, e |
+  badges = $Trainer.numbadges
+    case badges
+    when 1
+      $game_variables[Level::Cap] = 13
+    when 2
+      $game_variables[Level::Cap] = 20
+    when 3
+      $game_variables[Level::Cap] = 28
+    end
+}
+
 def poisonAllPokemon(event=nil)
     for pkmn in $Trainer.ablePokemonParty
        next if pkmn.hasType?(:POISON)  || pkmn.hasType?(:STEEL) ||

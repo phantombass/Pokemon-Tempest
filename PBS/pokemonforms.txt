@@ -3973,6 +3973,38 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Evolutions =
 #-------------------------------
+[PINSIR,2]
+Type1 = FIGHTING
+Type2 = ROCK
+BaseStats = 65,125,100,85,55,70
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 175
+EffortPoints = 0,2,0,0,0,0
+Rareness = 45
+Happiness = 70
+Abilities = HYPERCUTTER,MOLDBREAKER
+HiddenAbility = ASHRUSH
+Moves = 1,VISEGRIP,1,FOCUSENERGY,4,ROCKBLAST,8,SEISMICTOSS,11,HARDEN,15,REVENGE,18,VITALTHROW,22,ROCKTOMB,26,BRICKBREAK,29,XSCISSOR,33,SUBMISSION,36,ROCKSLIDE,40,SWORDSDANCE,43,STONEEDGE,47,SUPERPOWER,50,RUBBLERAZE
+EggMoves = BUGBITE,CLOSECOMBAT,FEINT,FEINTATTACK,FLAIL,FURYATTACK,MEFIRST,QUICKATTACK,SUPERPOWER,STEALTHROCK
+Compatibility = Bug
+StepsToHatch = 6400
+Height = 1.5
+Weight = 55.0
+Color = Brown
+Shape = 12
+Habitat = Forest
+RegionalNumbers = 118
+Kind = Stag Beetle
+Pokedex = Their pincers are strong enough to shatter thick logs. Because they dislike cold, Pinsir burrow and sleep under the ground on chilly nights.
+BattlerPlayerX = 5
+BattlerPlayerY = 0
+BattlerEnemyX = -3
+BattlerEnemyY = 10
+BattlerShadowX = 0
+BattlerShadowSize = 3
+Evolutions =
+#-------------------------------
 [SQUALTEMPER,21]
 FormName = Mega Squaltemper
 Type1 = TIME

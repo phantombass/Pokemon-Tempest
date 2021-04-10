@@ -242,7 +242,7 @@ class PokeBattle_Battle
     when PBBattleTerrains::Grassy;   pbDisplay(_INTL("Grass is covering the battlefield."))
     when PBBattleTerrains::Misty;    pbDisplay(_INTL("Mist is swirling about the battlefield."))
     when PBBattleTerrains::Psychic;  pbDisplay(_INTL("The battlefield is weird."))
-    when PBBattleTerrains::Poison;   pbDisplay(_INTL("Toxic waste covers the ground."))
+    when PBBattleTerrains::Poison;   pbDisplay(_INTL("Toxic waste covers the battlefield."))
     end
   end
 
@@ -393,9 +393,9 @@ class PokeBattle_Battle
         b.pbRecoverHP(b.totalhp/16)
         pbDisplay(_INTL("{1}'s HP was restored.",b.pbThis))
       end
-      if @field.terrain==PBBattleTerrains::Poison && b.affectedByTerrain? && b.pbCanPoison?
+      if @field.terrain==PBBattleTerrains::Poison && b.affectedByTerrain? && b.pbCanPoison?(b,true,self)
         PBDebug.log("[Lingering effect] Poison Terrain poisons #{b.pbThis(true)}")
-        b.pbRecoverHP(b.totalhp/16)
+        b.status = PBStatuses::POISON
         pbDisplay(_INTL("{1} was poisoned by the toxic waste!",b.pbThis))
       end
       # Healer, Hydration, Shed Skin

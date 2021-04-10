@@ -91,68 +91,6 @@ class PokeBattle_Battle
   def pbGainExpOne(idxParty,defeatedBattler,numPartic,expShare,expAll,showMessages=true)
     pkmn = pbParty(0)[idxParty]   # The Pokémon gaining EVs from defeatedBattler
     growthRate = pkmn.growthrate
-    badges = $Trainer.numbadges
-    if $game_switches[112] == true
-      if badges == 0
-        $game_variables[106] = 15
-      elsif badges == 1
-        $game_variables[106] = 22
-      elsif badges == 2
-        $game_variables[106] = 27
-      elsif badges == 3
-        $game_variables[106] = 32
-      elsif badges == 4
-        if $game_variables[110] == 6
-          $game_variables[106] = 64
-        elsif $game_variables[110] == 5
-          $game_variables[106] = 61
-        elsif $game_variables[110] == 4
-          $game_variables[106] = 58
-        elsif $game_variables[110] == 3
-          $game_variables[106] = 55
-        elsif $game_variables[110] == 2
-          $game_variables[106] = 46
-        elsif $game_variables[110] == 1
-          $game_variables[106] = 43
-        else
-        $game_variables[106] = 40
-        end
-      elsif badges == 5
-        if $game_variables[110] == 9
-          $game_variables[106] = 78
-        elsif $game_variables[110] == 8
-          $game_variables[106] = 75
-        elsif $game_variables[110] == 7
-          $game_variables[106] = 72
-        else
-        $game_variables[106] = 68
-        end
-      elsif badges == 6
-        $game_variables[106] = 81
-      elsif badges == 7
-        if $game_variables[110] == 13
-          $game_variables[106] = 95
-        elsif $game_variables[110] == 12
-          $game_variables[106] = 93
-        elsif $game_variables[110] == 11
-          $game_variables[106] = 90
-        elsif $game_variables[110] == 10
-          $game_variables[106] = 87
-        else
-        $game_variables[106] = 84
-        end
-      elsif badges == 8
-      if $game_variables[110] == 14
-        $game_variables[106] = 120
-      else
-        $game_variables[106] = 100
-      end
-      elsif $game_switches[12] == true
-        $game_variables[106] = 150
-      end
-    else
-      $game_variables[106] = MAXIMUM_LEVEL
-    end
     # Don't bother calculating if gainer is already at max Exp
     if pkmn.exp>=PBExperience.pbGetMaxExperience(growthRate)
       pkmn.calcStats   # To ensure new EVs still have an effect
@@ -171,14 +109,14 @@ class PokeBattle_Battle
         exp = a/(2*numPartic) if isPartic
         exp += a/(2*expShare.length) if hasExpShare
       else   # Gain from participating and/or Exp Share (Exp not split)
-        if pkmn.level >= $game_variables[106]
+        if pkmn.level >= $game_variables[Level::Cap]
           exp = a/1000
         else
           exp = (isPartic) ? a : a/2
         end
       end
     elsif isPartic   # Participated in battle, no Exp Shares held by anyone
-      if pkmn.level >= $game_variables[106]
+      if pkmn.level >= $game_variables[Level::Cap]
         exp = a/1000
       else
         exp = a/(SPLIT_EXP_BETWEEN_GAINERS ? numPartic : 1)
@@ -186,7 +124,7 @@ class PokeBattle_Battle
     elsif expAll   # Didn't participate in battle, gaining Exp due to Exp All
       # NOTE: Exp All works like the Exp Share from Gen 6+, not like the Exp All
       #       from Gen 1, i.e. Exp isn't split between all Pokémon gaining it.
-      if pkmn.level >= $game_variables[106]
+      if pkmn.level >= $game_variables[Level::Cap]
         exp = a/1000
       else
         exp = a/2

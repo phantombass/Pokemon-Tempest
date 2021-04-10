@@ -459,6 +459,14 @@ module RPG
         @viewport.color.blue = 120
         @viewport.color.alpha = 35
         $game_map.fog_name = nil
+      when PBFieldWeather::Humid;
+        @viewport.tone.set(@max*3/4, @max*3/4,  @max*3/4, 0)
+        @viewport.color.red = 0
+        @viewport.color.green = 255
+        @viewport.color.blue = 120
+        @viewport.color.alpha = 35
+        $game_map.fog_name = "better"
+        $game_map.fog_opacity = 72
       when PBFieldWeather::DAshfall;
         @viewport.tone.set(-@max*6/4, -@max*6/4,  -@max*6/4, 20)
         $game_map.fog_name = nil

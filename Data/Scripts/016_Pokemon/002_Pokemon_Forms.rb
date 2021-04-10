@@ -692,7 +692,7 @@ MultipleForms.register(:BAGON,{
   }
 })
 
-MultipleForms.copy(:BAGON,:SHELGON,:SALAMENCE,:GASTLY,:HAUNTER,:GENGAR,:HIPPOPOTAS,:HIPPOWDON,:GIBLE,:GABITE,:GARCHOMP)
+MultipleForms.copy(:BAGON,:SHELGON,:SALAMENCE,:GASTLY,:HAUNTER,:GENGAR,:HIPPOPOTAS,:HIPPOWDON,:GIBLE,:GABITE,:GARCHOMP,:PINSIR)
 
 MultipleForms.register(:DREEPY,{
   "getFormOnCreation" => proc { |pkmn|
