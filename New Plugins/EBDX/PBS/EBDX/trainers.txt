@@ -1,0 +1,28 @@
+#-------------------------------
+[RIVAL1]
+BattleBGM        = Battle Elite.mid
+#-------------------------------
+[RIVAL1,Blue]
+BattleVS         = forestSM
+#-------------------------------
+[RIVAL1,Blue,1]
+BattleVS         = flamesSM
+#-------------------------------
+[RIVAL1,Blue,2]
+BattleVS         = wavesSM
+#-------------------------------
+[LEADER_Brock]
+TrainerPositionX = -8
+BattleEnv        = INDOOR
+BattleVS         = classicVS
+#-------------------------------
+[LEADER_Brock,Brock]
+BattleScript     = BROCK
+#-------------------------------
+[TEAMROCKET_M]
+BattleIntro      = evilTeam
+BattleVS         = trainerSM
+#-------------------------------
+[TEAMROCKET_F]
+BattleIntro      = evilTeam
+BattleVS         = trainerSM

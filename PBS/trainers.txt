@@ -56,7 +56,7 @@ Pokemon = WHISMUR,11
 #-------------------------------
 [YOUNGSTER,Tommy]
 LoseText = "SAND!"
-Pokemon = SANDYGAST,15
+Pokemon = DRILBUR,15
 #-------------------------------
 [TUBER_F,Gina]
 LoseText = "Oh no! My cute Pokémon!"
@@ -67,7 +67,7 @@ Pokemon = MAGIKARP,14
 [FISHERMAN,Andy]
 LoseText = "Ah lost it!"
 Pokemon = MAGIKARP,12
-Pokemon = ARROKUDA,13
+Pokemon = CHINCHOU,13
 Pokemon = MAGIKARP,14
 #-------------------------------
 # Rainbow Cliffs

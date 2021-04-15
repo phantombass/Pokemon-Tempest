@@ -129,7 +129,7 @@ class DP_PauseMenu
         screen = QuestScreen.new(scene)
         screen.pbStartScreen
       end
-    }]
+    }] if $game_switches[Mission::One] == true
     @options << [$Trainer.name, "trainercardA", "trainercardB", proc {
       pbFadeOutIn(99999) do
         scene = PokemonTrainerCard_Scene.new

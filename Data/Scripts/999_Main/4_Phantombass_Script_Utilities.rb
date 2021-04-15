@@ -1,23 +1,21 @@
-Events.onWildPokemonCreate += proc {| sender, e |
-  pkmn = e[0]
-  if $game_switches[82]
-    $game_switches[81] = true
-    pkmn.setAbility(2)
-    pkmn.calcStats
+  module Level
+    Cap = 106
   end
-}
 
-module Level
-  Cap = 106
-end
+  module Chapter
+    Count = 502
+  end
 
 Events.onMapUpdate += proc {| sender, e |
-  badges = $Trainer.numbadges
-    case badges
+    case $game_variables[Chapter::Count]
     when 1
       $game_variables[Level::Cap] = 13
     when 2
-      $game_variables[Level::Cap] = 20
+      if $game_variables[Mission::Mission2] < 2
+        $game_variables[Level::Cap] = 13
+      else
+        $game_variables[Level::Cap] = 20
+      end
     when 3
       $game_variables[Level::Cap] = 28
     end

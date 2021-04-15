@@ -9,7 +9,7 @@ SOFTRESETFIX = true
 if defined?(PluginManager)
   PluginManager.register({
     :name => "Luka's Scripting Utilities",
-    :version => "3.0",
+    :version => "3.1.3",
     :credits => ["Luka S.J."],
     :link => "https://luka-sj.com/res/luts"
   })
@@ -34,7 +34,7 @@ def getPolygonPoints(n,rx=50,ry=50,a=0,tx=Graphics.width/2,ty=Graphics.height/2)
   end
   return points
 end
-#===============================================================================  
+#===============================================================================
 #  Function that returns a fully rendered window bitmap from a skin
 #===============================================================================
 # `slice` is of a `Rect.new` type, and is used to cut the windowskin into 9 parts
@@ -116,12 +116,14 @@ end
 #===============================================================================
 # begins file handlers
 class Dir
+  # directory names to skip during compilation
+  @@skipDir = ["000 Assets"]
   #-----------------------------------------------------------------------------
   #  Reads all files in a directory
   #-----------------------------------------------------------------------------
   def self.get(dir, filters = "*", full = true)
     files = []; filters = [filters] if !filters.is_a?(Array)
-    self.chdir(dir) do 
+    self.chdir(dir) do
       for filter in filters
         self.glob(filter){ |f| files.push(full ? (dir + "/" + f) : f) }
       end
@@ -166,14 +168,19 @@ class Dir
   #-----------------------------------------------------------------------------
   def self.runScript(dir, force_last = nil)
     files = self.all(dir); files.to_last(dir + "/" + force_last) unless force_last.nil?
-    vrs = defined?(ESSENTIALSVERSION) ? " v#{ESSENTIALSVERSION}" : ""
     vrs = defined?(ESSENTIALS_VERSION) ? " v#{ESSENTIALS_VERSION}" : ""
     # executes all script files
     for file in files
-      msg = "[Pokémon Essentials#{vrs}]\n#{file}\n\n"
+      msg = "[Pokémon Essentials#{vrs}] #{ERROR_TEXT}\n#{file}\n\n"
       # begin script processing
       name = file.split("/").last
       next if name.split('.')[-1] != 'rb'
+      # skip blacklisted dirs
+      for skpdir in @@skipDir
+        next if file.include?(skpdir)
+      end
+      p file
+      # open file for reading
       File.open(file, 'rb') do |f|
         begin
           eval(f.read, TOPLEVEL_BINDING, name)
@@ -187,9 +194,15 @@ class Dir
             err = line.split(":")[-1].strip
             lms = line.split(":")[0].strip
             err.gsub!(n, "") if n
+            err = err.capitalize if err.is_a?(String) && !err.empty?
             linum = n ? "Line #{n}: " : ""
-            msg += "#{linum}#{err.capitalize}: #{lms}\n"
+            msg += "#{linum}#{err}: #{lms}\n"
           end
+          msg += "\nFull trace can be found below:\n"
+          for bck in $!.backtrace
+            msg += "#{bck}\n"
+          end
+          msg += "\nEnd of Error."
           $raise_msg = nil
           raise msg
         end
@@ -199,14 +212,22 @@ class Dir
   #-----------------------------------------------------------------------------
   #  Interpret all the scripts from a directory
   #-----------------------------------------------------------------------------
-  def self.compile(dir, name)
+  def self.compile(dir, name, key = nil)
+    return if !self.safe?(dir) || !$DEBUG
     files = self.all(dir)
     # processes all files
     scripts = []; i = 0
     for file in files
       next if !file.include?(".rb")
+      # skip blacklisted dirs
+      skip = false
+      for skpdir in @@skipDir
+        skip = true if file.include?(skpdir)
+      end
+      # skip compilers
+      next if (!key.nil? && file.include?("#{key}_compiler")) || skip
       cnm = file.gsub(".rb", "").split("/")[-1]
-      cnm = cnm.gsub(cnm.scan(/\[\d+\]/)[0], "").strip
+      cnm = (cnm.gsub(cnm.scan(/\[\d+\]/)[0], "").strip rescue cnm)
       set = []; set.push(i); set.push(Env.char_dsc(cnm))
       File.open(file, 'rb') {|f| set.push(Zlib::Deflate.deflate(f.read))}
       scripts.push(set); i += 1
@@ -242,12 +263,12 @@ class File
   #-----------------------------------------------------------------------------
   def self.runScript(file)
     scripts = load_data(file)
-    vrs = defined?(ESSENTIALSVERSION) ? " v#{ESSENTIALSVERSION}" : ""
     vrs = defined?(ESSENTIALS_VERSION) ? " v#{ESSENTIALS_VERSION}" : ""
-    msg = "[Pokémon Essentials#{vrs}]\n#{file}\n\n"
+    msg = "[Pokémon Essentials#{vrs}] #{ERROR_TEXT}\n#{file}\n\n"
     # Reads all the code from the .rxdata
     for script in scripts
       id, name, code = script
+      name = Env.char_dsc(name)
       next if code.nil?# safety check
       code = Zlib::Inflate.inflate(code) # turn code into plaintext
       code.gsub!("\t", "  ") # get rid of tabs
@@ -265,9 +286,15 @@ class File
           err = line.split(":")[-1].strip
           lms = line.split(":")[0].strip
           err.gsub!(n, "") if n
+          err = err.capitalize if err.is_a?(String) && !err.empty?
           linum = n ? "Line #{n}: " : ""
-          msg += "#{linum}#{err.capitalize}: #{lms}\n"
+          msg += "#{linum}#{err}: #{lms}\n"
         end
+        msg += "\nFull trace can be found below:\n"
+        for bck in $!.backtrace
+          msg += "#{bck}\n"
+        end
+        msg += "\nEnd of Error."
         $raise_msg = nil
         raise msg
       end
@@ -277,6 +304,7 @@ class File
   #  Decompile scripts from .rxdata file
   #-----------------------------------------------------------------------------
   def self.decompile(file, dest)
+    return if !$DEBUG
     # create all necessary directories
     Dir.create(dest)
     scripts = load_data(file)
@@ -284,12 +312,31 @@ class File
     i = 0
     for script in scripts
       id, name, code = script
-      name = sprintf("[%03d] %s",i,Env.char_esc(name)); i += 1
+      name = sprintf("[%03d] %s", i, Env.char_esc(name)); i += 1
       next if code.nil?# safety check
       code = Zlib::Inflate.inflate(code) # turn code into plaintext
       code.gsub!("\t", "  ") # get rid of tabs
       File.open("#{dest}/#{name}.rb", 'wb') {|f| f.write(code)}
     end
+  end
+  #-----------------------------------------------------------------------------
+  #  Checks if Script needs re-compiling, then runs it
+  #-----------------------------------------------------------------------------
+  def self.runPlugin(dir, file)
+    if $DEBUG && Dir.safe?(dir) && !File.safe?("Game.rgssad")
+      # failsafe - create Plugins dir
+      Dir.create("Data/Plugins")
+      refresh = !File.safe?("Data/Plugins/#{file}.rxdata")
+      files = Dir.all(dir); files.flatten!
+      # check if refresh is required
+      for f in files
+        break refresh = true if refresh || File.mtime(f) > File.mtime("Data/Plugins/#{file}.rxdata")
+      end
+      # recompile if refresh is required
+      Dir.compile(dir, "Data/Plugins/#{file}", file) if refresh || Input.press?(Input::CTRL)
+    end
+    # run plugin
+    self.runScript("Data/Plugins/#{file}.rxdata")
   end
   #-----------------------------------------------------------------------------
 end
@@ -308,9 +355,9 @@ class ::String
   #-----------------------------------------------------------------------------
   #  checks if string contains only numeric values
   #-----------------------------------------------------------------------------
-  def numeric?
+  def is_numeric?
     for c in self.gsub('.', '').gsub('-', '').scan(/./)
-      return false unless [0,1,2,3,4,5,6,7,8,9].map { |n| n.to_s }.include?(c)
+      return false unless (0..9).to_a.map { |n| n.to_s }.include?(c)
     end
     return true
   end
@@ -390,7 +437,21 @@ class ::Hash
   #  gets value associated with key (safe method)
   #-----------------------------------------------------------------------------
   def get_key(key)
-    return self.hasKey?(key) ? self[key] : nil
+    return self.has_key?(key) ? self[key] : nil
+  end
+  #-----------------------------------------------------------------------------
+  #  merges and replace current hash
+  #-----------------------------------------------------------------------------
+  def deep_merge!(hash)
+    # failsafe
+    return if !hash.is_a?(Hash)
+    for key in hash.keys
+      if self[key].is_a?(Hash)
+        self[key].deep_merge!(hash[key])
+      else
+        self[key] = hash[key]
+      end
+    end
   end
   #-----------------------------------------------------------------------------
   #  merges two hashes
@@ -401,26 +462,12 @@ class ::Hash
     return h if !hash.is_a?(Hash)
     for key in hash.keys
       if self[key].is_a?(Hash)
-        h.merge(hash[key])
+        h.deep_merge!(hash[key])
       else
         h = hash[key]
       end
     end
     return h
-  end
-  #-----------------------------------------------------------------------------
-  #  merges and replace current hash
-  #-----------------------------------------------------------------------------
-  def deep_merge!(hash)
-    # failsafe
-    return if !hash.is_a?(Hash)
-    for key in hash.keys
-      if self[key].is_a?(Hash)
-        self[key].merge(hash[key])
-      else
-        self[key] = hash[key]
-      end
-    end
   end
   #-----------------------------------------------------------------------------
 end
@@ -433,12 +480,12 @@ class Viewport
   #-----------------------------------------------------------------------------
   def sprites
     hash = {}; i = 0
-    ObjectSpace.each_object(Sprite){|o|
+    ObjectSpace.each_object(Sprite) do |o|
       begin
         hash[i] = o if o.viewport && !o.viewport.nil? && o.viewport == self
         rescue RGSSError
       end
-    }
+    end
     return hash
   end
   #-----------------------------------------------------------------------------
@@ -465,7 +512,7 @@ class Sprite
   attr_accessor :speed
   attr_accessor :toggle
   attr_accessor :end_x, :end_y
-  attr_accessor :param
+  attr_accessor :param, :skew_d
   attr_accessor :ex, :ey
   attr_accessor :zx, :zy
   #-----------------------------------------------------------------------------
@@ -515,7 +562,7 @@ class Sprite
       self.y = self.viewport.rect.height/2
     end
   end
-  def center; return self.ox, self.oy; end
+  def center; return self.width/2, self.height/2; end
   #-----------------------------------------------------------------------------
   #  sets sprite anchor to bottom
   #-----------------------------------------------------------------------------
@@ -523,7 +570,7 @@ class Sprite
     self.ox = self.width/2
     self.oy = self.height
   end
-  def bottom; return self.ox, self.oy; end
+  def bottom; return self.width/2, self.height; end
   #-----------------------------------------------------------------------------
   #  applies screenshot as sprite bitmap
   #-----------------------------------------------------------------------------
@@ -534,13 +581,23 @@ class Sprite
     x = self.viewport ? viewport.rect.x : 0
     y = self.viewport ? viewport.rect.y : 0
     self.bitmap = Bitmap.new(width,height)
-    self.bitmap.blt(0,0,bmp,Rect.new(x,y,width,height)); bmp.dispose  
+    self.bitmap.blt(0,0,bmp,Rect.new(x,y,width,height)); bmp.dispose
+  end
+  def screenshot; self.snap_screen; end
+  #-----------------------------------------------------------------------------
+  #  stretch the provided image across the whole viewport
+  #-----------------------------------------------------------------------------
+  def stretch_screen(file)
+    bmp = pbBitmap(file)
+    self.bitmap = Bitmap.new(self.viewport.width, self.viewport.height)
+    self.bitmap.stretch_blt(self.bitmap.rect, bmp, bmp.rect)
   end
   #-----------------------------------------------------------------------------
   #  skews sprite's bitmap
   #-----------------------------------------------------------------------------
   def skew(angle = 90)
     return false if !self.bitmap
+    return if angle == self.skew_d
     angle = angle*(Math::PI/180)
     bitmap = self.storedBitmap ? self.storedBitmap : self.bitmap
     rect = Rect.new(0,0,bitmap.width,bitmap.height)
@@ -553,6 +610,7 @@ class Sprite
       self.bitmap.blt(x+rect.x,y+rect.y,bitmap,Rect.new(0,y,rect.width,1))
     end
     @calMidX = (angle <= 90) ? bitmap.width/2 : (self.bitmap.width - bitmap.width/2)
+    self.skew_d = angle
   end
   #-----------------------------------------------------------------------------
   #  gets the mid-point anchor of sprite
@@ -731,7 +789,7 @@ class Bitmap
   #-----------------------------------------------------------------------------
   #  draws circle on bitmap
   #-----------------------------------------------------------------------------
-  def draw_circle(color=Color.new(255,255,255),r=(self.width/2),tx=(self.width/2),ty=(self.height/2),hollow=false)
+  def bmp_circle(color=Color.new(255,255,255),r=(self.width/2),tx=(self.width/2),ty=(self.height/2),hollow=false)
     # basic circle formula
     # (x - tx)**2 + (y - ty)**2 = r**2
     for x in 0...self.width
@@ -749,6 +807,7 @@ class Bitmap
       end
     end
   end
+  def draw_circle(*args); self.bmp_circle(*args); end
   #-----------------------------------------------------------------------------
   #  sets font parameters
   #-----------------------------------------------------------------------------
@@ -1014,6 +1073,7 @@ class SpriteSheet < Sprite
   #  updates sheet
   #-----------------------------------------------------------------------------
   def update
+    return if !self.bitmap
     if @curFrame >= @speed
       if @vertical
         self.src_rect.y += self.src_rect.height
@@ -1029,35 +1089,42 @@ class SpriteSheet < Sprite
   #-----------------------------------------------------------------------------
 end
 #===============================================================================
-#  Common UI handlers (not used)
+#  Class used for selector sprite
 #===============================================================================
-class CommonButton < Sprite
-  attr_accessor :selected
+class SelectorSprite < SpriteSheet
+  attr_accessor :filename, :anchor
   #-----------------------------------------------------------------------------
-  #  sets button graphic
+  #  sets sheet bitmap
   #-----------------------------------------------------------------------------
-  def setButton(size = "M", var = 1, text = "")
-    bmp = pbBitmap("Graphics/Pictures/Common/btn#{size}_#{var}")
-    pbSetSmallFont(bmp)
-    case size
-    when "M"
-      x, y, w, h = 46, 22, 92, 38
-    when "N"
-      x, y, w, h = 54, 16, 108, 30
-    when "L"
-      x, y, w, h = 61, 22, 122, 38
-    end
-    color = self.darkenColor(bmp.get_pixel(x, y))
-    self.bitmap = Bitmap.new(bmp.width - 22, bmp.height)
-    pbSetSmallFont(self.bitmap)
-    self.bitmap.blt(0, 0, bmp, Rect.new(0, 0, bmp.width - 22, bmp.height))
-    pbDrawOutlineText(self.bitmap,2,2,w,h,text,Color.new(255,255,255),color,1)
+  def render(rect, file = nil, vertical = false)
+    @filename = file if @filename.nil? && !file.nil?
+    file = @filename if file.nil? && !@filename.nil?
+    @curFrame = 0
+    self.src_rect.x = 0
+    self.src_rect.y = 0
+    self.setBitmap(pbSelBitmap(@filename, rect), vertical)
+    self.center!
+    self.speed = 4
   end
   #-----------------------------------------------------------------------------
-  #  gets darker color
+  #  target sprite with selector
   #-----------------------------------------------------------------------------
-  def darken_color(color = nil, amt = 0.6)
-    return getDarkerColor(color,amt)
+  def target(sprite)
+    return if !sprite || !sprite.is_a?(Sprite)
+    self.render(Rect.new(0, 0, sprite.width, sprite.height))
+    self.anchor = sprite
+  end
+  #-----------------------------------------------------------------------------
+  #  update sprite
+  #-----------------------------------------------------------------------------
+  def update
+    super
+    if self.anchor
+      self.x = self.anchor.x - self.anchor.ox + self.anchor.width/2
+      self.y = self.anchor.y - self.anchor.oy + self.anchor.height/2
+      self.opacity = self.anchor.opacity
+      self.visible = self.anchor.visible
+    end
   end
   #-----------------------------------------------------------------------------
 end
@@ -1148,6 +1215,15 @@ class Color
   def self.teal; return Color.new(0, 255, 255); end
   def self.magenta; return Color.new(255, 0, 255); end
   #-----------------------------------------------------------------------------
+	# returns darkened color
+  #-----------------------------------------------------------------------------
+  def darken(amt = 0.2)
+    red = self.red - self.red*amt
+    green = self.green - self.green*amt
+    blue = self.blue - self.blue*amt
+    return Color.new(red, green, blue)
+  end
+  #-----------------------------------------------------------------------------
 end
 #===============================================================================
 #  downloads a bitmap and returns it
@@ -1159,6 +1235,28 @@ def onlineBmp(url)
   bmp = pbBitmap(fname)
   File.delete(fname)
   return bmp
+end
+#===============================================================================
+#  Block callback wrapper structure
+#===============================================================================
+class CallbackWrapper
+  @params = {}
+  #-----------------------------------------------------------------------------
+  #  execute callback
+  #-----------------------------------------------------------------------------
+  def execute(block, *args)
+    @params.each do |key, value|
+      args.instance_variable_set("@#{key.to_s}", value)
+    end
+    args.instance_eval(&block)
+  end
+  #-----------------------------------------------------------------------------
+  #  set instance variables
+  #-----------------------------------------------------------------------------
+  def set(params)
+    @params = params
+  end
+  #-----------------------------------------------------------------------------
 end
 #===============================================================================
 #  Error logger utility
@@ -1179,6 +1277,7 @@ class ErrorLogger
   def log_msg(msg, type = "INFO", file = nil)
     file = @file if file.nil?
     msg = "#{time_stamp} [#{type.upcase}] #{msg}\r\n"
+    Kernel.echoln(msg)
     File.open(file, 'ab') {|f| f.write(msg)}
   end
   #-----------------------------------------------------------------------------
@@ -1294,6 +1393,36 @@ module Env
     return str
   end
   #-----------------------------------------------------------------------------
+  # process cmd string
+  #-----------------------------------------------------------------------------
+  def self.proc_cmd(string)
+    arr = []
+    string.split("--").each {|a| arr.push(a.strip.gsub("\\","/").gsub("\"",""))}
+    return arr[1..-1]
+  end
+  #-----------------------------------------------------------------------------
+  # run console commands
+  #-----------------------------------------------------------------------------
+  def self.cmd_run
+    return if File.safe?("Game.rgssad")
+    cmd_line = Win32API.new("kernel32", "GetCommandLine", "", "P")
+    cmd_in = self.proc_cmd(cmd_line.call)
+    if cmd_in.length > 0
+      case cmd_in[0]
+      when "decompile_rxdata"
+        if cmd_in.length > 2 && cmd_in[1].include?(".rxdata")
+          File.decompile(cmd_in[1], cmd_in[2])
+          exit
+        end
+      when "compile_rxdata"
+        if cmd_in.length > 2
+          Dir.compile(cmd_in[1], cmd_in[2])
+          exit
+        end
+      end
+    end
+  end
+  #-----------------------------------------------------------------------------
 end
 #===============================================================================
 #  Darken color
@@ -1397,6 +1526,7 @@ def pbWait(*args)
   return if skip
   return pbWait_updater(*args)
 end
+def firstApr?; return Time.now.mon == 4 && Time.now.day == 1; end
 #===============================================================================
 # Don't touch these
 # mainly legacy support

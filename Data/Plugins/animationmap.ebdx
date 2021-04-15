@@ -1,0 +1,15 @@
+{"NORMAL{"__pk__{	"multiHitMove["FURYSWIPES"allOpposing["HYPERVOICE"physicalMove["TACKLE"specialMove["HYPERBEAM"
+STEEL{@{	"multiHitMove["GEARGRIND"statusMove["AUTOTOMIZE"physicalMove["IRONHEAD"specialMove["MAGNETBOMB"ELECTRIC{@{"multiHitMove["THUNDERPUNCH"nonUser["DISCHARGE"statusMove["THUNDERWAVE"allOpposing["ELECTROWEB"physicalMove["
+SPARK"specialMove["THUNDERBOLT"ICE{@{
+"multiHitMove["ICEPUNCH"statusMove["	MIST"allOpposing["ICYWIND"physicalMove["ICICLECRASH"specialMove["ICEBEAM"	DARK{@{	"statusMove["NASTYPLOT"allOpposing["DARKVOID"physicalMove["NIGHTSLASH"specialMove["DARKPULSE"
+WATER{@{"multiHitMove["CRABHAMMER"nonUser["	SURF"statusMove["AQUARING"allOpposing["BUBBLE"physicalMove["CRABHAMMER"specialMove["WATERGUN"DRAGON{@{
+"multiHitMove["DUALCHOP"statusMove["DRAGONDANCE"allOpposing["OUTRAGE"physicalMove["DRAGONCLAW"specialMove["DRAGONBREATH"
+GHOST{@{	"multiHitMove["SHADOWCLAW"statusMove["HEX"physicalMove["SHADOWCLAW"specialMove["SHADOWBALL"	FIRE{@{"multiHitMove["FIREPUNCH"nonUser["LAVAPLUME"statusMove["WILLOWISP"allOpposing["HEATWAVE"physicalMove["FLAREBLITZ"specialMove["FLAMETHROWER"
+GRASS{@{
+"multiHitMove["BULLETSEED"statusMove["INGRAIN"allOpposing["RAZORLEAF"physicalMove["VINEWHIP"specialMove["LEAFSTORM"	ROCK{@{	"statusMove["ROCKPOLISH"allOpposing["ROCKSLIDE"physicalMove["ROCKSLIDE"specialMove["ANCIENTPOWER"FIGHTING{@{	"multiHitMove["DOUBLEKICK"statusMove["BULKUP"physicalMove["CLOSECOMBAT"specialMove["AURASPHERE"GROUND{@{
+"multiHitMove["BONERUSH"nonUser["EARTHQUAKE"statusMove["MUDSPORT"physicalMove["EARTHQUAKE"specialMove["EARTHPOWER"FLYING{@{
+"multiHitMove["WINGATTACK"statusMove["
+ROOST"allOpposing["AIRCUTTER"physicalMove["WINGATTACK"specialMove["AIRSLASH"POISON{@{"multiHitMove["POISONJAB"nonUser["SLUDGEWAVE"statusMove["
+TOXIC"allOpposing["POISONGAS"physicalMove["POISONJAB"specialMove["SLUDGEBOMB"BUG{@{
+"multiHitMove["PINMISSILE"statusMove["RAGEPOWDER"allOpposing["STRINGSHOT"physicalMove["BUGBITE"specialMove["STRUGGLEBUG"PSYCHIC{@{
+"nonUser["SYNCHRONOISE"statusMove["MEDITATE"allOpposing["HEALBLOCK"physicalMove["PSYCHOCUT"specialMove["PSYCHIC

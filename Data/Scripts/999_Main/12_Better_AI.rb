@@ -462,37 +462,6 @@ end
 		return pbChooseBestNewEnemy(idxBattler,party,enemies)
 	end
 
-	def pbChooseBestNewEnemy(idxBattler,party,enemies)
-		return -1 if !enemies || enemies.length==0
-		best    = -1
-		bestSum = 0
-		movesData = pbLoadMovesData
-		enemies.each do |i|
-			pkmn = party[i]
-			sum  = 0
-			sum2 = 0
-			pkmn.each do |t|
-				next if t.fainted
-				eTypes = t.pbTypes(true)
-				pkmn.moves.each do |m|
-				next if m.id==0
-				moveData = movesData[m.id]
-				next if moveData[MOVE_BASE_DAMAGE]==0
-				@battle.battlers[idxBattler].eachOpposing do |b|
-					bTypes = b.pbTypes(true)
-					sum += PBTypes.getCombinedEffectiveness(moveData[MOVE_TYPE],
-						bTypes[0],bTypes[1],bTypes[2])
-					sum2 += (PBTypes.getCombinedEffectiveness(eTypes[0],bTypes[0],bTypes[1],bTypes[2]) * PBTypes.getCombinedEffectiveness(eTypes[1],bTypes[0],bTypes[1],bTypes[2]) * PBTypes.getCombinedEffectiveness(eTypes[2],bTypes[0],bTypes[1],bTypes[2]))
-				end
-			end
-			if best == -1 || (sum - sum2) > bestSum
-				best = i
-				bestSum = sum - sum2
-				end
-			end
-		end
-		return best
-	end
 end
 #===============================================================================
 # * Attacks

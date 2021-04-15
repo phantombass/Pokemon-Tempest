@@ -1,0 +1,311 @@
+#===============================================================================
+#  Nuzlocke functionality for EBS DX
+#-------------------------------------------------------------------------------
+#  creates a Nuzlocke Game Mode complete with all the proper rules
+#===============================================================================
+module EliteBattle
+  @nuzlocke = false
+  #-----------------------------------------------------------------------------
+  #  check if nuzlocke is on
+  #-----------------------------------------------------------------------------
+  def self.nuzlocke?
+    return $PokemonGlobal && $PokemonGlobal.isNuzlocke
+  end
+  #-----------------------------------------------------------------------------
+  #  recurring function to get the very first species in the evolutionary line
+  #-----------------------------------------------------------------------------
+  def self.getFirstEvo(species)
+    prev = pbGetPreviousForm(species)
+    return species if prev == species
+    return self.getFirstEvo(prev)
+  end
+  #-----------------------------------------------------------------------------
+  #  recurring function to get every evolution after defined species
+  #-----------------------------------------------------------------------------
+  def self.getNextEvos(species)
+    evo = pbGetEvolvedFormData(species); all = []
+    return [species] if evo.length < 1
+    for arr in evo
+      all += [arr[2]]
+      all += self.getNextEvos(arr[2])
+    end
+    return all.uniq
+  end
+  #-----------------------------------------------------------------------------
+  #  function to get all species inside an evolutionary line
+  #-----------------------------------------------------------------------------
+  def self.getEvolutionaryLine(species)
+    species = getConst(PBSpecies,species) unless species.is_a?(Numeric)
+    species = self.getFirstEvo(species)
+    return [species] + self.getNextEvos(species)
+  end
+  #-----------------------------------------------------------------------------
+  #  checks if an evo line has been caught so far
+  #-----------------------------------------------------------------------------
+  def self.checkEvoNuzlocke?(species)
+    return false if !$PokemonGlobal || !$PokemonGlobal.nuzlockeData
+    species = getConst(PBSpecies,species) unless species.is_a?(Numeric)
+    for poke in self.getEvolutionaryLine(species)
+      return true if $Trainer.owned[poke]
+    end
+    return false
+  end
+  #-----------------------------------------------------------------------------
+  #  starts nuzlocke mode
+  #-----------------------------------------------------------------------------
+  def self.startNuzlocke(skip = false)
+    ret = $PokemonGlobal && $PokemonGlobal.isNuzlocke
+    ret = self.nuzlockeSelection unless skip
+    $PokemonGlobal.qNuzlocke = ret
+    # sets the nuzlocke to true if already has a bag and Pokeballs
+    for i in 1..PBItems.maxValue
+      break if !$PokemonBag
+      if pbIsPokeBall?(i) && $PokemonBag.pbHasItem?(i)
+        @nuzlocke = ret
+        $PokemonGlobal.isNuzlocke = ret
+        break
+      end
+    end
+    # creates global variable
+    $PokemonGlobal.nuzlockeData = {} if $PokemonGlobal.nuzlockeData.nil?
+  end
+  #-----------------------------------------------------------------------------
+  #  creates an UI to select the nuzlocke options
+  #-----------------------------------------------------------------------------
+  def self.nuzlockeSelection
+    # list of all possible rules
+    modifiers = [:NOREVIVE, :PERMADEATH, :ONEROUTE, :DUPSCLAUSE, :STATIC]
+    # list of rule descriptions
+    desc = [
+      _INTL("Cannot revive fainted battlers"),
+      _INTL("Auto-delete fainted battlers"),
+      _INTL("One capture per map"),
+      _INTL("Disregard duplicate species (line)"),
+      _INTL("Exclude static from capture limit")
+    ]
+    # default
+    added = [:NOREVIVE, :DUPSCLAUSE, :ONEROUTE, :STATIC]; cmd = 0
+    # creates help text message window
+    msgwindow = pbCreateMessageWindow(nil, "choice 1")
+    msgwindow.text = _INTL("Select the Nuzlocke Rules you wish to apply.")
+    # main loop
+    loop do
+      # generates all commands
+      commands = []
+      for i in 0...modifiers.length
+        commands.push(_INTL("{1} {2}",(added.include?(modifiers[i])) ? "[X]" : "[  ]",desc[i]))
+      end
+      commands.push(_INTL("Done"))
+      # goes to command window
+      cmd = self.commandWindow(commands, cmd, msgwindow)
+      # processes return
+      if cmd < 0
+        clear = pbConfirmMessage("Do you wish to cancel the Nuzlocke selection?")
+        added.clear if clear
+        next unless clear
+      end
+      break if cmd < 0 || cmd >= (commands.length - 1)
+      if cmd >= 0 && cmd < (commands.length - 1)
+        if added.include?(modifiers[cmd])
+          added.delete(modifiers[cmd])
+        else
+          added.push(modifiers[cmd])
+        end
+      end
+    end
+    # disposes of message window
+    pbDisposeMessageWindow(msgwindow)
+    # adds randomizer rules
+    EliteBattle.addData(:NUZLOCKE, :RULES, added)
+    # shows message
+    msg = _INTL("Your selected Nuzlocke rules have been applied.")
+    msg = _INTL("No Nuzlocke rules have been applied.") if added.length < 1
+    msg = _INTL("Your selection has been cancelled.") if cmd < 0
+    pbMessage(msg)
+    Input.update
+    return added.length > 0
+  end
+  #-----------------------------------------------------------------------------
+end
+#===============================================================================
+#  adding nuzlocke functionality to battler specific classes
+#===============================================================================
+class PokeBattle_Pokemon
+  attr_accessor :permaFaint
+  #-----------------------------------------------------------------------------
+  #  modifies returned HP
+  #-----------------------------------------------------------------------------
+  alias hpget_ebdx_nuzlocke hp unless self.method_defined?(:hpget_ebdx_nuzlocke)
+  def hp
+    return (self.permaFaint && EliteBattle.get(:nuzlocke)) ? 0 : hpget_ebdx_nuzlocke
+  end
+  #-----------------------------------------------------------------------------
+  #  if HP falls to (or below 0) permanent faint is in effect
+  #-----------------------------------------------------------------------------
+  alias hpset_ebdx_nuzlocke hp= unless self.method_defined?(:hpset_ebdx_nuzlocke)
+  def hp=(val)
+    data = EliteBattle.getData(:NUZLOCKE, PBMetrics, :RULES); data = [] if data.nil?
+    self.permaFaint = true if EliteBattle.get(:nuzlocke) && (data.include?(:NOREVIVE) || data.include?(:PEMADEATH)) && val <= 0
+    hpset_ebdx_nuzlocke((self.permaFaint && EliteBattle.get(:nuzlocke)) ? 0 : val)
+  end
+  #-----------------------------------------------------------------------------
+end
+#===============================================================================
+class PokeBattle_Battler
+  #-----------------------------------------------------------------------------
+  #  modifies returned HP
+  #-----------------------------------------------------------------------------
+  alias hpget_ebdx_nuzlocke hp unless self.method_defined?(:hpget_ebdx_nuzlocke)
+  def hp
+    return (@pokemon && @pokemon.permaFaint && EliteBattle.get(:nuzlocke)) ? 0 : hpget_ebdx_nuzlocke
+  end
+  #-----------------------------------------------------------------------------
+  #  if HP falls to (or below 0) permanent faint is in effect
+  #-----------------------------------------------------------------------------
+  alias hpset_ebdx_nuzlocke hp= unless self.method_defined?(:hpset_ebdx_nuzlocke)
+  def hp=(val)
+    data = EliteBattle.getData(:NUZLOCKE, PBMetrics, :RULES); data = [] if data.nil?
+    @pokemon.permaFaint = true if EliteBattle.get(:nuzlocke) && (data.include?(:NOREVIVE) || data.include?(:PEMADEATH)) && val <= 0
+    hpset_ebdx_nuzlocke((@pokemon.permaFaint && EliteBattle.get(:nuzlocke)) ? 0 : val)
+  end
+  #-----------------------------------------------------------------------------
+end
+#===============================================================================
+#  registers battler for map if fainted in battle
+#===============================================================================
+class PokeBattle_Scene
+  attr_accessor :firstFainted
+  #-----------------------------------------------------------------------------
+  #  registers defeated battler on map
+  #-----------------------------------------------------------------------------
+  alias pbFaintBattler_ebdx_nuzlocke pbFaintBattler unless self.method_defined?(:pbFaintBattler_ebdx_nuzlocke)
+  def pbFaintBattler(battler)
+    if !@battle.opponent && !playerBattler?(battler)
+      data = EliteBattle.getData(:NUZLOCKE, PBMetrics, :RULES); data = [] if data.nil?
+      unless (@battle.pbParty(1).length == 2  && !self.firstFainted)
+        if EliteBattle.get(:nuzlocke) && data.include?(:ONEROUTE)
+          evo = EliteBattle.checkEvoNuzlocke?(battler.pokemon.species) && data.include?(:DUPSCLAUSE)
+          static = data.include?(:STATIC) && !$nonStaticEncounter
+          map = $PokemonGlobal.nuzlockeData[$game_map.map_id]
+          $PokemonGlobal.nuzlockeData[$game_map.map_id] = true if map.nil? && !static && !evo
+        end
+      end
+      self.firstFainted = true
+    end
+    # returns original function
+    return pbFaintBattler_ebdx_nuzlocke(battler)
+  end
+  #-----------------------------------------------------------------------------
+end
+#===============================================================================
+#  adding nuzlocke functionality to delete fainted battlers from party
+#  (applied after battle is finished)
+#===============================================================================
+class PokeBattle_Battle
+  #-----------------------------------------------------------------------------
+  #  deletes all fainted battlers after battle (if rule is applied)
+  #-----------------------------------------------------------------------------
+  alias pbEndOfBattle_ebdx_nuzlocke pbEndOfBattle unless self.method_defined?(:pbEndOfBattle_ebdx_nuzlocke)
+  def pbEndOfBattle
+    ret = pbEndOfBattle_ebdx_nuzlocke
+    # applies permadeath
+    data = EliteBattle.getData(:NUZLOCKE, PBMetrics, :RULES); data = [] if data.nil?
+    if EliteBattle.get(:nuzlocke) && data.include?(:PERMADEATH)
+      for i in 0...$Trainer.party.length
+        k = $Trainer.party.length - 1 - i
+        if $Trainer.party[k].hp <= 0
+          $PokemonBag.pbStoreItem($Trainer.party[k].item, 1) if $Trainer.party[k].item
+          $Trainer.party.delete_at(k)
+          $PokemonTemp.evolutionLevels.delete_at(k)
+        end
+      end
+    end
+    return ret
+  end
+  #-----------------------------------------------------------------------------
+  #  allows for the catching of only one Pokemon per route
+  #-----------------------------------------------------------------------------
+  alias pbThrowPokeBall_ebdx_nuzlocke pbThrowPokeBall unless self.method_defined?(:pbThrowPokeBall_ebdx_nuzlocke)
+  def pbThrowPokeBall(*args)
+    # part to disable Pokeball throwing if already caught
+    data = EliteBattle.getData(:NUZLOCKE, PBMetrics, :RULES); data = [] if data.nil?
+    if EliteBattle.get(:nuzlocke) && data.include?(:ONEROUTE)
+      static = data.include?(:STATIC) && !$nonStaticEncounter
+      map = $PokemonGlobal.nuzlockeData[$game_map.map_id]
+      return pbDisplay(_INTL("Nuzlocke rules prevent you to catch a wild Pokémon on a map you already encountered one!")) if !map.nil? && !static
+    end
+    pbThrowPokeBall_ebdx_nuzlocke(*args)
+    # part that registers caught Pokemon for map
+    if EliteBattle.get(:nuzlocke) && data.include?(:ONEROUTE) && @decision == 4
+      $PokemonGlobal.nuzlockeData[$game_map.map_id] = true unless static
+    end
+  end
+  #-----------------------------------------------------------------------------
+  #  registers Pokemon for nuzlocke map when fleeing
+  #-----------------------------------------------------------------------------
+  alias pbRun_ebdx_nuzlocke pbRun unless self.method_defined?(:pbRun_ebdx_nuzlocke)
+  def pbRun(*args)
+    data = EliteBattle.getData(:NUZLOCKE, PBMetrics, :RULES); data = [] if data.nil?
+    if opposes?(args[0])
+      battler = self.battlers[args[0]]
+    else
+      battler = self.battlers[args[0]].pbOpposingSide
+    end
+    if EliteBattle.get(:nuzlocke) && data.include?(:ONEROUTE) && !self.opponent
+      evo = EliteBattle.checkEvoNuzlocke?(battler.pokemon.species) && data.include?(:DUPSCLAUSE)
+      static = data.include?(:STATIC) && !$nonStaticEncounter
+      map = $PokemonGlobal.nuzlockeData[$game_map.map_id]
+      $PokemonGlobal.nuzlockeData[$game_map.map_id] = true if map.nil? && !static && !evo
+    end
+    # returns original function
+    return pbRun_ebdx_nuzlocke(*args)
+  end
+  #-----------------------------------------------------------------------------
+end
+#===============================================================================
+#  losing the nuzlocke
+#===============================================================================
+alias pbStartOver_ebdx_nuzlocke pbStartOver unless defined?(:pbStartOver_ebdx_nuzlocke)
+def self.pbStartOver(*args)
+  if EliteBattle.get(:nuzlocke)
+    pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]All your Pokémon have fainted. You have lost the Nuzlocke challenge! The challenge will now be turned off."))
+    EliteBattle.set(:nuzlocke, false)
+    $PokemonGloba.isNuzlocke = false
+    pbStartOver_ebdx_nuzlocke(*args)
+  end
+  return pbStartOver_ebdx_nuzlocke(*args)
+end
+#===============================================================================
+#  additional entry to Global Metadata for randomized data storage
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :qNuzlocke
+  attr_accessor :nuzlockeData
+  attr_accessor :isNuzlocke
+end
+#===============================================================================
+#  starts nuzlocke only after obtaining a Pokeball
+#===============================================================================
+class PokemonBag
+  alias pbStoreItem_ebdx_nuzlocke pbStoreItem unless self.method_defined?(:pbStoreItem_ebdx_nuzlocke)
+  def pbStoreItem(*args)
+    ret = pbStoreItem_ebdx_nuzlocke(*args)
+    item = args[0]; item = getID(PBItems,item) if item.is_a?(String) || item.is_a?(Symbol)
+    if $PokemonGlobal && $PokemonGlobal.qNuzlocke && pbIsPokeBall?(item)
+      EliteBattle.set(:nuzlocke, true)
+      $PokemonGlobal.isNuzlocke = true
+    end
+    return ret
+  end
+end
+#===============================================================================
+#  refresh cache on load
+#===============================================================================
+class PokemonLoadScreen
+  alias pbStartLoadScreen_ebdx_nuzlocke pbStartLoadScreen unless self.method_defined?(:pbStartLoadScreen_ebdx_nuzlocke)
+  def pbStartLoadScreen
+    ret = pbStartLoadScreen_ebdx_nuzlocke
+    EliteBattle.startNuzlocke(true) if $PokemonGlobal && $PokemonGlobal.isNuzlocke
+    return ret
+  end
+end

@@ -118,6 +118,11 @@ def pbReadout(text)
     pbMessage(_INTL("\\me[{1}]\\PN found a Readout for \\c[1]{2}\\c[0] Weather!\\wtnp[30]",meName,readoutName))
     pbMessage(_INTL("\\PN installed it into the \\c[1]Weather Reader\\c[0]!"))
     $game_variables[Readouts::Count] += 1
+    if $game_variables[Readouts::Count] == 24
+      meComplete = "Voltorb flip win"
+      pbMessage(_INTL("\\me[{1}]\\PN has found all of the \\c[1]Weather Readouts\\c[0]!"))
+      completeQuest(0)
+    end
     pbSetSelfSwitch(@event_id,"A",true)
   end
 end
