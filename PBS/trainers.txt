@@ -97,3 +97,31 @@ Pokemon = PIKIPEK,18
 LoseText = "You're really good!"
 Pokemon = TROPIUS,19
 #-------------------------------
+# Rainbow Cliffs
+#-------------------------------
+[BUGCATCHER,Antonio]
+LoseText = "Buzz!"
+Pokemon = YANMA,20
+Pokemon = YANMA,20
+#-------------------------------
+[BUGCATCHER,Anthony]
+LoseText = "Oh wow!"
+Pokemon = HERACROSS,20
+Pokemon = YANMA,20
+#-------------------------------
+[BUGCATCHER,Antoine]
+LoseText = "Isn't it awesome?"
+Pokemon = SCYTHER,22
+#-------------------------------
+[YOUNGSTER,Deacon]
+LoseText = "Oh you're strong!"
+Pokemon = NIDORANmA,20
+  Form = 1
+Pokemon = NIDORINO,21
+  Form = 1
+#-------------------------------
+[BLACKBELT,Freddie]
+LoseText = "Sick!"
+Pokemon = PINSIR,22
+  Form = 1
+#-------------------------------

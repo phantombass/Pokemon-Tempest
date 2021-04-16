@@ -29,10 +29,10 @@ BattleVS         = trainerSM
 #-------------------------------
 [RIVAL3]
 BattleBGM        = HGSS-138-RivalBattle.ogg
+BattleVS         = integratedVS
 Scale            = 1
 #-------------------------------
 [RIVAL3,Akron]
-BattleVS         = classicVS
 BattleEnv        = SNOW
 BattleScript     = RIVAL1
 Ace              = 2

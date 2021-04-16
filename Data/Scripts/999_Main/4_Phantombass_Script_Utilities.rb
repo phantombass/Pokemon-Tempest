@@ -21,6 +21,26 @@ Events.onMapUpdate += proc {| sender, e |
     end
 }
 
+def pbHoneyTree
+  if pbConfirmMessage("There may be a Pokémon in this tree!\\nWould you like to use a Honey?")
+    if vHI("Honey")
+      vDI("Honey",1)
+      honeyEnc = rand(100)+1
+      if honeyEnc < 51
+        pbMessage(_INTL("You didn't manage to find anything."))
+      elsif honeyEnc >= 51 && honeyEnc < 81
+        vWB("Yanma",19)
+      elsif honeyEnc >= 81 && honeyEnc < 96
+        vWB("Heracross",20)
+      elsif honeyEnc >= 96
+        vWB("Scyther",21)
+      end
+    elsif !vHI("Honey")
+      pbMessage(_INTL("You don't have any Honey..."))
+    end
+  end
+end
+
 def poisonAllPokemon(event=nil)
     for pkmn in $Trainer.ablePokemonParty
        next if pkmn.hasType?(:POISON)  || pkmn.hasType?(:STEEL) ||

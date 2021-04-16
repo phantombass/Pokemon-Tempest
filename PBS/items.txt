@@ -790,3 +790,4 @@
 803,HAMMER1,Hammer Part 1,Hammer Part 1s,8,0,"An part used to craft a Hammer",0,0,6,
 804,HAMMER2,Hammer Part 2,Hammer Part 2s,8,0,"An part used to craft a Hammer",0,0,6,
 805,HAMMER3,Hammer Part 3,Hammer Part 3s,8,0,"An part used to craft a Hammer",0,0,6,
+806,TM115,TM115,TM115s,4,15000,"The user casts a hex on the opponent. It does more damage if the target is suffering.",3,0,0,HEX

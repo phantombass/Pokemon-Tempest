@@ -3735,6 +3735,12 @@ BattlerEnemyY   = 34
 BattlerAltitude = 0
 SpriteScaleEnemy = 1
 #-------------------------------
+[PINSIR,2]
+BattlerPlayerY  = 8
+BattlerEnemyY   = 34
+BattlerAltitude = 0
+SpriteScaleEnemy = 1
+#-------------------------------
 [HIPPOPOTAS,2]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 44
