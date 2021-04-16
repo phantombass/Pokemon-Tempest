@@ -123,5 +123,5 @@ Pokemon = NIDORINO,21
 [BLACKBELT,Freddie]
 LoseText = "Sick!"
 Pokemon = PINSIR,22
-  Form = 1
+  Form = 2
 #-------------------------------

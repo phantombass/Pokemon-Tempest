@@ -453,7 +453,7 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   def setWeather
     # loop once
-    for wth in [["Rain", [:Rain, :HeavyRain, :Storm]], ["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]]]
+    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain]], ["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]]]
       proceed = false
       for cond in (wth[1].is_a?(Array) ? wth[1] : [wth[1]])
         proceed = true if @battle.pbWeather == getConst(PBWeather, cond)
