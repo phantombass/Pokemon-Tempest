@@ -3015,6 +3015,13 @@ BattleHandlers::AbilityOnSwitchIn.add(:SANDSTREAM,
   }
 )
 
+BattleHandlers::AbilityOnSwitchIn.add(:CLOUDCOVER,
+  proc { |ability,battler,battle|
+    next if battle.field.weather == PBWeather::Overcast
+    pbBattleWeatherAbility(PBWeather::Overcast,battler,battle)
+  }
+)
+
 BattleHandlers::AbilityOnSwitchIn.add(:GALEFORCE,
   proc { |ability,battler,battle|
     next if battle.field.weather == PBWeather::Windy

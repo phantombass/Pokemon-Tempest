@@ -323,3 +323,4 @@
 321,FAIRYBUBBLE,Fairy Bubble,"Fairy moves are stronger, and this Pokémon is immune to status."
 322,ACIDDRAIN,Acid Drain,"Heals some HP in Acid Rain weather."
 323,TOXICSURGE,Toxic Surge,"Summons Poison Terrain on entry."
+324,CLOUDCOVER,Cloud Cover,"Summons Overcast Weather on entry."
