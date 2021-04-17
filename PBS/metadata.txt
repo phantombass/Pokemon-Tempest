@@ -568,3 +568,16 @@ SnapEdges = true
 MapPosition = 0,16,7
 Outdoor = true
 ShowArea = true
+#-------------------------------
+[100]
+# Distura City
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,13,10
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[101]
+# Distura PMC
+SnapEdges = true
+MapPosition = 0,13,9

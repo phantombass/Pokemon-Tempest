@@ -3826,6 +3826,7 @@ SpriteScalePlayer = .75
 SpriteScaleEnemy = 1
 #-------------------------------
 [ALTEMPER,5]
+BattlerPlayerY  = -8
 SpriteScalePlayer = .75
 SpriteScaleEnemy = 1
 #-------------------------------
