@@ -505,78 +505,92 @@ class Game_Character
 
   alias stair_screen_y screen_y
   def screen_y
-    real_y = @real_y
-    if on_stair?
-      if @real_x / Game_Map::X_SUBPIXELS.to_f <= @stair_start_x * Game_Map::TILE_WIDTH &&
-         @stair_end_x < @stair_start_x
-        distance = (@stair_start_x - @stair_end_x) * Game_Map::REAL_RES_X -
-            2.0 * @stair_begin_offset * Game_Map::X_SUBPIXELS
-        rpos = @real_x - @stair_end_x * Game_Map::REAL_RES_X - @stair_begin_offset * Game_Map::X_SUBPIXELS
-        fraction = 1 - rpos / distance.to_f
-        if fraction >= 0 && fraction <= 1
-          diff = fraction * (@stair_end_y - @stair_start_y) * Game_Map::REAL_RES_Y
-          real_y += diff
-          if self.is_a?(Game_Player)
-            if SMOOTH_SCROLLING
-              @view_offset_y += diff - (@stair_last_increment || 0)
-            else
-              $game_map.scroll_down(diff - (@stair_last_increment || 0))
-            end
-          end
-          @stair_last_increment = diff
-        end
-        if fraction >= 1
-          endy = @stair_end_y
-          if @stair_end_y < @stair_start_y
-            endy -= @stair_y_position
-          else
-            endy -= @stair_y_position
-          end
-          @y = endy
-          @real_y = endy * Game_Map::REAL_RES_Y
-          @view_offset_y = 0 if SMOOTH_SCROLLING && self.is_a?(Game_Player)
-          clear_stair_data
-          return stair_screen_y
-        end
-      elsif @real_x / Game_Map::X_SUBPIXELS.to_f >= @stair_start_x * Game_Map::TILE_WIDTH &&
-          @stair_end_x > @stair_start_x
-        distance = (@stair_end_x - @stair_start_x) * Game_Map::REAL_RES_X -
-            2.0 * @stair_begin_offset * Game_Map::X_SUBPIXELS
-        rpos = @stair_start_x * Game_Map::REAL_RES_X - @real_x + @stair_begin_offset * Game_Map::X_SUBPIXELS
-        fraction = rpos / distance.to_f
-        if fraction <= 0 && fraction >= -1
-          diff = fraction * (@stair_start_y - @stair_end_y) * Game_Map::REAL_RES_Y
-          real_y += diff
-          if self.is_a?(Game_Player)
-            if SMOOTH_SCROLLING
-              @view_offset_y += diff - (@stair_last_increment || 0)
-            else
-              $game_map.scroll_down(diff - (@stair_last_increment || 0))
-            end
-          end
-          @stair_last_increment = diff
-        end
-        if fraction <= -1
-          endy = @stair_end_y
-          if @stair_end_y < @stair_start_y
-            endy -= @stair_y_position
-          else
-            endy -= @stair_y_position
-          end
-          @y = endy
-          @real_y = endy * Game_Map::REAL_RES_Y
-          @view_offset_y = 0 if SMOOTH_SCROLLING && self.is_a?(Game_Player)
-          clear_stair_data
-          return stair_screen_y
-        end
-      else
-        clear_stair_data
-      end
-    elsif jumping?
-      n = (@jump_count - @jump_peak).abs
-      return (real_y - self.map.display_y + 3) / 4 + Game_Map::TILE_HEIGHT -
-          (@jump_peak * @jump_peak - n * n) / 2
-    end
-    return (real_y - self.map.display_y + 3) / 4 + (Game_Map::TILE_HEIGHT)
-  end
-end
+     ret = screen_y_ground # new - required for v18.1 jump mechanic
+     real_y = @real_y
+     if on_stair?
+       if @real_x / Game_Map::X_SUBPIXELS.to_f <= @stair_start_x * Game_Map::TILE_WIDTH &&
+          @stair_end_x < @stair_start_x
+         distance = (@stair_start_x - @stair_end_x) * Game_Map::REAL_RES_X -
+             2.0 * @stair_begin_offset * Game_Map::X_SUBPIXELS
+         rpos = @real_x - @stair_end_x * Game_Map::REAL_RES_X - @stair_begin_offset * Game_Map::X_SUBPIXELS
+         fraction = 1 - rpos / distance.to_f
+         if fraction >= 0 && fraction <= 1
+           diff = fraction * (@stair_end_y - @stair_start_y) * Game_Map::REAL_RES_Y
+           real_y += diff
+           if self.is_a?(Game_Player)
+             if SMOOTH_SCROLLING
+               @view_offset_y += diff - (@stair_last_increment || 0)
+             else
+               $game_map.scroll_down(diff - (@stair_last_increment || 0))
+             end
+           end
+           @stair_last_increment = diff
+         end
+         if fraction >= 1
+           endy = @stair_end_y
+           if @stair_end_y < @stair_start_y
+             endy -= @stair_y_position
+           else
+             endy -= @stair_y_position
+           end
+           @y = endy
+           @real_y = endy * Game_Map::REAL_RES_Y
+           @view_offset_y = 0 if SMOOTH_SCROLLING && self.is_a?(Game_Player)
+           clear_stair_data
+           return stair_screen_y
+         end
+       elsif @real_x / Game_Map::X_SUBPIXELS.to_f >= @stair_start_x * Game_Map::TILE_WIDTH &&
+           @stair_end_x > @stair_start_x
+         distance = (@stair_end_x - @stair_start_x) * Game_Map::REAL_RES_X -
+             2.0 * @stair_begin_offset * Game_Map::X_SUBPIXELS
+         rpos = @stair_start_x * Game_Map::REAL_RES_X - @real_x + @stair_begin_offset * Game_Map::X_SUBPIXELS
+         fraction = rpos / distance.to_f
+         if fraction <= 0 && fraction >= -1
+           diff = fraction * (@stair_start_y - @stair_end_y) * Game_Map::REAL_RES_Y
+           real_y += diff
+           if self.is_a?(Game_Player)
+             if SMOOTH_SCROLLING
+               @view_offset_y += diff - (@stair_last_increment || 0)
+             else
+               $game_map.scroll_down(diff - (@stair_last_increment || 0))
+             end
+           end
+           @stair_last_increment = diff
+         end
+         if fraction <= -1
+           endy = @stair_end_y
+           if @stair_end_y < @stair_start_y
+             endy -= @stair_y_position
+           else
+             endy -= @stair_y_position
+           end
+           @y = endy
+           @real_y = endy * Game_Map::REAL_RES_Y
+           @view_offset_y = 0 if SMOOTH_SCROLLING && self.is_a?(Game_Player)
+           clear_stair_data
+           return stair_screen_y
+         end
+       else
+         clear_stair_data
+       end
+     # elsif jumping?
+       # n = (@jump_count - @jump_peak).abs
+       # return (real_y - self.map.display_y + 3) / 4 + Game_Map::TILE_HEIGHT -
+           # (@jump_peak * @jump_peak - n * n) / 2
+     # end
+     # Edit start
+     elsif jumping?
+       if @jump_count > 0
+         jump_fraction = ((@jump_count * jump_speed_real / Game_Map::REAL_RES_X) - 0.5).abs   # 0.5 to 0 to 0.5
+       else
+         jump_fraction = ((@jump_distance_left / @jump_distance) - 0.5).abs   # 0.5 to 0 to 0.5
+       end
+       ret += @jump_peak * (4 * jump_fraction**2 - 1)
+     end
+     if jumping?
+         return ret
+     end
+     #
+     return (real_y - self.map.display_y + 3) / 4 + (Game_Map::TILE_HEIGHT)
+   end
+ end

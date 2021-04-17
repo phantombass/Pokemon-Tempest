@@ -125,3 +125,37 @@ LoseText = "Sick!"
 Pokemon = PINSIR,22
   Form = 2
 #-------------------------------
+# Haunted Forest
+#-------------------------------
+[BUGCATCHER,Allan]
+LoseText = "Woohoo!"
+Pokemon = SCYTHER,24
+#-------------------------------
+[BUGCATCHER,Steve]
+LoseText = "It's freaky, man!"
+Pokemon = YANMA,22
+Pokemon = SPINARAK,20
+  Form = 1
+Pokemon = HERACROSS,24
+#-------------------------------
+[CHANNELER,Athena]
+LoseText = "Woohoo!"
+Pokemon = SHUPPET,22
+Pokemon = DUSKULL,22
+Pokemon = GASTLY,22
+  Form = 3
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt]
+LoseText = "Ugh!"
+Pokemon = NATU,23
+Pokemon = CHINGLING,23
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,1]
+LoseText = "Why are you so strong?"
+Pokemon = CLEFAIRY,25
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,2]
+LoseText = "Why are you so strong?"
+Pokemon = MEDITITE,24
+Pokemon = SABLEYE,24
+#-------------------------------

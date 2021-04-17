@@ -17,7 +17,11 @@ Events.onMapUpdate += proc {| sender, e |
         $game_variables[Level::Cap] = 20
       end
     when 3
-      $game_variables[Level::Cap] = 28
+      if $game_variables[Mission::Mission3]<3
+        $game_variables[Level::Cap] = 28
+      elsif $game_variables[Mission::Mission3]>=2 && $game_variables[Mission::Mission3]<5
+        $game_variables[Level::Cap] = 35
+      end
     end
 }
 

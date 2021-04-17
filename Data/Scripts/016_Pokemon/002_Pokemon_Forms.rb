@@ -692,7 +692,18 @@ MultipleForms.register(:BAGON,{
   }
 })
 
-MultipleForms.copy(:BAGON,:SHELGON,:SALAMENCE,:GASTLY,:HAUNTER,:GENGAR,:HIPPOPOTAS,:HIPPOWDON,:GIBLE,:GABITE,:GARCHOMP,:PINSIR,:TREECKO,:GROVYLE,:SCEPTILE,:TORCHIC,:COMBUSKEN,:BLAZIKEN,:MUDKIP,:MARSHTOMP,:SWAMPERT)
+MultipleForms.copy(:BAGON,:SHELGON,:SALAMENCE,:HIPPOPOTAS,:HIPPOWDON,:GIBLE,:GABITE,:GARCHOMP,:PINSIR,:TREECKO,:GROVYLE,:SCEPTILE,:TORCHIC,:COMBUSKEN,:BLAZIKEN,:MUDKIP,:MARSHTOMP,:SWAMPERT)
+
+MultipleForms.register(:GASTLY,{
+  "getFormOnCreation" => proc { |pkmn|
+    next if pkmn.formSimple>=4
+    mapPos = pbGetMetadata($game_map.map_id,MetadataMapPosition)
+    next 3 if mapPos && mapPos[0]==0   # Ufara region
+    next 0
+  }
+})
+
+MultipleForms.copy(:GASTLY,:HAUNTER,:GENGAR)
 
 MultipleForms.register(:DREEPY,{
   "getFormOnCreation" => proc { |pkmn|

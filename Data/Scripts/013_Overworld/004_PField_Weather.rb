@@ -431,7 +431,10 @@ module RPG
         @viewport.color.alpha = 0
       when PBFieldWeather::Overcast;
         @viewport.tone.set(-@max*6/4, -@max*6/4,  -@max*6/4, 20)
-        $game_map.fog_name = nil
+        $game_map.fog_name = "better"
+        $game_map.fog_opacity = 72
+        $game_map.fog_sx = 2
+        $game_map.fog_sy = 0
         @viewport.color.red = 0
         @viewport.color.green = 0
         @viewport.color.blue = 0

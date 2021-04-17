@@ -561,3 +561,10 @@ ShowArea = true
 # House
 SnapEdges = true
 MapPosition = 0,17,10
+#-------------------------------
+[099]
+# Haunted Forest
+SnapEdges = true
+MapPosition = 0,16,7
+Outdoor = true
+ShowArea = true

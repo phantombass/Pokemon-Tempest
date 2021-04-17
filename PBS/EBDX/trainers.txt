@@ -19,11 +19,11 @@ BattleVS         = classicVS
 [LEADER_Brock,Brock]
 BattleScript     = BROCK
 #-------------------------------
-[TEAMROCKET_M]
+[TEAMMAELSTROM_M]
 BattleIntro      = evilTeam
 BattleVS         = trainerSM
 #-------------------------------
-[TEAMROCKET_F]
+[TEAMMAELSTROM_F]
 BattleIntro      = evilTeam
 BattleVS         = trainerSM
 #-------------------------------

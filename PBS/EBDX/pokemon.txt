@@ -3735,6 +3735,21 @@ BattlerEnemyY   = 34
 BattlerAltitude = 0
 SpriteScaleEnemy = 1
 #-------------------------------
+[GASTLY,3]
+BattlerPlayerY  = 19
+BattlerEnemyY   = 30
+BattlerAltitude = 13
+#-------------------------------
+[HAUNTER,3]
+BattlerPlayerY  = 38
+BattlerEnemyY   = 50
+BattlerAltitude = 10
+#-------------------------------
+[GENGAR,3]
+BattlerPlayerY  = 20
+BattlerEnemyY   = 30
+BattlerAltitude = 0
+#-------------------------------
 [PINSIR,2]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 34
