@@ -62,13 +62,13 @@ Pokemon = DRILBUR,15
 LoseText = "Oh no! My cute Pokémon!"
 Pokemon = HIPPOPOTAS,13
   Form = 2
-Pokemon = MAGIKARP,14
+Pokemon = PIPLUP,14
 #-------------------------------
 [FISHERMAN,Andy]
 LoseText = "Ah lost it!"
 Pokemon = MAGIKARP,12
 Pokemon = CHINCHOU,13
-Pokemon = MAGIKARP,14
+Pokemon = BARBOACH,14
 #-------------------------------
 # Rainbow Cliffs
 #-------------------------------
@@ -91,7 +91,7 @@ Pokemon = CLEFAIRY,17
 [YOUNGSTER,Spencer]
 LoseText = "Oh..."
 Pokemon = TIMBURR,18
-Pokemon = PIKIPEK,18
+Pokemon = TURTWIG,18
 #-------------------------------
 [YOUNGSTER,Eric]
 LoseText = "You're really good!"
@@ -147,12 +147,12 @@ Pokemon = GASTLY,22
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt]
 LoseText = "Ugh!"
-Pokemon = NATU,23
-Pokemon = CHINGLING,23
+Pokemon = NATU,22
+Pokemon = CHINGLING,22
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,1]
 LoseText = "Why are you so strong?"
-Pokemon = CLEFAIRY,25
+Pokemon = CLEFAIRY,23
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,2]
 LoseText = "Why are you so strong?"

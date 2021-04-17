@@ -11,7 +11,20 @@
 #===============================================================================
 #  run script as plugin
 #===============================================================================
-ver = "1.0.8"
+#===============================================================================
+#  Elite Battle: DX
+#    by Luka S.J.
+# ----------------
+#  Script Loader & Settings
+# ----------------
+#  system is based off the original Essentials battle system, made by
+#  Poccil & Maruno
+#
+#  Enjoy the script, and make sure to give credit!
+#===============================================================================
+#  run script as plugin
+#===============================================================================
+ver = "1.0.10"
 # set up plugin metadata
 if !defined?(PluginManager)
   raise "This script is only compatible with Essentials v18.x!"
@@ -80,7 +93,7 @@ SHOW_LINEUP_WILD = false
 USE_FOLLOWER_EXCEPTION = true
 
 # add EBDX debug menu
-SHOW_DEBUG_FEATURES = false
+SHOW_DEBUG_FEATURES = true
 #-------------------------------------------------------------------------------
 # Adds additional "camera" vectors for when the camera is idling
 # vector parameters are: x, y, angle, scale, scene zoom

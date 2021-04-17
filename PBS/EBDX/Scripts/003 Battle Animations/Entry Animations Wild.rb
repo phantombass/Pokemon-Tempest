@@ -10,14 +10,14 @@ class EliteBattle_BasicWildAnimations
     @viewport = viewport
     @species = EliteBattle.get(:wildSpecies)
     @level = EliteBattle.get(:wildLevel)
-    @form = EliteBattle.get(:wildForm)
+    @form = EliteBattle.get(:wildForm) || 0
     # animation selection processing for any special transitions
     if !@species.nil?
       if self.isRegi?
         return self.animRegi
       else
         for trans in ["minorLegendary", "bwLegendary", "bwLegendary2"]
-          return eval("self.#{trans}") if EliteBattle.canTransition?(trans, @species, @form) || EliteBattle.canTransition?(trans, @species, 0)
+          return eval("self.#{trans}") if EliteBattle.canTransition?(trans, @species, @form)
         end
       end
     end
@@ -667,7 +667,7 @@ class SunMoonSpeciesTransitions
     @sprites["impact"].y = @viewport.height/2
     @sprites["impact"].z = 999
     @sprites["impact"].opacity = 0
-    pbPlayCry(@species)
+    pbSEPlay(pbCryFile(@species, @form))
     @scene.pbShowPartyLineup(0) if SHOW_LINEUP_WILD
     @sprites["background"].show
     k = -1

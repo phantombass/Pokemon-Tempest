@@ -319,7 +319,7 @@ class PokeBattle_AI
     movesData = pbLoadMovesData
     # get opponent info
     opponent = @battle.pbGetOwnerFromBattlerIndex(idxBattler)
-    selAce = EliteBattle.getTrainerData(opponent.trainertype, :ACE, opponent)
+    selAce = EliteBattle.getTrainerData(opponent.trainertype, :ACE, opponent) if !opponent.nil?
     selAce = nil if !selAce.is_a?(Numeric) || selAce < 1 || selAce > 6
     # loop through possible selections
     enemies.each do |i|

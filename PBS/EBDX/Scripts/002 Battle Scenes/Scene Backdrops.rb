@@ -56,10 +56,12 @@ module EliteBattle
     terrain = $game_player.terrain_tag
     # base battle scene room data
     # outdoor field
-    data = EliteBattle.getData(:Grass, PBEnvironment, :BACKDROP).clone
+    try = EliteBattle.getData(:Grass, PBEnvironment, :BACKDROP)
+    data = try.clone if !try.nil?
     # defines indoor room
     if !$game_map || !pbGetMetadata($game_map.map_id, MetadataOutdoor)
-      data = EliteBattle.getData(:None, PBEnvironment, :BACKDROP).clone
+      try = EliteBattle.getData(:None, PBEnvironment, :BACKDROP)
+      data = try.clone if !try.nil?
       base = "indoor"
     end
     # applies room data for specific environment if defined

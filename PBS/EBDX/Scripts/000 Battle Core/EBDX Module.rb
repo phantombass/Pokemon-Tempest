@@ -88,9 +88,9 @@ module EliteBattle
         @nextBattleScript = nil
       elsif !@nextBattleScript.nil?
         @nextBattleScript = [@nextBattleScript] if !@nextBattleScript.is_a?(Array)
-        @nextBattleScript.push(val)
+        @nextBattleScript.push(val.is_a?(Hash) ? val.clone : nil)
       else
-        @nextBattleScript = [val]
+        @nextBattleScript = [val.is_a?(Hash) ? val.clone : nil]
       end
     else
       # merges hashes if applicable
@@ -140,6 +140,22 @@ module EliteBattle
     return nil
   end
   #-----------------------------------------------------------------------------
+  # checks if observed dataset contains form info (prevent skipping)
+  #-----------------------------------------------------------------------------
+  def self.hasFormData?(dataset, skey, const, form)
+    return false if !dataset.is_a?(Hash)
+    for key in dataset.keys
+      next if key == skey
+      for val in dataset[key]
+        if val.to_s.include?("_")
+          vry = val.to_s.split("_")
+          return true if vry[0] == const && vry[1].to_i == form
+        end
+      end
+    end
+    return false
+  end
+  #-----------------------------------------------------------------------------
   # registers all BGM
   #-----------------------------------------------------------------------------
   def self.assignBGM(key, *args)
@@ -151,20 +167,7 @@ module EliteBattle
   def self.nextBattleBGM?(id, variant = 0, ext = 0)
     return nil if id.nil?
     for key in @bgmData.keys
-      array = @bgmData[key]
-      array = [array] if !array.is_a?(Array)
-      for val in array
-        if val.to_s.include?("__i__")
-          vry = [val.to_s.split("__i__")[0]]
-          vry.push(variant) if variant.is_a?(String)
-          vry.push(ext) if ext > 0
-          return key if vry.join("__i__").to_sym == val
-        elsif val.to_s.include?("_")
-          prk = val.to_s.split("_"); variant = 0 if prk[1] == "0" && !array.include?("#{prk[0]}_#{variant}".to_sym)
-          return key if "#{self.const(prk[0].to_sym)}_#{prk[1]}" == "#{id}_#{variant}"
-        end
-        return key if id == self.const(val)
-      end
+      return key if self.canTransition?(key, id, variant, ext, @bgmData)
     end
     return nil
   end
@@ -226,9 +229,10 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   # checks whether or not to run special transition for constant
   #-----------------------------------------------------------------------------
-  def self.canTransition?(transition, id, variant = 0, ext = 0)
-    return false if !@transitionData.has_key?(transition)
-    array = @transitionData[transition]
+  def self.canTransition?(transition, id, variant = 0, ext = 0, dataset = @transitionData)
+    return false if !dataset.has_key?(transition)
+    vrnt = variant
+    array = dataset[transition]
     array = [array] if !array.is_a?(Array)
     return true if array.include?(:ALLOW_ALL)
     for val in array
@@ -238,8 +242,10 @@ module EliteBattle
         vry.push(ext) if ext > 0
         return true if vry.join("__i__").to_sym == val
       elsif val.to_s.include?("_")
-        prk = val.to_s.split("_"); variant = 0 if prk[1] == "0" && !array.include?("#{prk[0]}_#{variant}".to_sym)
-        return true if "#{self.const(prk[0].to_sym)}_#{prk[1]}" == "#{id}_#{variant}"
+        prk = val.to_s.split("_")
+        variant = 0 if prk[1] == "0" && !array.include?("#{prk[0]}_#{variant}".to_sym)
+        return true if "#{self.const(prk[0].to_sym)}_#{prk[1]}" == "#{id}_#{vrnt}"
+        return true if "#{self.const(prk[0].to_sym)}_#{prk[1]}" == "#{id}_#{variant}" && !self.hasFormData?(@transitionData, transition, prk[0], vrnt)
       end
       return true if self.const(val) == id
     end
@@ -382,8 +388,12 @@ module EliteBattle
         vry = hash_key.to_s.split("__i__")
         ct = self.const(vry[0].to_sym, mod)
         k = ct
-        k = nil if (variant.is_a?(String) && vry.length < 2) || (!variant.is_a?(String) && vry.length > 1)
-        k = nil if (ext > 0 && vry.length < 3) || (ext < 1 && vry.length > 2)
+        if ext.nil? || vry.nil?
+          k = nil
+        else
+          k = nil if (variant.is_a?(String) && vry.length < 2) || (!variant.is_a?(String) && vry.length > 1)
+          k = nil if (ext > 0 && vry.length < 3) || (ext < 1 && vry.length > 2)
+        end
       else
         k = self.const(hash_key, mod)
       end

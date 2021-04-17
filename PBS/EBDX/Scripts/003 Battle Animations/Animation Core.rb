@@ -151,7 +151,7 @@ module EliteBattle
   #  map move to one of global animations
   #-----------------------------------------------------------------------------
   def self.mapMoveGlobal(scene, type, userindex, targetindex, hitnum, multihit, multitarget, category)
-    type = hasConst?(PBTypes, type) ? getConstantName(PBTypes, type).to_s.upcase.to_sym : nil
+    type = type > -1 ? getConstantName(PBTypes, type).to_s.upcase.to_sym : nil
     return false if type.nil?
     id = nil
     id = @@allOpp[type] if id.nil? && multitarget == PBTargets::AllFoes

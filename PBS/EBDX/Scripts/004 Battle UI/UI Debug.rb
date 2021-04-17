@@ -14,7 +14,7 @@ class PokeBattle_Scene
     # begin main menu loop
     loop do
       @idleTimer = 0 # reset idle timer to prevent scene from moving
-      cmd = pbShowCommands(@sprites["msgwindow"], options, -1)
+      cmd = Kernel.pbShowCommands(@sprites["msgwindow"], options, -1)
       case cmd
       #------------------------------------------------------------------------
       when 0 # debug move animations
@@ -22,10 +22,10 @@ class PokeBattle_Scene
         opt = (animations[0] + animations[1]).sort
         loop do
           @idleTimer = 0
-          ccd = pbShowCommands(@sprites["msgwindow"], opt, -1)
+          ccd = Kernel.pbShowCommands(@sprites["msgwindow"], opt, -1)
           break if ccd < 0
           sel = opt[ccd]
-          user = pbShowCommands(@sprites["msgwindow"], ["Opponent","Player"])
+          user = Kernel.pbShowCommands(@sprites["msgwindow"], ["Opponent","Player"])
           target = 1 - user
           if animations[0].include?(sel) # move animations
             EliteBattle.playMoveAnimation(sel.to_sym, self, user, target, 0, false)
