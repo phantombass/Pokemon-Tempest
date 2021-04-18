@@ -87,6 +87,7 @@ class PokeBattle_Scene
     pokeball.z = spritePoke.z-1; shadow.z = pokeball.z-1; spritePoke.showshadow = false
     ballburst = EBBallBurst.new(pokeball.viewport,pokeball.x,pokeball.y,50,@vector.zoom1,balltype)
     ballburst.catching
+    clearMessageWindow
     # play burst animation and sprite zoom
     for i in 0...32
       if i < 20
@@ -168,6 +169,7 @@ class PokeBattle_Scene
     end
     # burst if 3 or less shakes
     if shakes < 4
+      clearMessageWindow
       self.wait(40)
       pokeball.src_rect.y = 9*40
       self.wait
@@ -193,7 +195,6 @@ class PokeBattle_Scene
       end
       # dispose and clear messages
       ballburst.dispose
-      clearMessageWindow
       # reset vector
       @vector.reset
       pbShowAllDataboxes(0)
@@ -207,6 +208,7 @@ class PokeBattle_Scene
         self.wait(1, true)
       end
     else
+      clearMessageWindow
       # play animation when wild is caught
       @caughtBattler = @battle.pbParty(1)[targetBattler/2]
       spritePoke.visible = false

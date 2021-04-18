@@ -88,7 +88,7 @@ class PokeBattle_Battle
         msg += _INTL(text, *memb)
         toSendOut.concat(sent)
       end
-      pbDisplayBrief(msg) if msg.length>0
+      pbDisplayExtended(msg) if msg.length>0
       # The actual sending out of Pokémon
       animSendOuts = []
       toSendOut.each do |idxBattler|
@@ -170,6 +170,7 @@ class PokeBattle_Battle
   #-----------------------------------------------------------------------------
   alias pbAttackPhase_ebdx pbAttackPhase unless self.method_defined?(:pbAttackPhase_ebdx)
   def pbAttackPhase
+    @scene.pbTrainerBattleSpeech("turnAttack")
     $skipDatWait = true
     ret = pbAttackPhase_ebdx
     @scene.afterAnim = false
@@ -180,11 +181,12 @@ class PokeBattle_Battle
   #-----------------------------------------------------------------------------
   #  pokemon capturing
   #-----------------------------------------------------------------------------
-  alias pbThrowPokeBall_ebdx pbThrowPokeBall unless self.method_defined?(:pbThrowPokeBall_ebdx)
+  alias pbThrowPokeBall_ebdx_2 pbThrowPokeBall unless self.method_defined?(:pbThrowPokeBall_ebdx_2)
   def pbThrowPokeBall(*args)
+    @scene.pbTrainerBattleSpeech("beforeThrowBall")
     @scene.briefmessage = true
-    ret = pbThrowPokeBall_ebdx(*args)
-    @scene.briefmessage = false
+    ret = pbThrowPokeBall_ebdx_2(*args)
+    @scene.pbTrainerBattleSpeech("afterThrowBall")
     return ret
   end
   #-----------------------------------------------------------------------------

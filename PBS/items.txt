@@ -809,3 +809,4 @@
 822,STATICORB,Static Orb,Static Orbs,1,0,"A shiny yellow orb that is said to have a legend tied to it. It's known to be connected with the Ufara region.",0,0,0,
 823,FROSTEDORB,Frosted Orb,Frosted Orbs,1,0,"An icy blue orb that is said to have a legend tied to it. It's known to be connected with the Ufara region.",0,0,0,
 824,TM116,TM116,TM116s,4,15000,"The user fires a beam of light at the opponent. It may lower the target's Attack.",3,0,0,AURORABEAM
+825,TM117,TM117,TM117s,4,15000,"The user kisses the opponent with a life-draining force. The user heals more than half the damage done.",3,0,0,DRAININGKISS

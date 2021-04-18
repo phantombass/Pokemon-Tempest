@@ -3,7 +3,7 @@
 #===============================================================================
 class PokeBattle_Scene
   # additional scene attributes
-  attr_accessor :idleTimer, :safaribattle, :vector
+  attr_accessor :idleTimer, :safaribattle, :vector, :inMoveAnim
   attr_accessor :sendingOut, :afterAnim, :lowHPBGM
   attr_accessor :briefmessage, :sprites, :introdone
   attr_accessor :playerLineUp, :opponentLineUp
@@ -36,6 +36,7 @@ class PokeBattle_Scene
     @vector.battle = @battle
     # setup for all the necessary variable
     @firstsendout = true
+    @inMoveAnim = false
     @lastcmd = [0, 0, 0, 0]
     @lastmove = [0, 0, 0, 0]
     @orgPos = nil

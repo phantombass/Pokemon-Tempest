@@ -13,6 +13,11 @@ def pbLoadPokemonBitmapSpecies(pokemon, species, back = false, scale = FRONT_SPR
   ret = nil; pokemon = pokemon.pokemon if pokemon.respond_to?(:pokemon)
   # sauce
   species = getConst(PBSpecies, :BIDOOF) if hasConst?(PBSpecies, :BIDOOF) && defined?(firstApr?) && firstApr?
+  # applies scale
+  scale = back ? BACK_SPRITE_SCALE : FRONT_SPRITE_SCALE
+  # gets additional scale (if applicable)
+  s = EliteBattle.getData(species, PBSpecies, (back ? :BACKSCALE : :SCALE), (pokemon.form rescue 0))
+  scale = s if !s.nil? && s.is_a?(Numeric)
   # get more metrics
   s = EliteBattle.getData(species, PBSpecies, :SPRITESPEED, (pokemon.form rescue 0))
   speed = s if !s.nil? && s.is_a?(Numeric)
@@ -80,6 +85,12 @@ end
 #===============================================================================
 def pbLoadSpeciesBitmap(species, female=false, form=0, shiny=false, shadow=false, back=false, egg=false, scale=FRONT_SPRITE_SCALE)
   ret = nil
+  # applies scale
+  scale = back ? BACK_SPRITE_SCALE : FRONT_SPRITE_SCALE
+  # gets additional scale (if applicable)
+  s = EliteBattle.getData(species, PBSpecies, (back ? :BACKSCALE : :SCALE), (form rescue 0))
+  scale = s if !s.nil? && s.is_a?(Numeric)
+  # check sprite
   if egg
     bitmapFileName = sprintf("Graphics/EBDX/Battlers/Eggs/%s", getConstantName(PBSpecies, species)) rescue nil
     if !pbResolveBitmap(bitmapFileName)

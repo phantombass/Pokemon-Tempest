@@ -8,7 +8,7 @@ class DataBoxEBDX  <  SpriteWrapper
   #-----------------------------------------------------------------------------
   #  constructor
   #-----------------------------------------------------------------------------
-  def initialize(battler, doublebattle, viewport = nil, player = nil, scene = nil)
+  def initialize(battler, viewport = nil, player = nil, scene = nil)
     @viewport = viewport
     @scene = scene
     @battle = scene.battle
@@ -16,7 +16,7 @@ class DataBoxEBDX  <  SpriteWrapper
     @battler = battler
     @pokemon = @battler.displayPokemon
     @trainer = @battle.opponent ? @battle.opponent[0] : nil
-    @doublebattle = doublebattle
+    @doublebattle = @battle.doublebattle?
     @playerpoke = (@battler.index%2) == 0
     @sprites = {}
     @path = "Graphics/EBDX/Pictures/UI/"
@@ -96,7 +96,7 @@ class DataBoxEBDX  <  SpriteWrapper
         @containerBmp = data[:CONTAINER] if data.has_key?(:CONTAINER) && data[:CONTAINER].is_a?(String)
         # expand databox even in doubles
         @expandDouble = data[:EXPANDINDOUBLES] == true ? true : false if data.has_key?(:EXPANDINDOUBLES)
-        @showexp = true if @expandDouble && @playerpoke
+        @showexp = true if @expandDouble && @playerpoke && @battler.pbOwnedByPlayer?
         @showhp = true if @expandDouble && @playerpoke
         # applies a set of possible modifier keys
         for key in data.keys
@@ -291,7 +291,7 @@ class DataBoxEBDX  <  SpriteWrapper
     pbSetSmallFont(@sprites["textName"].bitmap)
 
     @sprites["caught"] = Sprite.new(@viewport)
-    @sprites["caught"].bitmap = pbBitmap(@path+"battleBoxOwned") if !@playerpoke && @battler.owned && !@scene.battle.opponent
+    @sprites["caught"].bitmap = pbBitmap(@path + "battleBoxOwned") if !@playerpoke && @battler.owned? && !@scene.battle.opponent
     @sprites["caught"].z = @sprites["textName"].z
     @sprites["caught"].ex = @sprites["textName"].ex - 20
     @sprites["caught"].ey = @sprites["textName"].ey + 6

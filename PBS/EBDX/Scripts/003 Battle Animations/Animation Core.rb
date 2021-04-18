@@ -9,6 +9,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.withMoveParams(anim, scene, userindex, targetindex, hitnum, multihit, *args)
     # initialize wrapper and pass instance variables
+    scene.inMoveAnim = 0 if !anim.nil?
     wrapper = CallbackWrapper.new
     wrapper.set({ :scene => scene, :battle => scene.battle, :sprites => scene.sprites,
                  :userSprite => scene.sprites["pokemon_#{userindex}"],
@@ -191,7 +192,6 @@ class PokeBattle_Scene
   #-----------------------------------------------------------------------------
   def pbFaintBattler(pkmn)
     # reset variables
-    self.clearMessageWindow
     @vector.reset
     # setup objects
     poke = @sprites["pokemon_#{pkmn.index}"]
@@ -211,6 +211,7 @@ class PokeBattle_Scene
       databox.opacity -= 32
       self.wait(1, true)
     end
+    clearMessageWindow(true)
     # try to remove low HP BGM
     setBGMLowHP(false)
     # reset src_rect
@@ -359,8 +360,8 @@ class PokeBattle_Scene
   alias pbChangePokemon_ebdx pbChangePokemon unless self.method_defined?(:pbChangePokemon_ebdx)
   def pbChangePokemon(index, pokemon)
     return $skipMegaChange = false if $skipMegaChange
-    index = index.index if index.respond_to?("index")
-    handled = EliteBattle.playCommonAnimation(:FORMCHANGE, self, index, index, 0, pokemon)
+    ndx = index.respond_to?("index") ? index.index : index
+    handled = EliteBattle.playCommonAnimation(:FORMCHANGE, self, ndx, ndx, 0, pokemon)
     return pbChangePokemon_ebdx(index, pokemon) if !handled
   end
   #-----------------------------------------------------------------------------

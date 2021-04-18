@@ -144,7 +144,30 @@ Pokemon = DUSKULL,22
 Pokemon = GASTLY,22
   Form = 3
 #-------------------------------
-# Team Maelstrom
+# Pixie Cave
+#-------------------------------
+[PICNICKER,Faith]
+LoseText = "My cuties!"
+Pokemon = GASTLY,24
+  Form = 3
+#-------------------------------
+[PICNICKER,Sophie]
+LoseText = "To think these are not their normal typings!"
+Pokemon = NATU,23
+Pokemon = DUNSPARCE,23
+#-------------------------------
+[PICNICKER,Megan]
+LoseText = "Oh my!"
+Pokemon = CHINGLING,22
+Pokemon = MARILL,23
+Pokemon = CLEFAIRY,24
+#-------------------------------
+[BLACKBELT,Tyler]
+LoseText = "Bruh!"
+Pokemon = MACHOP,22
+  Form = 2
+#-------------------------------
+# Team Maelstrom - Haunted Forest/Pixie Caverns
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt]
 LoseText = "Ugh!"
@@ -159,6 +182,8 @@ Pokemon = CLEFAIRY,23
 LoseText = "Why are you so strong?"
 Pokemon = MEDITITE,24
 Pokemon = SABLEYE,24
+#-------------------------------
+# Team Maelstrom - Venom/Comet Lab
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,3]
 LoseText = "Get outta here..."

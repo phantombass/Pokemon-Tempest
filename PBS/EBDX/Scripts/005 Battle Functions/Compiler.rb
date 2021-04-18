@@ -3,6 +3,7 @@
 #-------------------------------------------------------------------------------
 #  used to compile PBS data and interpret them on run-time
 #===============================================================================
+
 module EBCompiler
   #-----------------------------------------------------------------------------
   # interpret file stream and convert to appropriate Hash map
@@ -157,6 +158,7 @@ module EBCompiler
     self.compileAnimations
     # clean up
     GC.start
+    EliteBattle.set(:compiled, true)
   end
   #-----------------------------------------------------------------------------
   # print out formatting error
@@ -171,13 +173,32 @@ module EBCompiler
     $raise_msg = "File: #{filename}\nError compiling data in Section: #{sectn}\nWrong number of arguments for Key: #{key}, got #{val.length} expected #{len}"
     return ""
   end
+  #-----------------------------------------------------------------------------
+  # interpret all the data from cache
+  #-----------------------------------------------------------------------------
+  def self.addFromCached
+    # get cache
+    cache = EliteBattle.get(:cachedData)
+    for ch in cache
+      # run each from cache
+      EliteBattle.addData(*ch)
+    end
+    # clear cache
+    cache.clear
+    EliteBattle.set(:cachedData, [])
+  end
+  # force start garbage collector
+  GC.start
+  #-----------------------------------------------------------------------------
 end
 #===============================================================================
 # run compiler
+raise "Place the EBDX script above [[Main]] but under all the default Essentials scripts!" if !defined?(pbCompiler)
 alias pbCompiler_ebdx pbCompiler unless defined?(pbCompiler_ebdx)
 def pbCompiler
   pbCompiler_ebdx
   EBCompiler.compile
   EliteBattle.setupData
   EliteBattle.setupGlobalAnimationMap
+  EBCompiler.addFromCached
 end

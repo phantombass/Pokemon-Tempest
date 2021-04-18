@@ -22,7 +22,7 @@ class PokeBattle_Scene
     # battle data boxes
     @battle.battlers.each_with_index do |b, i|
       next if !b
-      @sprites["dataBox_#{i}"] = DataBoxEBDX.new(b, @battle.doublebattle?, @msgview, @battle.pbPlayer, self)
+      @sprites["dataBox_#{i}"] = DataBoxEBDX.new(b, @msgview, @battle.pbPlayer, self)
     end
     # messageBox (window sprite) drawn dynamically based on screen size
     bmp1 = smartWindow(Rect.new(8, 8, 8, 8), Rect.new(0, 0, @viewport.width - 28, 82), "Graphics/EBDX/Pictures/UI/skin1")

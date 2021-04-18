@@ -376,18 +376,17 @@ class DynamicPokemonSprite
     @species = species.nil? ? pokemon.species : species
     @form = (@pokemon.form rescue 0)
     @isShadow = true if @pokemon.isShadow?
-    # applies scale
-    scale = back ? BACK_SPRITE_SCALE : FRONT_SPRITE_SCALE
-    # gets additional scale (if applicable)
-    s = EliteBattle.getData(@species, PBSpecies, (back ? :BACKSCALE : :SCALE), (@pokemon.form rescue 0))
-    scale = s if !s.nil? && s.is_a?(Numeric)
     # loads Pokemon bitmap
     if !species.nil?
-      @bitmap = pbLoadPokemonBitmapSpecies(pokemon, species, back, scale)
+      @bitmap = pbLoadPokemonBitmapSpecies(pokemon, species, back)
     else
-      @bitmap = pbLoadPokemonBitmap(pokemon, back, scale)
+      @bitmap = pbLoadPokemonBitmap(pokemon, back)
     end
-    @scale = scale
+    # applies scale
+    @scale = back ? BACK_SPRITE_SCALE : FRONT_SPRITE_SCALE
+    # gets additional scale (if applicable)
+    s = EliteBattle.getData(species, PBSpecies, (back ? :BACKSCALE : :SCALE), (form rescue 0))
+    @scale = s if !s.nil? && s.is_a?(Numeric)
     # assigns bitmap to sprite
     @sprite.bitmap = @bitmap.bitmap.clone
     @shadow.bitmap = @bitmap.bitmap.clone

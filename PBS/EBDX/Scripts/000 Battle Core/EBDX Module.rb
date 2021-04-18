@@ -45,6 +45,9 @@ module EliteBattle
   @logger = ErrorLogger.new("errorlogEBDX.txt")
   # cache move animations at game load
   @moveAnimations = load_data("Data/PkmnAnimations.rxdata")
+  # ensure compiling
+  @compiled = false
+  @cachedData = []
   #-----------------------------------------------------------------------------
   # initialize logger
   #-----------------------------------------------------------------------------
@@ -274,6 +277,13 @@ module EliteBattle
   # adds additional metadata for Trainer and Pokemon
   #-----------------------------------------------------------------------------
   def self.addData(constant, *args)
+    # compiler exception
+    if !@compiled
+      args.insert(0, constant)
+      @cachedData.push(args)
+      return
+    end
+    # begin data processing
     constant = [constant] if !constant.is_a?(Array)
     mods = ["other"]
     for try_m in ["PBEnvironment", "PBTerrain", "PBTrainers", "PBSpecies"]
@@ -346,6 +356,8 @@ module EliteBattle
           else
             set[args[i+1]] = [const]
           end
+        elsif [:BACKDROP].include?(args[i]) && args[i+1].is_a?(Symbol) && defined?(EBEnvironment) && hasConst?(EBEnvironment, args[i+1])
+          data[args[i]] = getConst(EBEnvironment, args[i+1])
         else
           data[args[i]] = args[i+1]
         end
@@ -414,11 +426,10 @@ module EliteBattle
     d1 = self.getData(const, PBTrainers, key)
     d2 = trainer.nil? ? nil : self.getData(const, PBTrainers, key, trainer.name)
     d3 = trainer.nil? ? nil : self.getData(const, PBTrainers, key, trainer.name, trainer.partyID)
-    data = nil
-    data = d1 if !d1.nil?
-    data = d2 if !d2.nil?
-    data = d3 if !d3.nil?
-    return data
+    return d3 if !d3.nil?
+    return d2 if !d2.nil?
+    return d1 if !d1.nil?
+    return nil
   end
   #-----------------------------------------------------------------------------
   # adds main battler metrics

@@ -126,11 +126,12 @@ class PokeBattle_Battle
   #-----------------------------------------------------------------------------
   #  prevents the catching of Pokemon if CATCH_RATE is less than 0
   #-----------------------------------------------------------------------------
-  alias pbThrowPokeBall_ebdx pbThrowPokeBall unless self.method_defined?(:pbThrowPokeBall)
+  alias pbThrowPokeBall_ebdx pbThrowPokeBall unless self.method_defined?(:pbThrowPokeBall_ebdx)
   def pbThrowPokeBall(idxPokemon, ball, rareness=nil, showplayer=false)
     # queues message for uncatchable Pokemon
     data = EliteBattle.get(:nextBattleData); data = {} if !data.is_a?(Hash)
     nocatch = data.has_key?(:CATCH_RATE) && data[:CATCH_RATE] < 0 && !@opponent
+    @scene.briefmessage = true
     return pbThrowPokeBall_ebdx(idxPokemon, ball, rareness, showplayer) unless nocatch
     battler = nil
     battler = opposes?(idxPokemon) ? self.battlers[idxPokemon] : self.battlers[idxPokemon].pbOppositeOpposing

@@ -45,8 +45,6 @@ class PokeBattle_Scene
   def pbAnimationCore(animation, user, target, oppMove = false)
     return if !animation
     @briefMessage = false
-    # clear message window and hide databoxes
-    clearMessageWindow
     # store databox visibility
     pbHideAllDataboxes
     # get the battler sprites
@@ -74,13 +72,15 @@ class PokeBattle_Scene
        oldTargetX, oldTargetY - targetHeight/2)
     # Play the animation
     @sprites["battlebg"].defocus
-    animPlayer.start
+    animPlayer.start; i = 0
     loop do
       # update necessary components
       animPlayer.update
       pbGraphicsUpdate
       pbInputUpdate
       animateScene
+      i += 1
+      clearMessageWindow if i == 16
       # finish with the animation player
       break if animPlayer.animDone?
     end
@@ -99,6 +99,7 @@ class PokeBattle_Scene
     end
     # reset databox visibility
     pbShowAllDataboxes
+    clearMessageWindow
   end
   #-----------------------------------------------------------------------------
   #  get choice details for moves
@@ -139,7 +140,6 @@ class PokeBattle_Scene
     target = (targets && targets.is_a?(Array)) ? targets[0] : targets
     target = user if !target
     # clears the current UI
-    clearMessageWindow
     pbHideAllDataboxes
     # Substitute animation
     if @sprites["pokemon_#{user.index}"] && @battle.battlescene
@@ -184,6 +184,7 @@ class PokeBattle_Scene
     end
     # restores cleared UI
     pbShowAllDataboxes
+    clearMessageWindow
     self.afterAnim = true
   end
   #-----------------------------------------------------------------------------

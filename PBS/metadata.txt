@@ -597,3 +597,24 @@ DarkMap = true
 # Venom Lab Control Room
 SnapEdges = true
 MapPosition = 0,14,9
+#-------------------------------
+[115]
+# Cosmic Coast
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,20,12
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[116]
+# House
+SnapEdges = true
+MapPosition = 0,22,12
+#-------------------------------
+[117]
+# Pixie Caverns
+SnapEdges = true
+Weather = Rain,0
+Dungeon = false
+MapPosition = 0,22,8
+ShowArea = true

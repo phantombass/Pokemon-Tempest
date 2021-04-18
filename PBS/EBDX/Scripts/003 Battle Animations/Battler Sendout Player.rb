@@ -10,6 +10,7 @@ class PokeBattle_Scene
     # skip for followers
     if sendOuts.length < 2 && !EliteBattle.follower(@battle).nil?
       @firstsendout = false
+      clearMessageWindow(true)
       return
     end
     metrics = load_data("Data/species_metrics.dat")

@@ -62,6 +62,12 @@ class PokeBattle_Battle
     @scene.clearMessageWindow if !@scene.briefmessage
   end
   #-----------------------------------------------------------------------------
+  #  extended display command
+  #-----------------------------------------------------------------------------
+  def pbDisplayExtended(msg, &block)
+    @scene.pbDisplayMessage(msg, true, &block)
+  end
+  #-----------------------------------------------------------------------------
   #  confirm message command
   #-----------------------------------------------------------------------------
   def pbDisplayConfirm(msg, &block)
@@ -111,6 +117,7 @@ class PokeBattle_Scene
     @sprites["messageWindow"].text = ""
     @sprites["messageWindow"].refresh
     @sprites["messageBox"].visible = false
+    @briefmessage = false
   end
   #-----------------------------------------------------------------------------
   #  check if message box is visible
