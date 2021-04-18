@@ -1,0 +1,33 @@
+[Pokémon Essentials v18.1.dev] [EBDX v1.0.10] 
+
+Data/Plugins/EBDX.rxdata
+
+Error in script "Scene Backdrops":
+SyntaxError occurred.
+Compile error: compile error
+Line 458: Syntax error: [EBDX] Scene Backdrops
+Starstorm]]]: for wth in [["Rain", [
+^: ^
+Line 458: Syntax error: [EBDX] Scene Backdrops
+Starstorm]]]: for wth in [["Rain", [
+^: ^
+Line 1069: Syntax error: [EBDX] Scene Backdrops
+
+Full trace can be found below:
+[EBDX] Scene Backdrops:1069
+
+End of Error.
+
+02_Lukas_Script_Utilities.rb:299:in `runScript'
+02_Lukas_Script_Utilities.rb:269:in `each'
+02_Lukas_Script_Utilities.rb:269:in `runScript'
+02_Lukas_Script_Utilities.rb:339:in `runPlugin'
+05_EBDX.rb:52:in `load_scripts_from_folder'
+Section000:28:in `eval'
+Section000:31:in `load_scripts_from_folder'
+Section000:28:in `each'
+Section000:28:in `load_scripts_from_folder'
+Section000:41:in `load_scripts_from_folder'
+Section000:40:in `each'
+Section000:40:in `load_scripts_from_folder'
+Section000:45

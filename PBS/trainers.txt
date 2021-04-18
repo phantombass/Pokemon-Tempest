@@ -6,10 +6,9 @@
 LoseText = "Hmmph. I guess you're not that bad."
 Pokemon = DROWZEE,5
   Ability = 2
-Pokemon = BAGON,6
+Pokemon = BAGON,7
   Form = 2
   Ability = 0
-Pokemon = CASTFORM,7
 #-------------------------------
 # Zephyr Hills
 #-------------------------------
@@ -145,17 +144,61 @@ Pokemon = DUSKULL,22
 Pokemon = GASTLY,22
   Form = 3
 #-------------------------------
+# Team Maelstrom
+#-------------------------------
 [TEAMMAELSTROM_M,Grunt]
 LoseText = "Ugh!"
 Pokemon = NATU,22
 Pokemon = CHINGLING,22
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,1]
-LoseText = "Why are you so strong?"
+LoseText = "Who are you?"
 Pokemon = CLEFAIRY,23
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,2]
 LoseText = "Why are you so strong?"
 Pokemon = MEDITITE,24
 Pokemon = SABLEYE,24
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,3]
+LoseText = "Get outta here..."
+Pokemon = CLEFAIRY,28
+Pokemon = CLEFAIRY,28
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,4]
+LoseText = "Leave us alone!"
+Pokemon = MEDITITE,28
+Pokemon = CHINGLING,28
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,5]
+LoseText = "Why are you so strong?"
+Pokemon = MUNNA,27
+Pokemon = MUNNA,27
+Pokemon = XATU,27
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,6]
+LoseText = "No way..."
+Pokemon = MEDITITE,29
+Pokemon = SABLEYE,29
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,7]
+LoseText = "Not to worry. That Pokémon will wipe the floor with you anyway."
+Pokemon = XATU,29
+Pokemon = CLEFABLE,29
+#-------------------------------
+#Level Trainer
+#-------------------------------
+[SCIENTIST1,Nivel]
+Pokemon = AUDINO,13
+	Moves = MEMENTO
+Pokemon = AUDINO,13
+	Moves = MEMENTO
+Pokemon = AUDINO,13
+	Moves = MEMENTO
+Pokemon = AUDINO,13
+	Moves = MEMENTO
+Pokemon = AUDINO,13
+	Moves = MEMENTO
+Pokemon = AUDINO,13
+	Moves = MEMENTO
 #-------------------------------

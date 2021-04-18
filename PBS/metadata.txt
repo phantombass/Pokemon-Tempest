@@ -581,3 +581,19 @@ ShowArea = true
 # Distura PMC
 SnapEdges = true
 MapPosition = 0,13,9
+#-------------------------------
+[110]
+# Venom HQ
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[111]
+# Venom Lab
+SnapEdges = true
+MapPosition = 0,13,9
+DarkMap = true
+#-------------------------------
+[112]
+# Venom Lab Control Room
+SnapEdges = true
+MapPosition = 0,14,9

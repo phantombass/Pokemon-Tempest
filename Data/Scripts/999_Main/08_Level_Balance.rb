@@ -31,7 +31,7 @@ Events.onTrainerPartyLoad+=proc {|sender,e|
       for i in 0...party.length
         level = 0
         level=1 if level<1
-      if mlv<levelcap && mlv < party[i].level && $game_switches[LvlCap::Gym] == true
+      if $game_switches[LvlCap::Gym] == true
         level = levelcap
       elsif mlv<levelcap && mlv>party[i].level && $game_switches[LvlCap::Rival] == true
         level = mlv
@@ -51,7 +51,7 @@ Events.onTrainerPartyLoad+=proc {|sender,e|
       party[i].level = level
       #now we evolve the pokémon, if applicable
       species = party[i].species
-      if badges > 4
+      if badges > 0
       newspecies = pbGetBabySpecies(species) # revert to the first evolution
       evoflag=0 #used to track multiple evos not done by lvl
       endevo=false

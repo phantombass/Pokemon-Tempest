@@ -455,7 +455,7 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   def setWeather
     # loop once
-    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain]], ["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]]]
+    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain, :Starstorm]],["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]],["Overcast", [:Overcast]]]
       proceed = false
       for cond in (wth[1].is_a?(Array) ? wth[1] : [wth[1]])
         proceed = true if @battle.pbWeather == getConst(PBWeather, cond)
@@ -836,20 +836,39 @@ class BattleSceneRoom
     harsh = @battle.pbWeather == getConst(PBWeather, :HEAVYRAIN)
     # apply sky tone
     if @sprites["sky"]
-      @sprites["sky"].tone.all -= 2 if @sprites["sky"].tone.all > -16
+      if @battle.pbWeather == PBWeather::Starstorm
+        @sprites["sky"].tone.all -= 10 if @sprites["sky"].tone.all > -120
+      else
+        @sprites["sky"].tone.all -= 2 if @sprites["sky"].tone.all > -16
+      end
       @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 128
       for i in 0..1
-        @sprites["cloud#{i}"].tone.all -= 2 if @sprites["cloud#{i}"].tone.all > -16
+        if @battle.pbWeather == PBWeather::Starstorm
+          @sprites["cloud#{i}"].tone.all -= 10 if @sprites["cloud#{i}"].tone.all > -120
+        else
+          @sprites["cloud#{i}"].tone.all -= 2 if @sprites["cloud#{i}"].tone.all > -16
+        end
         @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 128
       end
     end
     for j in 0...72
       next if @sprites["w_rain#{j}"]
       @sprites["w_rain#{j}"] = Sprite.new(@viewport)
-      @sprites["w_rain#{j}"].create_rect(harsh ? 28 : 24, 3, Color.white)
+      if @battle.pbWeather == PBWeather::AcidRain
+        @sprites["w_rain#{j}"].create_rect(24, 3, Color.blue)
+      elsif @battle.pbWeather == PBWeather::Starstorm
+        @sprites["w_rain#{j}"].create_rect(7, 7, Color.white)
+      else
+        @sprites["w_rain#{j}"].create_rect(harsh ? 28 : 24, 3, Color.white)
+      end
       @sprites["w_rain#{j}"].default!
-      @sprites["w_rain#{j}"].angle = 80
-      @sprites["w_rain#{j}"].oy = 2
+      if @battle.pbWeather == PBWeather::Starstorm
+        @sprites["w_rain#{j}"].angle = 90
+        @sprites["w_rain#{j}"].oy = 2
+      else
+        @sprites["w_rain#{j}"].angle = 80
+        @sprites["w_rain#{j}"].oy = 2
+      end
       @sprites["w_rain#{j}"].opacity = 0
     end
   end
@@ -874,6 +893,31 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   def drawStrongWind; @strongwind = true; end
   def deleteStrongWind; @strongwind = false; end
+  #-----------------------------------------------------------------------------
+  # custom weather handlers
+  #-----------------------------------------------------------------------------
+  def drawOvercast
+    if @sprites["sky"]
+      @sprites["sky"].tone.all -= 5 if @sprites["sky"].tone.all > -100
+      @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 128
+      for i in 0..1
+        @sprites["cloud#{i}"].tone.all -= 5 if @sprites["cloud#{i}"].tone.all > -100
+        @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 128
+      end
+    end
+  end
+
+  def deleteOvercast
+    if @sprites["sky"]
+      @sprites["sky"].tone.all += 5 if @sprites["sky"].tone.all < 0
+      @sprites["sky"].tone.gray -= 16 if @sprites["sky"].tone.gray > 0
+      for i in 0..1
+        @sprites["cloud#{i}"].tone.all += 5 if @sprites["cloud#{i}"].tone.all < 0
+        @sprites["cloud#{i}"].tone.gray -= 16 if @sprites["cloud#{i}"].tone.gray > 0
+      end
+    end
+  end
+
   #-----------------------------------------------------------------------------
   # records the proper positioning
   #-----------------------------------------------------------------------------

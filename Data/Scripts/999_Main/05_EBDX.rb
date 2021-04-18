@@ -72,7 +72,7 @@ CAPTURE_BGM = "EBDX/Victory Against Wild"
 USE_LOW_HP_BGM = false
 
 # set this to true if you want to use your own common animations from the editor
-COMMON_ANIMATIONS = true
+COMMON_ANIMATIONS = false
 
 # set this to true to use animations from the Animation editor for missing move animations
 REPLACE_MISSING_ANIM = true

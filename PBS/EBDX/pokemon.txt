@@ -2613,8 +2613,8 @@ BattlerAltitude = 10
 BattlerPlayerY  = 6
 BattlerEnemyY   = 46
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
+
+
 #-------------------------------
 [TRANQUILL]
 BattlerPlayerY  = 12
@@ -3698,42 +3698,39 @@ BattlerAltitude = 0
 BattlerPlayerY  = 6
 BattlerEnemyY   = 64
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
+
+
 #-------------------------------
 [NOIBAT]
 BattlerPlayerY  = 6
 BattlerEnemyY   = 32
 BattlerAltitude = 1
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
+
+
 #-------------------------------
 [PIKIPEK]
 BattlerPlayerY  = 6
 BattlerEnemyY   = 64
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
+
+
 #-------------------------------
 [ALTEMPER]
-BattlerPlayerY  = -8
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
 BattlerEnemyY   = 16
-BattlerAltitude = 0
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
 #-------------------------------
 [BAGON,2]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 34
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
 #-------------------------------
 [GIBLE,2]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 34
 BattlerAltitude = 0
-SpriteScaleEnemy = 1
 #-------------------------------
 [GASTLY,3]
 BattlerPlayerY  = 19
@@ -3754,153 +3751,197 @@ BattlerAltitude = 0
 BattlerPlayerY  = 8
 BattlerEnemyY   = 34
 BattlerAltitude = 0
-SpriteScaleEnemy = 1
+
 #-------------------------------
 [HIPPOPOTAS,2]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 44
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
 #-------------------------------
 [DREEPY]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 14
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
 #-------------------------------
 [DREEPY,1]
 BattlerPlayerY  = -14
 BattlerEnemyY   = 14
 BattlerAltitude = 0
-SpriteScalePlayer = .5
-SpriteScaleEnemy = 1
 #-------------------------------
 [SNEASEL,1]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 44
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
 #-------------------------------
 [PIDOVE,1]
 BattlerPlayerY  = 6
 BattlerEnemyY   = 46
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
 #-------------------------------
 [ROOKIDEE]
 BattlerPlayerY  = 6
 BattlerEnemyY   = 46
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
 #-------------------------------
 [SNOM]
 BattlerPlayerY  = 6
 BattlerEnemyY   = 62
 BattlerAltitude = 0
-SpriteScalePlayer = 1
-SpriteScaleEnemy = 1
 #-------------------------------
 [ALTEMPER,1]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
 #-------------------------------
 [ALTEMPER,2]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,3]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,4]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,5]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,6]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,7]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,8]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,9]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,10]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,11]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,12]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,13]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,14]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,15]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,16]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,17]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,18]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,19]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5
+
 #-------------------------------
 [ALTEMPER,20]
-BattlerPlayerY  = -8
-SpriteScalePlayer = .75
-SpriteScaleEnemy = 1
+BattlerPlayerY  = -16
+BattlerPlayerX  = 8
+BattlerEnemyY   = 16
+BattlerAltitude = 1
+SpriteScalePlayer = 1.5

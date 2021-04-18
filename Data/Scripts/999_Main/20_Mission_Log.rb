@@ -2,9 +2,11 @@ module Mission
   One = 504
   Two = 509
   Three = 520
+  Four = 526
   Mission1 = 503
   Mission2 = 504
   Mission3 = 505
+  Mission4 = 507
   Stella = 517
   Vinny = 518
 end
@@ -35,13 +37,13 @@ end
 def pbNewMission(num)
   case num
   when 1
-    $game_variables[Mission::One] = 1
+    $game_variables[Mission::Mission1] = 1
     activateQuest(1)
     $Trainer.badges[0] = true
     $game_switches[Mission::One] = true
     $game_variables[Chapter::Count] += 1
   when 2
-    $game_variables[Mission::Two] = 1
+    $game_variables[Mission::Mission2] = 1
     activateQuest(3)
     $Trainer.badges[1] = true
     $game_switches[Mission::Two] = true
@@ -56,6 +58,21 @@ def pbNewMission(num)
     $Trainer.badges[2] = true
     completeQuest(3)
     $game_switches[Mission::Three] = true
+    $game_variables[Chapter::Count] += 1
+  when 4
+    $game_variables[Mission::Mission4] = 1
+    if $game_switches[Mission::Vinny]
+      activateQuest(6)
+    elsif $game_switches[Mission::Stella]
+      activateQuest(7)
+    end
+    $Trainer.badges[3] = true
+    if $game_switches[Mission::Vinny]
+      completeQuest(4)
+    elsif $game_switches[Mission::Stella]
+      completeQuest(5)
+    end
+    $game_switches[Mission::Four] = true
     $game_variables[Chapter::Count] += 1
   when 0
     $game_switches[Readouts::Readout] = true

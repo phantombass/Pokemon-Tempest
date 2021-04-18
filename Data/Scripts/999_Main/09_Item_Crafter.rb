@@ -98,9 +98,9 @@ def pbItemcraft(item)
     Kernel.pbReceiveItem(:WINGSUIT)
     $game_variables[Items::Wingsuit] = 1
   when "Torch"
-    $PokemonBag.pbDeleteItem(:CELLBATTERY,1)
-    $PokemonBag.pbDeleteItem(:BRIGHTPOWDER,1)
-    $PokemonBag.pbDeleteItem(:IRON,1)
+    $PokemonBag.pbDeleteItem(:TORCH1,1)
+    $PokemonBag.pbDeleteItem(:TORCH2,1)
+    $PokemonBag.pbDeleteItem(:TORCH3,1)
     Kernel.pbReceiveItem(:TORCH)
     $game_variables[Items::Torch] = 1
   when "Chainsaw"

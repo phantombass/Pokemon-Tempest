@@ -17,3 +17,6 @@ BattleEnv       = FOREST
 [099]
 BattleEnv       = FOREST
 #-------------------------------
+[112]
+BattleEnv       = INDOOR
+#-------------------------------
