@@ -278,7 +278,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.addData(constant, *args)
     # compiler exception
-    if !@compiled
+    if !@compiled && $DEBUG
       args.insert(0, constant)
       @cachedData.push(args)
       return

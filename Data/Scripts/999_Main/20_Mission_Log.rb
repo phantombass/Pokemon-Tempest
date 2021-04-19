@@ -45,6 +45,7 @@ def pbNewMission(num)
   when 2
     $game_variables[Mission::Mission2] = 1
     activateQuest(3)
+    completeQuest(1)
     $Trainer.badges[1] = true
     $game_switches[Mission::Two] = true
     $game_variables[Chapter::Count] += 1

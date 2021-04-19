@@ -101,12 +101,12 @@ end
 #===============================================================================
 #  destiny bond immunity for bosses
 #===============================================================================
-class PokeBattle_Move_0E7 < PokeBattle_Move
-  alias destinybond_ebdx pbEffectGeneral unless self.method_defined?(:destinybond_ebdx)
-  def pbEffectGeneral(*args)
+class PokeBattle_Move_0E7
+  alias destinybond_ebdx pbFailsAgainstTarget? unless self.method_defined?(:destinybond_ebdx)
+  def pbFailsAgainstTarget?(*args)
     rule = EliteBattle.getData(:BOSSBATTLES, PBMetrics, :IMMUNITIES).include?(:DESTINYBOND)
-    if args[1].immunity && rule
-      @battle.pbDisplay(_INTL("{1} is unaffected!", args[1].pbThis))
+    if args[1] && args[1].immunity && rule
+      @battle.pbDisplay(_INTL("It doesn't affect {1}...", args[1].pbThis))
       return true
     end
     return destinybond_ebdx(*args)
@@ -115,12 +115,12 @@ end
 #===============================================================================
 #  leech seed immunity for bosses
 #===============================================================================
-class PokeBattle_Move_0DC < PokeBattle_Move
+class PokeBattle_Move_0DC
   alias leechseed_ebdx pbFailsAgainstTarget? unless self.method_defined?(:leechseed_ebdx)
   def pbFailsAgainstTarget?(*args)
     rule = EliteBattle.getData(:BOSSBATTLES, PBMetrics, :IMMUNITIES).include?(:LEECHSEED)
-    if args[1].immunity && rule
-      @battle.pbDisplay(_INTL("It doesn't affect {1}...", args[1].pbThis(true)))
+    if args[1] && args[1].immunity && rule
+      @battle.pbDisplay(_INTL("It doesn't affect {1}...", args[1].pbThis))
       return true
     end
     return leechseed_ebdx(*args)
@@ -129,11 +129,11 @@ end
 #===============================================================================
 #  OHKO immunity
 #===============================================================================
-class PokeBattle_Move_070 < PokeBattle_Move
+class PokeBattle_Move_070
   alias ohkomove_ebdx pbFailsAgainstTarget? unless self.method_defined?(:ohkomove_ebdx)
   def pbFailsAgainstTarget?(*args)
     rule = EliteBattle.getData(:BOSSBATTLES, PBMetrics, :IMMUNITIES).include?(:OHKO)
-    if args[1].immunity && rule
+    if args[1] && args[1].immunity && rule
       @battle.pbDisplay(_INTL("{1} is unaffected!", args[1].pbThis))
       return true
     end
@@ -143,11 +143,11 @@ end
 #===============================================================================
 #  Perish Song immunity
 #===============================================================================
-class PokeBattle_Move_0E5 < PokeBattle_Move
+class PokeBattle_Move_0E5
   alias perishsong_ebdx pbFailsAgainstTarget? unless self.method_defined?(:perishsong_ebdx)
   def pbFailsAgainstTarget?(*args)
     rule = EliteBattle.getData(:BOSSBATTLES, PBMetrics, :IMMUNITIES).include?(:PERISHSONG)
-    if args[1].immunity && rule
+    if args[1] && args[1].immunity && rule
       @battle.pbDisplay(_INTL("{1} is unaffected!", args[1].pbThis))
       return true
     end

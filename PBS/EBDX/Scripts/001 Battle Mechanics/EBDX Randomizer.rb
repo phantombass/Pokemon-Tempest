@@ -207,19 +207,29 @@ end
 #===============================================================================
 def randomizeSpecies(species, static = false, gift = false)
   return species if !EliteBattle.get(:randomizer)
-  species = getConst(PBSpecies, species) unless species.is_a?(Numeric)
+  pokemon = nil
+  species = getConst(PBSpecies, species) if species.is_a?(Symbol)
+  if species.is_a?(PokeBattle_Pokemon)
+    pokemon = species.clone
+    species = pokemon.species
+  end
   # if defined as an exclusion rule, species will not be randomized
   excl = EliteBattle.getData(:RANDOMIZER, PBMetrics, :EXCLUSIONS_SPECIES)
   if !excl.nil? && excl.is_a?(Array)
     for ent in excl
       s = ent.is_a?(Numeric) ? ent : getConst(PBSpecies, ent)
-      return species if species == s
+      return (pokemon.nil? ? species : pokemon) if species == s
     end
   end
   # randomizes static encounters
-  return EliteBattle.getRandomizedData(species, :STATIC, species) if static
-  return EliteBattle.getRandomizedData(species, :GIFTS, species) if gift
-  return species
+  species = EliteBattle.getRandomizedData(species, :STATIC, species) if static
+  species = EliteBattle.getRandomizedData(species, :GIFTS, species) if gift
+  if !pokemon.nil?
+    pokemon.species = species
+    pokemon.calcStats
+    pokemon.resetMoves
+  end
+  return pokemon.nil? ? species : pokemon
 end
 
 def randomizeItem(item)

@@ -38,6 +38,7 @@ def pbDisallowSpeedup
   $CanToggle = false
 end
 
+
 # Default game speed.
 $GameSpeed = 0
 $frame = 0

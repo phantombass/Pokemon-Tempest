@@ -455,7 +455,7 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   def setWeather
     # loop once
-    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain,]],["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]],["Overcast", [:Overcast]],["Starstorm", [:Starstorm]]]
+    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain,]],["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]],["Overcast", [:Overcast]],["Starstorm", [:Starstorm]],["VolcanicAsh", [:VolcanicAsh, :DAshfall]]]
       proceed = false
       for cond in (wth[1].is_a?(Array) ? wth[1] : [wth[1]])
         proceed = true if @battle.pbWeather == getConst(PBWeather, cond)
@@ -522,6 +522,22 @@ class BattleSceneRoom
       end
       @sprites["w_starstorm#{j}"].opacity -= @sprites["w_starstorm#{j}"].speed
       @sprites["w_starstorm#{j}"].ex += @sprites["w_starstorm#{j}"].speed*2
+    end
+    # volcanic ash particles
+    for j in 0...72
+      next if !@sprites["w_volc#{j}"]
+      if @sprites["w_volc#{j}"].opacity <= 0
+        z = rand(32)
+        @sprites["w_volc#{j}"].param = 0.24 + 0.01*rand(z/2)
+        @sprites["w_volc#{j}"].ox = 0
+        @sprites["w_volc#{j}"].ey = -rand(64)
+        @sprites["w_volc#{j}"].ex = 32 + rand(@sprites["bg"].bitmap.width - 64)
+        @sprites["w_volc#{j}"].speed = 3 + 1/((rand(8) + 1)*0.4)
+        @sprites["w_volc#{j}"].z = z - (@focused ? 0 : 100)
+        @sprites["w_volc#{j}"].opacity = 255
+      end
+      @sprites["w_volc#{j}"].opacity -= @sprites["w_volc#{j}"].speed
+      @sprites["w_volc#{j}"].ox += @sprites["w_volc#{j}"].speed*2
     end
     # sun particles
     for j in 0...3
@@ -899,21 +915,21 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   def drawOvercast
     if @sprites["sky"]
-      @sprites["sky"].tone.all -= 5 if @sprites["sky"].tone.all > -100
-      @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 128
+      @sprites["sky"].tone.all -= 10 if @sprites["sky"].tone.all > -100
+      @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 172
       for i in 0..1
-        @sprites["cloud#{i}"].tone.all -= 5 if @sprites["cloud#{i}"].tone.all > -100
-        @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 128
+        @sprites["cloud#{i}"].tone.all -= 10 if @sprites["cloud#{i}"].tone.all > -100
+        @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 172
       end
     end
   end
 
   def deleteOvercast
     if @sprites["sky"]
-      @sprites["sky"].tone.all += 5 if @sprites["sky"].tone.all < 0
+      @sprites["sky"].tone.all += 10 if @sprites["sky"].tone.all < 0
       @sprites["sky"].tone.gray -= 16 if @sprites["sky"].tone.gray > 0
       for i in 0..1
-        @sprites["cloud#{i}"].tone.all += 5 if @sprites["cloud#{i}"].tone.all < 0
+        @sprites["cloud#{i}"].tone.all += 10 if @sprites["cloud#{i}"].tone.all < 0
         @sprites["cloud#{i}"].tone.gray -= 16 if @sprites["cloud#{i}"].tone.gray > 0
       end
     end
@@ -958,8 +974,44 @@ class BattleSceneRoom
     end
   end
   #-----------------------------------------------------------------------------
-  # records the proper positioning
+  # volcanic ash weather handlers
   #-----------------------------------------------------------------------------
+  def drawVolcanicAsh
+    # apply sky tone
+    if @sprites["sky"]
+      @sprites["sky"].tone.all -= 4 if @sprites["sky"].tone.all > -100
+      @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 128
+      for i in 0..1
+        @sprites["cloud#{i}"].tone.all -= 4 if @sprites["cloud#{i}"].tone.all > -100
+        @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 128
+      end
+    end
+    for j in 0...72
+      next if @sprites["w_volc#{j}"]
+      @sprites["w_volc#{j}"] = Sprite.new(@viewport)
+      @sprites["w_volc#{j}"].create_rect(5, 5, Color.black)
+      @sprites["w_volc#{j}"].default!
+      @sprites["w_volc#{j}"].angle = 90
+      @sprites["w_volc#{j}"].oy = 2
+      @sprites["w_volc#{j}"].opacity = 0
+    end
+  end
+  def deleteVolcanicAsh
+    # apply sky tone
+    if @sprites["sky"]
+      @sprites["sky"].tone.all += 2 if @sprites["sky"].tone.all < 0
+      @sprites["sky"].tone.gray -= 16 if @sprites["sky"].tone.gray > 0
+      for i in 0..1
+        @sprites["cloud#{i}"].tone.all += 2 if @sprites["cloud#{i}"].tone.all < 0
+        @sprites["cloud#{i}"].tone.gray -= 16 if @sprites["cloud#{i}"].tone.gray > 0
+      end
+    end
+    for j in 0...72
+      next if !@sprites["w_volc#{j}"]
+      @sprites["w_volc#{j}"].dispose
+      @sprites.delete("w_volc#{j}")
+    end
+  end
   def adjustMetrics
     @scale = EliteBattle.get(:roomScale)
     data = EliteBattle.get(:battlerMetrics)

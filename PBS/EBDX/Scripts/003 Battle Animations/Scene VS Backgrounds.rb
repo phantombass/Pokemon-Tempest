@@ -1,4 +1,20 @@
 #===============================================================================
+#  function used to alter selected graphics based on trainer context
+#===============================================================================
+def checkForTrainerVariant(files, trainerid, evilteam = false, teamskull = false)
+  for i in 0...files.length
+    str = sprintf("%s%03d", files[i], trainerid)
+    str2 = sprintf("%s_%03d", files[i], trainerid)
+    evl = files[i] + "Evil"
+    skl = files[i] + "Skull"
+    files[i] = evl if pbResolveBitmap(evl) && evilteam
+    files[i] = skl if pbResolveBitmap(skl) && teamskull
+    files[i] = str if pbResolveBitmap(str)
+    files[i] = str2 if pbResolveBitmap(str2)
+  end
+  return files
+end
+#===============================================================================
 #  New class used to render the Sun & Moon styled VS background
 #===============================================================================
 class SunMoonDefaultBackground
@@ -13,23 +29,16 @@ class SunMoonDefaultBackground
     @speed = 1
     @sprites = {}
     # reverts to default
-    bg = ["Graphics/EBDX/Transitions/Default/background",
+    files = ["Graphics/EBDX/Transitions/Default/background",
           "Graphics/EBDX/Transitions/Default/layer",
           "Graphics/EBDX/Transitions/Default/final"
          ]
     # gets specific graphics
-    for i in 0...bg.length
-      str = sprintf("%s%03d",bg[i],trainerid)
-      evl = bg[i] + "Evil"
-      skl = bg[i] + "Skull"
-      bg[i] = evl if pbResolveBitmap(evl) && @evilteam
-      bg[i] = skl if pbResolveBitmap(skl) && @teamskull
-      bg[i] = str if pbResolveBitmap(str)
-    end
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the 3 background layers
     for i in 0...3
       @sprites["bg#{i}"] = ScrollingSprite.new(@viewport)
-      @sprites["bg#{i}"].setBitmap(bg[i],false,(i > 0))
+      @sprites["bg#{i}"].setBitmap(files[i],false,(i > 0))
       @sprites["bg#{i}"].z = 200
       @sprites["bg#{i}"].center!(true)
       @sprites["bg#{i}"].angle = - 8 if $PokemonSystem.screensize < 2
@@ -78,9 +87,17 @@ class SunMoonSpecialBackground
     @disposed = false
     @speed = 1
     @sprites = {}
+    # get files
+    files = [
+      "Graphics/EBDX/Transitions/Special/background",
+      "Graphics/EBDX/Transitions/Special/ring",
+      "Graphics/EBDX/Transitions/Special/particle"
+    ]
+    # gets specific graphics
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the background
     @sprites["background"] = RainbowSprite.new(@viewport)
-    @sprites["background"].setBitmap("Graphics/EBDX/Transitions/Special/background")
+    @sprites["background"].setBitmap(files[0])
     @sprites["background"].color = Color.black
     @sprites["background"].z = 200
     @sprites["background"].center!(true)
@@ -91,7 +108,7 @@ class SunMoonSpecialBackground
     @fpIndex = 0
     # loads ring effect
     @sprites["ring"] = Sprite.new(@viewport)
-    @sprites["ring"].bitmap = pbBitmap("Graphics/EBDX/Transitions/Special/ring")
+    @sprites["ring"].bitmap = pbBitmap(files[1])
     @sprites["ring"].center!
     @sprites["ring"].x = @viewport.width/2
     @sprites["ring"].y = @viewport.height
@@ -103,7 +120,7 @@ class SunMoonSpecialBackground
     # loads sparkle particles
     for j in 0...32
       @sprites["s#{j}"] = Sprite.new(@viewport)
-      @sprites["s#{j}"].bitmap = pbBitmap("Graphics/EBDX/Transitions/Special/particle")
+      @sprites["s#{j}"].bitmap = pbBitmap(files[2])
       @sprites["s#{j}"].center!
       @sprites["s#{j}"].opacity = 0
       @sprites["s#{j}"].z = 220
@@ -229,10 +246,8 @@ class SunMoonEliteBackground
           "Graphics/EBDX/Transitions/Elite/vacuum",
           "Graphics/EBDX/Transitions/Elite/shine"
          ]
-    for i in 0...bg.length
-      str = sprintf("%s%03d",bg[i],trainerid)
-      bg[i] = str if pbResolveBitmap(str)
-    end
+    # gets specific graphics
+    bg = checkForTrainerVariant(bg, trainerid, @evilteam, @teamskull)
     # creates the background
     @sprites["background"] = Sprite.new(@viewport)
     @sprites["background"].bitmap = pbBitmap(bg[0])
@@ -455,10 +470,8 @@ class SunMoonUltraBackground
              "Graphics/EBDX/Transitions/Ultra/ring",
              "Graphics/EBDX/Transitions/Ultra/particle"
     ]
-    for i in 0...files.length
-      str = sprintf("%s%03d",files[i],trainerid)
-      files[i] = str if pbResolveBitmap(str)
-    end
+    # gets specific graphics
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the background layer
     @sprites["background"] = RainbowSprite.new(@viewport)
     @sprites["background"].setBitmap(files[0],2)
@@ -588,10 +601,8 @@ class SunMoonDigitalBackground
              "Graphics/EBDX/Transitions/Digital/particle",
              "Graphics/EBDX/Transitions/Digital/shine"
     ]
-    for i in 0...files.length
-      str = sprintf("%s%03d",files[i],trainerid)
-      files[i] = str if pbResolveBitmap(str)
-    end
+    # gets specific graphics
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the background layer
     @sprites["bg"] = Sprite.new(@viewport)
     @sprites["bg"].bitmap = pbBitmap(files[0])
@@ -724,10 +735,8 @@ class SunMoonPlasmaBackground
              "Graphics/EBDX/Transitions/Plasma/shine",
              "Graphics/EBDX/Transitions/Plasma/particle"
     ]
-    for i in 0...files.length
-      str = sprintf("%s%03d",files[i],trainerid)
-      files[i] = str if pbResolveBitmap(str)
-    end
+    # gets specific graphics
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the background layer
     @sprites["bg"] = Sprite.new(@viewport)
     @sprites["bg"].bitmap = pbBitmap(files[0])
@@ -843,10 +852,8 @@ class SunMoonGoldBackground
              "Graphics/EBDX/Transitions/Gold/swirl",
              "Graphics/EBDX/Transitions/Gold/particleA"
     ]
-    for i in 0...files.length
-      str = sprintf("%s%03d",files[i],trainerid)
-      files[i] = str if pbResolveBitmap(str)
-    end
+    # gets specific graphics
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the background layer
     @sprites["bg"] = Sprite.new(@viewport)
     @sprites["bg"].bitmap = pbBitmap(files[0])
@@ -941,10 +948,8 @@ class SunMoonCrystalBackground
     files = ["Graphics/EBDX/Transitions/Crystal/background",
              "Graphics/EBDX/Transitions/Crystal/overlay"
     ]
-    for i in 0...files.length
-      str = sprintf("%s%03d",files[i],trainerid)
-      files[i] = str if pbResolveBitmap(str)
-    end
+    # gets specific graphics
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the background layer
     @sprites["bg"] = Sprite.new(@viewport)
     @sprites["bg"].bitmap = pbBitmap(files[0])
@@ -1073,12 +1078,14 @@ class SunMoonSpaceBackground
     @speed = 1
     @sprites = {}
     # reverts to default
-    bg = "Graphics/EBDX/Transitions/Space/background"
-    str = sprintf("%s%03d",bg,trainerid)
-    bg = str if pbResolveBitmap(str)
+    files = [
+      "Graphics/EBDX/Transitions/Space/background"
+    ]
+    # gets specific graphics
+    files = checkForTrainerVariant(files, trainerid, @evilteam, @teamskull)
     # creates the background
     @sprites["bg1"] = Sprite.new(@viewport)
-    @sprites["bg1"].bitmap = pbBitmap(bg)
+    @sprites["bg1"].bitmap = pbBitmap(files[0])
     @sprites["bg1"].color = Color.black
     @sprites["bg1"].z = 200
     @sprites["bg1"].center!(true)
@@ -1199,10 +1206,7 @@ class SunMoonForestBackground
           "Graphics/EBDX/Transitions/Forest/ray"
          ]
     # gets specific graphics
-    for i in 0...bg.length
-      str = sprintf("%s%03d",bg[i],trainerid)
-      bg[i] = str if pbResolveBitmap(str)
-    end
+    bg = checkForTrainerVariant(bg, trainerid, @evilteam, @teamskull)
     # creates the background
     @sprites["bg1"] = Sprite.new(@viewport)
     @sprites["bg1"].bitmap = pbBitmap(bg[0])
@@ -1321,14 +1325,7 @@ class SunMoonWavesBackground
           "Graphics/EBDX/Transitions/Waves/background"
          ]
     # gets specific graphics
-    for i in 0...bg.length
-      str = sprintf("%s%03d",bg[i],trainerid)
-      evl = bg[i] + "Evil"
-      skl = bg[i] + "Skull"
-      bg[i] = evl if pbResolveBitmap(evl) && @evilteam
-      bg[i] = skl if pbResolveBitmap(skl) && @teamskull
-      bg[i] = str if pbResolveBitmap(str)
-    end
+    bg = checkForTrainerVariant(bg, trainerid, @evilteam, @teamskull)
     # create background layer
     @sprites["bg"] = Sprite.new(@viewport)
     @sprites["bg"].bitmap = pbBitmap(bg[3])
@@ -1424,14 +1421,7 @@ class SunMoonFlamesBackground
           "Graphics/EBDX/Transitions/Flames/overlay"
          ]
     # gets specific graphics
-    for i in 0...bg.length
-      str = sprintf("%s%03d",bg[i],trainerid)
-      evl = bg[i] + "Evil"
-      skl = bg[i] + "Skull"
-      bg[i] = evl if pbResolveBitmap(evl) && @evilteam
-      bg[i] = skl if pbResolveBitmap(skl) && @teamskull
-      bg[i] = str if pbResolveBitmap(str)
-    end
+    bg = checkForTrainerVariant(bg, trainerid, @evilteam, @teamskull)
     # create background layer
     @sprites["bg"] = Sprite.new(@viewport)
     @sprites["bg"].bitmap = pbBitmap(bg[2])

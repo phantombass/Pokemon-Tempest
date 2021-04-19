@@ -145,6 +145,33 @@ Pokemon = DUSKULL,22
 Pokemon = GASTLY,22
   Form = 3
 #-------------------------------
+# Cosmic Coast
+#-------------------------------
+[BLACKBELT,Michael]
+LoseText = "Ugh..."
+Pokemon = MEDITITE,22
+#-------------------------------
+[TUBER_F,Lola]
+LoseText = "Oh no! My cute Pokémon!"
+Pokemon = PANSAGE,20
+  Form = 1
+Pokemon = PANSEAR,20
+  Form = 1
+Pokemon = PANPOUR,20
+  Form = 1
+#-------------------------------
+[FISHERMAN,Barnie]
+LoseText = "Ah lost it!"
+Pokemon = SKRELP,21
+Pokemon = GYARADOS,22
+#-------------------------------
+[FISHERMAN,Sheldon]
+LoseText = "Ah lost it!"
+Pokemon = HIPPOPOTAS,21
+  Form = 2
+Pokemon = CHINCHOU,21
+Pokemon = BARBOACH,21
+#-------------------------------
 # Pixie Cave
 #-------------------------------
 [PICNICKER,Faith]

@@ -358,6 +358,7 @@ class PokemonLoadScreen
           $PokemonStorage      = Marshal.load(f)
           $SaveVersion         = Marshal.load(f) unless f.eof?
           pbRefreshResizeFactor if !mkxp?  # To fix Game_Screen pictures
+          pbDisallowSpeedup if !$DEBUG
           time = pbGetTimeNow
           $game_variables[99] = time.day
           dailyWeather = $game_variables[27]
@@ -453,6 +454,7 @@ class PokemonLoadScreen
         $game_player.refresh
         $game_map.autoplay
         $game_map.update
+        pbDisallowSpeedup if !$DEBUG
         time = pbGetTimeNow
         $game_variables[99] = time.day
         dailyWeather = $game_variables[27]

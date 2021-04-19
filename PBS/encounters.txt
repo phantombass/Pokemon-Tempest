@@ -217,3 +217,19 @@ Cave
     AZUMARILL,25,27
     CLEFAIRY,25,27
 #-------------------------------
+119 # Venom Lab
+25,10,10
+Cave
+    VOLTORB,23,25
+    ELEKID,23,25
+    VOLTORB,23,25
+    ELEKID,23,25
+    CHINGLING,24,26
+    CHINGLING,24,26
+    BELDUM,17,19
+    BELDUM,17,19
+    MEDITITE,25,27
+    CLEFAIRY,25,27
+    MEDITITE,25,27
+    CLEFAIRY,25,27
+#-------------------------------

@@ -11,7 +11,7 @@
 #===============================================================================
 #  run script as plugin
 #===============================================================================
-ver = "1.0.11"
+ver = "1.0.12"
 # set up plugin metadata
 if !defined?(PluginManager)
   raise "This script is only compatible with Essentials v18.x!"
@@ -32,7 +32,7 @@ else
 end
 ERROR_TEXT += "[EBDX v#{ver}] \r\n"
 # raise message if not compiled
-if !File.safe?("Data/Plugins/EBDX.rxdata") && !$DEBUG
+if !File.safe?("Data/Plugins/EBDX.rxdata") && !$DEBUG && !File.safe?("Game.rgssad")
   raise "You need to run your game at least once from Debug, to compile all the necessary files!"
 end
 # compile and eval script contents (don't touch please)

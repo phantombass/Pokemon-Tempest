@@ -3,7 +3,6 @@
 #-------------------------------------------------------------------------------
 #  used to compile PBS data and interpret them on run-time
 #===============================================================================
-
 module EBCompiler
   #-----------------------------------------------------------------------------
   # interpret file stream and convert to appropriate Hash map
@@ -177,6 +176,7 @@ module EBCompiler
   # interpret all the data from cache
   #-----------------------------------------------------------------------------
   def self.addFromCached
+    return if !$DEBUG
     # get cache
     cache = EliteBattle.get(:cachedData)
     for ch in cache
@@ -186,9 +186,9 @@ module EBCompiler
     # clear cache
     cache.clear
     EliteBattle.set(:cachedData, [])
+    # force start garbage collector
+    GC.start
   end
-  # force start garbage collector
-  GC.start
   #-----------------------------------------------------------------------------
 end
 #===============================================================================

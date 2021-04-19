@@ -3759,14 +3759,21 @@ BattlerEnemyY   = 44
 BattlerAltitude = 0
 #-------------------------------
 [DREEPY]
-BattlerPlayerY  = 8
 BattlerEnemyY   = 14
 BattlerAltitude = 0
 #-------------------------------
 [DREEPY,1]
-BattlerPlayerY  = -14
+BattlerPlayerX  = 16
+BattlerPlayerY  = -44
 BattlerEnemyY   = 14
-BattlerAltitude = 0
+BattlerAltitude = 1
+SpriteScalePlayer = 0.9
+#-------------------------------
+[DRAKLOAK,1]
+BattlerAltitude = 1
+#-------------------------------
+[DRAGAPULT,1]
+BattlerAltitude = 1
 #-------------------------------
 [SNEASEL,1]
 BattlerPlayerY  = 8

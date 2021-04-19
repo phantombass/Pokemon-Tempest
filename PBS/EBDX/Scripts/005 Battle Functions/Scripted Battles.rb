@@ -88,7 +88,7 @@ class PokeBattle_Scene
     return if !@battle.midspeech || !@battle.midspeech.is_a?(Array)
     @briefmessage = false
     ret = false
-    max = @battle.opponent ? @battle.opponent.length : pbSideSize(1)
+    max = @battle.opponent ? @battle.opponent.length : @battle.pbSideSize(1)
     # iterate through potential double battler indexes
     for index in 0...[@battle.midspeech.length, max].min
       handled = false

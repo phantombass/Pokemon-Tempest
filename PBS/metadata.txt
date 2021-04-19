@@ -618,3 +618,33 @@ Weather = Rain,0
 Dungeon = false
 MapPosition = 0,22,8
 ShowArea = true
+#-------------------------------
+[118]
+# Astral Peak
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,18,1
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[119]
+# Comet Lab
+SnapEdges = true
+MapPosition = 0,18,1
+ShowArea = true
+#-------------------------------
+[120]
+# Comet Lab Control Room
+SnapEdges = true
+MapPosition = 0,18,1
+#-------------------------------
+[121]
+# Astral PMC
+SnapEdges = true
+MapPosition = 0,18,1
+#-------------------------------
+[122]
+# Comet HQ
+SnapEdges = true
+MapPosition = 0,18,1
+ShowArea = true
