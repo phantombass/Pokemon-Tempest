@@ -6,9 +6,10 @@
 LoseText = "Hmmph. I guess you're not that bad."
 Pokemon = DROWZEE,5
   Ability = 2
-Pokemon = BAGON,7
+Pokemon = BAGON,6
   Form = 2
   Ability = 0
+Pokemon = CASTFORM,7
 #-------------------------------
 # Zephyr Hills
 #-------------------------------

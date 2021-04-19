@@ -455,7 +455,7 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   def setWeather
     # loop once
-    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain,]],["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]],["Overcast", [:Overcast]],["Starstorm", [:Starstorm]]]
+    for wth in [["Rain", [:Rain, :HeavyRain]], ["Snow", :Hail], ["StrongWind", :StrongWinds], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", :Sandstorm]]
       proceed = false
       for cond in (wth[1].is_a?(Array) ? wth[1] : [wth[1]])
         proceed = true if @battle.pbWeather == getConst(PBWeather, cond)
@@ -506,22 +506,6 @@ class BattleSceneRoom
       end
       @sprites["w_rain#{j}"].opacity -= @sprites["w_rain#{j}"].speed*(harsh ? 3 : 2)
       @sprites["w_rain#{j}"].ox += @sprites["w_rain#{j}"].speed*(harsh ? 8 : 6)
-    end
-    # starstorm particles
-    for j in 0...72
-      next if !@sprites["w_starstorm#{j}"]
-      if @sprites["w_starstorm#{j}"].opacity <= 0
-        z = rand(32)
-        @sprites["w_starstorm#{j}"].param = 0.24 + 0.01*rand(z/2)
-        @sprites["w_starstorm#{j}"].ox = 32 + rand(@sprites["bg"].bitmap.width - 64)
-        @sprites["w_starstorm#{j}"].ey = 0
-        @sprites["w_starstorm#{j}"].ex = 0
-        @sprites["w_starstorm#{j}"].speed = 3 + 2/((rand(5) + 1)*0.4)
-        @sprites["w_starstorm#{j}"].z = z - (@focused ? 0 : 100)
-        @sprites["w_starstorm#{j}"].opacity = 255
-      end
-      @sprites["w_starstorm#{j}"].opacity -= @sprites["w_starstorm#{j}"].speed
-      @sprites["w_starstorm#{j}"].ex += @sprites["w_starstorm#{j}"].speed*2
     end
     # sun particles
     for j in 0...3
@@ -862,11 +846,7 @@ class BattleSceneRoom
     for j in 0...72
       next if @sprites["w_rain#{j}"]
       @sprites["w_rain#{j}"] = Sprite.new(@viewport)
-      if @battle.pbWeather == PBWeather::AcidRain
-        @sprites["w_rain#{j}"].create_rect(24, 3, Color.blue)
-      else
-        @sprites["w_rain#{j}"].create_rect(harsh ? 28 : 24, 3, Color.white)
-      end
+      @sprites["w_rain#{j}"].create_rect(harsh ? 28 : 24, 3, Color.white)
       @sprites["w_rain#{j}"].default!
       @sprites["w_rain#{j}"].angle = 80
       @sprites["w_rain#{j}"].oy = 2
@@ -894,69 +874,6 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   def drawStrongWind; @strongwind = true; end
   def deleteStrongWind; @strongwind = false; end
-  #-----------------------------------------------------------------------------
-  # overcast weather handlers
-  #-----------------------------------------------------------------------------
-  def drawOvercast
-    if @sprites["sky"]
-      @sprites["sky"].tone.all -= 5 if @sprites["sky"].tone.all > -100
-      @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 128
-      for i in 0..1
-        @sprites["cloud#{i}"].tone.all -= 5 if @sprites["cloud#{i}"].tone.all > -100
-        @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 128
-      end
-    end
-  end
-
-  def deleteOvercast
-    if @sprites["sky"]
-      @sprites["sky"].tone.all += 5 if @sprites["sky"].tone.all < 0
-      @sprites["sky"].tone.gray -= 16 if @sprites["sky"].tone.gray > 0
-      for i in 0..1
-        @sprites["cloud#{i}"].tone.all += 5 if @sprites["cloud#{i}"].tone.all < 0
-        @sprites["cloud#{i}"].tone.gray -= 16 if @sprites["cloud#{i}"].tone.gray > 0
-      end
-    end
-  end
-  #-----------------------------------------------------------------------------
-  # starstorm weather handlers
-  #-----------------------------------------------------------------------------
-  def drawStarstorm
-    # apply sky tone
-    if @sprites["sky"]
-      @sprites["sky"].tone.all -= 10 if @sprites["sky"].tone.all > -120
-      @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 128
-      for i in 0..1
-        @sprites["cloud#{i}"].tone.all -= 10 if @sprites["cloud#{i}"].tone.all > -120
-        @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 128
-      end
-    end
-    for j in 0...72
-      next if @sprites["w_starstorm#{j}"]
-      @sprites["w_starstorm#{j}"] = Sprite.new(@viewport)
-      @sprites["w_starstorm#{j}"].create_rect(7, 7, Color.white)
-      @sprites["w_starstorm#{j}"].default!
-      @sprites["w_starstorm#{j}"].angle = 90
-      @sprites["w_starstorm#{j}"].oy = -rand(64)
-      @sprites["w_starstorm#{j}"].opacity = 0
-    end
-  end
-  def deleteStarstorm
-    # apply sky tone
-    if @sprites["sky"]
-      @sprites["sky"].tone.all += 2 if @sprites["sky"].tone.all < 0
-      @sprites["sky"].tone.gray -= 16 if @sprites["sky"].tone.gray > 0
-      for i in 0..1
-        @sprites["cloud#{i}"].tone.all += 2 if @sprites["cloud#{i}"].tone.all < 0
-        @sprites["cloud#{i}"].tone.gray -= 16 if @sprites["cloud#{i}"].tone.gray > 0
-      end
-    end
-    for j in 0...72
-      next if !@sprites["w_starstorm#{j}"]
-      @sprites["w_starstorm#{j}"].dispose
-      @sprites.delete("w_starstorm#{j}")
-    end
-  end
   #-----------------------------------------------------------------------------
   # records the proper positioning
   #-----------------------------------------------------------------------------
