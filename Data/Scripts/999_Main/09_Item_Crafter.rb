@@ -33,8 +33,12 @@ module Items
 end
 
 ItemHandlers::UseFromBag.add(:ITEMCRAFTER,proc { |item|
+  next 2
+})
+
+ItemHandlers::UseInField.add(:ITEMCRAFTER,proc { |item|
   useItemCrafter
-  })
+})
 
 def useItemCrafter
   pbMessage(_INTL("What would you like to Craft?\\ch[34,11,Chainsaw,Torch,Fulcrum,Hiking Gear,Aqua Rocket, Scuba Tank,Hovercraft,Escape Rope,Hammer,Wingsuit]"))
