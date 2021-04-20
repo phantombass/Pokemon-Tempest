@@ -631,6 +631,7 @@ ShowArea = true
 [119]
 # Comet Lab
 SnapEdges = true
+DarkMap = true
 MapPosition = 0,18,1
 ShowArea = true
 #-------------------------------
