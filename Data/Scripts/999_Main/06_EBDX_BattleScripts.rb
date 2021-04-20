@@ -7,6 +7,7 @@ module BattleScripts
       @scene.pbHideAllDataboxes
       # show flavor text
       @scene.pbDisplay("The Metang is seething with rage!")
+      pbBGMPlay("Legendary")
       EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
       @vector.reset # AURAFLARE doesn't reset the vector by default
       @scene.wait(16, true) # set true to anchor the sprites to vector
@@ -31,6 +32,7 @@ module BattleScripts
       @scene.pbHideAllDataboxes
       # show flavor text
       @scene.pbDisplay("The Cherrim is seething with rage!")
+      pbBGMPlay("Legendary")
       EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
       @vector.reset # AURAFLARE doesn't reset the vector by default
       @scene.wait(16, true) # set true to anchor the sprites to vector
@@ -55,6 +57,7 @@ module BattleScripts
       @scene.pbHideAllDataboxes
       # show flavor text
       @scene.pbDisplay("The Ariados is seething with rage!")
+      pbBGMPlay("Legendary")
       EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
       @vector.reset # AURAFLARE doesn't reset the vector by default
       @scene.wait(16, true) # set true to anchor the sprites to vector
@@ -79,6 +82,7 @@ module BattleScripts
       @scene.pbHideAllDataboxes
       # show flavor text
       @scene.pbDisplay("The Electrode is seething with rage!")
+      pbBGMPlay("Legendary")
       EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
       @vector.reset # AURAFLARE doesn't reset the vector by default
       @scene.wait(16, true) # set true to anchor the sprites to vector
@@ -103,6 +107,7 @@ module BattleScripts
       @scene.pbHideAllDataboxes
       # show flavor text
       @scene.pbDisplay("The Haunter is seething with rage!")
+      pbBGMPlay("Legendary")
       EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
       @vector.reset # AURAFLARE doesn't reset the vector by default
       @scene.wait(16, true) # set true to anchor the sprites to vector
