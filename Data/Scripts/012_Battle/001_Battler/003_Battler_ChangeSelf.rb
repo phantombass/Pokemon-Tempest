@@ -263,29 +263,29 @@ class PokeBattle_Battler
           when PBWeather::Rain, PBWeather::Storm, PBWeather::HeavyRain; newForm = 2
           when PBWeather::Hail, PBWeather::Sleet;     newForm = 3
           end
+          case newForm
+          when 4;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FAIRY)
+          when 0;                       @effects[PBEffects::Type3] = getConst(PBTypes,:NORMAL)
+          when 5;                       @effects[PBEffects::Type3] = getConst(PBTypes,:GHOST)
+          when 7;                       @effects[PBEffects::Type3] = getConst(PBTypes,:DARK)
+          when 8;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FLYING)
+          when 9;                       @effects[PBEffects::Type3] = getConst(PBTypes,:ELECTRIC)
+          when 10;                      @effects[PBEffects::Type3] = getConst(PBTypes,:DRAGON)
+          when 11;                      @effects[PBEffects::Type3] = getConst(PBTypes,:POISON)
+          when 12;                      @effects[PBEffects::Type3] = getConst(PBTypes,:ROCK)
+          when 13;                      @effects[PBEffects::Type3] = getConst(PBTypes,:GRASS)
+          when 14;                      @effects[PBEffects::Type3] = getConst(PBTypes,:GROUND)
+          when 15;                      @effects[PBEffects::Type3] = getConst(PBTypes,:FIGHTING)
+          when 16;                      @effects[PBEffects::Type3] = getConst(PBTypes,:STEEL)
+          when 17;                      @effects[PBEffects::Type3] = getConst(PBTypes,:PSYCHIC)
+          when 18;                      @effects[PBEffects::Type3] = getConst(PBTypes,:BUG)
+          when 20;                      @effects[PBEffects::Type3] = getConst(PBTypes,:SOUND)
+          when 1;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FIRE)
+          when 2;                       @effects[PBEffects::Type3] = getConst(PBTypes,:WATER)
+          when 3;                       @effects[PBEffects::Type3] = getConst(PBTypes,:ICE)
+          end
           if @form!=newForm
             @battle.pbShowAbilitySplash(self,true)
-            case newForm
-            when 4;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FAIRY)
-            when 0;                       @effects[PBEffects::Type3] = getConst(PBTypes,:NORMAL)
-            when 5;                       @effects[PBEffects::Type3] = getConst(PBTypes,:GHOST)
-            when 7;                       @effects[PBEffects::Type3] = getConst(PBTypes,:DARK)
-            when 8;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FLYING)
-            when 9;                       @effects[PBEffects::Type3] = getConst(PBTypes,:ELECTRIC)
-            when 10;                      @effects[PBEffects::Type3] = getConst(PBTypes,:DRAGON)
-            when 11;                      @effects[PBEffects::Type3] = getConst(PBTypes,:POISON)
-            when 12;                      @effects[PBEffects::Type3] = getConst(PBTypes,:ROCK)
-            when 13;                      @effects[PBEffects::Type3] = getConst(PBTypes,:GRASS)
-            when 14;                      @effects[PBEffects::Type3] = getConst(PBTypes,:GROUND)
-            when 15;                      @effects[PBEffects::Type3] = getConst(PBTypes,:FIGHTING)
-            when 16;                      @effects[PBEffects::Type3] = getConst(PBTypes,:STEEL)
-            when 17;                      @effects[PBEffects::Type3] = getConst(PBTypes,:PSYCHIC)
-            when 18;                      @effects[PBEffects::Type3] = getConst(PBTypes,:BUG)
-            when 20;                      @effects[PBEffects::Type3] = getConst(PBTypes,:SOUND)
-            when 1;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FIRE)
-            when 2;                       @effects[PBEffects::Type3] = getConst(PBTypes,:WATER)
-            when 3;                       @effects[PBEffects::Type3] = getConst(PBTypes,:ICE)
-            end
             @battle.pbHideAbilitySplash(self)
             pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
           end
