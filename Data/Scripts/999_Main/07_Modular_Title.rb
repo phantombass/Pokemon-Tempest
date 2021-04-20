@@ -72,7 +72,7 @@ MTS_MODIFIERS = [
   #"background4", "intro:6", "effect4", "effect5", "effect7", "overlay:static002", "bgm:title_xy"
 
   # Cosmic Vibes (gen 7)
-  "background3", "intro:7", "effect5", "effect6", "overlay6", "logo:shine", "bgm:title_sm"
+  "background:ethereal", "intro:7", "effect5", "effect6", "overlay6", "logo:shine003", "bgm:title_sm"
 #-------------------------------------------------------------------------------
 #                  V V     add your modifiers in here     V V
 #-------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ MTS_MODIFIERS = [
 # Config used for determining the cry of species to play, along with displaying
 # a certain Pokemon sprite if applicable. Leave it as nil in order not to play
 # a species cry, otherwise set as either a symbolic or numeric value
-MTS_SPECIES = nil
+MTS_SPECIES = 976
 # Applies a form to Pokemon species
 MTS_SPECIES_FORM = 0
 # Applies female form
