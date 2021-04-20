@@ -151,7 +151,7 @@ class PokeBattle_Move
       modifiers[ACC_MULT] *= 1.2
     end
     if @battle.field.weather==PBWeather::Fog
-      if user.pbHasType?(:FAIRY) || user.hasAbility?(:BAROMETRIC)
+      if user.pbHasType?(:FAIRY) || user.hasActiveAbility?(:BAROMETRIC)
         modifiers[ACC_MULT] *= 1
       else
         modifiers[ACC_MULT] *= 0.75
