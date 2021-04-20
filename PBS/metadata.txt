@@ -648,3 +648,24 @@ MapPosition = 0,18,1
 SnapEdges = true
 MapPosition = 0,18,1
 ShowArea = true
+#-------------------------------
+[124]
+# Distura Apartments
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[125]
+# Distura Houses
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[126]
+# Astral Houses
+SnapEdges = true
+MapPosition = 0,18,1
+#-------------------------------
+[127]
+# Astral Apartments
+SnapEdges = true
+MapPosition = 0,18,1
+#-------------------------------

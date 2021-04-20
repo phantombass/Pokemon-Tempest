@@ -3285,7 +3285,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 27
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = UNFEZANT,Level,32
+Evolutions = UNFEZANT,Level,36
 #-------------------------------
 [UNFEZANT,1]
 FormName = Ufaran Form
@@ -3381,7 +3381,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = NIDOQUEEN,Item,MOONSTONE
+Evolutions = NIDOQUEEN,Item,DRACOSTONE
 #-------------------------------
 [NIDOQUEEN,1]
 FormName = Ufaran Form
@@ -3478,7 +3478,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = NIDOKING,Item,MOONSTONE
+Evolutions = NIDOKING,Item,DRACOSTONE
 #-------------------------------
 [NIDOKING,1]
 FormName = Ufaran Form

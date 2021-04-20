@@ -26,7 +26,6 @@ Events.onMapUpdate += proc {| sender, e |
       end
     end
 }
-
 def pbHoneyTree
   if pbConfirmMessage("There may be a Pokémon in this tree!\\nWould you like to use a Honey?")
     if vHI("Honey")
