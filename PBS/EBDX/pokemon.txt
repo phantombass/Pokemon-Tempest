@@ -937,7 +937,7 @@ BattlerAltitude = 5
 #-------------------------------
 [HOPPIP]
 BattlerPlayerY  = 8
-BattlerEnemyY   = 20
+BattlerEnemyY   = -10
 BattlerAltitude = 15
 #-------------------------------
 [SKIPLOOM]
