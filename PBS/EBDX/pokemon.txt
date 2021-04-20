@@ -3775,6 +3775,11 @@ BattlerAltitude = 1
 [DRAGAPULT,1]
 BattlerAltitude = 1
 #-------------------------------
+[BELLSPROUT,1]
+BattlerPlayerY  = 10
+BattlerEnemyY   = 44
+BattlerAltitude = 0
+#-------------------------------
 [SNEASEL,1]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 44
