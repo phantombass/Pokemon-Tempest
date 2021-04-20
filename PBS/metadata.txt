@@ -476,6 +476,7 @@ MapPosition = 0,3,13
 # Valley Mine
 MapPosition = 0,3,13
 Environment = Cave
+SnapEdges = true
 ShowArea = true
 #-------------------------------
 [085]
