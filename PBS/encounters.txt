@@ -63,6 +63,25 @@ Land
     PIPLUP,12,14
     MEDITITE,12,14
     PIPLUP,12,14
+Water
+    MAGIKARP,14,19
+    POLIWAG,18,22
+    GYARADOS,20,25
+    HIPPOPOTAS,20,23
+    PIPLUP,10,15
+OldRod
+    MAGIKARP,5
+    MAGIKARP,10
+GoodRod
+    MAGIKARP,15
+    POLIWAG,15
+    CHINCHOU,20
+SuperRod
+    MAGIKARP,15,35
+    POLIWHIRL,25
+    GYARADOS,25,30
+    CHINCHOU,25,30
+    LANTURN,30,35
 #-------------------------------
 094 # Rainbow Cliffs
 25,10,10
