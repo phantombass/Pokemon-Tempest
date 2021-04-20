@@ -4,6 +4,7 @@ class PokeBattle_Battle
   #=============================================================================
   def pbCanRun?(idxBattler)
     return false if trainerBattle?
+    return false if $game_switches[81] == true
     battler = @battlers[idxBattler]
     return false if !@canRun && !battler.opposes?
     return true if battler.pbHasType?(:GHOST) && NEWEST_BATTLE_MECHANICS
