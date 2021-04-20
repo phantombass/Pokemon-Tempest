@@ -3780,6 +3780,21 @@ BattlerPlayerY  = 10
 BattlerEnemyY   = 44
 BattlerAltitude = 0
 #-------------------------------
+[PANSAGE,1]
+BattlerPlayerY  = 10
+BattlerEnemyY   = 14
+BattlerAltitude = 0
+#-------------------------------
+[PANSEAR,1]
+BattlerPlayerY  = 10
+BattlerEnemyY   = 14
+BattlerAltitude = 0
+#-------------------------------
+[PANPOUR,1]
+BattlerPlayerY  = 10
+BattlerEnemyY   = 14
+BattlerAltitude = 0
+#-------------------------------
 [SNEASEL,1]
 BattlerPlayerY  = 8
 BattlerEnemyY   = 44
