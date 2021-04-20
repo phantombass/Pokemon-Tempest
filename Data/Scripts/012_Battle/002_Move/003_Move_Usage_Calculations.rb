@@ -150,8 +150,12 @@ class PokeBattle_Move
       user.effects[PBEffects::MicleBerry] = false
       modifiers[ACC_MULT] *= 1.2
     end
-    if @battle.field.weather==PBWeather::Fog && (!user.pbHasType?(:FAIRY) || !user.hasAbility?(:BAROMETRIC))
-      modifiers[ACC_MULT] *= 0.75
+    if @battle.field.weather==PBWeather::Fog
+      if user.pbHasType?(:FAIRY) || user.hasAbility?(:BAROMETRIC)
+        modifiers[ACC_MULT] *= 1
+      else
+        modifiers[ACC_MULT] *= 0.75
+      end
     end
     modifiers[EVA_STAGE] = 0 if target.effects[PBEffects::Foresight] && modifiers[EVA_STAGE]>0
     modifiers[EVA_STAGE] = 0 if target.effects[PBEffects::MiracleEye] && modifiers[EVA_STAGE]>0

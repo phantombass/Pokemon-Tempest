@@ -282,6 +282,8 @@ class PokeBattle_Battler
             when PBWeather::Borealis;                   @effects[PBEffects::Type3] = getConst(PBTypes,:PSYCHIC)
             when PBWeather::Humid;                      @effects[PBEffects::Type3] = getConst(PBTypes,:BUG)
             when PBWeather::Reverb;                     @effects[PBEffects::Type3] = getConst(PBTypes,:SOUND)
+            when PBWeather::TimeWarp;                   @effects[PBEffects::Type3] = getConst(PBTypes,:TIME)
+            when PBWeather::Starstorm;                  @effects[PBEffects::Type3] = getConst(PBTypes,:COSMIC)
             when PBWeather::Sun, PBWeather::HarshSun;   @effects[PBEffects::Type3] = getConst(PBTypes,:FIRE)
             when PBWeather::Rain, PBWeather::Storm, PBWeather::HeavyRain; @effects[PBEffects::Type3] = getConst(PBTypes,:WATER)
             when PBWeather::Hail, PBWeather::Sleet;     @effects[PBEffects::Type3] = getConst(PBTypes,:ICE)
