@@ -51,6 +51,7 @@ Events.onStepTaken += proc { |_sender,_e|
       meName = "Voltorb flip win"
       textColor = "7FE00000"
       pbMessage(_INTL("\\me[{1}]<c2={2}>Hey \\PN! It's the Side Quest Captain! I have a job for you!</c2>",meName,textColor))
+      pbSideQuestLast
     else
       $game_variables[SideQuest::Steps] = 0
     end
