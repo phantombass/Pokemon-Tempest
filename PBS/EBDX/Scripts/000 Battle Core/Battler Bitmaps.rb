@@ -31,7 +31,8 @@ def pbLoadPokemonBitmapSpecies(pokemon, species, back = false, scale = FRONT_SPR
     end
     bitmapFileName = pbResolveBitmap(bitmapFileName)
   else
-    shiny = (!pokemon.superVariant.nil? && pokemon.isSuperShiny?) ? pokemon.superVariant : pokemon.isShiny?
+    shiny = pokemon.isShiny?
+    shiny = pokemon.superVariant if (!pokemon.superVariant.nil? && pokemon.isSuperShiny?)
     params = [species, back, pokemon.isFemale?, shiny, (pokemon.form rescue 0), (pokemon.isShadow? rescue 0), (pokemon.dynamax rescue false), (pokemon.dynamax && pokemon.gfactor rescue false)]
     bitmapFileName = pbCheckPokemonBitmapFiles(params)
   end

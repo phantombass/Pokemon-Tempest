@@ -167,11 +167,19 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   # gets next battle BGM
   #-----------------------------------------------------------------------------
-  def self.nextBattleBGM?(id, variant = 0, ext = 0)
+  def self.nextBattleBGM?(id, variant = 0, ext = 0, mod = PBTrainers)
     return nil if id.nil?
+    # try with form variants
     for key in @bgmData.keys
-      return key if self.canTransition?(key, id, variant, ext, @bgmData)
+      return key if self.canTransition?(key, id, mod, variant, ext, @bgmData)
     end
+    # try without form variants
+    if mod == PBSpecies
+      for key in @bgmData.keys
+        return key if self.canTransition?(key, id, mod, 0, 0, @bgmData)
+      end
+    end
+    # return nothing
     return nil
   end
   #-----------------------------------------------------------------------------
@@ -189,12 +197,12 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   # plays the next transition
   #-----------------------------------------------------------------------------
-  def self.playNextTransition(viewport, trainer = nil)
+  def self.playNextTransition(viewport, trainer = nil, mod = PBTrainers)
     @tviewport = viewport
     # trainer assigned custom transitions
     if !trainer.nil?
       for key in @customTransitions.keys
-        if self.canTransition?(key, trainer.trainertype, trainer.name, trainer.partyID)
+        if self.canTransition?(key, trainer.trainertype, mod, trainer.name, trainer.partyID)
           wrapper = CallbackWrapper.new
           wrapper.set({ :viewport => viewport, :trainer => trainer, :trainerid => trainer.trainertype, :name => trainer.name, :partyID => trainer.partyID })
           wrapper.execute(@customTransitions[@key])
@@ -232,7 +240,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   # checks whether or not to run special transition for constant
   #-----------------------------------------------------------------------------
-  def self.canTransition?(transition, id, variant = 0, ext = 0, dataset = @transitionData)
+  def self.canTransition?(transition, id, mod = PBTrainers, variant = 0, ext = 0, dataset = @transitionData)
     return false if !dataset.has_key?(transition)
     vrnt = variant
     array = dataset[transition]
@@ -250,7 +258,7 @@ module EliteBattle
         return true if "#{self.const(prk[0].to_sym)}_#{prk[1]}" == "#{id}_#{vrnt}"
         return true if "#{self.const(prk[0].to_sym)}_#{prk[1]}" == "#{id}_#{variant}" && !self.hasFormData?(@transitionData, transition, prk[0], vrnt)
       end
-      return true if self.const(val) == id
+      return true if self.const(val, mod) == id
     end
     return false
   end
@@ -267,7 +275,7 @@ module EliteBattle
   def self.smTransition?(id, poke = false, variant = 0, extr = 0)
     ret = false
     for ext in self.smTransitions?
-      ret = true if self.canTransition?("#{ext}SM", id, variant, extr)
+      ret = true if self.canTransition?("#{ext}SM", id, (poke ? PBSpecies : PBTrainers), variant, extr)
     end
     str = poke ? "species" : "trainer"
     ret = false if !pbResolveBitmap(sprintf("Graphics/EBDX/Transitions/#{str}%03d", id)) && !pbResolveBitmap(sprintf("Graphics/EBDX/Transitions/#{str}%03d_%d", id, poke ? variant : 0))

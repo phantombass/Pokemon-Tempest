@@ -17,7 +17,7 @@ class EliteBattle_BasicWildAnimations
         return self.animRegi
       else
         for trans in ["minorLegendary", "bwLegendary", "bwLegendary2"]
-          return eval("self.#{trans}") if EliteBattle.canTransition?(trans, @species, @form)
+          return eval("self.#{trans}") if EliteBattle.canTransition?(trans, @species, PBSpecies, @form)
         end
       end
     end
@@ -757,13 +757,11 @@ class SunMoonSpeciesTransitions
   #-----------------------------------------------------------------------------
   #  fetches secondary parameters for the animations
   #-----------------------------------------------------------------------------
-  def getParameters(trainerid)
-    # method used to check if battling against a registered evil team member
-    @evilteam = EliteBattle.canTransition?("evilTeam", trainerid, @form)
+  def getParameters(species)
     # methods used to determine special variants
     @variant = "trainer"
     for ext in EliteBattle.smTransitions?
-      @variant = ext if EliteBattle.canTransition?("#{ext}SM", trainerid, @form)
+      @variant = ext if EliteBattle.canTransition?("#{ext}SM", species, PBSpecies, @form)
     end
   end
   #-----------------------------------------------------------------------------

@@ -67,18 +67,18 @@ class PokeBattle_Scene
       next if !startBattle
       sendOuts.each_with_index do |b, m|
         next if !@sprites["player_#{m}"]
-        @sprites["player_#{m}"].src_rect.x += (@sprites["player_#{m}"].bitmap.width/4) if j == 0
+        @sprites["player_#{m}"].src_rect.x += (@sprites["player_#{m}"].bitmap.width/5) if j == 0
         @sprites["player_#{m}"].x -= 2 if j > 0
       end
       self.wait(1, false)
     end
     self.wait(6, true) if startBattle
-    for j in 0...4
+    for j in 0...6
       next if !startBattle
       sendOuts.each_with_index do |b, m|
         next if !@sprites["player_#{m}"]
-        @sprites["player_#{m}"].src_rect.x += (@sprites["player_#{m}"].bitmap.width/4) if j%2 == 0
-        @sprites["player_#{m}"].x += 3
+        @sprites["player_#{m}"].src_rect.x += (@sprites["player_#{m}"].bitmap.width/5) if j%2 == 0
+        @sprites["player_#{m}"].x += 3 if j < 4
       end
       self.wait(1, false)
     end

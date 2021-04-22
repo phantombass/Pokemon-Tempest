@@ -37,7 +37,7 @@ class PokeBattle_Scene
     pokeball = @sprites["captureball"]
     shadow = @sprites["ballshadow"]
     # position "camera"
-    sx, sy = @sprites["battlebg"].spoof(EliteBattle.getVector(:ENEMY), 1)
+    sx, sy = @sprites["battlebg"].spoof(EliteBattle.getVector(:ENEMY), targetBattler)
     curve = calculateCurve(sx-260,sy-160,sx-60,sy-200,sx,sy-140,24)
     # position pokeball
     pokeball.x = sx - 260
@@ -251,6 +251,7 @@ class PokeBattle_Scene
       spritePoke.clear
     end
     @playerfix = true if @safaribattle
+    self.briefmessage = true
   end
   #-----------------------------------------------------------------------------
   #  Function called when capture is successful

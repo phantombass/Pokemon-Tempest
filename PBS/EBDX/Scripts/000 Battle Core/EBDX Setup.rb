@@ -70,6 +70,29 @@ module EliteBattle
         end
         # register options
         EliteBattle.addData(section.upcase.to_sym, :METRICS, options)
+      # boss battle ruleset
+      elsif section.upcase == "BOSSBATTLES"
+        options = []
+        for set in ["Immunities"]
+          if metrics[section]["__pk__"] && metrics[section]["__pk__"][set]
+            for immunity in metrics[section]["__pk__"][set]
+              options.push(immunity.to_sym)
+            end
+            EliteBattle.addData(:BOSSBATTLES, set.upcase.to_sym, options)
+          end
+        end
+      # randomizer ruleset
+      elsif section.upcase == "RANDOMIZER"
+        options = []
+        sets = { "ItemExclusions" => :EXCLUSIONS_ITEMS }
+        for set in sets.keys
+          if metrics[section]["__pk__"] && metrics[section]["__pk__"][set]
+            for immunity in metrics[section]["__pk__"][set]
+              options.push(immunity.to_sym)
+            end
+            EliteBattle.addData(:RANDOMIZER, sets[set], options)
+          end
+        end
       # configure fight menu
       elsif section.upcase == "FIGHTMENU"
         options = {}
@@ -111,7 +134,7 @@ module EliteBattle
         :set => ['ShowHP', 'ExpBarWidth', 'HPBarWidth', 'Bitmap', 'HPColors', 'Container']
       },
       "COMMANDMENU" => {
-        :set => ['BarGraphic', 'SelectorGraphic', 'ButtonGraphic', 'PartyLineGraphic']
+        :set => ['BarGraphic', 'SelectorGraphic', 'ButtonGraphic']
       },
       "FIGHTMENU" => {
         :set => ['BarGraphic', 'SelectorGraphic', 'ButtonGraphic', 'MegaButtonGraphic', 'TypeGraphic', 'CategoryGraphic', 'ShowTypeAdvantage']
@@ -157,7 +180,8 @@ module EliteBattle
     return if !File.safeData?("Data/Plugins/pokemon.ebdx")
     metrics = load_data("Data/Plugins/pokemon.ebdx")
     for key in metrics.keys
-      args = [key.gsub(/[-,\s]/, "_").to_sym]
+      dnom = key.include?(",") ? "," : "-"
+      args = [key.gsub(dnom, "_").to_sym]
       vals = {
         'BattlerEnemyX' => :EX,
         'BattlerEnemyY' => :EY,

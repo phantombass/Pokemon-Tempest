@@ -22,10 +22,10 @@ def pbBattleAnimation(bgm = nil, battletype = 0, foe = nil)
   # checks if battle BGM is registered for species or trainer
   mapBGM = EliteBattle.getData($game_map.map_id, PBMap, :BGM)
   bgm = mapBGM if !mapBGM.nil?
-  pkmnBGM = EliteBattle.nextBattleBGM?(EliteBattle.get(:wildSpecies), EliteBattle.get(:wildForm))
+  pkmnBGM = EliteBattle.nextBattleBGM?(EliteBattle.get(:wildSpecies), EliteBattle.get(:wildForm), 0, PBSpecies)
   bgm = pkmnBGM if !pkmnBGM.nil? && trainerid < 0
-  trBGM = EliteBattle.nextBattleBGM?(trainerid)
-  bgm = trBGM if !trBGM.nil? && trainerid >= 0
+  trBGM = trainerid >= 0 ? EliteBattle.nextBattleBGM?(trainerid, foe[0].name, foe[0].partyID, PBTrainers) : nil
+  bgm = trBGM if !trBGM.nil?
   # plays battle BGM
   if bgm
     pbBGMPlay(bgm)

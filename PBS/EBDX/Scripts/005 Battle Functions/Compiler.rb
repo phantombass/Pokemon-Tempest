@@ -118,7 +118,6 @@ module EBCompiler
   # compile all the necessary PBS data
   #-----------------------------------------------------------------------------
   def self.compile
-    Input.update
     return if !$DEBUG || !Dir.safe?("PBS/EBDX") || File.safe?("Game.rgssad")
     pbs = Dir.get("PBS/EBDX", "*.txt", false)
     Dir.create("PBS/Plugins")

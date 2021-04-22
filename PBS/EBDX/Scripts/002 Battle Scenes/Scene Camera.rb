@@ -20,6 +20,7 @@ class PokeBattle_Scene
     @fancyMsg.update if @fancyMsg && !@fancyMsg.disposed?
     # dex data
     @sprites["dexdata"].update if @sprites["dexdata"]
+    pbHideAllDataboxes if @sprites["dexdata"]
     # vector update
     @vector.update
     # trick for clearing message windows

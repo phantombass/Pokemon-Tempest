@@ -8,22 +8,22 @@ class EliteBattle_BasicTrainerAnimations
   #-----------------------------------------------------------------------------
   def initialize(viewport, battletype, foe)
     @viewport = viewport
-    # plays random battle intro
+    # plays random battle intro 
     styles = ["anim1", "anim2", "anim3"]
     sel = styles[rand(styles.length)]
     handled = false
     # plays rainbow intro animation if applicable
-    handled = self.rainbowIntro(@viewport) if EliteBattle.canTransition?("rainbowIntro", foe[0].trainertype, foe[0].name, foe[0].partyID) && EliteBattle.get(:smAnim)
+    handled = self.rainbowIntro(@viewport) if EliteBattle.canTransition?("rainbowIntro", foe[0].trainertype, PBTrainers, foe[0].name, foe[0].partyID) && EliteBattle.get(:smAnim)
     # plays evil team animation if applicable
     filename = sprintf("Graphics/EBDX/Transitions/classic%03d", foe[0].trainertype)
-    if pbResolveBitmap(filename) && foe.length < 2 && EliteBattle.canTransition?("classicVS", foe[0].trainertype, foe[0].name, foe[0].partyID)
+    if pbResolveBitmap(filename) && foe.length < 2 && EliteBattle.canTransition?("classicVS", foe[0].trainertype, PBTrainers, foe[0].name, foe[0].partyID)
       handled = ClassicVSSequence.new(@viewport, foe[0])
       handled.start
       return true
-    elsif EliteBattle.canTransition?("evilTeam", foe[0].trainertype, foe[0].name, foe[0].partyID)
+    elsif EliteBattle.canTransition?("evilTeam", foe[0].trainertype, PBTrainers, foe[0].name, foe[0].partyID)
       return self.evilTeam(@viewport, foe[0].trainertype)
     # plays team skull animation if applicable
-    elsif EliteBattle.canTransition?("teamSkull", foe[0].trainertype, foe[0].name, foe[0].partyID)
+    elsif EliteBattle.canTransition?("teamSkull", foe[0].trainertype, PBTrainers, foe[0].name, foe[0].partyID)
       return self.teamSkull(@viewport, foe[0].trainertype)
     # plays override if applicable
     elsif !handled && pbBattleAnimationOverride(viewport, battletype, foe)
@@ -845,8 +845,8 @@ class SunMoonBattleTransitions
     @frames = 1
     @curFrame = 1
     @sprites = {}
-    @evilteam = EliteBattle.canTransition?("evilTeam", @trainer.trainertype, @trainer.name, @trainer.partyID)
-    @teamskull = EliteBattle.canTransition?("teamSkull", @trainer.trainertype, @trainer.name, @trainer.partyID)
+    @evilteam = EliteBattle.canTransition?("evilTeam", @trainer.trainertype, PBTrainers, @trainer.name, @trainer.partyID)
+    @teamskull = EliteBattle.canTransition?("teamSkull", @trainer.trainertype, PBTrainers, @trainer.name, @trainer.partyID)
     # retreives additional parameters
     self.getParameters(@trainer)
     # initializes the backdrop
@@ -1120,11 +1120,11 @@ class SunMoonBattleTransitions
   # fetches secondary parameters for the animations
   def getParameters(trainer)
     # method used to check if battling against a registered evil team member
-    @evilteam = EliteBattle.canTransition?("evilTeam", trainer.trainertype, trainer.name, trainer.partyID)
+    @evilteam = EliteBattle.canTransition?("evilTeam", trainer.trainertype, PBTrainers, trainer.name, trainer.partyID)
     # methods used to determine special variants
     @variant = "trainer"
     for ext in EliteBattle.smTransitions?
-      @variant = ext if EliteBattle.canTransition?("#{ext}SM", trainer.trainertype, trainer.name, trainer.partyID)
+      @variant = ext if EliteBattle.canTransition?("#{ext}SM", trainer.trainertype, PBTrainers, trainer.name, trainer.partyID)
     end
     # sets up the rest of the variables
     @obmp = pbBitmap("Graphics/EBDX/Transitions/Common/ballTransition")

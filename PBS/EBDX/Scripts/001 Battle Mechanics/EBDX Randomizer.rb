@@ -191,6 +191,7 @@ module EliteBattle
     # disposes of message window
     pbDisposeMessageWindow(msgwindow)
     # adds randomizer rules
+    $PokemonGlobal.randomizerRules = added
     EliteBattle.addData(:RANDOMIZER, :RULES, added)
     # shows message
     msg = _INTL("Your selected Randomizer rules have been applied.")
@@ -337,6 +338,7 @@ end
 class PokemonGlobalMetadata
   attr_accessor :randomizedData
   attr_accessor :isRandomizer
+  attr_accessor :randomizerRules
 end
 #===============================================================================
 #  refresh cache on load
@@ -346,7 +348,10 @@ class PokemonLoadScreen
   def pbStartLoadScreen
     ret = pbStartLoadScreen_ebdx_randomizer
     # refresh current cache
-    EliteBattle.startRandomizer(true) if $PokemonGlobal && $PokemonGlobal.isRandomizer
+    if $PokemonGlobal && $PokemonGlobal.isRandomizer
+      EliteBattle.startRandomizer(true)
+      EliteBattle.addData(:RANDOMIZER, :RULES, $PokemonGlobal.randomizerRules) if !$PokemonGlobal.randomizerRules.nil?
+    end
     return ret
   end
 end

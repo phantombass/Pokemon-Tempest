@@ -61,12 +61,10 @@ class PokeBattle_Scene
         break if yield -1
       elsif Input.trigger?(Input::A)                                            # Toggle Mega Evolution
         if megaEvoPossible
-          if @battle.pbCanMegaEvolve?(idxBattler)
             @fightWindow.megaButtonTrigger
             pbSEPlay("EBDX/SE_Select3")
           end
           break if yield -2
-        end
       elsif Input.trigger?(Input::F5)                                           # Shift
         if @fightWindow.shiftMode > 0
           pbSEPlay("EBDX/SE_Select2")

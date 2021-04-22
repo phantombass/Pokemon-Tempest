@@ -115,7 +115,8 @@ module EliteBattle
     end
     # disposes of message window
     pbDisposeMessageWindow(msgwindow)
-    # adds randomizer rules
+    # adds nuzlocke rules
+    $PokemonGlobal.nuzlockeRules = added
     EliteBattle.addData(:NUZLOCKE, :RULES, added)
     # shows message
     msg = _INTL("Your selected Nuzlocke rules have been applied.")
@@ -232,7 +233,7 @@ class PokeBattle_Battle
     if EliteBattle.get(:nuzlocke) && data.include?(:ONEROUTE)
       static = data.include?(:STATIC) && !$nonStaticEncounter
       map = $PokemonGlobal.nuzlockeData[$game_map.map_id]
-      return pbDisplay(_INTL("Nuzlocke rules prevent you to catch a wild Pokémon on a map you already encountered one!")) if !map.nil? && !static
+      return pbDisplay(_INTL("Nuzlocke rules prevent you from catching a wild Pokémon on a map you already had an encounter on!")) if !map.nil? && !static
     end
     pbThrowPokeBall_ebdx_nuzlocke(*args)
     # part that registers caught Pokemon for map
@@ -246,13 +247,15 @@ class PokeBattle_Battle
   alias pbRun_ebdx_nuzlocke pbRun unless self.method_defined?(:pbRun_ebdx_nuzlocke)
   def pbRun(*args)
     data = EliteBattle.getData(:NUZLOCKE, PBMetrics, :RULES); data = [] if data.nil?
-    if opposes?(args[0])
-      battler = self.battlers[args[0]]
-    else
-      battler = self.battlers[args[0]].pbOpposingSide
+    battler = nil
+    for i in 0...self.pbSideSize(1)
+      if @battlers[i+1] && @battlers[i+1].hp > 0
+        battler = @battlers[i+1]
+        break
+      end
     end
     if EliteBattle.get(:nuzlocke) && data.include?(:ONEROUTE) && !self.opponent
-      evo = EliteBattle.checkEvoNuzlocke?(battler.pokemon.species) && data.include?(:DUPSCLAUSE)
+      evo = battler.nil? ? false : EliteBattle.checkEvoNuzlocke?(battler.displaySpecies) && data.include?(:DUPSCLAUSE)
       static = data.include?(:STATIC) && !$nonStaticEncounter
       map = $PokemonGlobal.nuzlockeData[$game_map.map_id]
       $PokemonGlobal.nuzlockeData[$game_map.map_id] = true if map.nil? && !static && !evo
@@ -282,6 +285,7 @@ class PokemonGlobalMetadata
   attr_accessor :qNuzlocke
   attr_accessor :nuzlockeData
   attr_accessor :isNuzlocke
+  attr_accessor :nuzlockeRules
 end
 #===============================================================================
 #  starts nuzlocke only after obtaining a Pokeball
@@ -293,6 +297,7 @@ class PokemonBag
     item = args[0]; item = getID(PBItems,item) if item.is_a?(String) || item.is_a?(Symbol)
     if $PokemonGlobal && $PokemonGlobal.qNuzlocke && pbIsPokeBall?(item)
       EliteBattle.set(:nuzlocke, true)
+      EliteBattle.addData(:NUZLOCKE, :RULES, $PokemonGlobal.nuzlockeRules) if !$PokemonGlobal.nuzlockeRules.nil?
       $PokemonGlobal.isNuzlocke = true
     end
     return ret

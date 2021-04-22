@@ -23,9 +23,9 @@ class PokeBattle_Scene
     @battle = battle
     @battlers = battle.battlers
     # checks whether to display integrated VS sequence
-    @integratedVS = @battle.opponent && @battle.opponent.length < 2 && !EliteBattle.get(:smAnim) && EliteBattle.canTransition?("integratedVS", @battle.opponent[0].trainertype, @battle.opponent[0].name, @battle.opponent[0].partyID)
+    @integratedVS = @battle.opponent && @battle.opponent.length < 2 && !EliteBattle.get(:smAnim) && EliteBattle.canTransition?("integratedVS", @battle.opponent[0].trainertype, PBTrainers, @battle.opponent[0].name, @battle.opponent[0].partyID)
     # check if minor trainer transition is applied
-    @minorAnimation = @battle.opponent && !@integratedVS && EliteBattle.canTransition?("minorTrainer", @battle.opponent[0].trainertype, @battle.opponent[0].name, @battle.opponent[0].partyID)
+    @minorAnimation = @battle.opponent && !@integratedVS && EliteBattle.canTransition?("minorTrainer", @battle.opponent[0].trainertype, PBTrainers, @battle.opponent[0].name, @battle.opponent[0].partyID)
     # setup for initial vector configuration
     vec = EliteBattle.getVector(:ENEMY)
     if @battle.opponent && @minorAnimation
@@ -98,7 +98,7 @@ class PokeBattle_Scene
       @sprites["player_#{i}"].y = Graphics.height - @sprites["player_#{i}"].bitmap.height
       @sprites["player_#{i}"].z = 50
       @sprites["player_#{i}"].opacity = 0
-      @sprites["player_#{i}"].src_rect.width /= 4
+      @sprites["player_#{i}"].src_rect.width /= 5
     end
     # initializes trainer sprite
     if @battle.opponent

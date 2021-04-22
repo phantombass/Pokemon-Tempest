@@ -1012,6 +1012,9 @@ class BattleSceneRoom
       @sprites.delete("w_volc#{j}")
     end
   end
+  #-----------------------------------------------------------------------------
+  # records the proper positioning
+  #-----------------------------------------------------------------------------
   def adjustMetrics
     @scale = EliteBattle.get(:roomScale)
     data = EliteBattle.get(:battlerMetrics)

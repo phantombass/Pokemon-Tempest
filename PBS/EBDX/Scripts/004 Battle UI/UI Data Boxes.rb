@@ -284,17 +284,17 @@ class DataBoxEBDX  <  SpriteWrapper
     @sprites["exp"].ey = @sprites["container"].ey + @expBarY
 
     @sprites["textName"] = Sprite.new(@viewport)
-    @sprites["textName"].bitmap = Bitmap.new(@sprites["container"].bitmap.width, @sprites["base"].bitmap.height)
+    @sprites["textName"].bitmap = Bitmap.new(@sprites["container"].bitmap.width + 32, @sprites["base"].bitmap.height)
     @sprites["textName"].z = self.getMetric("name", :z)
-    @sprites["textName"].ex = self.getMetric("name", :x)
+    @sprites["textName"].ex = self.getMetric("name", :x) - 16
     @sprites["textName"].ey = self.getMetric("name", :y)
     pbSetSmallFont(@sprites["textName"].bitmap)
 
     @sprites["caught"] = Sprite.new(@viewport)
     @sprites["caught"].bitmap = pbBitmap(@path + "battleBoxOwned") if !@playerpoke && @battler.owned? && !@scene.battle.opponent
-    @sprites["caught"].z = @sprites["textName"].z
-    @sprites["caught"].ex = @sprites["textName"].ex - 20
-    @sprites["caught"].ey = @sprites["textName"].ey + 6
+    @sprites["caught"].z = @sprites["container"].z
+    @sprites["caught"].ex = @sprites["container"].ex - 18
+    @sprites["caught"].ey = @sprites["container"].ey - 2
 
     @sprites["textHP"] = Sprite.new(@viewport)
     @sprites["textHP"].bitmap = Bitmap.new(@sprites["container"].bitmap.width, @sprites["base"].bitmap.height)
@@ -413,17 +413,17 @@ class DataBoxEBDX  <  SpriteWrapper
     str = @pokemon.name
     str += " "
     color = @pokemon.isShiny? ? Color.new(222,197,95) : Color.white
-    pbDrawOutlineText(@sprites["textName"].bitmap,2-o,0,@sprites["textName"].bitmap.width-4,@sprites["textName"].bitmap.height,str,color,Color.new(0,0,0,125),0)
+    pbDrawOutlineText(@sprites["textName"].bitmap,18-o,0,@sprites["textName"].bitmap.width-40,@sprites["textName"].bitmap.height,str,color,Color.new(0,0,0,125),0)
     # writes the Pokemon's gender
-    x = @sprites["textName"].bitmap.text_size(str).width + 2
+    x = @sprites["textName"].bitmap.text_size(str).width + 18
     str = ""
     str = _INTL("♂") if @pokemon.gender == 0 && !@hidden
     str = _INTL("♀") if @pokemon.gender == 1 && !@hidden
     color = (@pokemon.gender == 0) ? Color.new(53,107,208) : Color.new(180,37,77)
-    pbDrawOutlineText(@sprites["textName"].bitmap,x-o,0,@sprites["textName"].bitmap.width-4,@sprites["textName"].bitmap.height,str,color,Color.new(0,0,0,125),0)
+    pbDrawOutlineText(@sprites["textName"].bitmap,x-o,0,@sprites["textName"].bitmap.width-40,@sprites["textName"].bitmap.height,str,color,Color.new(0,0,0,125),0)
     # writes the Pokemon's level
     str = "Lv.#{@battler.level}"
-    pbDrawOutlineText(@sprites["textName"].bitmap,2+o,0,@sprites["textName"].bitmap.width-4,@sprites["textName"].bitmap.height,str,Color.white,Color.new(0,0,0,125),2)
+    pbDrawOutlineText(@sprites["textName"].bitmap,18+o,0,@sprites["textName"].bitmap.width-40,@sprites["textName"].bitmap.height,str,Color.white,Color.new(0,0,0,125),2)
     self.updateHpBar
     self.updateExpBar
   end

@@ -40,12 +40,12 @@ end
 Events.onStepTaken += proc { |_sender,_e|
   if !$game_switches[SideQuest::Switch]
     $game_variables[SideQuest::Steps] += 1
-    $game_switches[SideQuest::Available] = true if $game_variables[SideQuest::Steps] >= 100
+    $game_switches[SideQuest::Available] = true if $game_variables[SideQuest::Steps] >= 200
   end
   if !$game_switches[SideQuest::Available]
     $game_switches[SideQuest::OnOff] = false
   end
-  if $game_variables[SideQuest::Steps] == 100 && $game_switches[SideQuest::Available]
+  if $game_variables[SideQuest::Steps] == 200 && $game_switches[SideQuest::Available]
     $game_variables[SideQuest::Rand] = rand(100)+1
     if $game_variables[SideQuest::Rand] >= 31
       meName = "Voltorb flip win"
