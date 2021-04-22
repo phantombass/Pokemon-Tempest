@@ -348,6 +348,7 @@ def pbSideQuestComplete
   pbCallBub(2,@event_id)
   pbMessage(_INTL("<c2={1}>As promised, a reward!</c2>",textColor))
   pbMessage(_INTL("\\me[{1}]<c2={2}>\\PN got ${3}!",meName,textColor,reward))
+  $Trainer.money += reward
   pbWait(8)
   if type == 0
     pbReceiveItem(itemReward1,3)
