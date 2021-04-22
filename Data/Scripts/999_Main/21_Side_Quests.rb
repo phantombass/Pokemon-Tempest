@@ -352,10 +352,10 @@ def pbSideQuestComplete
   $Trainer.money += reward
   pbWait(8)
   if type == 0
-    pbReceiveItem(itemReward1,3)
+    pbReceiveItem(itemReward1,1)
   elsif type == 2
-    pbReceiveItem(itemReward1,3)
-    pbReceiveItem(itemReward2,2)
+    pbReceiveItem(itemReward1,2)
+    pbReceiveItem(itemReward2,1)
     $PokemonBag.pbDeleteItem(itemID,1)
   elsif type == 1
     pbReceiveItem(itemReward1,3)
