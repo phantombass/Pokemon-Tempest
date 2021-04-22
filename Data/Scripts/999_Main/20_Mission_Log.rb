@@ -9,6 +9,7 @@ module Mission
   Mission4 = 507
   Stella = 517
   Vinny = 518
+  SideQuest = 404
 end
 
 def pbMissionUpdate
@@ -22,7 +23,9 @@ def pbMissionUpdate
   elsif $game_switches[Mission::Two] == true && $game_switches[Mission::Three] == false
     $game_variables[Mission::Mission2] += 1
     advanceQuestToStage(3,$game_variables[Mission::Mission2])
-  elsif $game_switches[Mission::Three] == true
+  elsif $game_switches[Mission::Three] == true && $game_switches[Mission::SideQuest] == true
+    advanceQuestToStage(8,2)
+  elsif $game_switches[Mission::Three] == true && $game_switches[Mission::SideQuest] == false
     $game_variables[Mission::Mission3] += 1
     if $game_switches[Mission::Stella] == true
       advanceQuestToStage(5,$game_variables[Mission::Mission3])
@@ -78,6 +81,9 @@ def pbNewMission(num)
   when 0
     $game_switches[Readouts::Readout] = true
     activateQuest(2)
+  when 8
+    $game_switches[Mission::SideQuest] = true
+    activateQuest(8)
   end
 end
 

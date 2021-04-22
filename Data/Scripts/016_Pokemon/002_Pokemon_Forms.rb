@@ -226,7 +226,7 @@ MultipleForms.register(:CASTFORM,{
   }
 })
 
-MultipleForms.copy(:CASTFORM,:FORMETEOS,:ALTEMPER)
+MultipleForms.copy(:CASTFORM,:FORMETEOS,:ALTEMPER,:SQUALTEMPER)
 
 MultipleForms.register(:BURMY,{
   "getFormOnCreation" => proc { |pkmn|

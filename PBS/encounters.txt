@@ -234,9 +234,9 @@ Cave
     AZUMARILL,21,23
     AUDINO,21,23
     AZUMARILL,21,23
-    CLEFAIRY,21,23
+    SABLEYE,21,23
 #-------------------------------
-119 # Venom Lab
+119 # Comet Lab
 25,10,10
 Cave
     VOLTORB,23,25

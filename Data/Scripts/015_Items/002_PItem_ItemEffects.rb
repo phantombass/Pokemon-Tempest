@@ -121,17 +121,52 @@ Events.onStepTaken += proc{
            $PokemonBag.pbHasItem?(:SUPERREPEL) ||
            $PokemonBag.pbHasItem?(:MAXREPEL)
           if pbConfirmMessage(_INTL("The repellent's effect wore off! Would you like to use another one?"))
-            ret = 0
-            pbFadeOutIn {
-              scene = PokemonBag_Scene.new
-              screen = PokemonBagScreen.new(scene,$PokemonBag)
-              ret = screen.pbChooseItemScreen(Proc.new { |item|
-                isConst?(item,PBItems,:REPEL) ||
-                isConst?(item,PBItems,:SUPERREPEL) ||
-                isConst?(item,PBItems,:MAXREPEL)
-              })
-            }
-            pbUseItem($PokemonBag,ret) if ret>0
+            if $PokemonBag.pbHasItem?(:REPEL) && !$PokemonBag.pbHasItem?(:SUPERREPEL) && !$PokemonBag.pbHasItem?(:MAXREPEL)
+              pbMessage(_INTL("Which one?\\ch[34,2,Repel]"))
+              if pbGet(34) == 0
+                pbUseItem($PokemonBag,:REPEL)
+              end
+            elsif !$PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && !$PokemonBag.pbHasItem?(:MAXREPEL)
+              pbMessage(_INTL("\\ch[34,2,Super Repel]"))
+              if pbGet(34) == 0
+                pbUseItem($PokemonBag,:SUPERREPEL)
+              end
+            elsif !$PokemonBag.pbHasItem?(:REPEL) && !$PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+              pbMessage(_INTL("\\ch[34,2,Max Repel]"))
+              if pbGet(34) == 0
+                pbUseItem($PokemonBag,:MAXREPEL)
+              end
+            elsif $PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && !$PokemonBag.pbHasItem?(:MAXREPEL)
+              pbMessage(_INTL("\\ch[34,3,Repel,Super Repel]"))
+              if pbGet(34) == 0
+                pbUseItem($PokemonBag,:REPEL)
+              elsif pbGet(34) == 1
+                pbUseItem($PokemonBag,:SUPERREPEL)
+              end
+            elsif !$PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+              pbMessage(_INTL("\\ch[34,3,Super Repel,Max Repel]"))
+              if pbGet(34) == 0
+                pbUseItem($PokemonBag,:SUPERREPEL)
+              elsif pbGet(34) == 1
+                pbUseItem($PokemonBag,:MAXREPEL)
+              end
+            elsif $PokemonBag.pbHasItem?(:REPEL) && !$PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+              pbMessage(_INTL("\\ch[34,3,Repel,Max Repel]"))
+              if pbGet(34) == 0
+                pbUseItem($PokemonBag,:REPEL)
+              elsif pbGet(34) == 1
+                pbUseItem($PokemonBag,:MAXREPEL)
+              end
+            elsif $PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+              pbMessage(_INTL("\\ch[34,3,Repel,Super Repel,Max Repel]"))
+              if pbGet(34) == 0
+                pbUseItem($PokemonBag,:REPEL)
+              elsif pbGet(34) == 1
+                pbUseItem($PokemonBag,:SUPERREPEL)
+              elsif pbGet(34) == 2
+                pbUseItem($PokemonBag,:MAXREPEL)
+              end
+            end
           end
         else
           pbMessage(_INTL("The repellent's effect wore off!"))

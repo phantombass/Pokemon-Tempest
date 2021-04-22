@@ -810,7 +810,7 @@ def pbPokemonMart(stock,speech=nil,cantsell=false)
   cmdSell = -1
   cmdQuit = -1
   commands[cmdBuy = commands.length]  = _INTL("Buy")
-  commands[cmdSell = commands.length] = _INTL("Sell") if !cantsell
+  commands[cmdSell = commands.length] = _INTL("Sell") if (!cantsell || $game_variables[SideQuest::Type] == 1)
   commands[cmdQuit = commands.length] = _INTL("Quit")
   pbCallBub(2,@event_id)
   if @event_id == 30
