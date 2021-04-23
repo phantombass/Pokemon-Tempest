@@ -1,5 +1,6 @@
 module SideQuest
   OnOff = 403
+  Activated = 527
   Type = 801
   Pkmn = 802
   Item = 803
@@ -38,22 +39,24 @@ module SideQuest
 end
 
 Events.onStepTaken += proc { |_sender,_e|
-  if !$game_switches[SideQuest::Switch]
-    $game_variables[SideQuest::Steps] += 1
-    $game_switches[SideQuest::Available] = true if $game_variables[SideQuest::Steps] >= 200
-  end
-  if !$game_switches[SideQuest::Available]
-    $game_switches[SideQuest::OnOff] = false
-  end
-  if $game_variables[SideQuest::Steps] == 200 && $game_switches[SideQuest::Available]
-    $game_variables[SideQuest::Rand] = rand(100)+1
-    if $game_variables[SideQuest::Rand] >= 31
-      meName = "Voltorb flip win"
-      textColor = "7FE00000"
-      pbMessage(_INTL("\\me[{1}]<c2={2}>Hey \\PN! It's the Side Quest Captain! I have a job for you!</c2>",meName,textColor))
-      pbSideQuestLast
-    else
-      $game_variables[SideQuest::Steps] = 0
+  if $game_switches[SideQuest::Activated] == true
+    if !$game_switches[SideQuest::Switch]
+      $game_variables[SideQuest::Steps] += 1
+      $game_switches[SideQuest::Available] = true if $game_variables[SideQuest::Steps] >= 200
+    end
+    if !$game_switches[SideQuest::Available]
+      $game_switches[SideQuest::OnOff] = false
+    end
+    if $game_variables[SideQuest::Steps] == 200 && $game_switches[SideQuest::Available]
+      $game_variables[SideQuest::Rand] = rand(100)+1
+      if $game_variables[SideQuest::Rand] >= 31
+        meName = "Voltorb flip win"
+        textColor = "7FE00000"
+        pbMessage(_INTL("\\me[{1}]<c2={2}>Hey \\PN! It's the Side Quest Captain! I have a job for you!</c2>",meName,textColor))
+        pbSideQuestLast
+      else
+        $game_variables[SideQuest::Steps] = 0
+      end
     end
   end
 }
