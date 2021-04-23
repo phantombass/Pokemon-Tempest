@@ -19,7 +19,7 @@ Events.onMapUpdate += proc {| sender, e |
     when 3
       if $game_variables[Mission::Mission3]<3
         $game_variables[Level::Cap] = 26
-      elsif $game_variables[Mission::Mission3]>=2 && $game_variables[Mission::Mission3]<6
+      elsif $game_variables[Mission::Mission3]>=3 && $game_variables[Mission::Mission3]<6
         $game_variables[Level::Cap] = 30
       elsif $game_variables[Mission::Mission3]>=6
         $game_variables[Level::Cap] = 35
@@ -40,7 +40,7 @@ Events.onStepTaken += proc {| sender, e |
     when 3
       if $game_variables[Mission::Mission3]<3
         $game_variables[Level::Cap] = 26
-      elsif $game_variables[Mission::Mission3]>=2 && $game_variables[Mission::Mission3]<6
+      elsif $game_variables[Mission::Mission3]>=3 && $game_variables[Mission::Mission3]<6
         $game_variables[Level::Cap] = 30
       elsif $game_variables[Mission::Mission3]>=6
         $game_variables[Level::Cap] = 35
