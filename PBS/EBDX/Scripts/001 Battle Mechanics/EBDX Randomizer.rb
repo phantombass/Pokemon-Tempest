@@ -202,17 +202,6 @@ module EliteBattle
     return added.length > 0
   end
   #-----------------------------------------------------------------------------
-  #  clear the randomizer content
-  #-----------------------------------------------------------------------------
-  def self.resetRandomizer
-    EliteBattle.reset(:randomizer)
-    if $PokemonGlobal
-      $PokemonGlobal.randomizedData
-      $PokemonGlobal.isRandomizer
-      $PokemonGlobal.randomizerRules
-    end
-  end
-  #-----------------------------------------------------------------------------
 end
 #===============================================================================
 #  helper functions to return randomized battlers and items

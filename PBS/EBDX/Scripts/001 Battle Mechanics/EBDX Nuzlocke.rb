@@ -127,18 +127,6 @@ module EliteBattle
     return added.length > 0
   end
   #-----------------------------------------------------------------------------
-  #  clear the randomizer content
-  #-----------------------------------------------------------------------------
-  def self.resetNuzlocke
-    EliteBattle.reset(:nuzlocke)
-    if $PokemonGlobal
-      $PokemonGlobal.qNuzlocke
-      $PokemonGlobal.nuzlockeData
-      $PokemonGlobal.isNuzlocke
-      $PokemonGlobal.nuzlockeRules
-    end
-  end
-  #-----------------------------------------------------------------------------
 end
 #===============================================================================
 #  adding nuzlocke functionality to battler specific classes
