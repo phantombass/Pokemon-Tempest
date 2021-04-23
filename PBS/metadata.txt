@@ -583,6 +583,41 @@ ShowArea = true
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
+[102]
+# Dept Store
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[103]
+# Dept Store
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[104]
+# Dept Store
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[105]
+# Dept Store
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[106]
+# Dept Store
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[107]
+# Dept Store
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
+[108]
+# Dept Store
+SnapEdges = true
+MapPosition = 0,13,9
+#-------------------------------
 [110]
 # Venom HQ
 SnapEdges = true

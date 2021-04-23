@@ -11,6 +11,7 @@ class PokeBattle_Scene
     if sendOuts.length < 2 && !EliteBattle.follower(@battle).nil?
       @firstsendout = false
       clearMessageWindow(true)
+      playBattlerCry(@battlers[EliteBattle.follower(@battle)])
       return
     end
     metrics = load_data("Data/species_metrics.dat")
@@ -123,13 +124,13 @@ class PokeBattle_Scene
     # configuring the Y position of Pokemon sprites
     sendOuts.each_with_index do |b, m|
       battler = @battlers[b[0]]; i = battler.index
+      playBattlerCry(battler)
       next if i == EliteBattle.follower(@battle)
       @sprites["pokemon_#{i}"].visible = true
       @sprites["pokemon_#{i}"].y -= 120 + (orgcord[m] - @sprites["pokemon_#{i}"].oy)*z3 if !dig[m]
       @sprites["pokemon_#{i}"].zoom_x = 0
       @sprites["pokemon_#{i}"].zoom_y = 0
       @sprites["dataBox_#{i}"].appear
-      playBattlerCry(battler)
       burst["#{i}"] = EBBallBurst.new(@viewport, @sprites["pokeball#{i}"].x, @sprites["pokeball#{i}"].y, 29, (startBattle ? 1 : 2), balltype[m])
     end
     # starting Pokemon release animation

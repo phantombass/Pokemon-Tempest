@@ -23,9 +23,7 @@ def pbMissionUpdate
   elsif $game_switches[Mission::Two] == true && $game_switches[Mission::Three] == false
     $game_variables[Mission::Mission2] += 1
     advanceQuestToStage(3,$game_variables[Mission::Mission2])
-  elsif $game_switches[Mission::Three] == true && $game_switches[Mission::SideQuest] == true
-    advanceQuestToStage(8,2)
-  elsif $game_switches[Mission::Three] == true && $game_switches[Mission::SideQuest] == false
+  elsif $game_switches[Mission::Three] == true
     $game_variables[Mission::Mission3] += 1
     if $game_switches[Mission::Stella] == true
       advanceQuestToStage(5,$game_variables[Mission::Mission3])

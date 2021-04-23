@@ -26,6 +26,28 @@ Events.onMapUpdate += proc {| sender, e |
       end
     end
 }
+
+Events.onStepTaken += proc {| sender, e |
+    case $game_variables[Chapter::Count]
+    when 1
+      $game_variables[Level::Cap] = 13
+    when 2
+      if $game_variables[Mission::Mission2] < 2
+        $game_variables[Level::Cap] = 13
+      else
+        $game_variables[Level::Cap] = 20
+      end
+    when 3
+      if $game_variables[Mission::Mission3]<3
+        $game_variables[Level::Cap] = 26
+      elsif $game_variables[Mission::Mission3]>=2 && $game_variables[Mission::Mission3]<6
+        $game_variables[Level::Cap] = 30
+      elsif $game_variables[Mission::Mission3]>=6
+        $game_variables[Level::Cap] = 35
+      end
+    end
+}
+
 def pbHoneyTree
   if pbConfirmMessage("There may be a Pokémon in this tree!\\nWould you like to use a Honey?")
     if vHI("Honey")

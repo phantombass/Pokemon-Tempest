@@ -11,7 +11,7 @@
 #===============================================================================
 #  run script as plugin
 #===============================================================================
-ver = "1.0.13"
+ver = "1.0.14"
 # set up plugin metadata
 if !defined?(PluginManager)
   raise "This script is only compatible with Essentials v18.x!"
