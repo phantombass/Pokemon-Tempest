@@ -140,7 +140,7 @@ class PokeBattle_Scene
       end
     end
     # initialize Player battler 0 when follower enabled
-    if !EliteBattle.follower(@battle).nil?
+    if !EliteBattle.follower(@battle).nil? && !@safaribattle
       pkmn = @battlers[EliteBattle.follower(@battle)].pokemon
       @sprites["pokemon_#{EliteBattle.follower(@battle)}"].setPokemonBitmap(pkmn, true)
       @sprites["pokemon_#{EliteBattle.follower(@battle)}"].tone = Tone.new(-255, -255, -255, -255)
@@ -187,7 +187,7 @@ class PokeBattle_Scene
           @sprites["trainer_#{t}"].tone.gray += 255*0.05 if @sprites["trainer_#{t}"].tone.gray < 0
         end
         # fade in player battler when follower is out
-        if !EliteBattle.follower(@battle).nil?
+        if !EliteBattle.follower(@battle).nil? && !@safaribattle
           @sprites["pokemon_#{EliteBattle.follower(@battle)}"].tone.all += 255*0.1 if @sprites["pokemon_#{EliteBattle.follower(@battle)}"].tone.all < 0
           @sprites["pokemon_#{EliteBattle.follower(@battle)}"].tone.gray += 255*0.1 if @sprites["pokemon_#{EliteBattle.follower(@battle)}"].tone.gray < 0
         end
@@ -203,7 +203,7 @@ class PokeBattle_Scene
       pbShowPartyLineup(1)
     end
     # show databox for follower
-    if !EliteBattle.follower(@battle).nil?
+    if !EliteBattle.follower(@battle).nil? && !@safaribattle
       @sprites["dataBox_#{EliteBattle.follower(@battle)}"].appear if !EliteBattle.get(:smAnim)
     end
     # Play cry for wild Pokémon
