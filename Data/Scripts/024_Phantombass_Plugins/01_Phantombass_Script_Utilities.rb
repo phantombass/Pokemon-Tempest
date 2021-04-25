@@ -21,15 +21,18 @@ Events.onMapUpdate += proc {| sender, e |
         $game_variables[Level::Cap] = 20
       end
     when 3
-      if $game_variables[Mission::Mission3]<3
+      if $game_variables[Mission::Mission3] <= 0
+      elsif $game_variables[Mission::Mission3]>=0 && $game_variables[Mission::Mission3] < 3
         $game_variables[Level::Cap] = 26
       elsif $game_variables[Mission::Mission3]>=3 && $game_variables[Mission::Mission3]<6
-          $game_variables[Level::Cap] = 30
+        $game_variables[Level::Cap] = 30
       elsif $game_variables[Mission::Mission3]>=6
         $game_variables[Level::Cap] = 35
       end
     when 4
-      if $game_variables[Mission::Mission4]<3
+      if $game_variables[Mission::Mission4] <= 0
+        $game_variables[Level::Cap] = 35
+      elsif $game_variables[Mission::Mission4]>=0 && $game_variables[Mission::Mission4]<3
         $game_variables[Level::Cap] = 42
       elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<6
         $game_variables[Level::Cap] = 46
@@ -40,34 +43,35 @@ Events.onMapUpdate += proc {| sender, e |
 }
 
 Events.onStepTaken += proc {| sender, e |
-    case $game_variables[Chapter::Count]
-    when 1
+  case $game_variables[Chapter::Count]
+  when 1
+    $game_variables[Level::Cap] = 13
+  when 2
+    if $game_variables[Mission::Mission2] < 2
       $game_variables[Level::Cap] = 13
-    when 2
-      if $game_variables[Mission::Mission2] < 2
-        $game_variables[Level::Cap] = 13
-      else
-        $game_variables[Level::Cap] = 20
-      end
-    when 3
-      if $game_variables[Mission::Mission3]<3
-        $game_variables[Level::Cap] = 26
-      elsif $game_variables[Mission::Mission3]>=3
-          if $game_variables[Mission::Mission3]<6
-            $game_variables[Level::Cap] = 30
-          end
-      elsif $game_variables[Mission::Mission3]>=6
-        $game_variables[Level::Cap] = 35
-      end
-    when 4
-      if $game_variables[Mission::Mission4]<3
-        $game_variables[Level::Cap] = 42
-      elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<6
-        $game_variables[Level::Cap] = 46
-      elsif $game_variables[Mission::Mission4]>=6
-        $game_variables[Level::Cap] = 50
-      end
+    else
+      $game_variables[Level::Cap] = 20
     end
+  when 3
+    if $game_variables[Mission::Mission3] <= 0
+    elsif $game_variables[Mission::Mission3]>=0 && $game_variables[Mission::Mission3] < 3
+      $game_variables[Level::Cap] = 26
+    elsif $game_variables[Mission::Mission3]>=3 && $game_variables[Mission::Mission3]<6
+      $game_variables[Level::Cap] = 30
+    elsif $game_variables[Mission::Mission3]>=6
+      $game_variables[Level::Cap] = 35
+    end
+  when 4
+    if $game_variables[Mission::Mission4] <= 0
+      $game_variables[Level::Cap] = 35
+    elsif $game_variables[Mission::Mission4]>=0 && $game_variables[Mission::Mission4]<3
+      $game_variables[Level::Cap] = 42
+    elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<6
+      $game_variables[Level::Cap] = 46
+    elsif $game_variables[Mission::Mission4]>=6
+      $game_variables[Level::Cap] = 50
+    end
+  end
 }
 
 #===================================

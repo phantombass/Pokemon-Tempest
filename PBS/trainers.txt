@@ -323,7 +323,7 @@ LoseText = "Not to worry. That Pokémon will wipe the floor with you anyway."
 Pokemon = XATU,29
 Pokemon = CLEFABLE,29
 #-------------------------------
-# Mt. Sear - Venom
+# Mt. Sear
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,8]
 LoseText = "Get outta here..."
@@ -339,7 +339,7 @@ Pokemon = CHINGLING,38
 LoseText = "Why are you so strong?"
 Pokemon = MUNNA,37
 Pokemon = MUSHARNA,37
-Pokemon = XATU,27
+Pokemon = XATU,37
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,11]
 LoseText = "No way..."
@@ -350,6 +350,28 @@ Pokemon = SABLEYE,39
 LoseText = "Hmmph. We'll let the boss handle you."
 Pokemon = XATU,39
 Pokemon = CLEFABLE,39
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,13]
+LoseText = "MUNNA!"
+Pokemon = MUNNA,37
+Pokemon = MUNNA,37
+Pokemon = MUNNA,37
+Pokemon = MUNNA,37
+Pokemon = MUNNA,37
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,14]
+LoseText = "Oh no."
+Pokemon = HYPNO,38
+Pokemon = ELGYEM,38
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,15]
+LoseText = "Boss! I've failed you!"
+Pokemon = ELECTRODE,39
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,16]
+LoseText = "We don't used just Cosmic types, you know."
+Pokemon = MACHOKE,38
+Pokemon = HAUNTER,38
 #-------------------------------
 #Level Trainer
 #-------------------------------
