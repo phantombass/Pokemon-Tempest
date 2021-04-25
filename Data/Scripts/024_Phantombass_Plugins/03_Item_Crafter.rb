@@ -98,61 +98,61 @@ def pbItemcraft(item)
     $PokemonBag.pbDeleteItem(:WINGSUIT1,1)
     $PokemonBag.pbDeleteItem(:WINGSUIT2,1)
     $PokemonBag.pbDeleteItem(:WINGSUIT3,1)
-    Kernel.pbReceiveItem(:WINGSUIT)
+    pbReceiveItem(:WINGSUIT)
     $game_variables[Items::Wingsuit] = 1
   when "Torch"
     $PokemonBag.pbDeleteItem(:TORCH1,1)
     $PokemonBag.pbDeleteItem(:TORCH2,1)
     $PokemonBag.pbDeleteItem(:TORCH3,1)
-    Kernel.pbReceiveItem(:TORCH)
+    pbReceiveItem(:TORCH)
     $game_variables[Items::Torch] = 1
   when "Chainsaw"
     $PokemonBag.pbDeleteItem(:CHAINSAW1,1)
     $PokemonBag.pbDeleteItem(:CHAINSAW2,1)
     $PokemonBag.pbDeleteItem(:CHAINSAW3,1)
-    Kernel.pbReceiveItem(:CHAINSAW)
+    pbReceiveItem(:CHAINSAW)
     $game_variables[Items::Chainsaw] = 1
   when "Hammer"
     $PokemonBag.pbDeleteItem(:HAMMER1,1)
     $PokemonBag.pbDeleteItem(:HAMMER2,1)
     $PokemonBag.pbDeleteItem(:HAMMER3,1)
-    Kernel.pbReceiveItem(:HAMMER)
+    pbReceiveItem(:HAMMER)
     $game_variables[Items::Hammer] = 1
   when "Hovercraft"
     $PokemonBag.pbDeleteItem(:HOVER1,1)
     $PokemonBag.pbDeleteItem(:HOVER2,1)
     $PokemonBag.pbDeleteItem(:HOVER3,1)
-    Kernel.pbReceiveItem(:HOVERCRAFT)
+    pbReceiveItem(:HOVERCRAFT)
     $game_variables[Items::Hovercraft] = 1
   when "Aqua Rocket"
     $PokemonBag.pbDeleteItem(:MYSTICWATER,1)
     $PokemonBag.pbDeleteItem(:DESTINYKNOT,1)
     $PokemonBag.pbDeleteItem(:EJECTBUTTON,1)
-    Kernel.pbReceiveItem(:AQUAROCKET)
+    pbReceiveItem(:AQUAROCKET)
     $game_variables[Items::AquaRocket] = 1
   when "Scuba Tank"
     $PokemonBag.pbDeleteItem(:PROTECTIVEPADS,1)
     $PokemonBag.pbDeleteItem(:METALCOAT,1)
     $PokemonBag.pbDeleteItem(:MYSTICWATER,1)
-    Kernel.pbReceiveItem(:SCUBATANK)
+    pbReceiveItem(:SCUBATANK)
     $game_variables[Items::ScubaTank] = 1
   when "Fulcrum"
     $PokemonBag.pbDeleteItem(:PROTEIN,1)
     $PokemonBag.pbDeleteItem(:HARDSTONE,1)
     $PokemonBag.pbDeleteItem(:LUCKYPUNCH,1)
-    Kernel.pbReceiveItem(:FULCRUM)
+    pbReceiveItem(:FULCRUM)
     $game_variables[Items::Fulcrum] = 1
   when "Hiking Gear"
     $PokemonBag.pbDeleteItem(:DESTINYKNOT,1)
     $PokemonBag.pbDeleteItem(:STICKYBARB,1)
     $PokemonBag.pbDeleteItem(:IRON,1)
-    Kernel.pbReceiveItem(:HIKINGGEAR)
+    pbReceiveItem(:HIKINGGEAR)
     $game_variables[Items::HikingGear] = 1
   when "Escape Rope"
     $PokemonBag.pbDeleteItem(:ESCAPE1,1)
     $PokemonBag.pbDeleteItem(:ESCAPE2,1)
     $PokemonBag.pbDeleteItem(:ESCAPE3,1)
-    Kernel.pbReceiveItem(:ESCAPEROPE)
+    pbReceiveItem(:ESCAPEROPE)
   end
 end
 end
