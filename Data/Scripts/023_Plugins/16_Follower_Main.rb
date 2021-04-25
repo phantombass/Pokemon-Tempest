@@ -89,6 +89,7 @@ end
 #-------------------------------------------------------------------------------
 def pbTalkToFollower
   return false if !$PokemonTemp.dependentEvents.refresh_sprite(false, true)
+  return false if !$Trainer.hasAltemper?
   if !($PokemonGlobal.surfing || pbGetMetadata($game_map.map_id,MetadataBicycleAlways) ||
      !PBTerrain.isSurfable?(pbFacingTerrainTag) ||
     !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player))
@@ -326,6 +327,10 @@ class DependentEvents
           firstPkmn.shiny?, firstPkmn.form,
           firstPkmn.shadowPokemon?]) if ret
     return ret
+  end
+
+  if pbGet(999)>0
+    remove_sprite(false)
   end
 
 # Command to update follower/ make it reappear

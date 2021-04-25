@@ -471,11 +471,11 @@ def pbRockSmashRandomItem
     pbWait(8)
     Kernel.pbMessage(_INTL("Oh, there was an item!"))
     if rand1 == 0
-      Kernel.pbItemBall(:HARDSTONE)
+    pbItemBall(:HARDSTONE)
     elsif rand1 == 1
-      Kernel.pbItemBall(:SOFTSAND)
+      pbItemBall(:SOFTSAND)
     else
-      Kernel.pbItemBall(:STARDUST)
+      pbItemBall(:STARDUST)
     end
   elsif randItem < 86
     rand2 = rand(3)
@@ -483,11 +483,11 @@ def pbRockSmashRandomItem
     pbWait(8)
     Kernel.pbMessage(_INTL("Oh, there was an item!"))
     if rand2 == 0
-      Kernel.pbItemBall(:NUGGET)
+      pbItemBall(:NUGGET)
     elsif rand2 == 1
-      Kernel.pbItemBall(:STARPIECE)
+      pbItemBall(:STARPIECE)
     else
-      Kernel.pbItemBall(:PPUP)
+      pbItemBall(:PPUP)
     end
   elsif randItem < 96
     pbExclaim(get_character(-1))
@@ -495,27 +495,27 @@ def pbRockSmashRandomItem
     Kernel.pbMessage(_INTL("Oh, there was an item!"))
     randFossil = rand(11)
       if randFossil == 1
-        Kernel.pbItemBall(:OLDAMBER)
+        pbItemBall(:OLDAMBER)
       elsif randFossil == 2
-        Kernel.pbItemBall(:HELIXFOSSIL)
+        pbItemBall(:HELIXFOSSIL)
       elsif randFossil == 3
-        Kernel.pbItemBall(:DOMEFOSSIL)
+        pbItemBall(:DOMEFOSSIL)
       elsif randFossil == 4
-        Kernel.pbItemBall(:ROOTFOSSIL)
+        pbItemBall(:ROOTFOSSIL)
       elsif randFossil == 5
-        Kernel.pbItemBall(:CLAWFOSSIL)
+        pbItemBall(:CLAWFOSSIL)
       elsif randFossil == 6
-        Kernel.pbItemBall(:SKULLFOSSIL)
+        pbItemBall(:SKULLFOSSIL)
       elsif randFossil == 7
-        Kernel.pbItemBall(:SHIELDFOSSIL)
+        pbItemBall(:SHIELDFOSSIL)
       elsif randFossil == 8
-        Kernel.pbItemBall(:COVERFOSSIL)
+        pbItemBall(:COVERFOSSIL)
       elsif randFossil == 9
-        Kernel.pbItemBall(:PLUMEFOSSIL)
+        pbItemBall(:PLUMEFOSSIL)
       elsif randFossil == 10
-        Kernel.pbItemBall(:SAILFOSSIL)
+        pbItemBall(:SAILFOSSIL)
       else
-        Kernel.pbItemBall(:JAWFOSSIL)
+        pbItemBall(:JAWFOSSIL)
       end
     else
       rand3 = rand(3)
@@ -523,11 +523,11 @@ def pbRockSmashRandomItem
       pbWait(8)
       Kernel.pbMessage(_INTL("Oh, there was an item!"))
       if rand3 == 0
-        Kernel.pbItemBall(:BIGNUGGET)
+        pbItemBall(:BIGNUGGET)
       elsif rand3 == 1
-        Kernel.pbItemBall(:PPMAX)
+        pbItemBall(:PPMAX)
       else
-        Kernel.pbItemBall(:IVMAXSTONE)
+        pbItemBall(:IVMAXSTONE)
       end
   end
 end

@@ -125,9 +125,7 @@ Events.OnTalkToFollower += proc {|pkmn,x,y,randomVal|
     items=[:POTION,:SUPERPOTION,:FULLRESTORE,:REVIVE,:PPUP,
          :PPMAX,:RARECANDY,:REPEL,:MAXREPEL,:ESCAPEROPE,
          :HONEY,:TINYMUSHROOM,:PEARL,:NUGGET,:GREATBALL,
-         :ULTRABALL,:THUNDERSTONE,:MOONSTONE,:SUNSTONE,:DUSKSTONE,
-         :REDAPRICORN,:BLUAPRICORN,:YLWAPRICORN,:GRNAPRICORN,:PNKAPRICORN,
-         :BLKAPRICORN,:WHTAPRICORN
+         :ULTRABALL,:THUNDERSTONE,:MOONSTONE,:SUNSTONE,:DUSKSTONE
     ]
     # If no message or quantity is specified the default message is used and the quantity of item is 1
     next true if pbPokemonFound(rand(items.length))
@@ -181,7 +179,7 @@ Events.OnTalkToFollower += proc {|pkmn,x,y,randomVal|
 
 # Specific message if the map name has Pokecenter or Pokemon Center
 Events.OnTalkToFollower += proc {|pkmn,x,y,randomVal|
-  if $game_map.name.include?("Poké Center") || $game_map.name.include?("Pokémon Center")
+  if $game_map.name.include?("PMC") || $game_map.name.include?("Pokémon Center")
     $scene.spriteset.addUserAnimation(Emo_Happy,x,y)
     pbWait(70)
     messages = [

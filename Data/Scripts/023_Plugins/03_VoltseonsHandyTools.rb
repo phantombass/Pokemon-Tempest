@@ -71,7 +71,7 @@ end
 
 # Find Item | Variables: itm = The Item, qty = Quantity of the item.
 def vFI(itm, qty=1)
-Kernel.pbItemBall(itm.upcase,qty)
+pbItemBall(itm.upcase,qty)
 pbSetSelfSwitch(@event_id,"A",true)
 #Example: vFI("Pokeball",5) - The player finds 5 pokéballs.
 #Alternates: vFindItem(), vItemFind(), vItemBall()

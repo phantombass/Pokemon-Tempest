@@ -11,6 +11,30 @@ Pokemon = BAGON,6
   Ability = 0
 Pokemon = CASTFORM,7
 #-------------------------------
+[RIVAL3,Akron,1]
+LoseText = "Hmmph. I guess should have expected that."
+Pokemon = HYPNO,36
+  Ability = 2
+Pokemon = FROSLASS,35
+  Ability = 2
+Pokemon = GYARADOS,35
+Pokemon = CLEFAIRY,36
+Pokemon = SALAMENCE,38
+  Form = 2
+  Ability = 0
+#-------------------------------
+[RIVAL3,Akron,2]
+LoseText = "Hmmph. I guess you've gotten a little better."
+Pokemon = HYPNO,38
+  Ability = 2
+Pokemon = FROSLASS,37
+  Ability = 2
+Pokemon = GYARADOS,37
+Pokemon = CLEFAIRY,38
+Pokemon = SALAMENCE,40
+  Form = 2
+  Ability = 0
+#-------------------------------
 # Zephyr Hills
 #-------------------------------
 [CAMPER,Aaron]
@@ -172,7 +196,7 @@ Pokemon = HIPPOPOTAS,21
 Pokemon = CHINCHOU,21
 Pokemon = BARBOACH,21
 #-------------------------------
-# Pixie Cave
+# Pixie Caverns
 #-------------------------------
 [PICNICKER,Faith]
 LoseText = "My cuties!"
@@ -195,7 +219,67 @@ LoseText = "Bruh!"
 Pokemon = MACHOP,22
   Form = 2
 #-------------------------------
-# Team Maelstrom - Haunted Forest/Pixie Caverns
+# Cinder Foothills
+#-------------------------------
+[JUGGLER,Kirk]
+LoseText = "Owowow!"
+Pokemon = MAGBY,34
+Pokemon = MAGBY,34
+Pokemon = MAGMAR,35
+#-------------------------------
+[FISHERMAN,Griffin]
+LoseText = "Ah lost it!"
+Pokemon = HIPPOWDON,37
+  Form = 2
+#-------------------------------
+[FISHERMAN,Tucker]
+LoseText = "Ah lost it!"
+Pokemon = GYARADOS,34
+Pokemon = LANTURN,34
+Pokemon = WHISCASH,34
+#-------------------------------
+[JUGGLER,Douglas]
+LoseText = "Bad pun, I know."
+Pokemon = HOUNDOUR,35
+Pokemon = MONFERNO,34
+#-------------------------------
+[JUGGLER,Franklin]
+LoseText = "Too hot!"
+Pokemon = TURTONATOR,37
+#-------------------------------
+# Mt Sear Base South
+#-------------------------------
+[POKEMONBREEDER,April]
+LoseText = "Oh wow!"
+Pokemon = AZUMARILL,36
+Pokemon = JYNX,36
+Pokemon = CORVISQUIRE,36
+#-------------------------------
+[FISHERMAN,Isaac]
+LoseText = "Well done!"
+Pokemon = LANTURN,38
+  Ability = 2
+#-------------------------------
+[HIKER,John]
+LoseText = "Shoot!"
+Pokemon = BOLDORE,36
+Pokemon = EXCADRILL,36
+Pokemon = SHIELDON,36
+#-------------------------------
+[POKEMONBREEDER,Jane]
+LoseText = "Oh no! My cute Pokémon!"
+Pokemon = PANSAGE,36
+  Form = 1
+Pokemon = PANSEAR,36
+  Form = 1
+Pokemon = PANPOUR,36
+  Form = 1
+#-------------------------------
+#----------------------------------------
+# Team Maelstrom
+#----------------------------------------
+#-------------------------------
+# Haunted Forest/Pixie Caverns
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt]
 LoseText = "Ugh!"
@@ -211,7 +295,7 @@ LoseText = "Why are you so strong?"
 Pokemon = MEDITITE,24
 Pokemon = SABLEYE,24
 #-------------------------------
-# Team Maelstrom - Venom/Comet Lab
+# Venom/Comet Lab
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,3]
 LoseText = "Get outta here..."
@@ -238,6 +322,34 @@ Pokemon = SABLEYE,29
 LoseText = "Not to worry. That Pokémon will wipe the floor with you anyway."
 Pokemon = XATU,29
 Pokemon = CLEFABLE,29
+#-------------------------------
+# Mt. Sear - Venom
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,8]
+LoseText = "Get outta here..."
+Pokemon = CLEFAIRY,38
+Pokemon = CLEFABLE,38
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,9]
+LoseText = "Leave us alone!"
+Pokemon = MEDICHAM,38
+Pokemon = CHINGLING,38
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,10]
+LoseText = "Why are you so strong?"
+Pokemon = MUNNA,37
+Pokemon = MUSHARNA,37
+Pokemon = XATU,27
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,11]
+LoseText = "No way..."
+Pokemon = MEDICHAM,39
+Pokemon = SABLEYE,39
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,12]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = XATU,39
+Pokemon = CLEFABLE,39
 #-------------------------------
 #Level Trainer
 #-------------------------------

@@ -1682,6 +1682,11 @@ class PokemonStorageScreen
     end
     @scene.pbWithdraw(selected,heldpoke,@storage.party.length)
     if heldpoke
+      if heldpoke.isSpecies?(:ALTEMPER)
+        $game_variables[999] = 0
+      elsif heldpoke.isSpecies?(:SQUALTEMPER)
+        $game_variables[999] = 0
+      end
       @storage.pbMoveCaughtToParty(heldpoke)
       @heldpkmn = nil
     else
@@ -1718,6 +1723,10 @@ class PokemonStorageScreen
             p.formTime = nil if p.respond_to?("formTime")
             p.form     = 0 if p.isSpecies?(:SHAYMIN)
             p.heal
+          elsif heldpoke.isSpecies?(:ALTEMPER)
+            $game_variables[999] = 1
+          elsif heldpoke.isSpecies?(:SQUALTEMPER)
+            $game_variables[999] = 1
           end
           @scene.pbStore(selected,heldpoke,destbox,firstfree)
           if heldpoke
@@ -1765,6 +1774,10 @@ class PokemonStorageScreen
       @heldpkmn.formTime = nil if @heldpkmn.respond_to?("formTime")
       @heldpkmn.form     = 0 if @heldpkmn.isSpecies?(:SHAYMIN)
       @heldpkmn.heal
+    elsif pokemon.isSpecies?(:ALTEMPER)
+      $game_variables[999] = 1
+    elsif pokemon.isSpecies?(:SQUALTEMPER)
+      $game_variables[999] = 1
     end
     @scene.pbPlace(selected,@heldpkmn)
     @storage[box,index] = @heldpkmn
@@ -1814,8 +1827,11 @@ class PokemonStorageScreen
     elsif pokemon.mail
       pbDisplay(_INTL("Please remove the mail."))
       return false
-    elsif pokemon.isSpecies?(:ARENAY)
-      pbDisplay(_INTL("You can't release Arenay! It's Professor Cypress' most prized posession!"))
+    elsif pokemon.isSpecies?(:ALTEMPER)
+      pbDisplay(_INTL("You can't release Altemper!"))
+      return false
+    elsif pokemon.isSpecies?(:SQUALTEMPER)
+      pbDisplay(_INTL("You can't release Squaltemper!"))
       return false
     end
     if box==-1 && pbAbleCount<=1 && pbAble?(pokemon) && !heldpoke

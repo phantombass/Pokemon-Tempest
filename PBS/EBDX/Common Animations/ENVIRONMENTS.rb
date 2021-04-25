@@ -62,7 +62,7 @@ module EBEnvironment
   }
   #-----------------------------------------------------------------------------
   INDOOR = {
-    "backdrop" => "IndoorA", "img001" => {
+    "backdrop" => "IndoorB", "img001" => {
       :bitmap => "decor007",
       :oy => 0, :z => 1, :flat => true, :scrolling => true, :speed => 0.5
     }, "img002" => {

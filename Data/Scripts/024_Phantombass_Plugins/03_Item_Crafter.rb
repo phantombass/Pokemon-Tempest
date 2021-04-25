@@ -1,7 +1,7 @@
 ################################################################################
 # Item Crafter
 # By Phantombass
-# Designed to simplify the Item Crafter Events in Pokémon Promenade
+# Designed to simplify the Item Crafter Events in Pokemon Tempest
 # This is merely an example of how this script works as far as items go. Make your
 # own item combinations and add them in their respective sections of this script.
 # Then to call in an event, simply add a Script command that says:
@@ -11,7 +11,7 @@
 ################################################################################
 PluginManager.register({
   :name => "Item Crafter",
-  :version => "1.0",
+  :version => "1.1",
   :credits => "Phantombass",
   :link => "No link yet"
 })
@@ -19,7 +19,6 @@ PluginManager.register({
 module Items
   #These are all the variables associated with the HM Items we will be crafting,
   #in order to make the variable reference process easier.
-
   Choice = 34
   Wingsuit = 79
   Hammer = 80
@@ -72,13 +71,13 @@ def canItemCraft?(item)
   when "Hovercraft"
     return true if $PokemonBag.pbHasItem?(:HOVER1) && $PokemonBag.pbHasItem?(:HOVER2) && $PokemonBag.pbHasItem?(:HOVER3)
   when "Aqua Rocket"
-    return true if $PokemonBag.pbHasItem?(:DESTINYKNOT) && $PokemonBag.pbHasItem?(:EJECTBUTTON) && $PokemonBag.pbHasItem?(:MYSTICWATER)
+    return true if $PokemonBag.pbHasItem?(:ROCKET1) && $PokemonBag.pbHasItem?(:ROCKET2) && $PokemonBag.pbHasItem?(:ROCKET3)
   when "Scuba Tank"
-    return true if $PokemonBag.pbHasItem?(:PROTECTIVEPADS) && $PokemonBag.pbHasItem?(:METALCOAT) && $PokemonBag.pbHasItem?(:MYSTICWATER)
+    return true if $PokemonBag.pbHasItem?(:SCUBA1) && $PokemonBag.pbHasItem?(:SCUBA2) && $PokemonBag.pbHasItem?(:SCUBA3)
   when "Fulcrum"
-    return true if $PokemonBag.pbHasItem?(:PROTEIN) && $PokemonBag.pbHasItem?(:HARDSTONE) && $PokemonBag.pbHasItem?(:LUCKYPUNCH)
+    return true if $PokemonBag.pbHasItem?(:FULCRUM1) && $PokemonBag.pbHasItem?(:FULCRUM2) && $PokemonBag.pbHasItem?(:FULCRUM3)
   when "Hiking Gear"
-    return true if $PokemonBag.pbHasItem?(:DESTINYKNOT) && $PokemonBag.pbHasItem?(:STICKYBARB) && $PokemonBag.pbHasItem?(:IRON)
+    return true if $PokemonBag.pbHasItem?(:HIKE1) && $PokemonBag.pbHasItem?(:HIKE2) && $PokemonBag.pbHasItem?(:HIKE3)
   when "Escape Rope"
     return true if $PokemonBag.pbHasItem?(:ESCAPE1) && $PokemonBag.pbHasItem?(:ESCAPE2) && $PokemonBag.pbHasItem?(:ESCAPE3)
   end

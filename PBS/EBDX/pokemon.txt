@@ -3712,8 +3712,11 @@ BattlerAltitude = 1
 BattlerPlayerY  = 6
 BattlerEnemyY   = 64
 BattlerAltitude = 0
-
-
+#-------------------------------
+[TURTONATOR]
+BattlerPlayerY  = 6
+BattlerEnemyY   = 64
+BattlerAltitude = 0
 #-------------------------------
 [ALTEMPER]
 BattlerPlayerY  = -16

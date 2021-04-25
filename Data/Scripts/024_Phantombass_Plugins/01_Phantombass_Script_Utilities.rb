@@ -1,3 +1,6 @@
+#===================================
+# Level Cap Scripts
+#===================================
   module Level
     Cap = 106
   end
@@ -5,6 +8,7 @@
   module Chapter
     Count = 502
   end
+
 
 Events.onMapUpdate += proc {| sender, e |
     case $game_variables[Chapter::Count]
@@ -19,16 +23,18 @@ Events.onMapUpdate += proc {| sender, e |
     when 3
       if $game_variables[Mission::Mission3]<3
         $game_variables[Level::Cap] = 26
-      elsif $game_variables[Mission::Mission3]>=3
-        if $game_variables[Mission::Mission3]<6
+      elsif $game_variables[Mission::Mission3]>=3 && $game_variables[Mission::Mission3]<6
           $game_variables[Level::Cap] = 30
-        end
       elsif $game_variables[Mission::Mission3]>=6
         $game_variables[Level::Cap] = 35
       end
     when 4
       if $game_variables[Mission::Mission4]<3
         $game_variables[Level::Cap] = 42
+      elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<6
+        $game_variables[Level::Cap] = 46
+      elsif $game_variables[Mission::Mission4]>=6
+        $game_variables[Level::Cap] = 50
       end
     end
 }
@@ -56,10 +62,41 @@ Events.onStepTaken += proc {| sender, e |
     when 4
       if $game_variables[Mission::Mission4]<3
         $game_variables[Level::Cap] = 42
+      elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<6
+        $game_variables[Level::Cap] = 46
+      elsif $game_variables[Mission::Mission4]>=6
+        $game_variables[Level::Cap] = 50
       end
     end
 }
 
+#===================================
+# Chapter Release Scripts
+#===================================
+module ChapterRelease
+  Four = 525
+  Constant = 1000
+end
+
+Events.onMapChange += proc {| sender, e |
+#  $game_switches[ChapterRelease::Four] = true
+  if $game_switches[ChapterRelease::Four] && $game_switches[520] && $game_variables[ChapterRelease::Constant] == 0
+    textColor = "7FE00000"
+    if $game_switches[Mission::Vinny]
+      leader = "Vinny"
+    elsif $game_switches[Mission::Stella]
+      leader = "Stella"
+    end
+    pbWait(64)
+    pbCommonEvent(6)
+    pbMessage(_INTL("<c2={1}>\\PN! It's {2}! Meet me at HQ for our next mission!</c2>",textColor,leader))
+    pbCommonEvent(7)
+    $game_variables[ChapterRelease::Constant]+=1
+  end
+}
+#===================================
+# Honey Tree
+#===================================
 def pbHoneyTree
   if pbConfirmMessage("There may be a Pokémon in this tree!\\nWould you like to use a Honey?")
     if vHI("Honey")
@@ -80,6 +117,9 @@ def pbHoneyTree
   end
 end
 
+#===================================
+# Mid Battle Status Scripts
+#===================================
 def poisonAllPokemon(event=nil)
     for pkmn in $Trainer.ablePokemonParty
        next if pkmn.hasType?(:POISON)  || pkmn.hasType?(:STEEL) ||

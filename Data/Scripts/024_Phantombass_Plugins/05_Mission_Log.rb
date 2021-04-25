@@ -23,12 +23,19 @@ def pbMissionUpdate
   elsif $game_switches[Mission::Two] == true && $game_switches[Mission::Three] == false
     $game_variables[Mission::Mission2] += 1
     advanceQuestToStage(3,$game_variables[Mission::Mission2])
-  elsif $game_switches[Mission::Three] == true
+  elsif $game_switches[Mission::Three] == true && $game_switches[Mission::Four] == false
     $game_variables[Mission::Mission3] += 1
     if $game_switches[Mission::Stella] == true
       advanceQuestToStage(5,$game_variables[Mission::Mission3])
     elsif $game_switches[Mission::Vinny] == true
       advanceQuestToStage(4,$game_variables[Mission::Mission3])
+    end
+  elsif $game_switches[Mission::Four] == true
+    $game_variables[Mission::Mission4] += 1
+    if $game_switches[Mission::Stella] == true
+      advanceQuestToStage(7,$game_variables[Mission::Mission4])
+    elsif $game_switches[Mission::Vinny] == true
+      advanceQuestToStage(6,$game_variables[Mission::Mission4])
     end
     #elsif
     #written in to help me expand

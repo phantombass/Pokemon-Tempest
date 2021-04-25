@@ -474,9 +474,9 @@ MapPosition = 0,3,13
 #-------------------------------
 [084]
 # Valley Mine
+SnapEdges = true
 MapPosition = 0,3,13
 Environment = Cave
-SnapEdges = true
 ShowArea = true
 #-------------------------------
 [085]
@@ -584,37 +584,37 @@ SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
 [102]
-# Dept Store
+# Dept 1F
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
 [103]
-# Dept Store
+# Dept. 2F
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
 [104]
-# Dept Store
+# Dept. 3F
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
 [105]
-# Dept Store
+# Dept. 4F
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
 [106]
-# Dept Store
+# Dept. 5F
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
 [107]
-# Dept Store
+# Dept. Rooftop
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
 [108]
-# Dept Store
+# Dept. Elevator
 SnapEdges = true
 MapPosition = 0,13,9
 #-------------------------------
@@ -666,8 +666,8 @@ ShowArea = true
 [119]
 # Comet Lab
 SnapEdges = true
-DarkMap = true
 MapPosition = 0,18,1
+DarkMap = true
 ShowArea = true
 #-------------------------------
 [120]
@@ -706,3 +706,56 @@ MapPosition = 0,18,1
 SnapEdges = true
 MapPosition = 0,18,1
 #-------------------------------
+[128]
+# Cinder Foothills
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,11,9
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[129]
+# Mt. Sear South Entrance
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,13,6
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[130]
+# Torrential Slopes
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,17,3
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[131]
+# Mt. Sear West Entrance
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,15,5
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[133]
+# Mt. Sear
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,14,5
+Outdoor = false
+ShowArea = true
+#-------------------------------
+[134]
+# Mt. Sear
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,14,5
+ShowArea = true
+#-------------------------------
+[135]
+# Mt. Sear
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,14,5
+ShowArea = true
