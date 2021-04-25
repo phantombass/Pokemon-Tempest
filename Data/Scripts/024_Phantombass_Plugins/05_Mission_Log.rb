@@ -14,28 +14,42 @@ end
 
 def pbMissionUpdate
   if $game_switches[Mission::One] == true && $game_switches[Mission::Two] == false
-    $game_variables[Mission::Mission1] += 1
     if $game_variables[Mission::Mission1] == 4
-      completeQuest(1)
+      $game_variables[Mission::Mission1] += 0
     else
+      $game_variables[Mission::Mission1] += 1
       advanceQuestToStage(1,$game_variables[Mission::Mission1])
     end
   elsif $game_switches[Mission::Two] == true && $game_switches[Mission::Three] == false
-    $game_variables[Mission::Mission2] += 1
-    advanceQuestToStage(3,$game_variables[Mission::Mission2])
+    if $game_variables[Mission::Mission2] >= 2
+      $game_variables[Mission::Mission2] += 0
+    else
+      $game_variables[Mission::Mission2] += 1
+      advanceQuestToStage(3,$game_variables[Mission::Mission2])
+    end
   elsif $game_switches[Mission::Three] == true && $game_switches[Mission::Four] == false
-    $game_variables[Mission::Mission3] += 1
-    if $game_switches[Mission::Stella] == true
-      advanceQuestToStage(5,$game_variables[Mission::Mission3])
-    elsif $game_switches[Mission::Vinny] == true
-      advanceQuestToStage(4,$game_variables[Mission::Mission3])
+    if $game_variables[Mission::Mission3] == 6
+      $game_variables[Mission::Mission3] += 0
+    else
+      if $game_switches[Mission::Stella] == true
+        $game_variables[Mission::Mission3] += 1
+        advanceQuestToStage(5,$game_variables[Mission::Mission3])
+      elsif $game_switches[Mission::Vinny] == true
+        $game_variables[Mission::Mission3] += 1
+        advanceQuestToStage(4,$game_variables[Mission::Mission3])
+      end
     end
   elsif $game_switches[Mission::Four] == true
-    $game_variables[Mission::Mission4] += 1
-    if $game_switches[Mission::Stella] == true
-      advanceQuestToStage(7,$game_variables[Mission::Mission4])
-    elsif $game_switches[Mission::Vinny] == true
-      advanceQuestToStage(6,$game_variables[Mission::Mission4])
+    if $game_variables[Mission::Mission4] == 6
+      $game_variables[Mission::Mission4] += 0
+    else
+      if $game_switches[Mission::Stella] == true
+        $game_variables[Mission::Mission4] += 1
+        advanceQuestToStage(7,$game_variables[Mission::Mission4])
+      elsif $game_switches[Mission::Vinny] == true
+        $game_variables[Mission::Mission4] += 1
+        advanceQuestToStage(6,$game_variables[Mission::Mission4])
+      end
     end
     #elsif
     #written in to help me expand
