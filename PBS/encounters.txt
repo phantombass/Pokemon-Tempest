@@ -1,5 +1,27 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
+022 # Shira Town
+25,10,10
+Water
+    MAGIKARP,14,19
+    POLIWAG,18,22
+    GYARADOS,20,25
+    HIPPOPOTAS,20,23
+    PIPLUP,10,15
+OldRod
+    MAGIKARP,5
+    MAGIKARP,10
+GoodRod
+    MAGIKARP,15
+    POLIWAG,15
+    CHINCHOU,20
+SuperRod
+    MAGIKARP,15,35
+    POLIWHIRL,25
+    GYARADOS,25,30
+    CHINCHOU,25,30
+    LANTURN,30,35
+#-------------------------------
 048 # Zephyr Hills
 25,10,10
 Land
@@ -72,6 +94,28 @@ Water
 OldRod
     MAGIKARP,5
     MAGIKARP,10
+GoodRod
+    MAGIKARP,15
+    POLIWAG,15
+    CHINCHOU,20
+SuperRod
+    MAGIKARP,15,35
+    POLIWHIRL,25
+    GYARADOS,25,30
+    CHINCHOU,25,30
+    LANTURN,30,35
+#-------------------------------
+088 # Coastal Steppes
+25,10,10
+Water
+    MAGIKARP,14,19
+    POLIWAG,18,22
+    GYARADOS,20,25
+    HIPPOPOTAS,20,23
+    PIPLUP,10,15
+OldRod
+    MAGIKARP,5
+    CHINCHOU,10
 GoodRod
     MAGIKARP,15
     POLIWAG,15
@@ -391,3 +435,93 @@ SuperRod
     GYARADOS,25,30
     BARBOACH,25,30
     WHISCASH,30,35
+#-------------------------------
+133 # Mt Sear
+25,10,10
+Cave
+    GOLBAT,30,32
+    LOUDRED,30,32
+    GOLBAT,30,32
+    LOUDRED,30,32
+    BOLDORE,30,32
+    GURDURR,27,29
+    BOLDORE,30,32
+    PANSAGE,27,29
+    PANPOUR,27,29
+    PANSEAR,27,29
+    PANPOUR,27,29
+    PANSEAR,27,29
+#-------------------------------
+134 # Mt. Sear Up
+25,10,10
+Cave
+    GOLBAT,30,32
+    LOUDRED,30,32
+    GOLBAT,30,32
+    LOUDRED,30,32
+    BOLDORE,30,32
+    GURDURR,27,29
+    BOLDORE,30,32
+    MAGMAR,31,33
+    MAGMAR,31,33
+    CHIMCHAR,27,29
+    MAGMAR,31,33
+    CHIMCHAR,27,29
+#-------------------------------
+135 # Mt. Sear Down
+25,10,10
+Cave
+    GOLBAT,30,32
+    LOUDRED,30,32
+    GOLBAT,30,32
+    LOUDRED,30,32
+    BOLDORE,30,32
+    GURDURR,27,29
+    BOLDORE,30,32
+    POLIWHIRL,31,33
+    POLIWHIRL,31,33
+    PIPLUP,27,29
+    POLIWHIRL,31,33
+    PIPLUP,27,29
+Water
+    MAGIKARP,14,19
+    POLIWAG,18,22
+    GYARADOS,20,25
+    HIPPOPOTAS,20,23
+    SKRELP,10,15
+OldRod
+    MAGIKARP,5
+    BARBOACH,10
+GoodRod
+    MAGIKARP,15
+    SKRELP,15
+    BARBOACH,20
+SuperRod
+    MAGIKARP,15,35
+    SKRELP,25
+    GYARADOS,25,30
+    BARBOACH,25,30
+    WHISCASH,30,35
+#-------------------------------
+137 # Mt. Sear DEpths
+25,10,10
+Water
+    MAGIKARP,14,19
+    POLIWAG,18,22
+    GYARADOS,20,25
+    HIPPOPOTAS,20,23
+    SKRELP,10,15
+OldRod
+    MAGIKARP,5
+    BARBOACH,10
+GoodRod
+    MAGIKARP,15
+    SKRELP,15
+    BARBOACH,20
+SuperRod
+    MAGIKARP,15,35
+    SKRELP,25
+    GYARADOS,40,45
+    LANTURN,35,40
+    DRAGALGE,50,55
+#-------------------------------

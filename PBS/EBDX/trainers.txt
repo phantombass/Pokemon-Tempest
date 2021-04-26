@@ -27,6 +27,41 @@ BattleVS         = trainerSM
 BattleIntro      = evilTeam
 BattleVS         = trainerSM
 #-------------------------------
+[MAELSTROMBOSS]
+BattleIntro      = evilTeam
+BattleVS         = trainerSM
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron]
+BattleEnv        = MAGMA
+BattleScript     = AARON
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,1]
+BattleEnv        = MAGMA
+BattleScript     = AARONLOSS
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,2]
+BattleEnv        = MAGMA
+BattleScript     = AARONLOSS
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,3]
+BattleEnv        = MAGMA
+BattleScript     = AARONLOSS
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,4]
+BattleEnv        = MAGMA
+BattleScript     = AARONLOSS
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,5]
+BattleEnv        = MAGMA
+BattleScript     = AARONLOSS
+Ace              = 5
+#-------------------------------
 [RIVAL3]
 BattleBGM        = HGSS-138-RivalBattle.ogg
 BattleVS         = integratedVS

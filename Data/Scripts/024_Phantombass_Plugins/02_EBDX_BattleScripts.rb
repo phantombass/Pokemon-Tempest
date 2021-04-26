@@ -250,7 +250,14 @@ module BattleScripts
     end
   }
 #Important Trainer Battles
-
+AARON = {
+  "turnStart0" => "I'll humor you this time, child.",
+  "lastOpp" => "Hmm. You have become a rather puzzling problem."
+}
+AARONLOSS = {
+  "turnStart0" => "Clearly you do not understand when to give up.",
+  "lastOpp" => "Hmm. You appear to have gotten a little stronger."
+}
 #Rival Battles
   RIVAL = {
     "turnStart0" => "You're going to regret challenging me!",

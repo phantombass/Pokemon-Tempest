@@ -3427,6 +3427,11 @@ BattlerPlayerY  = 12
 BattlerEnemyY   = 28
 BattlerAltitude = 20
 #-------------------------------
+[GROUDON,1]
+BattlerPlayerY  = 30
+BattlerEnemyY   = 12
+BattlerAltitude = 0
+#-------------------------------
 [DEOXYS,1]
 BattlerPlayerY  = 30
 BattlerEnemyY   = 12

@@ -85,7 +85,10 @@ module ChapterRelease
 end
 
 Events.onMapChange += proc {| sender, e |
-#  $game_switches[ChapterRelease::Four] = true
+  #  $game_switches[ChapterRelease::Four] = true
+}
+
+def pbChapterRelease
   if $game_switches[ChapterRelease::Four] && $game_switches[520] && $game_variables[ChapterRelease::Constant] == 0
     textColor = "7FE00000"
     if $game_switches[Mission::Vinny]
@@ -98,8 +101,9 @@ Events.onMapChange += proc {| sender, e |
     pbMessage(_INTL("<c2={1}>\\PN! It's {2}! Meet me at HQ for our next mission!</c2>",textColor,leader))
     pbCommonEvent(7)
     $game_variables[ChapterRelease::Constant]+=1
+  #elsif
   end
-}
+end
 #===================================
 # Honey Tree
 #===================================

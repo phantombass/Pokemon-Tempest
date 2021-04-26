@@ -818,7 +818,7 @@
 831,SCUBA3,Scuba Tank Part 3,Scuba Tank Part 3s,8,0,"A part used to craft a Scuba Tank",0,0,6,
 832,FULCRUM1,Fulcrum Part 1,Fulcrum 1s,8,0,"A part used to craft a Fulcrum",0,0,6,
 833,FULCRUM2,Fulcrum Part 2,Fulcrum 2s,8,0,"A part used to craft a Fulcrum",0,0,6,
-834,FULCRUM2,Fulcrum Part 3,Fulcrum 3s,8,0,"A part used to craft a Fulcrum",0,0,6,
+834,FULCRUM3,Fulcrum Part 3,Fulcrum 3s,8,0,"A part used to craft a Fulcrum",0,0,6,
 835,ROCKET1,Aqua Rocket Part 1,Aqua Rocket 1s,8,0,"A part used to craft an Aqua Rocket",0,0,6,
 836,ROCKET2,Aqua Rocket Part 2,Aqua Rocket 2s,8,0,"A part used to craft an Aqua Rocket",0,0,6,
 837,ROCKET2,Aqua Rocket Part 3,Aqua Rocket 3s,8,0,"A part used to craft an Aqua Rocket",0,0,6,

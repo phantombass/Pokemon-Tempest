@@ -731,7 +731,7 @@ Outdoor = true
 ShowArea = true
 #-------------------------------
 [131]
-# Mt. Sear West Entrance
+# Mt. Sear East Entrance
 SnapEdges = true
 Weather = Rain,0
 MapPosition = 0,15,5
@@ -758,4 +758,20 @@ ShowArea = true
 SnapEdges = true
 Weather = Rain,0
 MapPosition = 0,14,5
+ShowArea = true
+#-------------------------------
+[136]
+# Mt. Sear Summit
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,14,5
+Outdoor = false
+ShowArea = true
+#-------------------------------
+[137]
+# Mt. Sear Depths
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,14,5
+Outdoor = false
 ShowArea = true

@@ -2576,7 +2576,8 @@ MegaStone = CHIMECHONITE
 Type1 = COSMIC
 Type2 = SOUND
 BaseStats = 85,50,120,95,125,120
-Abilities = PINDROP
+Abilities = DIMENSIONBLOCK
+HiddenAbility = DIMENSIONBLOCK
 #-------------------------------
 [CHERRIM,2]
 FormName = Mega Cherrim
@@ -2593,6 +2594,7 @@ Type1 = POISON
 Type2 = DRAGON
 BaseStats = 73,130,80,125,70,80
 Abilities = STRONGJAW
+HiddenAbility = STRONGJAW
 #-------------------------------
 [ZANGOOSE,1]
 FormName = Mega Zangoose
@@ -3433,7 +3435,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = TRANQUILL,Level,21
 #-------------------------------
-[TRANQUILL,1]
+[TRANQUILL,2]
 FormName = Ufaran Form
 Type1 = DARK
 Type2 = FLYING
@@ -3462,9 +3464,9 @@ BattlerEnemyX = 0
 BattlerEnemyY = 27
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = UNFEZANT,Level,36
+Evolutions = UNFEZANT,Level,32
 #-------------------------------
-[UNFEZANT,1]
+[UNFEZANT,2]
 FormName = Ufaran Form
 Type1 = DARK
 Type2 = FLYING
@@ -3978,6 +3980,37 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = SCEPTILE,Level,36
 #-------------------------------
+[SCEPTILE,2]
+Type1 = FIGHTING
+Type2 = GROUND
+BaseStats = 70,105,85,65,85,120
+GenderRate = FemaleOneEighth
+GrowthRate = Parabolic
+BaseEXP = 142
+EffortPoints = 0,0,0,2,0,0
+Rareness = 45
+Happiness = 70
+Abilities = INNERFOCUS
+HiddenAbility = FIGHTERSWRATH
+Moves = 0,THOUSANDARROWS,1,THOUSANDARROWS,1,POUND,1,LEER,1,MUDSLAP,1,MACHPULSE,5,MUDSLAP,9,MACHPULSE,13,SANDATTACK,18,SANDTOMB,23,DRAINPUNCH,28,AGILITY,33,BULLDOZE,38,DETECT,43,CROSSCHOP,48,FALSESWIPE,53,QUICKGUARD,58,EARTHQUAKE,63,SCREECH
+Compatibility = Monster,Dragon
+StepsToHatch = 5120
+Height = 0.9
+Weight = 21.6
+Color = Green
+Shape = 6
+Habitat = Forest
+RegionalNumbers = 4
+Kind = Wood Gecko
+Pokedex = Leaves grow out of this Pokémon's body. They help obscure a Grovyle from the eyes of its enemies while it is in a thickly overgrown forest.
+BattlerPlayerX = 1
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 5
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Evolutions =
+#-------------------------------
 [TORCHIC,2]
 Type1 = FLYING
 BaseStats = 45,50,40,45,80,50
@@ -4040,6 +4073,37 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = BLAZIKEN,Level,36
 #-------------------------------
+[BLAZIKEN,2]
+Type1 = FLYING
+Type2 = PSYCHIC
+BaseStats = 80,65,75,125,75,110
+GenderRate = FemaleOneEighth
+GrowthRate = Parabolic
+BaseEXP = 142
+EffortPoints = 0,1,0,0,1,0
+Rareness = 45
+Happiness = 70
+Abilities = COMPOUNDEYES
+HiddenAbility = GALEFORCE
+Moves = 0,WINDDRILL,1,WINDDRILL,1,SCRATCH,1,GROWL,1,GUST,1,SANDATTACK,5,GUST,10,SANDATTACK,14,CONFUSION,20,ROOST,25,AIRCUTTER,31,UTURN,36,CALMMIND,42,BRAINFREEZE,47,WHIRLWIND,53,PSYCHIC,58,HURRICANE
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.9
+Weight = 19.5
+Color = Red
+Shape = 6
+Habitat = Grassland
+RegionalNumbers = 7
+Kind = Young Fowl
+Pokedex = It lashes out with 10 kicks per second. Its strong fighting instinct compels it to keep up its offensive until the opponent gives up.
+BattlerPlayerX = 8
+BattlerPlayerY = 0
+BattlerEnemyX = 2
+BattlerEnemyY = 12
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Evolutions =
+#-------------------------------
 [MUDKIP,2]
 Type1 = ROCK
 BaseStats = 50,70,50,40,50,50
@@ -4101,6 +4165,37 @@ BattlerEnemyY = 15
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = SWAMPERT,Level,36
+#-------------------------------
+[SWAMPERT,2]
+Type1 = ROCK
+Type2 = DARK
+BaseStats = 110,110,90,65,90,70
+GenderRate = FemaleOneEighth
+GrowthRate = Parabolic
+BaseEXP = 142
+EffortPoints = 0,2,0,0,0,0
+Rareness = 45
+Happiness = 70
+Abilities = ROCKHEAD
+HiddenAbility = SANDSTREAM
+Moves = 0,KNOCKOFF,1,KNOCKOFF,1,TACKLE,1,GROWL,1,ROCKTHROW,1,SANDATTACK,5,ROCKTHROW,9,SANDATTACK,12,BITE,18,BIDE,22,STEALTHROCK,28,SMACKDOWN,32,PROTECT,38,ROCKSLIDE,42,TAKEDOWN,48,CRUNCH,52,ENDEAVOR
+Compatibility = Monster,Water1
+StepsToHatch = 5120
+Height = 0.7
+Weight = 28.0
+Color = Blue
+Shape = 6
+Habitat = WatersEdge
+RegionalNumbers = 10
+Kind = Mud Fish
+Pokedex = Its toughened hind legs enable it to stand upright. Because it weakens if its skin dries out, it replenishes fluids by playing in mud.
+BattlerPlayerX = -2
+BattlerPlayerY = 0
+BattlerEnemyX = 2
+BattlerEnemyY = 15
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Evolutions =
 #-------------------------------
 [MACHOP,2]
 Type1 = FIGHTING
