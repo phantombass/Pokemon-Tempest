@@ -2806,6 +2806,199 @@ Type1 = TIME
 Type2 = COSMIC
 Type3 = SOUND
 #-------------------------------
+[ALTEMPER,21]
+FormName = Mega Altemper
+MegaMove = TEMPESTRAGE
+MegaMessage = 1
+BaseStats = 80,30,90,130,150,90
+Type1 = TIME
+Type2 = COSMIC
+#-------------------------------
+[ALTEMPER,22]
+FormName = Mega Sunny Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = FIRE
+Color = Red
+Pokedex = This is the form ALTEMPER takes on the brightest of days. Its skin is unexpectedly hot to the touch, so approach with care.
+#-------------------------------
+[ALTEMPER,23]
+FormName = Mega Rainy Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = WATER
+Color = Blue
+Pokedex = This is the form ALTEMPER takes when soaked with rain. When its body is compressed, water will seep out as if from a sponge.
+#-------------------------------
+[ALTEMPER,24]
+FormName = Mega Snowy Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = ICE
+Color = White
+Pokedex = This is the form ALTEMPER takes when covered in snow. Its body becomes an ice-like material, with a temperature near -5 degrees Celsius.
+#-------------------------------
+[ALTEMPER,25]
+FormName = Mega Foggy Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = FAIRY
+#-------------------------------
+[ALTEMPER,26]
+FormName = Mega Overcast Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = GHOST
+#-------------------------------
+[ALTEMPER,27]
+FormName = Mega Starry Form
+Type1 = TIME
+Type2 = COSMIC
+#-------------------------------
+[ALTEMPER,28]
+FormName = Mega Eclipse Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = DARK
+#-------------------------------
+[ALTEMPER,29]
+FormName = Mega Windy Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = FLYING
+#-------------------------------
+[ALTEMPER,30]
+FormName = Mega Heat Lightning Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = ELECTRIC
+#-------------------------------
+[ALTEMPER,31]
+FormName = Mega Delta Stream Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = DRAGON
+#-------------------------------
+[ALTEMPER,32]
+FormName = Mega Acid Rain Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = POISON
+#-------------------------------
+[ALTEMPER,33]
+FormName = Mega Sandstorm Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = ROCK
+#-------------------------------
+[ALTEMPER,34]
+FormName = Mega Rainbow Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = GRASS
+#-------------------------------
+[ALTEMPER,35]
+FormName = Mega Dust Devil Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = GROUND
+#-------------------------------
+[ALTEMPER,36]
+FormName = Mega Distortion Ashfall Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = FIGHTING
+#-------------------------------
+[ALTEMPER,37]
+FormName = Mega Volcanic Ash Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = STEEL
+#-------------------------------
+[ALTEMPER,38]
+FormName = Mega Borealis Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = PSYCHIC
+#-------------------------------
+[ALTEMPER,39]
+FormName = Mega Humid Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = BUG
+#-------------------------------
+[ALTEMPER,40]
+FormName = Mega Time Warp Form
+Type1 = TIME
+Type2 = COSMIC
+#-------------------------------
+[ALTEMPER,41]
+FormName = Mega Echo Chamber Form
+Type1 = TIME
+Type2 = COSMIC
+Type3 = SOUND
+#-------------------------------
+[SKRELP,1]
+Type1 = POISON
+Type2 = WATER
+BaseStats = 50,60,60,30,60,60
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 64
+EffortPoints = 0,0,0,0,0,1
+Rareness = 225
+Happiness = 70
+Abilities = POISONPOINT,POISONTOUCH
+HiddenAbility = ADAPTABILITY
+Moves = 1,TACKLE,1,SMOKESCREEN,1,WATERGUN,5,FEINTATTACK,9,TAILWHIP,12,BUBBLE,15,ACID,19,CAMOUFLAGE,23,POISONTAIL,25,WATERPULSE,28,DOUBLETEAM,32,TOXIC,35,AQUATAIL,38,SLUDGEBOMB,42,HYDROPUMP,49,DRAGONPULSE
+EggMoves = ACIDARMOR,HAZE,PLAYROUGH,TOXICSPIKES,VENOMDRENCH,LEECHSEED,LEAFBLADE,AQUAJET
+Compatibility = Water1,Dragon
+StepsToHatch = 5120
+Height = 0.5
+Weight = 7.3
+Color = Brown
+Shape = 5
+RegionalNumbers = 188
+Kind = Kelp
+Pokedex = Camouflaged as rotten kelp, they spray liquid poison on prey that approaches unawares and then finish it off.
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 0
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Evolutions = DRAGALGE,Level,36
+#-------------------------------
+[DRAGALGE,1]
+Type1 = WATER
+Type2 = GRASS
+BaseStats = 65,75,90,44,97,123
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 173
+EffortPoints = 0,0,0,0,0,2
+Rareness = 55
+Happiness = 70
+Abilities = RAINDISH,FLOWERGIFT
+HiddenAbility = ADAPTABILITY
+Moves = 0,MAGICALLEAF,1,MAGICALLEAF,1,DRAGONTAIL,1,TACKLE,1,SMOKESCREEN,1,WATERGUN,1,ABSORB,5,ABSORB,9,TAILWHIP,12,BUBBLE,15,MEGADRAIN,19,CAMOUFLAGE,23,LEECHSEED,25,WATERPULSE,28,DOUBLETEAM,32,GIGADRAIN,35,SCALD,38,WEATHERBALL,42,HYDROPUMP,53,LIQUIDATION,59,LEAFSTORM
+Compatibility = Water1,Dragon
+StepsToHatch = 5120
+Height = 1.8
+Weight = 81.5
+Color = Brown
+Shape = 5
+RegionalNumbers = 189
+Kind = Mock Kelp
+Pokedex = Their poison is strong enough to eat through the hull of a tanker, and they spit it indiscriminately at anything that enters their territory.
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 0
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Evolutions =
+#-------------------------------
 [PANSAGE,1]
 Type1 = FIGHTING
 BaseStats = 50,53,48,64,53,48

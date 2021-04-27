@@ -275,6 +275,48 @@ Pokemon = PANSEAR,36
 Pokemon = PANPOUR,36
   Form = 1
 #-------------------------------
+# Torrential Slopes
+#-------------------------------
+[WORKER,Kirk]
+LoseText = "Owowow!"
+Pokemon = ELEKID,34
+Pokemon = ELEKID,34
+Pokemon = ELECTABUZZ,35
+#-------------------------------
+[GENTLEMAN,Douglas]
+LoseText = "Bad pun, I know."
+Pokemon = SKRELP,35
+Pokemon = PRINPLUP,34
+#-------------------------------
+[GENTLEMAN,Franklin]
+LoseText = "Too hot!"
+Pokemon = POLITOED,37
+#-------------------------------
+# Mt Sear Base East
+#-------------------------------
+[POKEMONBREEDER,May]
+LoseText = "Oh wow!"
+Pokemon = AZUMARILL,36
+Pokemon = JYNX,36
+Pokemon = CORVISQUIRE,36
+#-------------------------------
+[FISHERMAN,Isaac]
+LoseText = "Well done!"
+Pokemon = LANTURN,38
+  Ability = 2
+#-------------------------------
+[HIKER,John]
+LoseText = "Shoot!"
+Pokemon = BOLDORE,36
+Pokemon = EXCADRILL,36
+Pokemon = CRANIDOS,36
+#-------------------------------
+[POKEMONBREEDER,Jen]
+LoseText = "Oh no! My cute Pokémon!"
+Pokemon = MAGBY,36
+Pokemon = ELEKID,36
+Pokemon = SMOOCHUM,36
+#-------------------------------
 #----------------------------------------
 # Team Maelstrom
 #----------------------------------------
