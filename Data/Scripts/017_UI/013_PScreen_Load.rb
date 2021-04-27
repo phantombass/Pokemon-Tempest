@@ -358,24 +358,6 @@ class PokemonLoadScreen
           $PokemonStorage      = Marshal.load(f)
           $SaveVersion         = Marshal.load(f) unless f.eof?
           pbRefreshResizeFactor if !mkxp?  # To fix Game_Screen pictures
-          pbDisallowSpeedup if !$DEBUG
-          time = pbGetTimeNow
-          $game_variables[99] = time.day
-          dailyWeather = $game_variables[27]
-          if $game_variables[28] > $game_variables[99] || $game_variables[28]<$game_variables[99]
-            $game_variables[27] = 1+rand(100)
-            $game_variables[28] = $game_variables[99]
-          end
-          if dailyWeather>=96
-            $game_switches[72] = true
-            $game_switches[71] = false
-          elsif dailyWeather>=86 && dailyWeather<96
-            $game_switches[71] = true
-            $game_switches[72] = false
-          else
-            $game_switches[71] = false
-            $game_switches[72] = false
-          end
           magicNumberMatches = false
           if $data_system.respond_to?("magic_number")
             magicNumberMatches = ($game_system.magic_number==$data_system.magic_number)
@@ -454,24 +436,6 @@ class PokemonLoadScreen
         $game_player.refresh
         $game_map.autoplay
         $game_map.update
-        pbDisallowSpeedup if !$DEBUG
-        time = pbGetTimeNow
-        $game_variables[99] = time.day
-        dailyWeather = $game_variables[27]
-        if $game_variables[28] > $game_variables[99] || $game_variables[28]<$game_variables[99]
-          $game_variables[27] = 1+rand(100)
-          $game_variables[28] = $game_variables[99]
-        end
-        if dailyWeather>=96
-          $game_switches[72] = true
-          $game_switches[71] = false
-        elsif dailyWeather>=86 && dailyWeather<96
-          $game_switches[71] = true
-          $game_switches[72] = false
-        else
-          $game_switches[71] = false
-          $game_switches[72] = false
-        end
         return
       elsif cmdMysteryGift>=0 && command==cmdMysteryGift
         pbPlayDecisionSE
