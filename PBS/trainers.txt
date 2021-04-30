@@ -317,6 +317,58 @@ Pokemon = MAGBY,36
 Pokemon = ELEKID,36
 Pokemon = SMOOCHUM,36
 #-------------------------------
+# Dust-Ridden Pass
+#-------------------------------
+[HIKER,Drake]
+LoseText = "Oh my..."
+Pokemon = BAGON,45
+	Form = 2
+Pokemon = SHELGON,45
+	Form = 2
+Pokemon = TURTONATOR,45
+#-------------------------------
+[HIKER,Josh]
+LoseText = "Oh my..."
+Pokemon = NOIBAT,45
+Pokemon = XATU,45
+Pokemon = DUNSPARCE,45
+#-------------------------------
+[HIKER,Tom]
+LoseText = "Oh my..."
+Pokemon = GYARADOS,48
+#-------------------------------
+[HIKER,Phil]
+LoseText = "Oh my..."
+Pokemon = NIDOKING,46
+	Form = 1
+Pokemon = NIDOQUEEN,46
+	Form = 1
+#-------------------------------
+# SubTerra Trench
+#-------------------------------
+[HIKER,Jesse]
+LoseText = "Oh my..."
+Pokemon = CRANIDOS,45
+Pokemon = SHIELDON,45
+Pokemon = RAMPARDOS,45
+#-------------------------------
+[HIKER,James]
+LoseText = "Oh my..."
+Pokemon = SHIELDON,45
+Pokemon = CRANIDOS,45
+Pokemon = BASTIODON,45
+#-------------------------------
+[HIKER,Oscar]
+LoseText = "Oh my..."
+Pokemon = ABSOL,48
+#-------------------------------
+[HIKER,Billy]
+LoseText = "Oh my..."
+Pokemon = UNFEZANT,46
+	Form = 1
+Pokemon = ARIADOS,46
+	Form = 1
+#-------------------------------
 #----------------------------------------
 # Team Maelstrom
 #----------------------------------------

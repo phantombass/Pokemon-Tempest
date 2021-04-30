@@ -3732,7 +3732,7 @@ SpriteScalePlayer = 1.5
 #-------------------------------
 [BAGON,2]
 BattlerPlayerY  = 8
-BattlerEnemyY   = 34
+BattlerEnemyY   = 14
 BattlerAltitude = 0
 #-------------------------------
 [GIBLE,2]

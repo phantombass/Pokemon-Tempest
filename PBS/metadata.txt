@@ -775,3 +775,26 @@ Weather = Rain,0
 MapPosition = 0,14,5
 Outdoor = false
 ShowArea = true
+#-------------------------------
+[140]
+# Distura Underpass
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,9,7
+ShowArea = true
+#-------------------------------
+[142]
+# Dust-Ridden Pass
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,9,3
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[144]
+# Drakon Plains
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,9,1
+Outdoor = true
+ShowArea = true

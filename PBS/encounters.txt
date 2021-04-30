@@ -525,3 +525,67 @@ SuperRod
     LANTURN,35,40
     DRAGALGE,50,55
 #-------------------------------
+140 # Distura Underpass
+25,10,10
+Cave
+    XATU,42,45
+    GOLBAT,40,42
+    XATU,42,45
+    GOLBAT,40,42
+    LOUDRED,41,44
+    NOIBAT,40,42
+    LOUDRED,41,44
+    NOIBAT,40,42
+    EXPLOUD,44,46
+    EXPLOUD,44,46
+    CROBAT,44,46
+    CROBAT,44,46
+#-------------------------------
+141 # Astral Tunnel
+25,10,10
+Cave
+    XATU,42,45
+    GOLBAT,40,42
+    XATU,42,45
+    GOLBAT,40,42
+    LOUDRED,41,44
+    NOIBAT,40,42
+    LOUDRED,41,44
+    NOIBAT,40,42
+    EXPLOUD,44,46
+    EXPLOUD,44,46
+    CROBAT,44,46
+    CROBAT,44,46
+#-------------------------------
+142 # Dust-Ridden Pass
+25,10,10
+Land
+    XATU,42,45
+    BAGON,40,42
+    XATU,42,45
+    BAGON,40,42
+    TURTONATOR,41,44
+    DUNSPARCE,40,42
+    TURTONATOR,41,44
+    DUNSPARCE,40,42
+    SHELGON,44,46
+    SHELGON,44,46
+    NIDOKING,44,46
+    NIDOQUEEN,44,46
+#-------------------------------
+143 # SubTerra Trench
+25,10,10
+Cave
+    TRANQUILL,42,45
+    ARIADOS,40,42
+    TRANQUILL,42,45
+    ARIADOS,40,42
+    HOUNDOUR,41,44
+    SABLEYE,40,42
+    HOUNDOUR,41,44
+    SABLEYE,40,42
+    UNFEZANT,44,46
+    ABSOL,44,46
+    UNFEZANT,44,46
+    ABSOL,44,46
+#-------------------------------
