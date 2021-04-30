@@ -503,7 +503,7 @@ SuperRod
     BARBOACH,25,30
     WHISCASH,30,35
 #-------------------------------
-137 # Mt. Sear DEpths
+137 # Mt. Sear Depths
 25,10,10
 Water
     MAGIKARP,14,19

@@ -758,7 +758,7 @@ BattleHandlers::MoveImmunityTargetAbility.add(:CORRUPTION,
 
 BattleHandlers::MoveImmunityTargetAbility.add(:DIMENSIONBLOCK,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityAbility(user,target,move,type,:COSMIC,battle) || pbBattleMoveImmunityAbility(user,target,move,type,:TIME,battle)
+    next pbBattleMoveImmunityAbility(user,target,move,type,:COSMIC,battle)
   }
 )
 
