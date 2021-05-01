@@ -37,8 +37,10 @@ Events.onMapUpdate += proc {| sender, e |
       $game_variables[Level::Cap] = 42
     elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<=5
       $game_variables[Level::Cap] = 46
-    elsif $game_variables[Mission::Mission4]>=6
+    elsif $game_variables[Mission::Mission4]>=6 && $game_variables[Mission::Mission4]<=7
       $game_variables[Level::Cap] = 50
+    elsif $game_variables[Mission::Mission4]>=8
+      $game_variables[Level::Cap] = 55
     end
   end
 }
@@ -70,8 +72,10 @@ Events.onStepTaken += proc {| sender, e |
       $game_variables[Level::Cap] = 42
     elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<=5
       $game_variables[Level::Cap] = 46
-    elsif $game_variables[Mission::Mission4]>=6
+    elsif $game_variables[Mission::Mission4]>=6 && $game_variables[Mission::Mission4]<=7
       $game_variables[Level::Cap] = 50
+    elsif $game_variables[Mission::Mission4]>=8
+      $game_variables[Level::Cap] = 55
     end
   end
 }
@@ -85,7 +89,7 @@ module ChapterRelease
 end
 
 Events.onMapChange += proc {| sender, e |
-  #  $game_switches[ChapterRelease::Four] = true
+    $game_switches[ChapterRelease::Four] = true
 }
 
 def pbChapterRelease

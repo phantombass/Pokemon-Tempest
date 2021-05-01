@@ -40,7 +40,7 @@ def pbMissionUpdate
       end
     end
   elsif $game_switches[Mission::Four] == true
-    if $game_variables[Mission::Mission4] == 6
+    if $game_variables[Mission::Mission4] == 10
       $game_variables[Mission::Mission4] += 0
     else
       if $game_switches[Mission::Stella] == true

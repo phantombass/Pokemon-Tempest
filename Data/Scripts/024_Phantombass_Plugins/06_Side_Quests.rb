@@ -33,6 +33,14 @@ module SideQuest
   Peak = 97
   Venom = 98
   Comet = 99
+  Cinder = 105
+  SearS = 107
+  Slopes = 108
+  SearE = 109
+  Dust = 112
+  Drakon = 113
+  SubTerra = 114
+  Timeless = 115
   Lost = 100
   MonSQ = 103
   ItemSQ = 104
@@ -108,7 +116,7 @@ def pbSideQuestGen
   textColor = "7FE00000"
   textColor2 = "463F0000"
   typeSQ = rand(3)
-  locSQ = rand(17)
+  locSQ = rand(21)
   $game_variables[SideQuest::Steps] = 0
   case locSQ
   when 0
@@ -187,11 +195,52 @@ def pbSideQuestGen
     mapName = "Snowcap Heights"
     $game_switches[SideQuest::Snowcap] = true
   when 15
-    mapName = "Distura City"
-    $game_switches[SideQuest::Distura] = true
+    if $game_switches[Mission::Vinny]
+      mapName = "Distura City"
+      $game_switches[SideQuest::Distura] = true
+    elsif $game_switches[Mission::Stella]
+      mapName = "Astral Peak"
+      $game_switches[SideQuest::Peak] = true
+    end
   when 16
-    mapName = "Astral Peak"
-    $game_switches[SideQuest::Peak] = true
+    if $game_switches[Mission::Vinny]
+      mapName = "Cinder Foothils"
+      $game_switches[SideQuest::Cinder] = true
+    elsif $game_switches[Mission::Stella]
+      mapName = "Torrential Slopes"
+      $game_switches[SideQuest::Slopes] = true
+    end
+  when 17
+    if $game_switches[Mission::Vinny]
+      mapName = "Cinder Foothills"
+      $game_switches[SideQuest::Cinder] = true
+    elsif $game_switches[Mission::Stella]
+      mapName = "Torrential Slopes"
+      $game_switches[SideQuest::Slopes] = true
+    end
+  when 18
+    mapName = "Mt. Sear"
+    if $game_switches[Mission::Vinny]
+      $game_switches[SideQuest::SearS] = true
+    elsif $game_switches[Mission::Stella]
+      $game_switches[SideQuest::SearE] = true
+    end
+  when 19
+    if $game_switches[Mission::Vinny]
+      mapName = "Dust-Ridden Pass"
+      $game_switches[SideQuest::Dust] = true
+    elsif $game_switches[Mission::Stella]
+      mapName = "SubTerra Trench"
+      $game_switches[SideQuest::SubTerra] = true
+    end
+  when 20
+    if $game_switches[Mission::Vinny]
+      mapName = "Drakon Mountain"
+      $game_switches[SideQuest::Drakon] = true
+    elsif $game_switches[Mission::Stella]
+      mapName = "Timeless Chasm"
+      $game_switches[SideQuest::Timeless] = true
+    end
   end
   case typeSQ
   when 0

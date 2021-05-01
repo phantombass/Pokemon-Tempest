@@ -2810,7 +2810,7 @@ Type3 = SOUND
 FormName = Mega Altemper
 MegaMove = TEMPESTRAGE
 MegaMessage = 1
-BaseStats = 80,30,90,130,150,90
+BaseStats = 80,30,90,120,140,90
 Type1 = TIME
 Type2 = COSMIC
 #-------------------------------

@@ -6,9 +6,9 @@ PlayerB = POKEMONTRAINER_Leaf,trchar001,girl_bike,girl_surf,girl_run,girl_surf,g
 TrainerVictoryME = Battle victory trainer.ogg
 WildVictoryME = Battle victory wild.ogg
 TrainerBattleBGM = HGSS-118-BattleTrainer.ogg
-SurfBGM = Surfing.mid
+SurfBGM = HGGS-170-Surf.ogg
 BicycleBGM = Bicycle.mid
-Home = 3,7,5,8
+Home = 32,3,9,8
 WildBattleBGM = HGSS-110-BattleWild.ogg
 #-------------------------------
 [001]
@@ -783,6 +783,13 @@ Weather = Rain,0
 MapPosition = 0,9,7
 ShowArea = true
 #-------------------------------
+[141]
+# Astral Tunnel
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,19,3
+ShowArea = true
+#-------------------------------
 [142]
 # Dust-Ridden Pass
 SnapEdges = true
@@ -791,10 +798,66 @@ MapPosition = 0,9,3
 Outdoor = true
 ShowArea = true
 #-------------------------------
+[143]
+# SubTerra Trench
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,18,17
+Outdoor = false
+ShowArea = true
+#-------------------------------
 [144]
-# Drakon Plains
+# Drakon Village
 SnapEdges = true
 Weather = Rain,0
 MapPosition = 0,9,1
 Outdoor = true
+ShowArea = true
+#-------------------------------
+[145]
+# Timeless Grotto
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,26,17
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[146]
+# Drakon PMC
+SnapEdges = true
+MapPosition = 0,9,1
+#-------------------------------
+[147]
+# Timeless PMC
+SnapEdges = true
+MapPosition = 0,26,17
+#-------------------------------
+[148]
+# Elder's House
+SnapEdges = true
+MapPosition = 0,9,1
+#-------------------------------
+[149]
+# Drakon Houses
+SnapEdges = true
+MapPosition = 0,9,1
+#-------------------------------
+[150]
+# Timeless Houses
+SnapEdges = true
+MapPosition = 0,26,17
+#-------------------------------
+[151]
+# Drakon Mountain
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,9,1
+Outdoor = false
+ShowArea = true
+#-------------------------------
+[152]
+# Timeless Chasm
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 0,26,17
 ShowArea = true

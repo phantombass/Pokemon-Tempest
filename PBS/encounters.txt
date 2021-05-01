@@ -589,3 +589,35 @@ Cave
     UNFEZANT,44,46
     ABSOL,44,46
 #-------------------------------
+151 # Drakon Mountain
+25,10,10
+Cave
+    XATU,44,46
+    SHELGON,44,46
+    XATU,44,46
+    SHELGON,44,46
+    NOIBAT,45,47
+    DUNSPARCE,45,47
+    NOIBAT,45,47
+    DUNSPARCE,45,47
+    NOIVERN,46,48
+    NOIVERN,46,48
+    NIDOKING,46,48
+    NIDOQUEEN,46,48
+#-------------------------------
+152 # Timeless Chasm
+25,10,10
+Cave
+    OMANYTE,44,46
+    KABUTO,44,46
+    LILEEP,44,46
+    ANORITH,44,46
+    CRANIDOS,44,46
+    SHIELDON,44,46
+    TIRTOUGA,44,46
+    ARCHEN,44,46
+    AMAURA,44,46
+    TYRUNT,44,46
+    AERODACTYL,46,48
+    AERODACTYL,46,48
+#-------------------------------
