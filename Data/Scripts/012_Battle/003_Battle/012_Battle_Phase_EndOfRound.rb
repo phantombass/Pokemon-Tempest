@@ -122,7 +122,9 @@ class PokeBattle_Battle
     priority.each do |b|
       # Weather damage
       # NOTE:
-      b.pbCheckFormOnWeatherChange
+      if $megaAltemper == 0
+        b.pbCheckFormOnWeatherChange
+      end
       if b.abilityActive? && !b.hasActiveAbility?(:BAROMETRIC)
         BattleHandlers.triggerEORWeatherAbility(b.ability,curWeather,b,self)
         b.pbFaint if b.fainted?

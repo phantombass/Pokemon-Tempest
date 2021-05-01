@@ -263,6 +263,9 @@ class PokeBattle_Battler
           when PBWeather::Rain, PBWeather::Storm, PBWeather::HeavyRain; newForm = 2
           when PBWeather::Hail, PBWeather::Sleet;     newForm = 3
           end
+          if mega?
+            newform +=21
+          end
           case newForm
           when 4;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FAIRY)
           when 0;                       @effects[PBEffects::Type3] = getConst(PBTypes,:NORMAL)
@@ -283,6 +286,25 @@ class PokeBattle_Battler
           when 1;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FIRE)
           when 2;                       @effects[PBEffects::Type3] = getConst(PBTypes,:WATER)
           when 3;                       @effects[PBEffects::Type3] = getConst(PBTypes,:ICE)
+          when 25;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FAIRY)
+          when 21;                       @effects[PBEffects::Type3] = getConst(PBTypes,:NORMAL)
+          when 26;                       @effects[PBEffects::Type3] = getConst(PBTypes,:GHOST)
+          when 28;                       @effects[PBEffects::Type3] = getConst(PBTypes,:DARK)
+          when 29;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FLYING)
+          when 30;                       @effects[PBEffects::Type3] = getConst(PBTypes,:ELECTRIC)
+          when 31;                      @effects[PBEffects::Type3] = getConst(PBTypes,:DRAGON)
+          when 32;                      @effects[PBEffects::Type3] = getConst(PBTypes,:POISON)
+          when 33;                      @effects[PBEffects::Type3] = getConst(PBTypes,:ROCK)
+          when 34;                      @effects[PBEffects::Type3] = getConst(PBTypes,:GRASS)
+          when 35;                      @effects[PBEffects::Type3] = getConst(PBTypes,:GROUND)
+          when 36;                      @effects[PBEffects::Type3] = getConst(PBTypes,:FIGHTING)
+          when 37;                      @effects[PBEffects::Type3] = getConst(PBTypes,:STEEL)
+          when 38;                      @effects[PBEffects::Type3] = getConst(PBTypes,:PSYCHIC)
+          when 39;                      @effects[PBEffects::Type3] = getConst(PBTypes,:BUG)
+          when 41;                      @effects[PBEffects::Type3] = getConst(PBTypes,:SOUND)
+          when 22;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FIRE)
+          when 23;                       @effects[PBEffects::Type3] = getConst(PBTypes,:WATER)
+          when 24;                       @effects[PBEffects::Type3] = getConst(PBTypes,:ICE)
           end
           if @form!=newForm
             @battle.pbShowAbilitySplash(self,true)
