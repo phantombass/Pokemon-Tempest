@@ -57,6 +57,11 @@ Mapping: Phantombass
 
 Eventing: Phantombass
 
+Tilesets:
+
+WesleyFG
+lichenprincess
+
 Playtesting:
 
 DarkDevil26

@@ -3,10 +3,12 @@ module Mission
   Two = 509
   Three = 520
   Four = 526
+  Five = 541
   Mission1 = 503
   Mission2 = 504
   Mission3 = 505
   Mission4 = 507
+  Mission5 = 508
   Stella = 517
   Vinny = 518
   SideQuest = 404
@@ -50,6 +52,13 @@ def pbMissionUpdate
         $game_variables[Mission::Mission4] += 1
         advanceQuestToStage(6,$game_variables[Mission::Mission4])
       end
+    end
+  elsif $game_switches[Mission::Five] == true
+    if $game_variables[Mission::Mission5] == 10
+      $game_variables[Mission::Mission4] += 0
+    else
+      $game_variables[Mission::Mission4] += 1
+      advanceQuestToStage(8,$game_variables[Mission::Mission4])
     end
     #elsif
     #written in to help me expand
@@ -96,6 +105,12 @@ def pbNewMission(num)
       completeQuest(5)
     end
     $game_switches[Mission::Four] = true
+    $game_variables[Chapter::Count] += 1
+  when 5
+    $game_variables[Mission::Mission5] = 1
+    activateQuest(8)
+    $Trainer.badges[4] = true
+    $game_switches[Mission::Five] = true
     $game_variables[Chapter::Count] += 1
   when 0
     $game_switches[Readouts::Readout] = true

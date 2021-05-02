@@ -77,6 +77,9 @@ Events.onStepTaken += proc {| sender, e |
     elsif $game_variables[Mission::Mission4]>=8
       $game_variables[Level::Cap] = 55
     end
+  when 5
+    if $game_variables[Mission::Mission5] <= 0
+      $game_variables[Level::Cap] = 55
   end
 }
 
