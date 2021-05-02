@@ -861,3 +861,10 @@ SnapEdges = true
 Weather = Rain,0
 MapPosition = 0,26,17
 ShowArea = true
+#-------------------------------
+[155]
+# Distortion World
+SnapEdges = true
+MapPosition = 0,29,0
+Outdoor = true
+ShowArea = true
