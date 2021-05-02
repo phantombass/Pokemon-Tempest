@@ -57,7 +57,7 @@
 54,TWINS,Twins,24,,,HGSSEncounter-Lass,Mixed,,
 55,YOUNGCOUPLE,Young Couple,60,,,HGSSEncounter-Lass,Mixed,32,
 56,TEAMMAELSTROM_M,Team Maelstrom,100,DP-GalacticBattle,,HGSSEncounter-TeamRocket,Male,100,
-57,TEAMMAELSTROM_F,Team Maelstrom,100,DP-GalacticBattle,,HGSSEncounter-TeamRocket,Female,100,
+57,MAELSTROMADMIN,Team Maelstrom Admin,100,DP-GalacticBattle,,HGSSEncounter-TeamRocket,Female,100,
 58,MAELSTROMBOSS,Maelstrom Boss,200,B2W2-ColressBattle,,,Male,200,
 59,LEADER_Brock,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Male,200,
 60,LEADER_Misty,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Female,200,

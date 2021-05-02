@@ -226,7 +226,17 @@ MultipleForms.register(:CASTFORM,{
   }
 })
 
-MultipleForms.copy(:CASTFORM,:FORMETEOS,:ALTEMPER,:SQUALTEMPER)
+MultipleForms.copy(:CASTFORM,:FORMETEOS)
+
+MultipleForms.register(:ALTEMPER,{
+  "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
+    if pkmn.isMega?
+      next 21
+    else
+      next 0
+    end
+  }
+})
 
 MultipleForms.register(:BURMY,{
   "getFormOnCreation" => proc { |pkmn|

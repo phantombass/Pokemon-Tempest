@@ -264,7 +264,7 @@ class PokeBattle_Battler
           when PBWeather::Hail, PBWeather::Sleet;     newForm = 3
           end
           if mega?
-            newform +=21
+            newForm +=21
           end
           case newForm
           when 4;                       @effects[PBEffects::Type3] = getConst(PBTypes,:FAIRY)

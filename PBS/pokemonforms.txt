@@ -2815,7 +2815,7 @@ Type1 = TIME
 Type2 = COSMIC
 #-------------------------------
 [ALTEMPER,22]
-FormName = Mega Sunny Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FIRE
@@ -2824,7 +2824,7 @@ Color = Red
 Pokedex = This is the form ALTEMPER takes on the brightest of days. Its skin is unexpectedly hot to the touch, so approach with care.
 #-------------------------------
 [ALTEMPER,23]
-FormName = Mega Rainy Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = WATER
@@ -2833,7 +2833,7 @@ Color = Blue
 Pokedex = This is the form ALTEMPER takes when soaked with rain. When its body is compressed, water will seep out as if from a sponge.
 #-------------------------------
 [ALTEMPER,24]
-FormName = Mega Snowy Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = ICE
@@ -2842,117 +2842,117 @@ Color = White
 Pokedex = This is the form ALTEMPER takes when covered in snow. Its body becomes an ice-like material, with a temperature near -5 degrees Celsius.
 #-------------------------------
 [ALTEMPER,25]
-FormName = Mega Foggy Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FAIRY
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,26]
-FormName = Mega Overcast Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = GHOST
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,27]
-FormName = Mega Starry Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,28]
-FormName = Mega Eclipse Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = DARK
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,29]
-FormName = Mega Windy Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FLYING
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,30]
-FormName = Mega Heat Lightning Form
+FormName = Mega Altemperm
 Type1 = TIME
 Type2 = COSMIC
 Type3 = ELECTRIC
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,31]
-FormName = Mega Delta Stream Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = DRAGON
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,32]
-FormName = Mega Acid Rain Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = POISON
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,33]
-FormName = Mega Sandstorm Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = ROCK
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,34]
-FormName = Mega Rainbow Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = GRASS
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,35]
-FormName = Mega Dust Devil Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = GROUND
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,36]
-FormName = Mega Distortion Ashfall Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FIGHTING
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,37]
-FormName = Mega Volcanic Ash Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = STEEL
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,38]
-FormName = Mega Borealis Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = PSYCHIC
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,39]
-FormName = Mega Humid Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = BUG
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,40]
-FormName = Mega Time Warp Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,41]
-FormName = Mega Echo Chamber Form
+FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = SOUND
