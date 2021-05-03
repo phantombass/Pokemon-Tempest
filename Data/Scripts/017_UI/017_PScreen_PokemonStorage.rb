@@ -1774,9 +1774,9 @@ class PokemonStorageScreen
       @heldpkmn.formTime = nil if @heldpkmn.respond_to?("formTime")
       @heldpkmn.form     = 0 if @heldpkmn.isSpecies?(:SHAYMIN)
       @heldpkmn.heal
-    elsif pokemon.isSpecies?(:ALTEMPER)
+    elsif @heldpkmn.isSpecies?(:ALTEMPER)
       $game_variables[999] = 1
-    elsif pokemon.isSpecies?(:SQUALTEMPER)
+    elsif @heldpkmn.isSpecies?(:SQUALTEMPER)
       $game_variables[999] = 1
     end
     @scene.pbPlace(selected,@heldpkmn)
