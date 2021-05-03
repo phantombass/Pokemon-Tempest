@@ -55,9 +55,9 @@ def pbMissionUpdate
     end
   elsif $game_switches[Mission::Five] == true
     if $game_variables[Mission::Mission5] == 10
-      $game_variables[Mission::Mission4] += 0
+      $game_variables[Mission::Mission5] += 0
     else
-      $game_variables[Mission::Mission4] += 1
+      $game_variables[Mission::Mission5] += 1
       advanceQuestToStage(8,$game_variables[Mission::Mission4])
     end
     #elsif

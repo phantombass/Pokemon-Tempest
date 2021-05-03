@@ -1,6 +1,6 @@
 module SideQuest
   OnOff = 403
-  Activated = 527
+  Activated = 405
   Type = 801
   Pkmn = 802
   Item = 803
@@ -116,7 +116,7 @@ def pbSideQuestGen
   textColor = "7FE00000"
   textColor2 = "463F0000"
   typeSQ = rand(3)
-  locSQ = rand(21)
+  locSQ = rand(20)
   $game_variables[SideQuest::Steps] = 0
   case locSQ
   when 0
@@ -204,28 +204,20 @@ def pbSideQuestGen
     end
   when 16
     if $game_switches[Mission::Vinny]
-      mapName = "Cinder Foothils"
-      $game_switches[SideQuest::Cinder] = true
-    elsif $game_switches[Mission::Stella]
-      mapName = "Torrential Slopes"
-      $game_switches[SideQuest::Slopes] = true
-    end
-  when 17
-    if $game_switches[Mission::Vinny]
       mapName = "Cinder Foothills"
       $game_switches[SideQuest::Cinder] = true
     elsif $game_switches[Mission::Stella]
       mapName = "Torrential Slopes"
       $game_switches[SideQuest::Slopes] = true
     end
-  when 18
+  when 17
     mapName = "Mt. Sear"
     if $game_switches[Mission::Vinny]
       $game_switches[SideQuest::SearS] = true
     elsif $game_switches[Mission::Stella]
       $game_switches[SideQuest::SearE] = true
     end
-  when 19
+  when 18
     if $game_switches[Mission::Vinny]
       mapName = "Dust-Ridden Pass"
       $game_switches[SideQuest::Dust] = true
@@ -233,7 +225,7 @@ def pbSideQuestGen
       mapName = "SubTerra Trench"
       $game_switches[SideQuest::SubTerra] = true
     end
-  when 20
+  when 19
     if $game_switches[Mission::Vinny]
       mapName = "Drakon Mountain"
       $game_switches[SideQuest::Drakon] = true
