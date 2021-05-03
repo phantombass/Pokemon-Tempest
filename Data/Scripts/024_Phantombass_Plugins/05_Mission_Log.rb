@@ -108,7 +108,7 @@ def pbNewMission(num)
     $game_variables[Chapter::Count] += 1
   when 5
     $game_variables[Mission::Mission5] = 1
-    activateQuest(8)
+    activateQuest(10)
     $Trainer.badges[4] = true
     $game_switches[Mission::Five] = true
     $game_variables[Chapter::Count] += 1
