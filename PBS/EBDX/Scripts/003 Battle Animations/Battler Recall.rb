@@ -32,7 +32,7 @@ class PokeBattle_Scene
         poke.zoom_y -= zoom
       end
       ballburst.update
-      wait
+      self.wait
     end
     ballburst.dispose
     ballburst = nil
@@ -76,7 +76,7 @@ class PokeBattle_Scene
       @sprites["pokeball#{i}"].dispose
     end
     # register as heavy shake
-    shake = false; heavy = false; onlydig = false
+    shake = false; heavy = false; onlydig = false; shadowless = false
     sendOuts.each_with_index do |b, m|
       battler = @battlers[b[0]]; i = battler.index
       next if i == EliteBattle.follower(@battle)
@@ -84,6 +84,10 @@ class PokeBattle_Scene
       heavy = true if battler.pbWeight*0.1 >= 291 && alt[m] < 1 && !dig[m]
     end
     sendOuts.each_with_index {|b, m| onlydig = true if !shake && dig[m] }
+    # override for shadowless environments
+    if @sprites["battlebg"].data.has_key?("noshadow") && @sprites["battlebg"].data["noshadow"] == true
+      shake = false; heavy = false; shadowless = true
+    end
     # play SE
     pbSEPlay("EBDX/Drop") if shake && !heavy
     pbSEPlay("EBDX/Drop Heavy") if heavy
@@ -92,7 +96,7 @@ class PokeBattle_Scene
     for j in 0...8
       next if onlydig
       sendOuts.each_with_index do |b, m|
-        next if alt[m] < 1
+        next if alt[m] < 1 && !shadowless
         battler = @battlers[b[0]]; i = battler.index
         next if i == EliteBattle.follower(@battle)
         @sprites["pokemon_#{i}"].y += ((j/4 < 1) ? 4 : -4)

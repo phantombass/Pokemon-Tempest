@@ -78,10 +78,12 @@ class TargetWindowEBDX
         iy = (bmp.height - icon.height)/2 - 9
         @buttons["#{i}"].bitmap.blt(ix, iy, icon, Rect.new(0, 0, icon.width/2, bmp.height - 4 - iy), 216) if @battle.battlers[i].hp > 0
       else
-        @buttons["#{i}"].opacity = 128
+        @buttons["#{i}"].opacity = i/2 > @battle.pbMaxSize(i%2) - 1 ? 0 : 128
       end
       # calculate x and y positions
       x = (@viewport.width - rw)/2 + (i%2 == 0 ? i/2 : @battle.pbMaxSize(1) - 1 - (i-1)/2)*(bmp.width + 8)
+      dif = @battle.pbMaxSize(1 - i%2) - @battle.pbMaxSize(i%2)
+      x += dif*0.5*(bmp.width + 8) if dif > 0
       y = (@viewport.height - rh - 4) + (1 - i%2)*(bmp.height + 4)
       # apply positioning
       @buttons["#{i}"].x = x

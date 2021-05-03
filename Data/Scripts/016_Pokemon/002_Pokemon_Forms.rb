@@ -230,7 +230,7 @@ MultipleForms.copy(:CASTFORM,:FORMETEOS)
 
 MultipleForms.register(:ALTEMPER,{
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
-    if pkmn.isMega?
+    if pkmn.form >= 21
       next 21
     else
       next 0

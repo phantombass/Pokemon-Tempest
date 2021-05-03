@@ -45,7 +45,7 @@ def pbBattleAnimation(bgm = nil, battletype = 0, foe = nil)
     end
   end
   # checks if the Sun & Moon styled VS sequence is to be played
-  EliteBattle.smTransition?(trainerid, false, (foe[0].name rescue 0), (foe[0].partyID rescue 0)) if trainerid >= 0
+  EliteBattle.smTransition?(trainerid, false, (foe[0].name rescue 0), (foe[0].partyID rescue 0)) if trainerid >= 0 && foe && foe.length < 2
   EliteBattle.smTransition?(EliteBattle.get(:wildSpecies), true, EliteBattle.get(:wildForm)) if trainerid < 0
   $timenow = Time.now
   # plays custom transition if applicable

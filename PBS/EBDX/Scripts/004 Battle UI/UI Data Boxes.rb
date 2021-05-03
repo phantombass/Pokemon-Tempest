@@ -492,7 +492,7 @@ class DataBoxEBDX  <  SpriteWrapper
       @sprites["mega"].bitmap = pbBitmap(path) unless path.nil?
     end
     # shows the Mega/Primal symbols when activated
-    @sprites["mega"].src_rect.width = (@battler.mega? || (@battler.isSpecies?(:ALTEMPER) && @battler.form>=21) || @battler.primal?) ? @sprites["mega"].bitmap.width : 0
+    @sprites["mega"].src_rect.width = (@battler.mega? || @battler.primal? || @battler.form >= 21) ? @sprites["mega"].bitmap.width : 0
     # shows status condition
     @sprites["status"].src_rect.y = @sprites["status"].src_rect.height * (@battler.status-1)
     @sprites["status"].src_rect.width = @battler.status > 0 ? @sprites["status"].bitmap.width : 0

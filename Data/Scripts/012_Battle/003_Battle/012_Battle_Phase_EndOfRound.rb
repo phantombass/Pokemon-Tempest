@@ -122,7 +122,7 @@ class PokeBattle_Battle
     priority.each do |b|
       # Weather damage
       # NOTE:
-      if $megaAltemper == 0
+      if b.form <= 20
         b.pbCheckFormOnWeatherChange
       end
       if b.abilityActive? && !b.hasActiveAbility?(:BAROMETRIC)

@@ -11,6 +11,9 @@ module EliteBattle
   def self.randomizer?
     return $PokemonGlobal && $PokemonGlobal.isRandomizer
   end
+  def self.randomizerOn?
+    return self.randomizer? && self.get(:randomizer)
+  end
   #-----------------------------------------------------------------------------
   #  randomizes compiled trainer data
   #-----------------------------------------------------------------------------

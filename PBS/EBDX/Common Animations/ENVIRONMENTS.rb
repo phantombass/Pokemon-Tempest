@@ -62,7 +62,7 @@ module EBEnvironment
   }
   #-----------------------------------------------------------------------------
   INDOOR = {
-    "backdrop" => "IndoorB", "img001" => {
+    "backdrop" => "IndoorA", "img001" => {
       :bitmap => "decor007",
       :oy => 0, :z => 1, :flat => true, :scrolling => true, :speed => 0.5
     }, "img002" => {
@@ -88,6 +88,18 @@ module EBEnvironment
     }, "lightsB" => true, "img002" => {
       :bitmap => "crowd",
       :oy => 32, :y => 102, :z => 2, :flat => false, :sheet => true,
+      :vertical => true, :speed => 8, :frames => 2
+    }
+  }
+  #-----------------------------------------------------------------------------
+  NET = {
+    "backdrop" => "Net", "img001" => {
+      :scrolling => true, :vertical => true, :speed => 1,
+      :bitmap => "decor003d",
+      :oy => 180, :y => 90, :flat => true
+    }, "img002" => {
+      :bitmap => "crowd_d",
+      :oy => 32, :y => 112, :z => 2, :flat => false, :sheet => true,
       :vertical => true, :speed => 8, :frames => 2
     }
   }

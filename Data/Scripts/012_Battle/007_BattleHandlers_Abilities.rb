@@ -2065,7 +2065,6 @@ BattleHandlers::EORWeatherAbility.add(:SOLARPOWER,
 BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   proc { |ability,weather,battler,battle|
     newWeather = 0
-    $megaAltemper = 0
     oldWeather = battle.field.weather
     newForm = battler.form
     newWeather = newForm
@@ -2299,9 +2298,8 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   when PBWeather::ShadowSky;   battle.pbDisplay(_INTL("The sky is shadowy."))
   end
     newForm = newWeather
-    if battler.mega?
+    if battler.form >= 21
       newForm += 21
-      $megaAltemper = 1
     end
     if @form!=newForm
       battler.pbChangeForm(newForm,_INTL("{1} transformed!",battler.pbThis))

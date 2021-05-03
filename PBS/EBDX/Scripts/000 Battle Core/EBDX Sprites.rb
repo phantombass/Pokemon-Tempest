@@ -57,25 +57,11 @@ end
 #  Custom Sprite class used in the Battle Scene
 #===============================================================================
 class DynamicPokemonSprite
-  attr_accessor :shadow
-  attr_accessor :sprite
-  attr_accessor :showshadow
-  attr_accessor :status
-  attr_accessor :hidden
-  attr_accessor :fainted
-  attr_accessor :anim
-  attr_accessor :isShadow
-  attr_accessor :charged
-  attr_accessor :index
-  attr_accessor :dynamax
-  attr_reader :loaded
-  attr_reader :selected
-  attr_reader :isSub
-  attr_reader :viewport
-  attr_reader :pulse
-  attr_reader :pokemon
-  attr_reader :species
-  attr_reader :form
+  attr_accessor :shadow, :sprite, :index
+  attr_accessor :showshadow, :hidden, :fainted, :isShadow, :charged, :noshadow
+  attr_accessor :status, :anim, :dynamax, :scale_y
+  attr_reader :loaded, :selected, :isSub, :pulse
+  attr_reader :viewport, :pokemon, :species, :form
   #-----------------------------------------------------------------------------
   #  class constructor
   #-----------------------------------------------------------------------------
@@ -92,10 +78,12 @@ class DynamicPokemonSprite
     @index = index
     @doublebattle = doublebattle
     @showshadow = true
+    @noshadow = false
     @altitude = 0
     @yposition = 0
     @ox = 0
     @oy = 0
+    @scale_y = 1
     # creates necessary sprites
     @shadow = Sprite.new(@viewport)
     @sprite = Sprite.new(@viewport)
@@ -485,9 +473,10 @@ class DynamicPokemonSprite
   # formates the shadow skew and opacity
   #-----------------------------------------------------------------------------
   def formatShadow
+    sc = @scale_y.nil? ? 1 : @scale_y # safety
     @shadow.zoom_x = @sprite.zoom_x
-    @shadow.zoom_y = @sprite.zoom_y*0.30
-    @shadow.ox = @sprite.ox - 6
+    @shadow.zoom_y = (@sprite.zoom_y*sc*0.25)*(@index%2 == 0 ? 1 : 0.5)
+    @shadow.ox = @sprite.ox - 12
     @shadow.oy = @sprite.oy - 6
     @shadow.opacity = @sprite.opacity*0.3
     @shadow.tone = Tone.new(-255,-255,-255,255)
@@ -495,7 +484,7 @@ class DynamicPokemonSprite
     @shadow.mirror = @sprite.mirror
     @shadow.angle = @sprite.angle
     # hides shadow if not toggled
-    @shadow.visible = false if !@showshadow
+    @shadow.visible = false if !@showshadow || @noshadow
   end
   #-----------------------------------------------------------------------------
   # plays animation frames
@@ -519,7 +508,8 @@ class DynamicPokemonSprite
   #-----------------------------------------------------------------------------
   # animates battler sprite
   #-----------------------------------------------------------------------------
-  def update(angle = 74)
+  def update(scale_y = nil)
+    @scale_y = scale_y if !scale_y.nil?
     # skips animation if sprite is supposed to be still
     if @still
       @still = false
@@ -538,7 +528,6 @@ class DynamicPokemonSprite
       @sprite.bitmap = @bitmap.bitmap.clone
       @shadow.bitmap = @bitmap.bitmap.clone
     end
-    #@shadow.skew(angle)
     # applies color overlay based on status condition
     if !@anim && !@pulse.nil?
       @pulse += @k
@@ -667,6 +656,7 @@ end
 #  Animated trainer sprites (child of DynamicPokemonSprite)
 #===============================================================================
 class DynamicTrainerSprite  <  DynamicPokemonSprite
+  attr_accessor :noshadow
   #-----------------------------------------------------------------------------
   # class constructor
   #-----------------------------------------------------------------------------
@@ -683,6 +673,7 @@ class DynamicTrainerSprite  <  DynamicPokemonSprite
     @index = index
     @doublebattle = doublebattle
     @showshadow = true
+    @noshadow = false
     @altitude = 0
     @yposition = 0
     @shadow = Sprite.new(@viewport)
@@ -733,7 +724,6 @@ class DynamicTrainerSprite  <  DynamicPokemonSprite
     @sprite.oy += a if !a.nil? && a.is_a?(Numeric)
     # formats the underlying shadow
     self.formatShadow
-    #@shadow.skew(74)
   end
   #-----------------------------------------------------------------------------
 end

@@ -33,11 +33,13 @@ class PokeBattle_Scene
     end
     # backdrop update
     @sprites["battlebg"].update
+
     @sprites["trainer_Anim"].update
     @sprites["trainer_Anim"].opacity -= 8 if @introdone && @sprites["trainer_Anim"].opacity > 0
     @idleTimer += 1 if @idleTimer >= 0
     @lastMotion = nil if @idleTimer < 0
     @sprites["player_"].x += (40-@sprites["player_"].x)/4 if @safaribattle && @sprites["player_"] && @playerfix
+    # update battler sprites
     @battle.battlers.each_with_index do |b, i|
       if b
         unless EliteBattle.get(:smAnim)
@@ -61,7 +63,7 @@ class PokeBattle_Scene
               @sprites["pokemon_#{i}"].status = 0
             end
           end
-          @sprites["pokemon_#{i}"].update(@vector.angle + 48)
+          @sprites["pokemon_#{i}"].update(@sprites["battlebg"].scale_y)
           @sprites["pokemon_#{i}"].shadowUpdate
           @sprites["pokemon_#{i}"].chargedUpdate
           @sprites["pokemon_#{i}"].energyUpdate
@@ -74,7 +76,15 @@ class PokeBattle_Scene
           setVector(a[@lastMotion])
         end
       end
+      # update trainer sprites
+      if @battle.opponent
+        for t in 0...@battle.opponent.length
+          next if !@sprites["trainer_#{t}"]
+          @sprites["trainer_#{t}"].scale_y = @sprites["battlebg"].scale_y
+        end
+      end
       next if !align
+      # align the positions of all sprites in scene
       zoom = (i%2 == 0) ? 2 : 1
       if @sprites["pokemon_#{i}"]
         dmax = (i%2 == 0) ? 4/BACK_SPRITE_SCALE : 4; zoomer = (@vector.zoom1**0.75) * zoom * (@sprites["pokemon_#{i}"].dynamax ? dmax : 1)
@@ -85,6 +95,7 @@ class PokeBattle_Scene
       end
       if @battle.opponent
         for t in 0...@battle.opponent.length
+          next if !@sprites["trainer_#{t}"]
           @sprites["trainer_#{t}"].x = @sprites["battlebg"].trainer(t*2 + 1).x
           @sprites["trainer_#{t}"].y = @sprites["battlebg"].trainer(t*2 + 1).y
           @sprites["trainer_#{t}"].zoom_x = (@vector.zoom1**0.75)

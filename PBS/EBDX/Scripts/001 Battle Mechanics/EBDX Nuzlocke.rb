@@ -11,6 +11,9 @@ module EliteBattle
   def self.nuzlocke?
     return $PokemonGlobal && $PokemonGlobal.isNuzlocke
   end
+  def self.nuzlockeOn?
+    return self.nuzlocke? && self.get(:nuzlocke)
+  end
   #-----------------------------------------------------------------------------
   #  recurring function to get the very first species in the evolutionary line
   #-----------------------------------------------------------------------------

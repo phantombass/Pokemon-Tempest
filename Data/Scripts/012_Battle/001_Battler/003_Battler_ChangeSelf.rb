@@ -263,7 +263,7 @@ class PokeBattle_Battler
           when PBWeather::Rain, PBWeather::Storm, PBWeather::HeavyRain; newForm = 2
           when PBWeather::Hail, PBWeather::Sleet;     newForm = 3
           end
-          if mega?
+          if @form >= 21
             newForm +=21
           end
           case newForm

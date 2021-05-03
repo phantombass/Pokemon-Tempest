@@ -202,6 +202,10 @@ class PokeBattle_Scene
     @sprites["opponent"].toLastFrame
     @sprites["opponent"].lock
     @sprites["opponent"].z = 10
+    # hide shadow if applicable
+    if @sprites["battlebg"].data.has_key?("noshadow") && @sprites["battlebg"].data["noshadow"] == true
+      @sprites["opponent"].noshadow = true
+    end
     v = (@battle.doublebattle? && speech) ? 3 : -1
     @sprites["opponent"].x = @sprites["battlebg"].battler(v).x + (speech ? 200 : 160) + (@battle.doublebattle? && speech ? 96 : 0)
     @sprites["opponent"].y = @sprites["battlebg"].battler(v).y - (speech ? 2 : -40)

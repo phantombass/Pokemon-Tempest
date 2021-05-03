@@ -272,9 +272,17 @@ class BattleSceneRoom
     self.updateSky
     # turn off shadows if appropriate
     if @data.has_key?("noshadow") && @data["noshadow"] == true
-      for i in 0...4
-        next if !@scene.sprites["pokemon_#{i}"]
-        @scene.sprites["pokemon_#{i}"].showshadow = false
+      # for battler sprites
+      @battle.battlers.each_with_index do |b, i|
+        next if !b || !@scene.sprites["pokemon_#{i}"]
+        @scene.sprites["pokemon_#{i}"].noshadow = true
+      end
+      # for trainer sprites
+      if @battle.opponent
+        for t in 0...@battle.opponent.length
+          next if !@scene.sprites["trainer_#{t}"]
+          @scene.sprites["trainer_#{t}"].noshadow = true
+        end
       end
     end
     # adjusts for wind affected elements
@@ -375,7 +383,7 @@ class BattleSceneRoom
       @sprites["cloud#{i}"].direction = [1, -1, 1][i]
       @sprites["cloud#{i}"].oy = @sprites["cloud#{i}"].bitmap.height
       @sprites["cloud#{i}"].ex = 0
-      @sprites["cloud#{i}"].ey = [98, 92, 30][i]
+      @sprites["cloud#{i}"].ey = [98, 91, 30][i]
       @sprites["cloud#{i}"].param = 1
       @sprites["cloud#{i}"].visible = !PBDayNight.isNight? || !@data.try_key?("outdoor")
       self.setColor(@sprites["sky"], @sprites["cloud#{i}"])
@@ -1080,6 +1088,7 @@ class BattleSceneRoom
   #-----------------------------------------------------------------------------
   # battler sprite positioning
   #-----------------------------------------------------------------------------
+  def scale_y; return @sprites["bg"].zoom_y; end
   def battler(i); return @sprites["battler#{i}"]; end
   def trainer(i); return @sprites["trainer_#{i}"]; end
   def stageLightPos(j)
