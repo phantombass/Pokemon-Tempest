@@ -34,3 +34,17 @@ Point = 15,5,Mt. Sear East Entrance,,131,3,16,535
 Point = 18,16,SubTerra Trench,,,,,517
 Point = 26,17,Timeless Grotto,,145,28,11,517
 Point = 9,2,Dust-Ridden Pass,,,,,518
+#===================================
+[1]
+Filename = mapRegion1.png
+Name = Sinnoh Region
+Point = 11,11,Spear Pillar,Distortion World,154,9,29,541
+#===================================
+[2]
+Filename = mapRegion2.png
+Name = Tinjo Region
+#===================================
+[3]
+Filename = mapRegion1=3.png
+Name = Zharo Region
+

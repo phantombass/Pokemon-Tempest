@@ -621,3 +621,35 @@ Cave
     AERODACTYL,46,48
     AERODACTYL,46,48
 #-------------------------------
+155 # Distortion World
+25,10,10
+Distortion
+    OMANYTE,50,52
+    KABUTO,50,52
+    LILEEP,50,52
+    ANORITH,50,52
+    CRANIDOS,50,52
+    SHIELDON,50,52
+    TIRTOUGA,50,52
+    ARCHEN,50,52
+    AMAURA,50,52
+    TYRUNT,50,52
+    AERODACTYL,52,54
+    AERODACTYL,52,54
+#-------------------------------
+156 # Distortion World
+25,10,10
+Distortion
+    OMANYTE,50,52
+    KABUTO,50,52
+    LILEEP,50,52
+    ANORITH,50,52
+    CRANIDOS,50,52
+    SHIELDON,50,52
+    TIRTOUGA,50,52
+    ARCHEN,50,52
+    AMAURA,50,52
+    TYRUNT,50,52
+    AERODACTYL,52,54
+    AERODACTYL,52,54
+#-------------------------------

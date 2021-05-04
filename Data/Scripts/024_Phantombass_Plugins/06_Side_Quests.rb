@@ -1,6 +1,6 @@
 module SideQuest
   OnOff = 403
-  Activated = 405
+  Activated = 527
   Type = 801
   Pkmn = 802
   Item = 803

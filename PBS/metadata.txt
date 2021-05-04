@@ -866,13 +866,22 @@ ShowArea = true
 # Spear Pillar
 SnapEdges = true
 Weather = Rain,0
-MapPosition = 0,29,0
+MapPosition = 1,11,11
 Outdoor = true
 ShowArea = true
 #-------------------------------
 [155]
 # Distortion World
 SnapEdges = true
-MapPosition = 0,29,0
+Weather = Rain,0
+MapPosition = 1,11,11
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[156]
+# Distortion World
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 1,11,11
 Outdoor = true
 ShowArea = true

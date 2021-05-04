@@ -41,7 +41,7 @@ def pbMissionUpdate
         advanceQuestToStage(4,$game_variables[Mission::Mission3])
       end
     end
-  elsif $game_switches[Mission::Four] == true
+  elsif $game_switches[Mission::Four] == true && $game_switches[Mission::Five] == false
     if $game_variables[Mission::Mission4] == 10
       $game_variables[Mission::Mission4] += 0
     else
@@ -58,7 +58,7 @@ def pbMissionUpdate
       $game_variables[Mission::Mission5] += 0
     else
       $game_variables[Mission::Mission5] += 1
-      advanceQuestToStage(8,$game_variables[Mission::Mission4])
+      advanceQuestToStage(10,$game_variables[Mission::Mission5])
     end
     #elsif
     #written in to help me expand
@@ -110,6 +110,11 @@ def pbNewMission(num)
     $game_variables[Mission::Mission5] = 1
     activateQuest(10)
     $Trainer.badges[4] = true
+    if $game_switches[Mission::Vinny]
+      completeQuest(6)
+    elsif $game_switches[Mission::Stella]
+      completeQuest(7)
+    end
     $game_switches[Mission::Five] = true
     $game_variables[Chapter::Count] += 1
   when 0

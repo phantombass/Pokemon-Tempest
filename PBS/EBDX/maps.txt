@@ -59,3 +59,9 @@ BattleEnv       = CAVE
 [152]
 BattleEnv       = CAVE
 #-------------------------------
+[155]
+BattleEnv       = DIMENSION
+#-------------------------------
+[156]
+BattleEnv       = DIMENSION
+#-------------------------------
