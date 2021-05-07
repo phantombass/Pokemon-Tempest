@@ -6,7 +6,7 @@
 # https://github.com/Maruno17/pokemon-essentials
 #==============================================================================
 
-Essentials::ERROR_TEXT += "[v19 Hotfixes 1.0.0]\r\n"
+Essentials::ERROR_TEXT += "[v19 Hotfixes 1.0.4]\r\n"
 
 #==============================================================================
 # Fix for dynamic shadows not disappearing if you transfer elsewhere while you
@@ -316,4 +316,72 @@ class Pokemon
     calc_stats
     $Trainer.pokedex.register(self)
   end
+end
+
+#==============================================================================
+# Fixed defs pbChooseItem, pbChooseApricorn and pbChooseFossil storing nil into
+# a Game Variable (which gets treated as 0); they now store :NONE.
+#==============================================================================
+def pbChooseItem(var = 0, *args)
+  ret = nil
+  pbFadeOutIn {
+    scene = PokemonBag_Scene.new
+    screen = PokemonBagScreen.new(scene,$PokemonBag)
+    ret = screen.pbChooseItemScreen
+  }
+  $game_variables[var] = ret || :NONE if var > 0
+  return ret
+end
+
+def pbChooseApricorn(var = 0)
+  ret = nil
+  pbFadeOutIn {
+    scene = PokemonBag_Scene.new
+    screen = PokemonBagScreen.new(scene,$PokemonBag)
+    ret = screen.pbChooseItemScreen(Proc.new { |item| GameData::Item.get(item).is_apricorn? })
+  }
+  $game_variables[var] = ret || :NONE if var > 0
+  return ret
+end
+
+def pbChooseFossil(var = 0)
+  ret = nil
+  pbFadeOutIn {
+    scene = PokemonBag_Scene.new
+    screen = PokemonBagScreen.new(scene,$PokemonBag)
+    ret = screen.pbChooseItemScreen(Proc.new { |item| GameData::Item.get(item).is_fossil? })
+  }
+  $game_variables[var] = ret || :NONE if var > 0
+  return ret
+end
+
+#==============================================================================
+# Fixed phone contact details being registered incorrectly (causing a crash
+# when calling them), fixed being unable to call non-trainer contacts.
+#==============================================================================
+def pbPhoneRegisterBattle(message,event,trainertype,trainername,maxbattles)
+  return if !$Trainer.has_pokegear           # Can't register without a Pokégear
+  return false if !GameData::TrainerType.exists?(trainertype)
+  trainertype = GameData::TrainerType.get(trainertype).id
+  contact = pbFindPhoneTrainer(trainertype,trainername)
+  return if contact && contact[0]              # Existing contact and is visible
+  message = _INTL("Let me register you.") if !message
+  return if !pbConfirmMessage(message)
+  displayname = _INTL("{1} {2}", GameData::TrainerType.get(trainertype).name,
+     pbGetMessageFromHash(MessageTypes::TrainerNames,trainername))
+  if contact                          # Previously registered, just make visible
+    contact[0] = true
+  else                                                         # Add new contact
+    pbPhoneRegister(event,trainertype,trainername)
+    pbPhoneIncrement(trainertype,trainername,maxbattles)
+  end
+  pbMessage(_INTL("\\me[Register phone]Registered {1} in the Pokégear.",displayname))
+end
+
+def pbFindPhoneTrainer(tr_type, tr_name)        # Ignores whether visible or not
+  return nil if !$PokemonGlobal.phoneNumbers
+  for num in $PokemonGlobal.phoneNumbers
+    return num if num[1] == tr_type && num[2] == tr_name   # If a match
+  end
+  return nil
 end

@@ -1,5 +1,5 @@
 ﻿Name      = v19 Hotfixes
-Version   = 1.0.3
+Version   = 1.0.4
 Conflicts = v19 Updates
 Website   = https://github.com/Maruno17/pokemon-essentials
 Credits   = Maruno
@@ -68,6 +68,18 @@ Credits   = Maruno
 #   the opponents.
 # - Fixes for bugs when generating trainers/Pokémon for Battle
 #   Facilities.
+#
+# 1.0.4:
+# - Fixed phone contacts being converted from old save files
+#   incorrectly.
+# - Fixed defs pbChooseItem, pbChooseApricorn and pbChooseFossil
+#   storing nil into a Game Variable (which gets treated as 0);
+#   they now store :NONE.
+# - Fixed phone contact details being registered incorrectly
+#   (causing a crash when calling them).
+# - Fixed being unable to call non-trainer contacts.
+# - Fixed crash when trying to write Battle Tower PBS files.
+# - Fixed misnamed variables in Effectiveness methods.
 #
 #=================================================================
 # Notes

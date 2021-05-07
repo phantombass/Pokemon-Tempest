@@ -454,3 +454,68 @@ module Compiler
     Graphics.update
   end
 end
+
+#==============================================================================
+# Fixed phone contacts being converted from old save files incorrectly.
+#==============================================================================
+SaveData.register_conversion(:v19_fix_phone_contacts) do
+  essentials_version 19
+  display_title 'Fixing phone contacts data'
+  to_value :global_metadata do |global|
+    global.phoneNumbers.each do |contact|
+      contact[1] = GameData::TrainerType.get(contact[1]).id if contact && contact.length == 8
+    end
+  end
+end
+
+#==============================================================================
+# Fixed crash when trying to write Battle Tower PBS files.
+#==============================================================================
+module Compiler
+  module_function
+
+  def write_battle_tower_pokemon(btpokemon,filename)
+    return if !btpokemon || !filename
+    species = {}
+    moves   = {}
+    items   = {}
+    natures = {}
+    evs = {
+      :HP              => "HP",
+      :ATTACK          => "ATK",
+      :DEFENSE         => "DEF",
+      :SPECIAL_ATTACK  => "SA",
+      :SPECIAL_DEFENSE => "SD",
+      :SPEED           => "SPD"
+    }
+    File.open(filename,"wb") { |f|
+      add_PBS_header_to_file(f)
+      f.write("\#-------------------------------\r\n")
+      for i in 0...btpokemon.length
+        Graphics.update if i % 500 == 0
+        pkmn = btpokemon[i]
+        c1 = (species[pkmn.species]) ? species[pkmn.species] : (species[pkmn.species] = GameData::Species.get(pkmn.species).species.to_s)
+        c2 = (items[pkmn.item]) ? items[pkmn.item] : (items[pkmn.item] = GameData::Item.get(pkmn.item).id.to_s)
+        c3 = (natures[pkmn.nature]) ? natures[pkmn.nature] : (natures[pkmn.nature] = GameData::Nature.get(pkmn.nature).id.to_s)
+        evlist = ""
+        pkmn.ev.each_with_index do |stat, i|
+          evlist += "," if i > 0
+          evlist += evs[stat]
+        end
+        c4 = c5 = c6 = c7 = ""
+        [pkmn.move1, pkmn.move2, pkmn.move3, pkmn.move4].each_with_index do |move, i|
+          next if !move
+          text = (moves[move]) ? moves[move] : (moves[move] = GameData::Move.get(move).id.to_s)
+          case i
+          when 0 then c4 = text
+          when 1 then c5 = text
+          when 2 then c6 = text
+          when 3 then c7 = text
+          end
+        end
+        f.write("#{c1};#{c2};#{c3};#{evlist};#{c4},#{c5},#{c6},#{c7}\r\n")
+      end
+    }
+    Graphics.update
+  end
+end

@@ -488,10 +488,12 @@ MultipleForms.register(:ALTEMPER,{
 
 MultipleForms.register(:BAGON,{
   "getFormOnCreation" => proc { |pkmn|
-    next if pkmn.form>=3
-    map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-    next 2 if map_metadata && map_metadata.town_map_position &&
-              map_metadata.town_map_position[0] == 1   # Ufara region # Ufara region
+    next if pkmn.form_simple>=3
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+      next 2 if map_metadata && map_metadata.town_map_position &&
+                map_metadata.town_map_position[0] == 1   # Ufara region
+    end
     next 0
   }
 })
@@ -500,10 +502,12 @@ MultipleForms.copy(:BAGON,:SHELGON,:SALAMENCE,:MACHOP,:MACHOKE,:MACHAMP,:HIPPOPO
 
 MultipleForms.register(:GASTLY,{
   "getFormOnCreation" => proc { |pkmn|
-    next if pkmn.form>=4
-    map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-    next 3 if map_metadata && map_metadata.town_map_position &&
-              map_metadata.town_map_position[0] == 1   # Ufara region
+    next if pkmn.form_simple>=4
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+      next 3 if map_metadata && map_metadata.town_map_position &&
+                map_metadata.town_map_position[0] == 1   # Ufara region
+    end
     next 0
   }
 })
@@ -513,10 +517,10 @@ MultipleForms.copy(:GASTLY,:HAUNTER,:GENGAR)
 MultipleForms.register(:DREEPY,{
   "getFormOnCreation" => proc { |pkmn|
     next if pkmn.form_simple>=2
-    map_metadata = GameData::MapMetadata.try_get($game_map.map_id)   # Map IDs for Ufaran Forme
-    if map_metadata && map_metadata.town_map_position &&
-              map_metadata.town_map_position[0] == 1   # Ufara region
-      next 1
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)   # Map IDs for Ufaran Forme
+      next 1 if map_metadata && map_metadata.town_map_position &&
+                map_metadata.town_map_position[0] == 1   # Ufara region
     end
     next 0
   }
@@ -2748,12 +2752,12 @@ class PokemonSummary_Scene
     ivAt = ivtable[@pokemon.iv.keys[1]]
     evDf = evtable[@pokemon.ev.keys[2]]
     ivDf = ivtable[@pokemon.iv.keys[2]]
-    evSa = evtable[@pokemon.ev.keys[4]]
-    ivSa = ivtable[@pokemon.iv.keys[4]]
-    evSd = evtable[@pokemon.ev.keys[5]]
-    ivSd = ivtable[@pokemon.iv.keys[5]]
-    evSp = evtable[@pokemon.ev.keys[3]]
-    ivSp = ivtable[@pokemon.iv.keys[3]]
+    evSd = evtable[@pokemon.ev.keys[4]]
+    ivSd = ivtable[@pokemon.iv.keys[4]]
+    evSp = evtable[@pokemon.ev.keys[5]]
+    ivSp = ivtable[@pokemon.iv.keys[5]]
+    evSa = evtable[@pokemon.ev.keys[3]]
+    ivSa = ivtable[@pokemon.iv.keys[3]]
     textpos = [
        [_INTL("HP"),292,70,2,base,statshadows[:HP]],
        [sprintf("%d/%d",evHP,ivHP),462,70,1,Color.new(64,64,64),Color.new(176,176,176)],

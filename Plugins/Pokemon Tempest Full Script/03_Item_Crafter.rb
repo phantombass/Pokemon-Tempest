@@ -9,12 +9,6 @@
 # pbItemcraft(PBItems::item), where item is the internal name of the item.
 ################################################################################
 ################################################################################
-PluginManager.register({
-  :name => "Item Crafter",
-  :version => "1.1",
-  :credits => "Phantombass",
-  :link => "No link yet"
-})
 
 module Items
   #These are all the variables associated with the HM Items we will be crafting,
