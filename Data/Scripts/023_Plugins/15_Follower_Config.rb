@@ -84,28 +84,28 @@ end
 Events.OnTalkToFollower += proc {|pkmn,x,y,randomVal|
 # Special Dialogue when statused
   case pkmn.status
-  when PBStatuses::POISON
+  when :POISON
     $scene.spriteset.addUserAnimation(Emo_Poison,x,y)
     pbWait(120)
     pbMessage(_INTL("{1} is shivering with the effects of being poisoned.",pkmn.name))
-  when PBStatuses::BURN
+  when :BURN
     $scene.spriteset.addUserAnimation(Emo_Hate,x,y)
     pbWait(70)
     pbMessage(_INTL("{1}'s burn looks painful.",pkmn.name))
-  when PBStatuses::FROZEN
+  when :FROZEN
     $scene.spriteset.addUserAnimation(Emo_Normal,x,y)
     pbWait(100)
     pbMessage(_INTL("{1} seems very cold. It's frozen solid!",pkmn.name))
-  when PBStatuses::SLEEP
+  when :SLEEP
     $scene.spriteset.addUserAnimation(Emo_Normal, x, y)
     pbWait(100)
     pbMessage(_INTL("{1} seems really tired.",pkmn.name))
-  when PBStatuses::PARALYSIS
+  when :PARALYSIS
     $scene.spriteset.addUserAnimation(Emo_Normal,x,y)
     pbWait(100)
     pbMessage(_INTL("{1} is standing still and twitching.",pkmn.name))
   end
-  next true if pkmn.status != PBStatuses::NONE
+  next true if pkmn.status != :NONE
 }
 
 

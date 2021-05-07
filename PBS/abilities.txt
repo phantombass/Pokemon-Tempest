@@ -324,5 +324,5 @@
 322,ACIDDRAIN,Acid Drain,"Heals some HP in Acid Rain weather."
 323,TOXICSURGE,Toxic Surge,"Summons Poison Terrain on entry."
 324,CLOUDCOVER,Cloud Cover,"Summons Overcast Weather on entry."
-325,ASHSURGE,Ash Surge,"Boosts Attack in Ash-based weather."
-326,WINDSURGE,Wind Surge,"Boosts Special Attack in Wind-based weather."
+325,SOOTSURGE,Soot Surge,"Boosts Fighting and Steel moves in Ash-based weather."
+326,WINDSURGE,Wind Surge,"Boosts Flying and Dragon moves in Wind-based weather."

@@ -885,3 +885,11 @@ Weather = Rain,0
 MapPosition = 1,11,11
 Outdoor = true
 ShowArea = true
+#-------------------------------
+[157]
+# Menzopolis Outlands
+SnapEdges = true
+Weather = Rain,0
+MapPosition = 1,12,10
+Outdoor = true
+ShowArea = true

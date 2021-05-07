@@ -90,9 +90,7 @@ end
 def pbTalkToFollower
   return false if !$PokemonTemp.dependentEvents.refresh_sprite(false, true)
   return false if !$Trainer.hasAltemper?
-  if !($PokemonGlobal.surfing || pbGetMetadata($game_map.map_id,MetadataBicycleAlways) ||
-     !PBTerrain.isSurfable?(pbFacingTerrainTag) ||
-    !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player))
+  if !($PokemonGlobal.surfing ||!$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player))
     pbSurf
     return false
   end
@@ -238,7 +236,7 @@ class DependentEvents
       ret = [-1,""]
       for j in 0...2   # Try using the species' internal name and then its ID number
         next if trySpecies==0 && j==0
-        trySpeciesText = (j==0) ? getConstantName(PBSpecies,trySpecies) : sprintf("%03d",trySpecies)
+        trySpeciesText = 976
         bitmapFileName = sprintf("%s%s%s%s%s",
            trySpeciesText,
            (tryGender) ? "f" : "",
@@ -272,7 +270,7 @@ class DependentEvents
 
 # Adds step animation for followers and update their speed
   def update_stepping
-    if PBTerrain.isIce?(pbGetTerrainTag)
+    if GameData::TerrainTag.get(:Ice)
       followingMoveRoute([PBMoveRoute::StepAnimeOff])
       return
     end
@@ -354,13 +352,13 @@ alias follow_surf pbSurf
 def pbSurf
   return false if $game_player.pbFacingEvent
   return false if $game_player.pbHasDependentEvents?
-  move = getID(PBMoves,:SURF)
+  move = GameData::Move.get(:SURF).id
   movefinder = pbCheckMove(move)
-  if $PokemonBag.pbQuantity(PBItems::HOVERCRAFT)==0 || (!$DEBUG && !movefinder)
+  if $PokemonBag.pbQuantity(GameData::Item.get(:HOVERCRAFT))==0 || (!$DEBUG && !movefinder)
     return false
   end
   if pbConfirmMessage(_INTL("The water is a deep blue...\nWould you like to surf on it?"))
-    pbMessage(_INTL("{1} used the {2}!",$Trainer.name,PBItems.getName(PBItems::HOVERCRAFT)))
+    pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
     pbCancelVehicles
     surfbgm = pbGetMetadata(0,MetadataSurfBGM)
     pbCueBGM(surfbgm,0.5) if surfbgm
@@ -382,16 +380,16 @@ end
 
 # Update when starting diving to incorporate hiddden move animation
 def Kernel.pbDive
-  divemap = pbGetMetadata($game_map.map_id,MetadataDiveMap)
+  divemap = GameData::Metadata.get($game_map.map_id).dive_map_id
   return false if !divemap
 
-  if !$DEBUG  && $PokemonBag.pbQuantity(PBItems::SCUBATANK)==0
+  if !$DEBUG  && $PokemonBag.pbQuantity(GameData::Item.get(:SCUBATANK))==0
     Kernel.pbMessage(_INTL("The sea is deep here."))
     return false
   end
   if Kernel.pbConfirmMessage(_INTL("The sea is deep here. Would you like to use the Scuba Tank?"))
-    if $PokemonBag.pbQuantity(PBItems::SCUBATANK)>0
-      Kernel.pbMessage(_INTL("{1} used the {2}!",$Trainer.name,PBItems.getName(PBItems::SCUBATANK)))
+    if $PokemonBag.pbQuantity(GameData::Item.get(:SCUBATANK))>0
+      Kernel.pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
       pbHiddenMoveAnimation(nil)
     end
     pbFadeOutIn(99999){
@@ -417,12 +415,12 @@ def pbSurfacing
   divemap = nil
   meta = pbLoadMetadata
   for i in 0...meta.length
-    if meta[i] && meta[i][MetadataDiveMap] && meta[i][MetadataDiveMap]==$game_map.map_id
+    if meta[i] && meta[i][GameData::Metadata.dive_map_id] && meta[i][GameData::Metadata.dive_map_id]==$game_map.map_id
       divemap = i; break
     end
   end
   return if !divemap
-  move = getID(PBMoves,:DIVE)
+  move = GameData::Move.get(:DIVE).id
   movefinder = pbCheckMove(move)
   if !pbCheckHiddenMoveBadge(BADGE_FOR_DIVE,false) || (!$DEBUG && !movefinder)
     pbMessage(_INTL("Light is filtering down from above. A Pokémon may be able to surface here."))
@@ -430,7 +428,7 @@ def pbSurfacing
   end
   if pbConfirmMessage(_INTL("Light is filtering down from above. Would you like to use Dive?"))
     speciesname = (movefinder) ? movefinder.name : $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,PBMoves.getName(move)))
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Move.get(move).name))
     pbHiddenMoveAnimation(movefinder,false)
     pbFadeOutIn {
        $game_temp.player_new_map_id    = divemap
@@ -453,7 +451,7 @@ end
 # Update when starting Strength to incorporate hiddden move animation
 HiddenMoveHandlers::UseMove.add(:STRENGTH,proc { |move,pokemon|
   if !pbHiddenMoveAnimation(pokemon,false)
-    pbMessage(_INTL("{1} used {2}!\1",pokemon.name,PBMoves.getName(move)))
+    pbMessage(_INTL("{1} used {2}!\1",pokemon.name,GameData::Move.get(move).name))
   end
   pbMessage(_INTL("{1}'s Strength made it possible to move boulders around!",pokemon.name))
   $PokemonMap.strengthUsed = true
@@ -463,7 +461,7 @@ HiddenMoveHandlers::UseMove.add(:STRENGTH,proc { |move,pokemon|
 # Update when starting Headbutt to incorporate hiddden move animation
 def pbHeadbutt(event=nil)
   event = $game_player.pbFacingEvent(true)
-  move = getID(PBMoves,:HEADBUTT)
+  move = GameData::Move.get(:HEADBUTT).id
   movefinder = pbCheckMove(move)
   if !$DEBUG && !movefinder
     pbMessage(_INTL("A Pokémon could be in this tree. Maybe a Pokémon could shake it."))
@@ -471,7 +469,7 @@ def pbHeadbutt(event=nil)
   end
   if pbConfirmMessage(_INTL("A Pokémon could be in this tree. Would you like to use Headbutt?"))
     speciesname = (movefinder) ? movefinder.name : $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,PBMoves.getName(move)))
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Move.get(move)))
     pbHiddenMoveAnimation(movefinder)
     pbHeadbuttEffect(event)
     return true
@@ -492,7 +490,7 @@ end
 alias follow_pbMountBike pbMountBike
 def pbMountBike
   ret=follow_pbMountBike
-  $PokemonTemp.dependentEvents.come_back(!(pbGetMetadata($game_map.map_id,MetadataBicycleAlways)))
+  $PokemonTemp.dependentEvents.come_back(!(GameData::MapMetadata.try_get($game_map.map_id).always_bicycle))
   return ret
 end
 
@@ -598,20 +596,7 @@ end
 
 #Fix for followers having animations (grass, etc) when toggled off
 #Treats followers as if they are under a bridge when toggled
-alias follow_pbGetTerrainTag pbGetTerrainTag
-def pbGetTerrainTag(event=nil,countBridge=false)
-  ret = follow_pbGetTerrainTag(event,countBridge)
-  if event && event!=$game_player
-    for devent in $PokemonGlobal.dependentEvents
-      if event.id==devent[1] && !($PokemonGlobal.followerToggled &&
-                                  $Trainer.firstAblePokemon)
-        ret = PBTerrain::Bridge
-        break
-      end
-    end
-  end
-  return ret
-end
+
 
 # Add a check for dependent events in the passablity method
 class Game_Map
@@ -768,7 +753,7 @@ def pbStartOver(gameover=false)
     end
     pbCancelVehicles
     pbRemoveDependenciesExceptFollower
-    $game_switches[STARTING_OVER_SWITCH] = true
+    $game_switches[Settings::STARTING_OVER_SWITCH] = true
     $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
     $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
     $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
@@ -776,7 +761,7 @@ def pbStartOver(gameover=false)
     $scene.transfer_player if $scene.is_a?(Scene_Map)
     $game_map.refresh
   else
-    homedata = pbGetMetadata(0,MetadataHome)
+    homedata = GameData::Metadata.get(0).home
     if homedata && !pbRxdataExists?(sprintf("Data/Map%03d",homedata[0]))
       if $DEBUG
         pbMessage(_ISPRINTF("Can't find the map 'Map{1:03d}' in the Data folder. The game will resume at the player's position.",homedata[0]))
@@ -792,7 +777,7 @@ def pbStartOver(gameover=false)
     if homedata
       pbCancelVehicles
       pbRemoveDependenciesExceptFollower
-      $game_switches[STARTING_OVER_SWITCH] = true
+      $game_switches[GameData::STARTING_OVER_SWITCH] = true
       $game_temp.player_new_map_id    = homedata[0]
       $game_temp.player_new_x         = homedata[1]
       $game_temp.player_new_y         = homedata[2]
@@ -1040,7 +1025,7 @@ end
           make_steps = [2,1,0].any? do |e|
             tile_id = @character.map.data[@old_x, @old_y, e]
             next false if tile_id.nil?
-            next $data_tilesets[tilesetid].terrain_tags[tile_id] == PBTerrain::Sand
+            next $data_tilesets[tilesetid].terrain_tagss[tile_id] == :Sand
           end
         end
         if make_steps
@@ -1116,15 +1101,15 @@ class DependentEventSprites
           $PokemonTemp.dependentEvents.come_back(false)
         end
         case firstPkmn.status
-        when PBStatuses::BURN
+        when :BURN
           @sprites[i].tone.set(@sprites[i].tone.red+BURNTONE[0],@sprites[i].tone.green+BURNTONE[1],@sprites[i].tone.blue+BURNTONE[2],@sprites[i].tone.gray+BURNTONE[3])
-        when PBStatuses::POISON
+        when :POISON
           @sprites[i].tone.set(@sprites[i].tone.red+POISONTONE[0],@sprites[i].tone.green+POISONTONE[1],@sprites[i].tone.blue+POISONTONE[2],@sprites[i].tone.gray+POISONTONE[3])
-        when PBStatuses::PARALYSIS
+        when :PARALYSIS
           @sprites[i].tone.set(@sprites[i].tone.red+PARALYSISTONE[0],@sprites[i].tone.green+PARALYSISTONE[1],@sprites[i].tone.blue+PARALYSISTONE[2],@sprites[i].tone.gray+PARALYSISTONE[3])
-        when PBStatuses::FROZEN
+        when :FROZEN
           @sprites[i].tone.set(@sprites[i].tone.red+FREEZETONE[0],@sprites[i].tone.green+FREEZETONE[1],@sprites[i].tone.blue+FREEZETONE[2],@sprites[i].tone.gray+FREEZETONE[3])
-        when PBStatuses::SLEEP
+        when :SLEEP
           @sprites[i].tone.set(@sprites[i].tone.red+SLEEPTONE[0],@sprites[i].tone.green+SLEEPTONE[1],@sprites[i].tone.blue+SLEEPTONE[2],@sprites[i].tone.gray+SLEEPTONE[3])
         end
       end
@@ -1135,14 +1120,14 @@ end
 # Update the Passage method for bridge and ice sliding
 def pbTestPass(follower,x,y,direction=nil)
   ret = $MapFactory.isPassable?(follower.map.map_id,x,y,follower)
-  if defined?(PBTerrain::StairLeft) && ($MapFactory.getTerrainTag(follower.map.map_id,x,y)==PBTerrain::StairLeft ||$MapFactory.getTerrainTag(follower.map.map_id,x,y)==PBTerrain::StairRight)
+  if defined?(GameData::TerrainTag(:StairLeft)) && ($MapFactory.getTerrainTag(follower.map.map_id,x,y)==:StairLeft ||$MapFactory.getTerrainTag(follower.map.map_id,x,y)==:StairRight)
     return true
   end
   if !ret && $PokemonGlobal.bridge>0 &&
-          PBTerrain.isBridge?($MapFactory.getTerrainTag(follower.map.map_id,x,y))
+          GameData::TerrainTag.get($MapFactory.getTerrainTag(follower.map.map_id,x,y)).bridge
     return true
   end
-  if PBTerrain.isIce?($MapFactory.getTerrainTag(follower.map.map_id,x,y))
+  if GameData::TerrainTag.get($MapFactory.getTerrainTag(follower.map.map_id,x,y)).ice
     return true
   end
   return ret
@@ -1181,32 +1166,32 @@ class DependentEvents
       for i in 0...facings.length
         facing=facings[i]
         tile=$MapFactory.getFacingTile(facing,leader)
-        if defined?(PBTerrain::StairLeft)
+        if defined?(GameData::TerrainTag.get(:StairLeft))
           if tile[1] > $game_player.x
-            tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == PBTerrain::StairLeft && $game_map.terrain_tag($game_player.x,$game_player.y) == PBTerrain::StairLeft
+            tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == :StairLeft && $game_map.terrain_tags($game_player.x,$game_player.y) == :StairLeft
           elsif tile[1] < $game_player.x
-            tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == PBTerrain::StairLeft
+            tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == :StairLeft
           end
           if tile[1] > $game_player.x
-            tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == PBTerrain::StairRight
+            tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == :StairRight
           elsif tile[1] < $game_player.x
-            tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == PBTerrain::StairRight && $game_map.terrain_tag($game_player.x,$game_player.y) == PBTerrain::StairRight
+            tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == :StairRight && $game_map.terrain_tags($game_player.x,$game_player.y) == :StairRight
           end
         end
         passable = tile && $MapFactory.isPassable?(tile[0],tile[1],tile[2],follower)
         if !passable && $PokemonGlobal.bridge>0
-          passable = PBTerrain.isBridge?($MapFactory.getTerrainTag(tile[0],tile[1],tile[2]))
+          passable = GameData::TerrainTag.get($MapFactory.getTerrainTag(tile[0],tile[1],tile[2])).bridge
         elsif passable && !$PokemonGlobal.surfing && $PokemonGlobal.bridge==0
-          passable=!PBTerrain.isWater?($MapFactory.getTerrainTag(tile[0],tile[1],tile[2]))
+          passable=!GameData::TerrainTag.get($MapFactory.getTerrainTag(tile[0],tile[1],tile[2])).can_surf
         end
         if i==0 && !passable && tile &&
-           PBTerrain.isLedge?($MapFactory.getTerrainTag(tile[0],tile[1],tile[2]))
+           GameData::TerrainTag.get($MapFactory.getTerrainTag(tile[0],tile[1],tile[2])).ledge
           # If the tile isn't passable and the tile is a ledge,
           # get tile from further behind
           tile=$MapFactory.getFacingTileFromPos(tile[0],tile[1],tile[2],facing)
           passable= tile && $MapFactory.isPassable?(tile[0],tile[1],tile[2],follower)
           if passable && !$PokemonGlobal.surfing
-            passable=!PBTerrain.isWater?($MapFactory.getTerrainTag(tile[0],tile[1],tile[2]))
+            passable=!GameData::TerrainTag..get($MapFactory.getTerrainTag(tile[0],tile[1],tile[2])).can_surf
           end
         end
         if passable
@@ -1402,7 +1387,7 @@ Events.onStepTaken += proc { |_sender,_e|
   end
 }
 
-class PokeBattle_Trainer
+class Trainer
   def hasAltemper?
     return true if indexAltemper > -1
     return false
@@ -1411,7 +1396,7 @@ class PokeBattle_Trainer
   def indexAltemper(pkmn=false)
     ret = -1
     @party.each_with_index do |p,i|
-      ret = i if p && (p.isSpecies?(:ALTEMPER) || p.isSpecies?(:SQUALTEMPER)) && p.able?
+      ret = i if p && p.isSpecies?(:ALTEMPER) && p.able?
     end
     if pkmn
       return @party[ret] if ret >= 0

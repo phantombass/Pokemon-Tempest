@@ -1,5 +1,3 @@
-pbCompiler
-
 class Scene_DebugIntro
   def main
     Graphics.transition(0)
@@ -12,11 +10,7 @@ end
 
 def pbCallTitle
   return Scene_DebugIntro.new if $DEBUG
-  # First parameter is an array of images in the Titles
-  # directory without a file extension, to show before the
-  # actual title screen.  Second parameter is the actual
-  # title screen filename, also in Titles with no extension.
-  return Scene_Intro.new(['intro1','intro2','intro3'], 'splash')
+  return Scene_Intro.new
 end
 
 def mainFunction
@@ -30,16 +24,10 @@ end
 
 def mainFunctionDebug
   begin
-    if !mkxp?
-      getCurrentProcess = Win32API.new("kernel32.dll", "GetCurrentProcess", "", "l")
-      setPriorityClass  = Win32API.new("kernel32.dll", "SetPriorityClass", %w(l i), "")
-      setPriorityClass.call(getCurrentProcess.call(), 32768)   # "Above normal" priority class
-    end
-    $data_animations    = pbLoadRxData("Data/Animations")
-    $data_tilesets      = pbLoadRxData("Data/Tilesets")
-    $data_common_events = pbLoadRxData("Data/CommonEvents")
-    $data_system        = pbLoadRxData("Data/System")
-    $game_system        = Game_System.new
+    PluginManager.runPlugins
+    Compiler.main
+    Game.initialize
+    Game.set_up_system
     Graphics.update
     Graphics.freeze
     $scene = pbCallTitle

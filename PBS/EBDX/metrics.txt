@@ -1,6 +1,5 @@
 #-------------------------------
 [VECTORS]
-RoomScale          = 2.25
 SINGLE
   XY               = 102,408
   ANGLE            = 32
@@ -25,7 +24,7 @@ ENEMY
   XY               = -276,678
   ANGLE            = 32
   SCALE            = 686
-  ZOOM             = 1
+  ZOOM             = 1.5
 PLAYER
   XY               = 238,332
   ANGLE            = 36
@@ -36,6 +35,11 @@ DUAL
   ANGLE            = 26
   SCALE            = 242
   ZOOM             = 0.6
+DYNAMAX
+  XY               = 202,308
+  ANGLE            = 18
+  SCALE            = 136
+  ZOOM             = 0.5
 #-------------------------------
 [BATTLERPOS-0]
 SINGLE
@@ -72,31 +76,3 @@ TRIPLE
 [BATTLERPOS-5]
 TRIPLE
   XYZ              = 162,152,11
-#-------------------------------
-[COMMANDMENU]
-ButtonGraphic      = btnCmd
-SelectorGraphic    = cmdSel
-#-------------------------------
-[FIGHTMENU]
-ButtonGraphic      = moveSelButtons
-MegaButtonGraphic  = megaButton
-SelectorGraphic    = cmdSel
-CategoryGraphic    = category
-TypeGraphic        = types
-ShowTypeAdvantage  = true
-#-------------------------------
-[TARGETMENU]
-ButtonGraphic      = btnEmpty
-SelectorGraphic    = cmdSel
-#-------------------------------
-[BAGMENU]
-Shade              = shade
-LastItem           = last
-BackButton         = back
-PocketIcons        = pocketIcons
-PocketButtons      = itemContainer
-PocketName         = itemName
-ItemFrame          = itemFrame
-ItemCancel         = itemCancel
-ItemConfirm        = itemConfirm
-SelectorGraphic    = cmdSel
