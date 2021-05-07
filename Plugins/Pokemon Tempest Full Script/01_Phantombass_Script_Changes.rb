@@ -492,7 +492,7 @@ MultipleForms.register(:BAGON,{
     if $game_map
       map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
       next 2 if map_metadata && map_metadata.town_map_position &&
-                map_metadata.town_map_position[0] == 1   # Ufara region
+                map_metadata.town_map_position[0] == 0   # Ufara region
     end
     next 0
   }
@@ -506,7 +506,7 @@ MultipleForms.register(:GASTLY,{
     if $game_map
       map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
       next 3 if map_metadata && map_metadata.town_map_position &&
-                map_metadata.town_map_position[0] == 1   # Ufara region
+                map_metadata.town_map_position[0] == 0   # Ufara region
     end
     next 0
   }
@@ -520,7 +520,7 @@ MultipleForms.register(:DREEPY,{
     if $game_map
       map_metadata = GameData::MapMetadata.try_get($game_map.map_id)   # Map IDs for Ufaran Forme
       next 1 if map_metadata && map_metadata.town_map_position &&
-                map_metadata.town_map_position[0] == 1   # Ufara region
+                map_metadata.town_map_position[0] == 0   # Ufara region
     end
     next 0
   }
@@ -537,7 +537,7 @@ MultipleForms.register(:ALTEMPER,{
 
 class PokeBattle_Battler
   def pbCheckFormOnWeatherChange
-    return if fainted? || @effects[PBEffects::Transform]
+    return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) || isSpecies?(:CASTFORM))
     # Castform - Forecast
     if isSpecies?(:CASTFORM)
       if hasActiveAbility?(:FORECAST)
@@ -1004,8 +1004,8 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   end
 end
     newForm = newWeather
-    if battler.form >= 21
-      if battler.form >= 42
+    if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
+      if battler.form >= 42 && battler.isSpecies?(:ALTEMPER)
         newForm += 42
       else
         newForm += 21
@@ -4804,7 +4804,7 @@ class PokeBattle_Battle
   def pbRecallAndReplace(idxBattler,idxParty,randomReplacement=false,batonPass=false)
     @scene.pbRecall(idxBattler) if !@battlers[idxBattler].fainted?
     @battlers[idxBattler].pbAbilitiesOnSwitchOut   # Inc. primordial weather check
-    if @battlers[idxBattler].ability == :BAROMETRIC
+    if @battlers[idxBattler].ability == :BAROMETRIC && @battlers[idxBattler].isSpecies?(:ALTEMPER)
       @battlers[idxBattler].form = 0
     end
     @scene.pbShowPartyLineup(idxBattler&1) if pbSideSize(idxBattler)==1
