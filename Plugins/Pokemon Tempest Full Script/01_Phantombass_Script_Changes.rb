@@ -4815,8 +4815,8 @@ class PokeBattle_Battle
     opt = playerBattler?(@battlers[index]) ? ["last", "beforeLast"] : ["lastOpp", "beforeLastOpp"]
     @scene.pbTrainerBattleSpeech(*opt)
     if !@replaced
-      if !@battlers[index].isSpecies?(:ALTEMPER)
-        @battlers[index].form = 0
+      if !@battlers[index].isSpecies?(:ALTEMPER) && !@battlers[index].isSpecies?(:CASTFORM) && !@battlers[index].isSpecies?(:CHERRIM)
+        @battlers[index].form = @battlers[index].form
       else
         if @battlers[index].form <= 20
           @battlers[index].form = 0
