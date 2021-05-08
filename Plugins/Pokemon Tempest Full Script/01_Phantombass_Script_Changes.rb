@@ -651,7 +651,6 @@ class PokeBattle_Battler
               @battle.pbShowAbilitySplash(self,true)
               @battle.pbHideAbilitySplash(self)
               pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
-              p @form
             end
           else
           pbChangeForm(0,_INTL("{1} transformed!",pbThis))
