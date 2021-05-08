@@ -5724,6 +5724,14 @@ GameData::Weather.register({
   :graphics         => [nil, ["fog_tile"]]
 })
 GameData::Weather.register({
+  :id               => :Rainbow,
+  :category         => :Rainbow,
+  :id_number        => 21,
+  :tile_delta_x     => 0,
+  :tile_delta_y     => 0,
+  :graphics         => [nil, ["rainbow_tile"]]
+})
+GameData::Weather.register({
   :id               => :HeatLight,
   :id_number        => 20,   # Must be 2 (preset RMXP weather)
   :category         => :HeatLight,
@@ -5735,7 +5743,7 @@ GameData::Weather.register({
   :id               => :Borealis,
   :id_number        => 28,
   :category         => :Borealis,
-  :graphics         => [["hail_1", "hail_2", "hail_3"]],
+  :graphics         => [["hail_1", "hail_2", "hail_3"],["borealis_tile"]],
   :particle_delta_x => -10,
   :particle_delta_y => 10,
   :tone_proc        => proc { |strength|
