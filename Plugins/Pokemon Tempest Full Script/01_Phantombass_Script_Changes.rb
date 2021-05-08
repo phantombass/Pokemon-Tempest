@@ -6295,15 +6295,11 @@ class PokemonWeatherScreen
           break
         elsif cmdNone>=0 && cmd==cmdNone
           pbPlayDecisionSE
-          if $game_variables[51]>=1
-            pbMessage(_INTL("Weather: Clear"))
-            pbMessage(_INTL("Weather Ball Type: Normal"))
-            pbMessage(_INTL("Additional Effects: None"))
-#            @sprites["weather"]=IconSprite.new(240,120,@viewport3)
-#            @sprites["weather"].setBitmap("Graphics/Pictures/testfront")
-          else
-            pbMessage(_INTL("No Readout Installed for this Weather"))
-          end
+          pbMessage(_INTL("Weather: Clear"))
+          pbMessage(_INTL("Weather Ball Type: Normal"))
+          pbMessage(_INTL("Additional Effects: None"))
+#         @sprites["weather"]=IconSprite.new(240,120,@viewport3)
+#         @sprites["weather"].setBitmap("Graphics/Pictures/testfront")
         elsif cmdNone>=0 && cmd==cmdRain
           pbPlayDecisionSE
           if $game_variables[52]>=1
