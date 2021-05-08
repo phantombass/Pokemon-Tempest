@@ -3316,6 +3316,9 @@ class BattleSceneRoom
 end
 
 module Effectiveness
+
+  module_function
+
   def ineffective_type?(attack_type, defend_type1, defend_type2 = nil, defend_type3 = nil)
     value = calculate(attack_type, defend_type1, defend_type2, defend_type3)
     return ineffective?(value)
