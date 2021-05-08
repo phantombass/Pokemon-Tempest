@@ -537,158 +537,126 @@ MultipleForms.register(:ALTEMPER,{
 
 class PokeBattle_Battler
   def pbCheckFormOnWeatherChange
-    return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) || isSpecies?(:CASTFORM))
+    return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) && !isSpecies?(:CASTFORM))
     # Castform - Forecast
-    if isSpecies?(:CASTFORM)
-      if hasActiveAbility?(:FORECAST)
-        newForm = 0
-        case @battle.pbWeather
-        when :Fog then                        newForm = 4
-        when :Overcast then newForm = 5
-        when :Starstorm then   			        	newForm = 6
-        when :DClear then 				          	newForm = 6
-        when :Eclipse then                    newForm = 7
-        when :Windy then                      newForm = 8
-        when :HeatLight then                  newForm = 9
-        when :StrongWinds then                newForm = 10
-        when :AcidRain then newForm = 11
-        when :Sandstorm then                  newForm = 12
-        when :Rainbow then                    newForm = 13
-        when :DustDevil then                  newForm = 14
-        when :DAshfall then                   newForm = 15
-        when :VolcanicAsh then                newForm = 16
-        when :Borealis then                   newForm = 17
-        when :Humid then                      newForm = 18
-        when :TimeWarp then                   newForm = 19
-        when :Reverb then                     newForm = 20
-        when :Sun, :HarshSun then   newForm = 1
-        when :Rain, :Storm, :HeavyRain then newForm = 2
-        when :Hail, :Sleet then     newForm = 3
-        end
-        if @form!=newForm
-          @battle.pbShowAbilitySplash(self,true)
-          @battle.pbHideAbilitySplash(self)
-          pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
-        end
-      else
-        pbChangeForm(0,_INTL("{1} transformed!",pbThis))
+      if isSpecies?(:CASTFORM)
+        if self.ability == :FORECAST
+          newForm = 0
+          case @battle.pbWeather
+          when :Fog then                        newForm = 4
+          when :Overcast then newForm = 5
+          when :Starstorm then   			        	newForm = 6
+          when :DClear then 				          	newForm = 6
+          when :Eclipse then                    newForm = 7
+          when :Windy then                      newForm = 8
+          when :HeatLight then                  newForm = 9
+          when :StrongWinds then                newForm = 10
+          when :AcidRain then newForm = 11
+          when :Sandstorm then                  newForm = 12
+          when :Rainbow then                    newForm = 13
+          when :DustDevil then                  newForm = 14
+          when :DAshfall then                   newForm = 15
+          when :VolcanicAsh then                newForm = 16
+          when :Borealis then                   newForm = 17
+          when :Humid then                      newForm = 18
+          when :TimeWarp then                   newForm = 19
+          when :Reverb then                     newForm = 20
+          when :Sun, :HarshSun then   newForm = 1
+          when :Rain, :Storm, :HeavyRain then newForm = 2
+          when :Hail, :Sleet then     newForm = 3
+          end
+          if @form!=newForm
+            @battle.pbShowAbilitySplash(self,true)
+            @battle.pbHideAbilitySplash(self)
+            pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
+          end
+        else
+          pbChangeForm(0,_INTL("{1} transformed!",pbThis))
       end
     end
-      if isSpecies?(:FORMETEOS)
-        if hasActiveAbility?(:ACCLIMATE)
-          newForm = 0
-          case @battle.pbWeather
-          when :Fog then                        newForm = 4
-          when :Overcast then newForm = 5
-          when :Starstorm then   			        	newForm = 6
-          when :DClear then 				          	newForm = 6
-          when :Eclipse then                    newForm = 7
-          when :Windy then                      newForm = 8
-          when :HeatLight then                  newForm = 9
-          when :StrongWinds then                newForm = 10
-          when :AcidRain then newForm = 11
-          when :Sandstorm then                  newForm = 12
-          when :Rainbow then                    newForm = 13
-          when :DustDevil then                  newForm = 14
-          when :DAshfall then                   newForm = 15
-          when :VolcanicAsh then                newForm = 16
-          when :Borealis then                   newForm = 17
-          when :Humid then                      newForm = 18
-          when :TimeWarp then                   newForm = 19
-          when :Reverb then                     newForm = 20
-          when :Sun, :HarshSun then   newForm = 1
-          when :Rain, :Storm, :HeavyRain then newForm = 2
-          when :Hail, :Sleet then     newForm = 3
-          end
-          if @form!=newForm
-            @battle.pbShowAbilitySplash(self,true)
-            @battle.pbHideAbilitySplash(self)
-            pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
-          end
-        else
+        if isSpecies?(:ALTEMPER)
+          if self.ability == :BAROMETRIC
+            newForm = 0
+            case @battle.pbWeather
+            when :Fog then                        newForm = 4
+            when :Overcast then newForm = 5
+            when :Starstorm then   			        	newForm = 6
+            when :DClear then 				          	newForm = 6
+            when :Eclipse then                    newForm = 7
+            when :Windy then                      newForm = 8
+            when :HeatLight then                  newForm = 9
+            when :StrongWinds then                newForm = 10
+            when :AcidRain then newForm = 11
+            when :Sandstorm then                  newForm = 12
+            when :Rainbow then                    newForm = 13
+            when :DustDevil then                  newForm = 14
+            when :DAshfall then                   newForm = 15
+            when :VolcanicAsh then                newForm = 16
+            when :Borealis then                   newForm = 17
+            when :Humid then                      newForm = 18
+            when :TimeWarp then                   newForm = 19
+            when :Reverb then                     newForm = 20
+            when :Sun, :HarshSun then   newForm = 1
+            when :Rain, :Storm, :HeavyRain then newForm = 2
+            when :Hail, :Sleet then     newForm = 3
+            end
+              if @form >= 21
+                if @form >= 42
+                  newForm += 42
+                else
+                  newForm += 21
+                end
+              end
+            case newForm
+            when 4 then                       @effects[PBEffects::Type3] = :FAIRY
+            when 0 then                       @effects[PBEffects::Type3] = :NORMAL
+            when 5 then                       @effects[PBEffects::Type3] = :GHOST
+            when 7 then                       @effects[PBEffects::Type3] = :DARK
+            when 8 then                       @effects[PBEffects::Type3] = :FLYING
+            when 9 then                       @effects[PBEffects::Type3] = :ELECTRIC
+            when 10 then                      @effects[PBEffects::Type3] = :DRAGON
+            when 11 then                      @effects[PBEffects::Type3] = :POISON
+            when 12 then                      @effects[PBEffects::Type3] = :ROCK
+            when 13 then                      @effects[PBEffects::Type3] = :GRASS
+            when 14 then                      @effects[PBEffects::Type3] = :GROUND
+            when 15 then                      @effects[PBEffects::Type3] = :FIGHTING
+            when 16 then                      @effects[PBEffects::Type3] = :STEEL
+            when 17 then                      @effects[PBEffects::Type3] = :PSYCHIC
+            when 18 then                      @effects[PBEffects::Type3] = :BUG
+            when 20 then                      @effects[PBEffects::Type3] = :SOUND
+            when 1 then                       @effects[PBEffects::Type3] = :FIRE
+            when 2 then                       @effects[PBEffects::Type3] = :WATER
+            when 3 then                       @effects[PBEffects::Type3] = :ICE
+            when 25 then                       @effects[PBEffects::Type3] = :FAIRY
+            when 21 then                       @effects[PBEffects::Type3] = :NORMAL
+            when 26 then                       @effects[PBEffects::Type3] = :GHOST
+            when 28 then                       @effects[PBEffects::Type3] = :DARK
+            when 29 then                       @effects[PBEffects::Type3] = :FLYING
+            when 30 then                       @effects[PBEffects::Type3] = :ELECTRIC
+            when 31 then                      @effects[PBEffects::Type3] = :DRAGON
+            when 32 then                      @effects[PBEffects::Type3] = :POISON
+            when 33 then                      @effects[PBEffects::Type3] = :ROCK
+            when 34 then                      @effects[PBEffects::Type3] = :GRASS
+            when 35 then                      @effects[PBEffects::Type3] = :GROUND
+            when 36 then                      @effects[PBEffects::Type3] = :FIGHTING
+            when 37 then                      @effects[PBEffects::Type3] = :STEEL
+            when 38 then                      @effects[PBEffects::Type3] = :PSYCHIC
+            when 39 then                      @effects[PBEffects::Type3] = :BUG
+            when 41 then                      @effects[PBEffects::Type3] = :SOUND
+            when 22 then                       @effects[PBEffects::Type3] = :FIRE
+            when 23 then                       @effects[PBEffects::Type3] = :WATER
+            when 24 then                       @effects[PBEffects::Type3] = :ICE
+            end
+            if @form!=newForm
+              @battle.pbShowAbilitySplash(self,true)
+              @battle.pbHideAbilitySplash(self)
+              pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
+              p @form
+            end
+          else
           pbChangeForm(0,_INTL("{1} transformed!",pbThis))
         end
       end
-        if isSpecies?(:ALTEMPER) && self.ability == :BAROMETRIC
-          newForm = 0
-          case @battle.pbWeather
-          when :Fog then                        newForm = 4
-          when :Overcast then newForm = 5
-          when :Starstorm then   			        	newForm = 6
-          when :DClear then 				          	newForm = 6
-          when :Eclipse then                    newForm = 7
-          when :Windy then                      newForm = 8
-          when :HeatLight then                  newForm = 9
-          when :StrongWinds then                newForm = 10
-          when :AcidRain then newForm = 11
-          when :Sandstorm then                  newForm = 12
-          when :Rainbow then                    newForm = 13
-          when :DustDevil then                  newForm = 14
-          when :DAshfall then                   newForm = 15
-          when :VolcanicAsh then                newForm = 16
-          when :Borealis then                   newForm = 17
-          when :Humid then                      newForm = 18
-          when :TimeWarp then                   newForm = 19
-          when :Reverb then                     newForm = 20
-          when :Sun, :HarshSun then   newForm = 1
-          when :Rain, :Storm, :HeavyRain then newForm = 2
-          when :Hail, :Sleet then     newForm = 3
-          end
-          if @form >= 21
-            if @form >= 42
-              newForm += 42
-            else
-              newForm +=21
-            end
-          end
-          case newForm
-          when 4 then                       @effects[PBEffects::Type3] = :FAIRY
-          when 0 then                       @effects[PBEffects::Type3] = :NORMAL
-          when 5 then                       @effects[PBEffects::Type3] = :GHOST
-          when 7 then                       @effects[PBEffects::Type3] = :DARK
-          when 8 then                       @effects[PBEffects::Type3] = :FLYING
-          when 9 then                       @effects[PBEffects::Type3] = :ELECTRIC
-          when 10 then                      @effects[PBEffects::Type3] = :DRAGON
-          when 11 then                      @effects[PBEffects::Type3] = :POISON
-          when 12 then                      @effects[PBEffects::Type3] = :ROCK
-          when 13 then                      @effects[PBEffects::Type3] = :GRASS
-          when 14 then                      @effects[PBEffects::Type3] = :GROUND
-          when 15 then                      @effects[PBEffects::Type3] = :FIGHTING
-          when 16 then                      @effects[PBEffects::Type3] = :STEEL
-          when 17 then                      @effects[PBEffects::Type3] = :PSYCHIC
-          when 18 then                      @effects[PBEffects::Type3] = :BUG
-          when 20 then                      @effects[PBEffects::Type3] = :SOUND
-          when 1 then                       @effects[PBEffects::Type3] = :FIRE
-          when 2 then                       @effects[PBEffects::Type3] = :WATER
-          when 3 then                       @effects[PBEffects::Type3] = :ICE
-          when 25 then                       @effects[PBEffects::Type3] = :FAIRY
-          when 21 then                       @effects[PBEffects::Type3] = :NORMAL
-          when 26 then                       @effects[PBEffects::Type3] = :GHOST
-          when 28 then                       @effects[PBEffects::Type3] = :DARK
-          when 29 then                       @effects[PBEffects::Type3] = :FLYING
-          when 30 then                       @effects[PBEffects::Type3] = :ELECTRIC
-          when 31 then                      @effects[PBEffects::Type3] = :DRAGON
-          when 32 then                      @effects[PBEffects::Type3] = :POISON
-          when 33 then                      @effects[PBEffects::Type3] = :ROCK
-          when 34 then                      @effects[PBEffects::Type3] = :GRASS
-          when 35 then                      @effects[PBEffects::Type3] = :GROUND
-          when 36 then                      @effects[PBEffects::Type3] = :FIGHTING
-          when 37 then                      @effects[PBEffects::Type3] = :STEEL
-          when 38 then                      @effects[PBEffects::Type3] = :PSYCHIC
-          when 39 then                      @effects[PBEffects::Type3] = :BUG
-          when 41 then                      @effects[PBEffects::Type3] = :SOUND
-          when 22 then                       @effects[PBEffects::Type3] = :FIRE
-          when 23 then                       @effects[PBEffects::Type3] = :WATER
-          when 24 then                       @effects[PBEffects::Type3] = :ICE
-          end
-          if @form!=newForm
-            @battle.pbShowAbilitySplash(self,true)
-            @battle.pbHideAbilitySplash(self)
-            pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
-          end
-        else
-          pbChangeForm(0,_INTL("{1} transformed!",pbThis))
-        end
     # Cherrim - Flower Gift
     if isSpecies?(:CHERRIM)
       if hasActiveAbility?(:FLOWERGIFT)
@@ -4804,12 +4772,39 @@ class PokeBattle_Battle
   def pbRecallAndReplace(idxBattler,idxParty,randomReplacement=false,batonPass=false)
     @scene.pbRecall(idxBattler) if !@battlers[idxBattler].fainted?
     @battlers[idxBattler].pbAbilitiesOnSwitchOut   # Inc. primordial weather check
-    if @battlers[idxBattler].ability == :BAROMETRIC && @battlers[idxBattler].isSpecies?(:ALTEMPER)
+    if (@battlers[idxBattler].ability == :BAROMETRIC && @battlers[idxBattler].isSpecies?(:ALTEMPER)) || (@battlers[idxBattler].ability == :FORECAST && @battlers[idxBattler].isSpecies?(:CASTFORM))
       @battlers[idxBattler].form = 0
     end
     @scene.pbShowPartyLineup(idxBattler&1) if pbSideSize(idxBattler)==1
     pbMessagesOnReplace(idxBattler,idxParty) if !randomReplacement
     pbReplace(idxBattler,idxParty,batonPass)
+  end
+
+  alias pbReplace_ebdx pbReplace unless self.method_defined?(:pbReplace_ebdx)
+  def pbReplace(index, *args)
+    # displays trainer dialogue if applicable
+    opt = playerBattler?(@battlers[index]) ? ["last", "beforeLast"] : ["lastOpp", "beforeLastOpp"]
+    @scene.pbTrainerBattleSpeech(*opt)
+    if !@replaced
+      if !@battlers[index].isSpecies?(:ALTEMPER)
+        @battlers[index].form = @battlers[index].form_simple
+      else
+        if @battlers[index].form <= 20
+          @battlers[index].form = 0
+        elsif @battlers[index].form >= 21 && @battlers[index].form <= 41
+          @battlers[index].form = 21
+        elsif @battlers[index].form >= 42
+          @battlers[index].form = 42
+        end
+      end
+      if !@battlers[index].fainted?
+        @scene.pbRecall(index)
+      end
+    end
+    pbReplace_ebdx(index, *args)
+    @replaced = false
+    opt = playerBattler?(@battlers[index]) ? "afterLast" : "afterLastOpp"
+    @scene.pbTrainerBattleSpeech(opt)
   end
   def pbStartWeather(user,newWeather,fixedDuration=false,showAnim=true)
     return if @field.weather==newWeather
@@ -5395,10 +5390,10 @@ class PokeBattle_Battle
     # NOTE: Primordial weather doesn't need to be checked here, because if it
     #       could wear off here, it will have worn off already.
     # Count down weather duration
-    curWeather = pbWeather
+    curWeather = @field.weather
     priority.each do |b|
       # Weather-related abilities
-      if b.abilityActive? && b.hasActiveAbility?(:BAROMETRIC)
+      if b.ability == :BAROMETRIC
         BattleHandlers.triggerEORWeatherAbility(b.ability,curWeather,b,self)
         b.pbFaint if b.fainted?
       end
@@ -5437,7 +5432,7 @@ class PokeBattle_Battle
       when :Reverb then pbDisplay(_INTL("Silence fell once more."))
       when :DustDevil then pbDisplay(_INTL("The dust devil dissipated."))
       end
-      @field.weather = :None
+      @field.weather= :None
       # Check for form changes caused by the weather changing
       eachBattler { |b| b.pbCheckFormOnWeatherChange }
       # Start up the default weather
@@ -5458,69 +5453,69 @@ class PokeBattle_Battle
     when :ShadowSky;   pbDisplay(_INTL("The shadow sky continues."));
     end
     # Effects due to weather
-    curWeather = pbWeather
+    curWeather = @field.weather
     priority.each do |b|
       # Weather damage
       # NOTE:
-      if b.form <= 20
-        b.pbCheckFormOnWeatherChange
-      end
-      if b.abilityActive? && !b.hasActiveAbility?(:BAROMETRIC)
+#      if b.form <= 20
+#        b.pbCheckFormOnWeatherChange
+#      end
+      if !b.isSpecies?(:ALTEMPER)
         BattleHandlers.triggerEORWeatherAbility(b.ability,curWeather,b,self)
         b.pbFaint if b.fainted?
       end
       case curWeather
       when :Sandstorm
-        next if !b.takesSandstormDamage?
+        next if !b.takesSandstormDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is buffeted by the sandstorm!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/16,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :AcidRain
-        next if !b.takesAcidRainDamage?
+        next if !b.takesAcidRainDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is scathed by Acid Rain!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/16,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :DWind
-        next if !b.takesDWindDamage?
+        next if !b.takesDWindDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is whipped by the Distorted Wind!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/16,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :DustDevil
-        next if !b.takesDustDevilDamage?
+        next if !b.takesDustDevilDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is buffeted by the Dust Devil!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/16,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Hail
-        next if !b.takesHailDamage?
+        next if !b.takesHailDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is buffeted by the hail!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/16,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Sleet
-        next if !b.takesHailDamage?
+        next if !b.takesHailDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is buffeted by the Sleet!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/8,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Starstorm
-        next if !b.takesStarstormDamage?
+        next if !b.takesStarstormDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is hurt by the Starstorm!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/8,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :ShadowSky
-        next if !b.takesShadowSkyDamage?
+        next if !b.takesShadowSkyDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is hurt by the shadow sky!",b.pbThis))
         @scene.pbDamageAnimation(b)
         b.pbReduceHP(b.totalhp/16,false)
