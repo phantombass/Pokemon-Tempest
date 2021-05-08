@@ -4786,7 +4786,7 @@ class PokeBattle_Battle
     @scene.pbTrainerBattleSpeech(*opt)
     if !@replaced
       if !@battlers[index].isSpecies?(:ALTEMPER)
-        @battlers[index].form = @battlers[index].form_simple
+        @battlers[index].form = 0
       else
         if @battlers[index].form <= 20
           @battlers[index].form = 0
@@ -5456,9 +5456,9 @@ class PokeBattle_Battle
     priority.each do |b|
       # Weather damage
       # NOTE:
-#      if b.form <= 20
-#        b.pbCheckFormOnWeatherChange
-#      end
+      if b.isSpecies?(:CASTFORM)
+        b.pbCheckFormOnWeatherChange
+      end
       if !b.isSpecies?(:ALTEMPER)
         BattleHandlers.triggerEORWeatherAbility(b.ability,curWeather,b,self)
         b.pbFaint if b.fainted?
