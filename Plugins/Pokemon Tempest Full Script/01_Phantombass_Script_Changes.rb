@@ -2270,7 +2270,7 @@ class PokemonSave_Scene
     else
       loctext+=_INTL("Time<r><c2={1}>{2}m</c2><br>",textColor,min)
     end
-    loctext+=_INTL("Badges<r><c2={1}>{2}</c2><br>",textColor,$Trainer.badge_count)
+    loctext+=_INTL("Chapter<r><c2={1}>{2}</c2><br>",textColor,$Trainer.badge_count)
     if $Trainer.has_pokedex
       loctext+=_INTL("Pokédex<r><c2={1}>{2}/{3}</c2><br>",textColor,$Trainer.pokedex.owned_count,$Trainer.pokedex.seen_count)
     end
