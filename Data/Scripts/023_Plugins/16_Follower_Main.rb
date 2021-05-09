@@ -32,7 +32,7 @@ def pbToggleFollowingPokemon(forced = nil,anim = true)
   end
   if $PokemonGlobal.followerToggled
     $PokemonGlobal.followerToggled = false
-    ret = Events.FollowerRefresh.trigger($Trainer.firstAblePokemon)
+    ret = Events.FollowerRefresh.trigger($Trainer.first_able_pokemon)
     $PokemonTemp.dependentEvents.remove_sprite(ret)
     pbWait(1)
   else
@@ -617,7 +617,7 @@ end
 alias follow_HMAnim pbHiddenMoveAnimation
 def pbHiddenMoveAnimation(pokemon,followAnim = true)
   ret = follow_HMAnim(pokemon)
-  if ret && followAnim && $PokemonTemp.dependentEvents.refresh_sprite(false,true) && pokemon == $Trainer.firstAblePokemon
+  if ret && followAnim && $PokemonTemp.dependentEvents.refresh_sprite(false,true) && pokemon == $Trainer.first_able_pokemon
     value = $game_player.direction
     followingMoveRoute([PBMoveRoute::Forward])
     case pbGetDependency("FollowerPkmn").direction
@@ -1095,7 +1095,7 @@ class DependentEventSprites
     end
     for i in 0...@sprites.length
       pbDayNightTint(@sprites[i])
-      firstPkmn = $Trainer.firstAblePokemon
+      firstPkmn = $Trainer.first_able_pokemon
       if $PokemonGlobal.followerToggled && APPLYSTATUSTONES && firstPkmn
         if MultipleForms.hasFunction?(firstPkmn,"getForm")
           $PokemonTemp.dependentEvents.come_back(false)
