@@ -115,3 +115,21 @@ physicalMove = NIGHTSLASH
 specialMove  = DARKPULSE
 statusMove   = NASTYPLOT
 allOpposing  = DARKVOID
+#-------------------------------
+[COSMIC]
+physicalMove = NIGHTSLASH
+specialMove  = AURORABEAM
+statusMove   = NASTYPLOT
+allOpposing  = WHIRLWIND
+#-------------------------------
+[TIME]
+physicalMove = DRAGONCLAW
+specialMove  = AURASPHERE
+statusMove   = NASTYPLOT
+allOpposing  = EARTPOWER
+#-------------------------------
+[SOUND]
+physicalMove = CLOSECOMBAT
+specialMove  = HYPERVOICE
+statusMove   = GROWL
+allOpposing  = HYPERVOICE
