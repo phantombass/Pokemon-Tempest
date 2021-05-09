@@ -995,7 +995,6 @@ end
     when 2 then                       battler.effects[PBEffects::Type3] = :WATER
     when 3 then                       battler.effects[PBEffects::Type3] = :ICE
     end
-    p battler.effects[PBEffects::Type3]
     if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
       if battler.form >= 42 && battler.isSpecies?(:ALTEMPER)
         newForm += 42
