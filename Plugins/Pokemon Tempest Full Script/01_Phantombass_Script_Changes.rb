@@ -608,44 +608,44 @@ class PokeBattle_Battler
                 end
               end
             case newForm
-            when 4 then                       @effects[PBEffects::Type3] = :FAIRY
-            when 0 then                       @effects[PBEffects::Type3] = :NORMAL
-            when 5 then                       @effects[PBEffects::Type3] = :GHOST
-            when 7 then                       @effects[PBEffects::Type3] = :DARK
-            when 8 then                       @effects[PBEffects::Type3] = :FLYING
-            when 9 then                       @effects[PBEffects::Type3] = :ELECTRIC
-            when 10 then                      @effects[PBEffects::Type3] = :DRAGON
-            when 11 then                      @effects[PBEffects::Type3] = :POISON
-            when 12 then                      @effects[PBEffects::Type3] = :ROCK
-            when 13 then                      @effects[PBEffects::Type3] = :GRASS
-            when 14 then                      @effects[PBEffects::Type3] = :GROUND
-            when 15 then                      @effects[PBEffects::Type3] = :FIGHTING
-            when 16 then                      @effects[PBEffects::Type3] = :STEEL
-            when 17 then                      @effects[PBEffects::Type3] = :PSYCHIC
-            when 18 then                      @effects[PBEffects::Type3] = :BUG
-            when 20 then                      @effects[PBEffects::Type3] = :SOUND
-            when 1 then                       @effects[PBEffects::Type3] = :FIRE
-            when 2 then                       @effects[PBEffects::Type3] = :WATER
-            when 3 then                       @effects[PBEffects::Type3] = :ICE
-            when 25 then                       @effects[PBEffects::Type3] = :FAIRY
-            when 21 then                       @effects[PBEffects::Type3] = :NORMAL
-            when 26 then                       @effects[PBEffects::Type3] = :GHOST
-            when 28 then                       @effects[PBEffects::Type3] = :DARK
-            when 29 then                       @effects[PBEffects::Type3] = :FLYING
-            when 30 then                       @effects[PBEffects::Type3] = :ELECTRIC
-            when 31 then                      @effects[PBEffects::Type3] = :DRAGON
-            when 32 then                      @effects[PBEffects::Type3] = :POISON
-            when 33 then                      @effects[PBEffects::Type3] = :ROCK
-            when 34 then                      @effects[PBEffects::Type3] = :GRASS
-            when 35 then                      @effects[PBEffects::Type3] = :GROUND
-            when 36 then                      @effects[PBEffects::Type3] = :FIGHTING
-            when 37 then                      @effects[PBEffects::Type3] = :STEEL
-            when 38 then                      @effects[PBEffects::Type3] = :PSYCHIC
-            when 39 then                      @effects[PBEffects::Type3] = :BUG
-            when 41 then                      @effects[PBEffects::Type3] = :SOUND
-            when 22 then                       @effects[PBEffects::Type3] = :FIRE
-            when 23 then                       @effects[PBEffects::Type3] = :WATER
-            when 24 then                       @effects[PBEffects::Type3] = :ICE
+            when 4 then                       self.effects[PBEffects::Type3] = :FAIRY
+            when 0 then                       self.effects[PBEffects::Type3] = :NORMAL
+            when 5 then                       self.effects[PBEffects::Type3] = :GHOST
+            when 7 then                       self.effects[PBEffects::Type3] = :DARK
+            when 8 then                       self.effects[PBEffects::Type3] = :FLYING
+            when 9 then                       self.effects[PBEffects::Type3] = :ELECTRIC
+            when 10 then                      self.effects[PBEffects::Type3] = :DRAGON
+            when 11 then                      self.effects[PBEffects::Type3] = :POISON
+            when 12 then                      self.effects[PBEffects::Type3] = :ROCK
+            when 13 then                      self.effects[PBEffects::Type3] = :GRASS
+            when 14 then                      self.effects[PBEffects::Type3] = :GROUND
+            when 15 then                      self.effects[PBEffects::Type3] = :FIGHTING
+            when 16 then                      self.effects[PBEffects::Type3] = :STEEL
+            when 17 then                      self.effects[PBEffects::Type3] = :PSYCHIC
+            when 18 then                      self.effects[PBEffects::Type3] = :BUG
+            when 20 then                      self.effects[PBEffects::Type3] = :SOUND
+            when 1 then                       self.effects[PBEffects::Type3] = :FIRE
+            when 2 then                       self.effects[PBEffects::Type3] = :WATER
+            when 3 then                       self.effects[PBEffects::Type3] = :ICE
+            when 25 then                       self.effects[PBEffects::Type3] = :FAIRY
+            when 21 then                       self.effects[PBEffects::Type3] = :NORMAL
+            when 26 then                       self.effects[PBEffects::Type3] = :GHOST
+            when 28 then                       self.effects[PBEffects::Type3] = :DARK
+            when 29 then                       self.effects[PBEffects::Type3] = :FLYING
+            when 30 then                       self.effects[PBEffects::Type3] = :ELECTRIC
+            when 31 then                      self.effects[PBEffects::Type3] = :DRAGON
+            when 32 then                      self.effects[PBEffects::Type3] = :POISON
+            when 33 then                      self.effects[PBEffects::Type3] = :ROCK
+            when 34 then                      self.effects[PBEffects::Type3] = :GRASS
+            when 35 then                      self.effects[PBEffects::Type3] = :GROUND
+            when 36 then                      self.effects[PBEffects::Type3] = :FIGHTING
+            when 37 then                      self.effects[PBEffects::Type3] = :STEEL
+            when 38 then                      self.effects[PBEffects::Type3] = :PSYCHIC
+            when 39 then                      self.effects[PBEffects::Type3] = :BUG
+            when 41 then                      self.effects[PBEffects::Type3] = :SOUND
+            when 22 then                       self.effects[PBEffects::Type3] = :FIRE
+            when 23 then                       self.effects[PBEffects::Type3] = :WATER
+            when 24 then                       self.effects[PBEffects::Type3] = :ICE
             end
             if @form!=newForm
               @battle.pbShowAbilitySplash(self,true)
@@ -974,6 +974,28 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   end
 end
     newForm = newWeather
+    case newForm
+    when 4 then                       battler.effects[PBEffects::Type3] = :FAIRY
+    when 0 then                       battler.effects[PBEffects::Type3] = :NORMAL
+    when 5 then                       battler.effects[PBEffects::Type3] = :GHOST
+    when 7 then                       battler.effects[PBEffects::Type3] = :DARK
+    when 8 then                       battler.effects[PBEffects::Type3] = :FLYING
+    when 9 then                       battler.effects[PBEffects::Type3] = :ELECTRIC
+    when 10 then                      battler.effects[PBEffects::Type3] = :DRAGON
+    when 11 then                      battler.effects[PBEffects::Type3] = :POISON
+    when 12 then                      battler.effects[PBEffects::Type3] = :ROCK
+    when 13 then                      battler.effects[PBEffects::Type3] = :GRASS
+    when 14 then                      battler.effects[PBEffects::Type3] = :GROUND
+    when 15 then                      battler.effects[PBEffects::Type3] = :FIGHTING
+    when 16 then                      battler.effects[PBEffects::Type3] = :STEEL
+    when 17 then                      battler.effects[PBEffects::Type3] = :PSYCHIC
+    when 18 then                      battler.effects[PBEffects::Type3] = :BUG
+    when 20 then                      battler.effects[PBEffects::Type3] = :SOUND
+    when 1 then                       battler.effects[PBEffects::Type3] = :FIRE
+    when 2 then                       battler.effects[PBEffects::Type3] = :WATER
+    when 3 then                       battler.effects[PBEffects::Type3] = :ICE
+    end
+    p battler.effects[PBEffects::Type3]
     if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
       if battler.form >= 42 && battler.isSpecies?(:ALTEMPER)
         newForm += 42
