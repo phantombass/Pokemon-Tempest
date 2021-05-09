@@ -1318,7 +1318,6 @@ BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
 # Item Scripts
 #===================================
 module ItemHandlers
-
   def pbRaiseEffortValues(pkmn, stat, evGain = 10, ev_limit = true)
     stat = GameData::Stat.get(stat).id
     return 0 if ev_limit && pkmn.ev[stat] >= 252
@@ -1352,272 +1351,271 @@ module ItemHandlers
     scene.pbDisplay(messages[2-(h ? 0 : 2)-(e ? 0 : 1)])
     return true
   end
-
-  def canUseMoveCut?
-    showmsg = true
-     return false if !$PokemonBag.pbQuantity(:CHAINSAW)==0
-     facingEvent = $game_player.pbFacingEvent
-     if !facingEvent || !facingEvent.name[/cuttree/i]
-       pbMessage(_INTL("Can't use that here.")) if showmsg
-       return false
-     end
-     return true
-  end
-  def useMoveCut
-    if !pbHiddenMoveAnimation(nil)
-      pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:CHAINSAW).name))
-    end
-    facingEvent = $game_player.pbFacingEvent
-    if facingEvent
-      pbSmashEvent(facingEvent)
-    end
-    return true
-  end
-
-  def canUseMoveDive?
-     showmsg = true
-     return false if !$PokemonBag.pbQuantity(:SCUBATANK)==0
-     if $PokemonGlobal.diving
-       surface_map_id = nil
-       GameData::MapMetadata.each do |map_data|
-         next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
-         surface_map_id = map_data.id
-         break
-       end
-       if !surface_map_id ||
-          !$MapFactory.getTerrainTag(surface_map_id, $game_player.x, $game_player.y).can_dive
-         pbMessage(_INTL("Can't use that here.")) if showmsg
-         return false
-       end
-     else
-       if !GameData::MapMetadata.exists?($game_map.map_id) ||
-          !GameData::MapMetadata.get($game_map.map_id).dive_map_id
-         pbMessage(_INTL("Can't use that here.")) if showmsg
-         return false
-       end
-       if !$game_player.terrain_tag.can_dive
-         pbMessage(_INTL("Can't use that here.")) if showmsg
-         return false
-       end
-     end
-     return true
-  end
-  def useMoveDive
-    wasdiving = $PokemonGlobal.diving
-    if $PokemonGlobal.diving
-      dive_map_id = nil
-      GameData::MapMetadata.each do |map_data|
-        next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
-        dive_map_id = map_data.id
-        break
-      end
-    else
-      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-      dive_map_id = map_metadata.dive_map_id if map_metadata
-    end
-    return false if !dive_map_id
-    if !pbHiddenMoveAnimation(pokemon)
-      pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
-    end
-    pbFadeOutIn {
-      $game_temp.player_new_map_id    = dive_map_id
-      $game_temp.player_new_x         = $game_player.x
-      $game_temp.player_new_y         = $game_player.y
-      $game_temp.player_new_direction = $game_player.direction
-      $PokemonGlobal.surfing = wasdiving
-      $PokemonGlobal.diving  = !wasdiving
-      pbUpdateVehicle
-      $scene.transfer_player(false)
-      $game_map.autoplay
-      $game_map.refresh
-    }
-    return true
-  end
-
-  def canUseMoveFlash?
-     showmsg = true
-     if !GameData::MapMetadata.exists?($game_map.map_id) ||
-        !GameData::MapMetadata.get($game_map.map_id).dark_map
-       pbMessage(_INTL("Can't use that here.")) if showmsg
-       return false
-     end
-     if $PokemonGlobal.flashUsed
-       pbMessage(_INTL("Flash is already being used.")) if showmsg
-       return false
-     end
-     return true
-  end
-  def useMoveFlash
-    darkness = $PokemonTemp.darknessSprite
-    return false if !darkness || darkness.disposed?
-    if !pbHiddenMoveAnimation(nil)
-      pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:TORCH).name))
-    end
-    $PokemonGlobal.flashUsed = true
-    radiusDiff = 8*20/Graphics.frame_rate
-    while darkness.radius<darkness.radiusMax
-      Graphics.update
-      Input.update
-      pbUpdateSceneMap
-      darkness.radius += radiusDiff
-      darkness.radius = darkness.radiusMax if darkness.radius>darkness.radiusMax
-    end
-    return true
-  end
-
-  def canUseMoveFly?
-    showmsg = true
-    return false if !$PokemonBag.pbQuantity(:WINGSUIT)==0
-    if $game_player.pbHasDependentEvents?
-      pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
-      return false
-    end
-    if !GameData::MapMetadata.exists?($game_map.map_id) ||
-       !GameData::MapMetadata.get($game_map.map_id).outdoor_map
-      pbMessage(_INTL("Can't use that here.")) if showmsg
-      return false
-    end
-    return true
-  end
-  def useMoveFly
-    if !$PokemonTemp.flydata
-      pbMessage(_INTL("Can't use that here."))
-      return false
-    end
-    if !pbHiddenMoveAnimation(pokemon)
-      pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:WINGSUIT).name))
-    end
-    pbFadeOutIn {
-      for i in 115..121
-        $game_switches[i] = false
-      end
-      $game_switches[125] = false
-      $game_temp.player_new_map_id    = $PokemonTemp.flydata[0]
-      $game_temp.player_new_x         = $PokemonTemp.flydata[1]
-      $game_temp.player_new_y         = $PokemonTemp.flydata[2]
-      $game_temp.player_new_direction = 2
-      $PokemonTemp.flydata = nil
-      $scene.transfer_player
-      $game_map.autoplay
-      $game_map.refresh
-    }
-    pbEraseEscapePoint
-    return true
-  end
-
-  def canUseMoveRockSmash?
-    showmsg = true
-    return false if !$PokemonBag.pbQuantity(:HAMMER)==0
-    facingEvent = $game_player.pbFacingEvent
-    if !facingEvent || !facingEvent.name[/smashrock/i]
-      pbMessage(_INTL("Can't use that here.")) if showmsg
-      return false
-    end
-    return true
-  end
-  def useMoveRockSmash
-    if !pbHiddenMoveAnimation(nil)
-      pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:HAMMER).name))
-    end
-    facingEvent = $game_player.pbFacingEvent
-    if facingEvent
-      pbSmashEvent(facingEvent)
-      pbRockSmashRandomEncounter
-    end
-    return true
-  end
-
-  def canUseMoveStrength?
-     showmsg = true
-     return false if !$PokemonBag.pbQuantity(:FULCRUM)==0
-     if $PokemonMap.strengthUsed
-       pbMessage(_INTL("The Fulcrum is already being used.")) if showmsg
-       return false
-     end
-     return true
-  end
-  def useMoveStrength
-    if !pbHiddenMoveAnimation(nil)
-      pbMessage(_INTL("{1} used a {2}!\1",$Trainer.name,GameData::Item.get(:FULCRUM).name))
-    end
-    pbMessage(_INTL("{1}'s {2} made it possible to move boulders around!",$Trainer.name,GameData::Item.get(:FULCRUM).name))
-    $PokemonMap.strengthUsed = true
-    return true
-  end
-
-  def canUseMoveSurf?
-     showmsg = true
-     return false if !$PokemonBag.pbQuantity(:HOVERCRAFT)==0
-     if $PokemonGlobal.surfing
-       pbMessage(_INTL("You're already surfing.")) if showmsg
-       return false
-     end
-     if $game_player.pbHasDependentEvents?
-       pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
-       return false
-     end
-     if GameData::MapMetadata.exists?($game_map.map_id) &&
-        GameData::MapMetadata.get($game_map.map_id).always_bicycle
-       pbMessage(_INTL("Let's enjoy cycling!")) if showmsg
-       return false
-     end
-     if !$game_player.pbFacingTerrainTag.can_surf_freely ||
-        !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player)
-       pbMessage(_INTL("No surfing here!")) if showmsg
-       return false
-     end
-     return true
-  end
-  def useMoveSurf
-    $game_temp.in_menu = false
-    pbCancelVehicles
-    if !pbHiddenMoveAnimation(nil)
-      pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
-    end
-    surfbgm = GameData::Metadata.get.surf_BGM
-    pbCueBGM(surfbgm,0.5) if surfbgm
-    pbStartSurfing
-    return true
-  end
-
-  def canUseMoveWaterfall?
-    showmsg = true
-    if !$game_player.pbFacingTerrainTag.waterfall
-      pbMessage(_INTL("Can't use that here.")) if showmsg
-      return false
-    end
-    return true
-  end
-  def useMoveWaterfall
-    if !pbHiddenMoveAnimation(pokemon)
-      pbMessage(_INTL("{1} used an {2}!",$Trainer.name,GameData::Item.get(:AQUAROCKET).name))
-    end
-    pbAscendWaterfall
-    return true
-  end
-
-  def canUseMoveRockClimb?
-    showmsg = true
-    return false if !$PokemonBag.pbQuantity(:HIKINGGEAR)==0
-     if pbFacingTerrainTag!=PBTerrain::RockClimb
-       pbMessage(_INTL("Can't use that here.")) if showmsg
-       return false
-     end
-     return true
-  end
-  def useMoveRockClimb
-     if !pbHiddenMoveAnimation(nil)
-       pbMessage(_INTL("{1} uses the {2}!",$Trainer.name,GameData::Item.get(:HIKINGGEAR).name))
-     end
-     if event.direction=8
-       pbRockClimbUp
-     elsif event.direction=2
-       pbRockClimbDown
-     end
-     return true
-  end
+end
+def canUseMoveCut?
+  showmsg = true
+   return false if !$PokemonBag.pbHasItem?(:CHAINSAW)
+   facingEvent = $game_player.pbFacingEvent
+   if !facingEvent || !facingEvent.name[/cuttree/i]
+     pbMessage(_INTL("Can't use that here.")) if showmsg
+     return false
+   end
+   return true
 end
 
+def useMoveCut
+  if !pbHiddenMoveAnimation(nil)
+    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:CHAINSAW).name))
+  end
+  facingEvent = $game_player.pbFacingEvent
+  if facingEvent
+    pbSmashEvent(facingEvent)
+  end
+  return true
+end
+
+def canUseMoveDive?
+   showmsg = true
+   return false if !$PokemonBag.pbQuantity(:SCUBATANK)==0
+   if $PokemonGlobal.diving
+     surface_map_id = nil
+     GameData::MapMetadata.each do |map_data|
+       next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
+       surface_map_id = map_data.id
+       break
+     end
+     if !surface_map_id ||
+        !$MapFactory.getTerrainTag(surface_map_id, $game_player.x, $game_player.y).can_dive
+       pbMessage(_INTL("Can't use that here.")) if showmsg
+       return false
+     end
+   else
+     if !GameData::MapMetadata.exists?($game_map.map_id) ||
+        !GameData::MapMetadata.get($game_map.map_id).dive_map_id
+       pbMessage(_INTL("Can't use that here.")) if showmsg
+       return false
+     end
+     if !$game_player.terrain_tag.can_dive
+       pbMessage(_INTL("Can't use that here.")) if showmsg
+       return false
+     end
+   end
+   return true
+end
+def useMoveDive
+  wasdiving = $PokemonGlobal.diving
+  if $PokemonGlobal.diving
+    dive_map_id = nil
+    GameData::MapMetadata.each do |map_data|
+      next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
+      dive_map_id = map_data.id
+      break
+    end
+  else
+    map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+    dive_map_id = map_metadata.dive_map_id if map_metadata
+  end
+  return false if !dive_map_id
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
+  end
+  pbFadeOutIn {
+    $game_temp.player_new_map_id    = dive_map_id
+    $game_temp.player_new_x         = $game_player.x
+    $game_temp.player_new_y         = $game_player.y
+    $game_temp.player_new_direction = $game_player.direction
+    $PokemonGlobal.surfing = wasdiving
+    $PokemonGlobal.diving  = !wasdiving
+    pbUpdateVehicle
+    $scene.transfer_player(false)
+    $game_map.autoplay
+    $game_map.refresh
+  }
+  return true
+end
+
+def canUseMoveFlash?
+   showmsg = true
+   if !GameData::MapMetadata.exists?($game_map.map_id) ||
+      !GameData::MapMetadata.get($game_map.map_id).dark_map
+     pbMessage(_INTL("Can't use that here.")) if showmsg
+     return false
+   end
+   if $PokemonGlobal.flashUsed
+     pbMessage(_INTL("Flash is already being used.")) if showmsg
+     return false
+   end
+   return true
+end
+def useMoveFlash
+  darkness = $PokemonTemp.darknessSprite
+  return false if !darkness || darkness.disposed?
+  if !pbHiddenMoveAnimation(nil)
+    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:TORCH).name))
+  end
+  $PokemonGlobal.flashUsed = true
+  radiusDiff = 8*20/Graphics.frame_rate
+  while darkness.radius<darkness.radiusMax
+    Graphics.update
+    Input.update
+    pbUpdateSceneMap
+    darkness.radius += radiusDiff
+    darkness.radius = darkness.radiusMax if darkness.radius>darkness.radiusMax
+  end
+  return true
+end
+
+def canUseMoveFly?
+  showmsg = true
+  return false if !$PokemonBag.pbQuantity(:WINGSUIT)==0
+  if $game_player.pbHasDependentEvents?
+    pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
+    return false
+  end
+  if !GameData::MapMetadata.exists?($game_map.map_id) ||
+     !GameData::MapMetadata.get($game_map.map_id).outdoor_map
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    return false
+  end
+  return true
+end
+def useMoveFly
+  if !$PokemonTemp.flydata
+    pbMessage(_INTL("Can't use that here."))
+    return false
+  end
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:WINGSUIT).name))
+  end
+  pbFadeOutIn {
+    for i in 115..121
+      $game_switches[i] = false
+    end
+    $game_switches[125] = false
+    $game_temp.player_new_map_id    = $PokemonTemp.flydata[0]
+    $game_temp.player_new_x         = $PokemonTemp.flydata[1]
+    $game_temp.player_new_y         = $PokemonTemp.flydata[2]
+    $game_temp.player_new_direction = 2
+    $PokemonTemp.flydata = nil
+    $scene.transfer_player
+    $game_map.autoplay
+    $game_map.refresh
+  }
+  pbEraseEscapePoint
+  return true
+end
+
+def canUseMoveRockSmash?
+  showmsg = true
+  return false if !$PokemonBag.pbQuantity(:HAMMER)==0
+  facingEvent = $game_player.pbFacingEvent
+  if !facingEvent || !facingEvent.name[/smashrock/i]
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    return false
+  end
+  return true
+end
+def useMoveRockSmash
+  if !pbHiddenMoveAnimation(nil)
+    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:HAMMER).name))
+  end
+  facingEvent = $game_player.pbFacingEvent
+  if facingEvent
+    pbSmashEvent(facingEvent)
+    pbRockSmashRandomEncounter
+  end
+  return true
+end
+
+def canUseMoveStrength?
+   showmsg = true
+   return false if !$PokemonBag.pbQuantity(:FULCRUM)==0
+   if $PokemonMap.strengthUsed
+     pbMessage(_INTL("The Fulcrum is already being used.")) if showmsg
+     return false
+   end
+   return true
+end
+def useMoveStrength
+  if !pbHiddenMoveAnimation(nil)
+    pbMessage(_INTL("{1} used a {2}!\1",$Trainer.name,GameData::Item.get(:FULCRUM).name))
+  end
+  pbMessage(_INTL("{1}'s {2} made it possible to move boulders around!",$Trainer.name,GameData::Item.get(:FULCRUM).name))
+  $PokemonMap.strengthUsed = true
+  return true
+end
+
+def canUseMoveSurf?
+   showmsg = true
+   return false if !$PokemonBag.pbQuantity(:HOVERCRAFT)==0
+   if $PokemonGlobal.surfing
+     pbMessage(_INTL("You're already surfing.")) if showmsg
+     return false
+   end
+   if $game_player.pbHasDependentEvents?
+     pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
+     return false
+   end
+   if GameData::MapMetadata.exists?($game_map.map_id) &&
+      GameData::MapMetadata.get($game_map.map_id).always_bicycle
+     pbMessage(_INTL("Let's enjoy cycling!")) if showmsg
+     return false
+   end
+   if !$game_player.pbFacingTerrainTag.can_surf_freely ||
+      !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player)
+     pbMessage(_INTL("No surfing here!")) if showmsg
+     return false
+   end
+   return true
+end
+def useMoveSurf
+  $game_temp.in_menu = false
+  pbCancelVehicles
+  if !pbHiddenMoveAnimation(nil)
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
+  end
+  surfbgm = GameData::Metadata.get.surf_BGM
+  pbCueBGM(surfbgm,0.5) if surfbgm
+  pbStartSurfing
+  return true
+end
+
+def canUseMoveWaterfall?
+  showmsg = true
+  if !$game_player.pbFacingTerrainTag.waterfall
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    return false
+  end
+  return true
+end
+def useMoveWaterfall
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used an {2}!",$Trainer.name,GameData::Item.get(:AQUAROCKET).name))
+  end
+  pbAscendWaterfall
+  return true
+end
+
+def canUseMoveRockClimb?
+  showmsg = true
+  return false if !$PokemonBag.pbQuantity(:HIKINGGEAR)==0
+   if pbFacingTerrainTag!=PBTerrain::RockClimb
+     pbMessage(_INTL("Can't use that here.")) if showmsg
+     return false
+   end
+   return true
+end
+def useMoveRockClimb
+   if !pbHiddenMoveAnimation(nil)
+     pbMessage(_INTL("{1} uses the {2}!",$Trainer.name,GameData::Item.get(:HIKINGGEAR).name))
+   end
+   if event.direction=8
+     pbRockClimbUp
+   elsif event.direction=2
+     pbRockClimbDown
+   end
+   return true
+end
 def pbRockSmashRandomItem
   randItem = rand(100)+1
   return nil if randItem < 51
@@ -1649,6 +1647,729 @@ def pbRockSmashRandomItem
   end
 end
 
+def pbCut
+  if !$PokemonBag.pbHasItem?(:CHAINSAW)
+    pbMessage(_INTL("This tree looks like it can be cut down."))
+    return false
+  end
+  pbMessage(_INTL("This tree looks like it can be cut down!\1"))
+  if pbConfirmMessage(_INTL("Would you like to cut it?"))
+    speciesname = $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:CHAINSAW).name))
+    return true
+  end
+  return false
+end
+
+def pbSmashEvent(event)
+  return if !event
+  if event.name[/cuttree/i]
+    pbSEPlay("Cut",80)
+  elsif event.name[/smashrock/i]
+    pbSEPlay("Rock Smash",80)
+  end
+  pbMoveRoute(event,[
+     PBMoveRoute::Wait,2,
+     PBMoveRoute::TurnLeft,
+     PBMoveRoute::Wait,2,
+     PBMoveRoute::TurnRight,
+     PBMoveRoute::Wait,2,
+     PBMoveRoute::TurnUp,
+     PBMoveRoute::Wait,2
+  ])
+  pbWait(Graphics.frame_rate*4/10)
+  event.erase
+  $PokemonMap.addErasedEvent(event.id) if $PokemonMap
+end
+
+
+
+#===============================================================================
+# Dig
+#===============================================================================
+HiddenMoveHandlers::CanUseMove.add(:DIG,proc { |move,pkmn,showmsg|
+  escape = ($PokemonGlobal.escapePoint rescue nil)
+  if !escape || escape==[]
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    next false
+  end
+  if $game_player.pbHasDependentEvents?
+    pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
+    next false
+  end
+  next true
+})
+
+HiddenMoveHandlers::ConfirmUseMove.add(:DIG,proc { |move,pkmn|
+  escape = ($PokemonGlobal.escapePoint rescue nil)
+  next false if !escape || escape==[]
+  mapname = pbGetMapNameFromId(escape[0])
+  next pbConfirmMessage(_INTL("Want to escape from here and return to {1}?",mapname))
+})
+
+HiddenMoveHandlers::UseMove.add(:DIG,proc { |move,pokemon|
+  escape = ($PokemonGlobal.escapePoint rescue nil)
+  if escape
+    if !pbHiddenMoveAnimation(pokemon)
+      pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
+    end
+    pbFadeOutIn {
+      $game_temp.player_new_map_id    = escape[0]
+      $game_temp.player_new_x         = escape[1]
+      $game_temp.player_new_y         = escape[2]
+      $game_temp.player_new_direction = escape[3]
+      $scene.transfer_player
+      $game_map.autoplay
+      $game_map.refresh
+    }
+    pbEraseEscapePoint
+    next true
+  end
+  next false
+})
+
+
+
+#===============================================================================
+# Dive
+#===============================================================================
+def pbDive
+  return false if $game_player.pbFacingEvent
+  map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+  return false if !map_metadata || !map_metadata.dive_map_id
+  if !$PokemonBag.pbHasItem?(:SCUBATANK)
+    pbMessage(_INTL("The sea is deep here. A Pokémon may be able to go underwater."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("The sea is deep here. Would you like to use Dive?"))
+    speciesname = $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
+    pbFadeOutIn {
+       $game_temp.player_new_map_id    = map_metadata.dive_map_id
+       $game_temp.player_new_x         = $game_player.x
+       $game_temp.player_new_y         = $game_player.y
+       $game_temp.player_new_direction = $game_player.direction
+       $PokemonGlobal.surfing = false
+       $PokemonGlobal.diving  = true
+       pbUpdateVehicle
+       $scene.transfer_player(false)
+       $game_map.autoplay
+       $game_map.refresh
+    }
+    return true
+  end
+  return false
+end
+
+def pbSurfacing
+  return if !$PokemonGlobal.diving
+  return false if $game_player.pbFacingEvent
+  surface_map_id = nil
+  GameData::MapMetadata.each do |map_data|
+    next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
+    surface_map_id = map_data.id
+    break
+  end
+  return if !surface_map_id
+  move = :DIVE
+  movefinder = $Trainer.get_pokemon_with_move(move)
+  if !$PokemonBag.pbHasItem?(:SCUBATANK)
+    pbMessage(_INTL("Light is filtering down from above. A Pokémon may be able to surface here."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("Light is filtering down from above. Would you like to use Dive?"))
+    speciesname = $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
+    pbFadeOutIn {
+       $game_temp.player_new_map_id    = surface_map_id
+       $game_temp.player_new_x         = $game_player.x
+       $game_temp.player_new_y         = $game_player.y
+       $game_temp.player_new_direction = $game_player.direction
+       $PokemonGlobal.surfing = true
+       $PokemonGlobal.diving  = false
+       pbUpdateVehicle
+       $scene.transfer_player(false)
+       surfbgm = GameData::Metadata.get.surf_BGM
+       (surfbgm) ?  pbBGMPlay(surfbgm) : $game_map.autoplayAsCue
+       $game_map.refresh
+    }
+    return true
+  end
+  return false
+end
+
+def pbTransferUnderwater(mapid,x,y,direction=$game_player.direction)
+  pbFadeOutIn {
+    $game_temp.player_new_map_id    = mapid
+    $game_temp.player_new_x         = x
+    $game_temp.player_new_y         = y
+    $game_temp.player_new_direction = direction
+    $scene.transfer_player(false)
+    $game_map.autoplay
+    $game_map.refresh
+  }
+end
+
+Events.onAction += proc { |_sender, _e|
+  if $PokemonGlobal.diving
+    surface_map_id = nil
+    GameData::MapMetadata.each do |map_data|
+      next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
+      surface_map_id = map_data.id
+      break
+    end
+    if surface_map_id &&
+       $MapFactory.getTerrainTag(surface_map_id, $game_player.x, $game_player.y).can_dive
+      pbSurfacing
+    end
+  else
+    pbDive if $game_player.terrain_tag.can_dive
+  end
+}
+
+HiddenMoveHandlers::CanUseMove.add(:DIVE,proc { |move,pkmn,showmsg|
+  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_DIVE,showmsg)
+  if $PokemonGlobal.diving
+    surface_map_id = nil
+    GameData::MapMetadata.each do |map_data|
+      next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
+      surface_map_id = map_data.id
+      break
+    end
+    if !surface_map_id ||
+       !$MapFactory.getTerrainTag(surface_map_id, $game_player.x, $game_player.y).can_dive
+      pbMessage(_INTL("Can't use that here.")) if showmsg
+      next false
+    end
+  else
+    if !GameData::MapMetadata.exists?($game_map.map_id) ||
+       !GameData::MapMetadata.get($game_map.map_id).dive_map_id
+      pbMessage(_INTL("Can't use that here.")) if showmsg
+      next false
+    end
+    if !$game_player.terrain_tag.can_dive
+      pbMessage(_INTL("Can't use that here.")) if showmsg
+      next false
+    end
+  end
+  next true
+})
+
+HiddenMoveHandlers::UseMove.add(:DIVE,proc { |move,pokemon|
+  wasdiving = $PokemonGlobal.diving
+  if $PokemonGlobal.diving
+    dive_map_id = nil
+    GameData::MapMetadata.each do |map_data|
+      next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
+      dive_map_id = map_data.id
+      break
+    end
+  else
+    map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+    dive_map_id = map_metadata.dive_map_id if map_metadata
+  end
+  next false if !dive_map_id
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
+  end
+  pbFadeOutIn {
+    $game_temp.player_new_map_id    = dive_map_id
+    $game_temp.player_new_x         = $game_player.x
+    $game_temp.player_new_y         = $game_player.y
+    $game_temp.player_new_direction = $game_player.direction
+    $PokemonGlobal.surfing = wasdiving
+    $PokemonGlobal.diving  = !wasdiving
+    pbUpdateVehicle
+    $scene.transfer_player(false)
+    $game_map.autoplay
+    $game_map.refresh
+  }
+  next true
+})
+
+
+
+#===============================================================================
+# Flash
+#===============================================================================
+HiddenMoveHandlers::CanUseMove.add(:FLASH,proc { |move,pkmn,showmsg|
+  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_FLASH,showmsg)
+  if !GameData::MapMetadata.exists?($game_map.map_id) ||
+     !GameData::MapMetadata.get($game_map.map_id).dark_map
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    next false
+  end
+  if $PokemonGlobal.flashUsed
+    pbMessage(_INTL("Flash is already being used.")) if showmsg
+    next false
+  end
+  next true
+})
+
+HiddenMoveHandlers::UseMove.add(:FLASH,proc { |move,pokemon|
+  darkness = $PokemonTemp.darknessSprite
+  next false if !darkness || darkness.disposed?
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
+  end
+  $PokemonGlobal.flashUsed = true
+  radiusDiff = 8*20/Graphics.frame_rate
+  while darkness.radius<darkness.radiusMax
+    Graphics.update
+    Input.update
+    pbUpdateSceneMap
+    darkness.radius += radiusDiff
+    darkness.radius = darkness.radiusMax if darkness.radius>darkness.radiusMax
+  end
+  next true
+})
+
+
+
+#===============================================================================
+# Fly
+#===============================================================================
+HiddenMoveHandlers::CanUseMove.add(:FLY,proc { |move,pkmn,showmsg|
+  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_FLY,showmsg)
+  if $game_player.pbHasDependentEvents?
+    pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
+    next false
+  end
+  if !GameData::MapMetadata.exists?($game_map.map_id) ||
+     !GameData::MapMetadata.get($game_map.map_id).outdoor_map
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    next false
+  end
+  next true
+})
+
+HiddenMoveHandlers::UseMove.add(:FLY,proc { |move,pokemon|
+  if !$PokemonTemp.flydata
+    pbMessage(_INTL("Can't use that here."))
+    next false
+  end
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Item.get(:WINGSUIT).name))
+  end
+  pbFadeOutIn {
+    $game_temp.player_new_map_id    = $PokemonTemp.flydata[0]
+    $game_temp.player_new_x         = $PokemonTemp.flydata[1]
+    $game_temp.player_new_y         = $PokemonTemp.flydata[2]
+    $game_temp.player_new_direction = 2
+    $PokemonTemp.flydata = nil
+    $scene.transfer_player
+    $game_map.autoplay
+    $game_map.refresh
+  }
+  pbEraseEscapePoint
+  next true
+})
+
+
+
+#===============================================================================
+# Headbutt
+#===============================================================================
+def pbHeadbuttEffect(event=nil)
+  event = $game_player.pbFacingEvent(true) if !event
+  a = (event.x+(event.x/24).floor+1)*(event.y+(event.y/24).floor+1)
+  a = (a*2/5)%10   # Even 2x as likely as odd, 0 is 1.5x as likely as odd
+  b = $Trainer.public_ID % 10   # Practically equal odds of each value
+  chance = 1                             # ~50%
+  if a==b;                  chance = 8   # 10%
+  elsif a>b && (a-b).abs<5; chance = 5   # ~30.3%
+  elsif a<b && (a-b).abs>5; chance = 5   # ~9.7%
+  end
+  if rand(10)>=chance
+    pbMessage(_INTL("Nope. Nothing..."))
+  else
+    enctype = (chance==1) ? :HeadbuttLow : :HeadbuttHigh
+    if !pbEncounter(enctype)
+      pbMessage(_INTL("Nope. Nothing..."))
+    end
+  end
+end
+
+def pbHeadbutt(event=nil)
+  move = :HEADBUTT
+  movefinder = $Trainer.get_pokemon_with_move(move)
+  if !$DEBUG && !movefinder
+    pbMessage(_INTL("A Pokémon could be in this tree. Maybe a Pokémon could shake it."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("A Pokémon could be in this tree. Would you like to use Headbutt?"))
+    speciesname = (movefinder) ? movefinder.name : $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Move.get(move).name))
+    pbHiddenMoveAnimation(movefinder)
+    pbHeadbuttEffect(event)
+    return true
+  end
+  return false
+end
+
+HiddenMoveHandlers::CanUseMove.add(:HEADBUTT,proc { |move,pkmn,showmsg|
+  facingEvent = $game_player.pbFacingEvent
+  if !facingEvent || !facingEvent.name[/headbutttree/i]
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    next false
+  end
+  next true
+})
+
+HiddenMoveHandlers::UseMove.add(:HEADBUTT,proc { |move,pokemon|
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
+  end
+  facingEvent = $game_player.pbFacingEvent
+  pbHeadbuttEffect(facingEvent)
+})
+
+
+
+#===============================================================================
+# Rock Smash
+#===============================================================================
+def pbRockSmashRandomEncounter
+  if $PokemonEncounters.encounter_triggered?(:RockSmash, false, false)
+    pbEncounter(:RockSmash)
+  end
+end
+
+def pbRockSmash
+  if !$PokemonBag.pbHasItem?(:HAMMER)
+    pbMessage(_INTL("It's a rugged rock, but a Pokémon may be able to smash it."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("This rock appears to be breakable. Would you like to use Rock Smash?"))
+    speciesname = $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:HAMMER).name))
+    return true
+  end
+  return false
+end
+
+HiddenMoveHandlers::CanUseMove.add(:ROCKSMASH,proc { |move,pkmn,showmsg|
+  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_ROCKSMASH,showmsg)
+  facingEvent = $game_player.pbFacingEvent
+  if !facingEvent || !facingEvent.name[/smashrock/i]
+    pbMessage(_INTL("Can't use that here.")) if showmsg
+    next false
+  end
+  next true
+})
+
+HiddenMoveHandlers::UseMove.add(:ROCKSMASH,proc { |move,pokemon|
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Item.get(:HAMMER).name))
+  end
+  facingEvent = $game_player.pbFacingEvent
+  if facingEvent
+    pbSmashEvent(facingEvent)
+    pbRockSmashRandomEncounter
+    pbRockSmashRandomItem
+  end
+  next true
+})
+
+
+
+#===============================================================================
+# Strength
+#===============================================================================
+def pbStrength
+  if $PokemonMap.strengthUsed
+    pbMessage(_INTL("Strength made it possible to move boulders around."))
+    return false
+  end
+  if !$PokemonBag.pbHasItem?(:FULCRUM)
+    pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside."))
+    return false
+  end
+  pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside.\1"))
+  if pbConfirmMessage(_INTL("Would you like to use Strength?"))
+    speciesname = $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:FULCRUM).name))
+    pbMessage(_INTL("{1}'s Strength made it possible to move boulders around!",speciesname))
+    $PokemonMap.strengthUsed = true
+    return true
+  end
+  return false
+end
+
+Events.onAction += proc { |_sender,_e|
+  facingEvent = $game_player.pbFacingEvent
+  pbStrength if facingEvent && facingEvent.name[/strengthboulder/i]
+}
+
+HiddenMoveHandlers::CanUseMove.add(:STRENGTH,proc { |move,pkmn,showmsg|
+  next false if !$PokemonBag.pbHasItem?(:FULCRUM)
+  if $PokemonMap.strengthUsed
+    pbMessage(_INTL("Strength is already being used.")) if showmsg
+    next false
+  end
+  next true
+})
+
+HiddenMoveHandlers::UseMove.add(:STRENGTH,proc { |move,pokemon|
+  if !pbHiddenMoveAnimation(pokemon)
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:FULCRUM).name))
+  end
+  pbMessage(_INTL("The {1}'s Strength made it possible to move boulders around!",GameData::Item.get(:FULCRUM).name))
+  $PokemonMap.strengthUsed = true
+  next true
+})
+
+
+
+#===============================================================================
+# Surf
+#===============================================================================
+def pbSurf
+  return false if $game_player.pbFacingEvent
+  return false if $game_player.pbHasDependentEvents?
+  if !$PokemonBag.pbHasItem?(:HOVERCRAFT)
+    return false
+  end
+  if pbConfirmMessage(_INTL("The water is a deep blue...\nWould you like to surf on it?"))
+    speciesname = $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:HOVERCRAFT).name))
+    pbCancelVehicles
+    surfbgm = GameData::Metadata.get.surf_BGM
+    pbCueBGM(surfbgm,0.5) if surfbgm
+    pbStartSurfing
+    return true
+  end
+  return false
+end
+
+def pbStartSurfing
+  pbCancelVehicles
+  $PokemonEncounters.reset_step_count
+  $PokemonGlobal.surfing = true
+  pbUpdateVehicle
+  $PokemonTemp.surfJump = $MapFactory.getFacingCoords($game_player.x,$game_player.y,$game_player.direction)
+  pbJumpToward
+  $PokemonTemp.surfJump = nil
+  $game_player.check_event_trigger_here([1,2])
+end
+
+def pbEndSurf(_xOffset,_yOffset)
+  return false if !$PokemonGlobal.surfing
+  x = $game_player.x
+  y = $game_player.y
+  if $game_map.terrain_tag(x,y).can_surf && !$game_player.pbFacingTerrainTag.can_surf
+    $PokemonTemp.surfJump = [x,y]
+    if pbJumpToward(1,false,true)
+      $game_map.autoplayAsCue
+      $game_player.increase_steps
+      result = $game_player.check_event_trigger_here([1,2])
+      pbOnStepTaken(result)
+    end
+    $PokemonTemp.surfJump = nil
+    return true
+  end
+  return false
+end
+
+def pbTransferSurfing(mapid,xcoord,ycoord,direction=$game_player.direction)
+  pbFadeOutIn {
+    $game_temp.player_new_map_id    = mapid
+    $game_temp.player_new_x         = xcoord
+    $game_temp.player_new_y         = ycoord
+    $game_temp.player_new_direction = direction
+    $scene.transfer_player(false)
+    $game_map.autoplay
+    $game_map.refresh
+  }
+end
+
+Events.onAction += proc { |_sender,_e|
+  next if $PokemonGlobal.surfing
+  next if GameData::MapMetadata.exists?($game_map.map_id) &&
+          GameData::MapMetadata.get($game_map.map_id).always_bicycle
+  next if !$game_player.pbFacingTerrainTag.can_surf_freely
+  next if !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player)
+  pbSurf
+}
+
+HiddenMoveHandlers::CanUseMove.add(:SURF,proc { |move,pkmn,showmsg|
+  next false if !$PokemonBag.pbHasItem?(:HOVERCRAFT)
+  if $PokemonGlobal.surfing
+    pbMessage(_INTL("You're already surfing.")) if showmsg
+    next false
+  end
+  if $game_player.pbHasDependentEvents?
+    pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
+    next false
+  end
+  if GameData::MapMetadata.exists?($game_map.map_id) &&
+     GameData::MapMetadata.get($game_map.map_id).always_bicycle
+    pbMessage(_INTL("Let's enjoy cycling!")) if showmsg
+    next false
+  end
+  if !$game_player.pbFacingTerrainTag.can_surf_freely ||
+     !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player)
+    pbMessage(_INTL("No surfing here!")) if showmsg
+    next false
+  end
+  next true
+})
+
+HiddenMoveHandlers::UseMove.add(:SURF,proc { |move,pokemon|
+  $game_temp.in_menu = false
+  pbCancelVehicles
+  if !pbHiddenMoveAnimation(pokemon)
+      pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
+  end
+  surfbgm = GameData::Metadata.get.surf_BGM
+  pbCueBGM(surfbgm,0.5) if surfbgm
+  pbStartSurfing
+  next true
+})
+
+
+#===============================================================================
+# Waterfall
+#===============================================================================
+def pbAscendWaterfall
+  return if $game_player.direction != 8   # Can't ascend if not facing up
+  terrain = $game_player.pbFacingTerrainTag
+  return if !terrain.waterfall && !terrain.waterfall_crest
+  oldthrough   = $game_player.through
+  oldmovespeed = $game_player.move_speed
+  $game_player.through    = true
+  $game_player.move_speed = 2
+  loop do
+    $game_player.move_up
+    terrain = $game_player.pbTerrainTag
+    break if !terrain.waterfall && !terrain.waterfall_crest
+  end
+  $game_player.through    = oldthrough
+  $game_player.move_speed = oldmovespeed
+end
+
+def pbDescendWaterfall
+  return if $game_player.direction != 2   # Can't descend if not facing down
+  terrain = $game_player.pbFacingTerrainTag
+  return if !terrain.waterfall && !terrain.waterfall_crest
+  oldthrough   = $game_player.through
+  oldmovespeed = $game_player.move_speed
+  $game_player.through    = true
+  $game_player.move_speed = 2
+  loop do
+    $game_player.move_down
+    terrain = $game_player.pbTerrainTag
+    break if !terrain.waterfall && !terrain.waterfall_crest
+  end
+  $game_player.through    = oldthrough
+  $game_player.move_speed = oldmovespeed
+end
+
+def pbWaterfall
+  if !$PokemonBag.pbHasItem?(:AQUAROCKET)
+    pbMessage(_INTL("A wall of water is crashing down with a mighty roar."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("It's a large waterfall. Would you like to use Waterfall?"))
+    speciesname = $Trainer.name
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:AQUAROCKET).name))
+    pbAscendWaterfall
+    return true
+  end
+  return false
+end
+
+Events.onAction += proc { |_sender,_e|
+  terrain = $game_player.pbFacingTerrainTag
+  if terrain.waterfall
+    pbWaterfall
+  elsif terrain.waterfall_crest
+    pbMessage(_INTL("A wall of water is crashing down with a mighty roar."))
+  end
+}
+
+ItemHandlers::UseFromBag.add(:CHAINSAW,proc{|item|
+  next canUseMoveCut? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:CHAINSAW,proc{|item|
+  useMoveCut if canUseMoveCut?
+})
+
+ItemHandlers::UseFromBag.add(:SCUBATANK,proc{|item|
+   next canUseMoveDive? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:SCUBATANK,proc{|item|
+   useMoveDive if canUseMoveDive?
+})
+
+ItemHandlers::UseFromBag.add(:TORCH,proc{|item|
+   next canUseMoveFlash? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:TORCH,proc{|item|
+   useMoveFlash if canUseMoveFlash?
+})
+
+ItemHandlers::UseFromBag.add(:WINGSUIT,proc{|item|
+   next canUseMoveFly? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:WINGSUIT,proc{|item|
+   useMoveFly if canUseMoveFly?
+})
+
+ItemHandlers::UseFromBag.add(:HAMMER,proc{|item|
+   next canUseMoveRockSmash? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:HAMMER,proc{|item|
+   useMoveRockSmash if canUseMoveRockSmash?
+})
+
+ItemHandlers::UseFromBag.add(:FULCRUM,proc{|item|
+   next canUseMoveStrength? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:FULCRUM,proc{|item|
+   useMoveStrength if canUseMoveStrength?
+})
+
+ItemHandlers::UseFromBag.add(:HOVERCRAFT,proc{|item|
+   next canUseMoveSurf? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:HOVERCRAFT,proc{|item|
+   useMoveSurf if canUseMoveSurf?
+})
+
+ItemHandlers::UseFromBag.add(:AQUAROCKET,proc{|item|
+   next canUseMoveWaterfall? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:AQUAROCKET,proc{|item|
+   useMoveWaterfall if canUseMoveWaterfall?
+})
+
+ItemHandlers::UseFromBag.add(:HIKINGGEAR,proc{|item|
+   next canUseMoveRockClimb? ? 2 : 0
+})
+
+ItemHandlers::UseInField.add(:HIKINGGEAR,proc{|item|
+   useMoveRockClimb if canUseMoveRockClimb?
+})
+ItemHandlers::UseFromBag.add(:ESCAPEROPE,proc { |item|
+  if $game_player.pbHasDependentEvents?
+    pbMessage(_INTL("It can't be used when you have someone with you."))
+    next 0
+  end
+  if ($PokemonGlobal.escapePoint rescue false) && $PokemonGlobal.escapePoint.length>0
+    next 2   # End screen and consume item
+  end
+  pbMessage(_INTL("Can't use that here."))
+  next 0
+})
 ItemHandlers::UseOnPokemon.add(:RARECANDY,proc { |item,pkmn,scene|
   if pkmn.level>=GameData::GrowthRate.max_level || pkmn.shadowPokemon? || pkmn.level>=$game_variables[106]
     scene.pbDisplay(_INTL("It won't have any effect."))
@@ -2086,81 +2807,7 @@ BattleHandlers::DamageCalcUserItem.add(:TEMPORALPLATE,
   }
 )
 
-ItemHandlers::UseFromBag.add(:CHAINSAW,proc{|item|
-   next canUseMoveCut? ? 2 : 0
-})
 
-ItemHandlers::UseInField.add(:CHAINSAW,proc{|item|
-   useMoveCut if canUseMoveCut?
-})
-
-ItemHandlers::UseFromBag.add(:SCUBATANK,proc{|item|
-   next canUseMoveDive? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:SCUBATANK,proc{|item|
-   useMoveDive if canUseMoveDive?
-})
-
-ItemHandlers::UseFromBag.add(:TORCH,proc{|item|
-   next canUseMoveFlash? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:TORCH,proc{|item|
-   useMoveFlash if canUseMoveFlash?
-})
-
-ItemHandlers::UseFromBag.add(:WINGSUIT,proc{|item|
-   next canUseMoveFly? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:WINGSUIT,proc{|item|
-   useMoveFly if canUseMoveFly?
-})
-
-ItemHandlers::UseInField.add(:ITEMCRAFTER,proc{|item|
-   useItemCrafter
-})
-
-ItemHandlers::UseFromBag.add(:HAMMER,proc{|item|
-   next canUseMoveRockSmash? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:HAMMER,proc{|item|
-   useMoveRockSmash if canUseMoveRockSmash?
-})
-
-ItemHandlers::UseFromBag.add(:FULCRUM,proc{|item|
-   next canUseMoveStrength? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:FULCRUM,proc{|item|
-   useMoveStrength if canUseMoveStrength?
-})
-
-ItemHandlers::UseFromBag.add(:HOVERCRAFT,proc{|item|
-   next canUseMoveSurf? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:HOVERCRAFT,proc{|item|
-   useMoveSurf if canUseMoveSurf?
-})
-
-ItemHandlers::UseFromBag.add(:AQUAROCKET,proc{|item|
-   next canUseMoveWaterfall? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:AQUAROCKET,proc{|item|
-   useMoveWaterfall if canUseMoveWaterfall?
-})
-
-ItemHandlers::UseFromBag.add(:HIKINGGEAR,proc{|item|
-   next canUseMoveRockClimb? ? 2 : 0
-})
-
-ItemHandlers::UseInField.add(:HIKINGGEAR,proc{|item|
-   useMoveRockClimb if canUseMoveRockClimb?
-})
 #===================================
 # Misc
 #===================================
