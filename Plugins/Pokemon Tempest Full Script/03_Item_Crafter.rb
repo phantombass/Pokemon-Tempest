@@ -37,16 +37,16 @@ def useItemCrafter
   pbMessage(_INTL("What would you like to Craft?\\ch[34,11,Chainsaw,Torch,Fulcrum,Hiking Gear,Aqua Rocket, Scuba Tank,Hovercraft,Escape Rope,Hammer,Wingsuit]"))
   choice = $game_variables[Items::Choice]
   case choice
-  when 0; pbItemcraft(GameData::Item.get(CHAINSAW))
-  when 1; pbItemcraft(GameData::Item.get(TORCH))
-  when 2; pbItemcraft(GameData::Item.get(FULCRUM))
-  when 3; pbItemcraft(GameData::Item.get(HIKINGGEAR))
-  when 4; pbItemcraft(GameData::Item.get(AQUAROCKET))
-  when 5; pbItemcraft(GameData::Item.get(SCUBATANK))
-  when 6; pbItemcraft(GameData::Item.get(HOVERCRAFT))
-  when 7; pbItemcraft(GameData::Item.get(ESCAPEROPE))
-  when 8; pbItemcraft(GameData::Item.get(HAMMER))
-  when 9; pbItemcraft(GameData::Item.get(WINGSUIT))
+  when 0; pbItemcraft(GameData::Item.get(:CHAINSAW))
+  when 1; pbItemcraft(GameData::Item.get(:TORCH))
+  when 2; pbItemcraft(GameData::Item.get(:FULCRUM))
+  when 3; pbItemcraft(GameData::Item.get(:HIKINGGEAR))
+  when 4; pbItemcraft(GameData::Item.get(:AQUAROCKET))
+  when 5; pbItemcraft(GameData::Item.get(:SCUBATANK))
+  when 6; pbItemcraft(GameData::Item.get(:HOVERCRAFT))
+  when 7; pbItemcraft(GameData::Item.get(:ESCAPEROPE))
+  when 8; pbItemcraft(GameData::Item.get(:HAMMER))
+  when 9; pbItemcraft(GameData::Item.get(:WINGSUIT))
   end
 end
 
