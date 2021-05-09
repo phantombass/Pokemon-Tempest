@@ -130,7 +130,6 @@ class Vector
   #  updates vector calculation based on incremental speed
   #-----------------------------------------------------------------------------
   def update
-    return if self.finished?
     @x += ((@set[0] - @x)*@inc)
     @y += ((@set[1] - @y)*@inc)
     @angle += ((@set[2] - @angle)*@inc)

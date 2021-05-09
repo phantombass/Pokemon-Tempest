@@ -751,7 +751,7 @@ class PokeBattle_Scene
           else
             wasTargeting = true
             @bagWindow.sprites["back"].opacity = 0
-            idxTarget = pbChooseTarget(idxBattler, PBTargets::Foe, {})
+            idxTarget = pbChooseTarget(idxBattler, GameData::Target.get(:Foe), {})
             if idxTarget >= 0
               ret = item
               break if yield item.id, useType, idxTarget, -1, self

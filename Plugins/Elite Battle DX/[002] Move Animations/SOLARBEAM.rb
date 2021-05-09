@@ -11,7 +11,7 @@ end
 
 EliteBattle.defineMoveAnimation(:SOLARBEAM_CHARGE) do
   vector = @scene.getRealVector(@userIndex, @userIsPlayer)
-  factor = @targetIsPlayer ? 2 : 1
+  factor = @userIsPlayer ? 2 : 1
   # set up animation
   fp = {}
   fp["bg"] = Sprite.new(@viewport)
@@ -109,15 +109,15 @@ EliteBattle.defineMoveAnimation(:SOLARBEAM_ATK) do
   @sprites["battlebg"].defocus
   for i in 0...96
     pbSEPlay("Anim/Psych Up",80) if i == 48
+    ax, ay = @userSprite.getAnchor
+    cx, cy = @targetSprite.getCenter(true)
     for j in 0...72
       if fp["#{j}"].opacity == 0 && fp["#{j}"].tone.gray == 0
-        cx, cy = @userSprite.getAnchor
-        dx[j] = cx - 32*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = cy - 32*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
+        dx[j] = ax - 32*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 32*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
         fp["#{j}"].x = dx[j]
         fp["#{j}"].y = dy[j]
       end
-      cx, cy = @targetSprite.getCenter(true)
       next if j>(i)
       x2 = cx - 32*@targetSprite.zoom_x + rndx[j]*@targetSprite.zoom_x
       y2 = cy - 32*@targetSprite.zoom_y + rndy[j]*@targetSprite.zoom_y
@@ -136,7 +136,6 @@ EliteBattle.defineMoveAnimation(:SOLARBEAM_ATK) do
     end
     fp["bg"].opacity += 10 if fp["bg"].opacity < 255*0.75
     if i >= 32
-      cx, cy = @targetSprite.getCenter(true)
       @targetSprite.tone.red += 5.4 if @targetSprite.tone.red < 194.4
       @targetSprite.tone.green += 3.4 if @targetSprite.tone.green < 122.4
       @targetSprite.tone.blue += 0.15 if @targetSprite.tone.blue < 5.4
@@ -150,7 +149,6 @@ EliteBattle.defineMoveAnimation(:SOLARBEAM_ATK) do
     @scene.wait(1,true)
   end
   20.times do
-    cx, cy = @targetSprite.getCenter(true)
     @targetSprite.tone.red -= 9.7
     @targetSprite.tone.green -= 6.1
     @targetSprite.tone.blue -= 0.27

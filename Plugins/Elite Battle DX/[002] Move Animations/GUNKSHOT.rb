@@ -60,20 +60,19 @@ EliteBattle.defineMoveAnimation(:GUNKSHOT) do
   # shoot first
   for i in 0...96
     @vector.set(vector) if i == 16 # change vector
+    ax, ay = @userSprite.getAnchor
+    cx, cy = @targetSprite.getCenter(true)
     for j in 0...128
       next if j>(i*2)
       if !fp["#{j}"].visible
-        cx, cy = @userSprite.getAnchor
-        dx[j] = cx - 32*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = cy - 32*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
+        dx[j] = ax - 32*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 32*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
         fp["#{j}"].x = dx[j]
         fp["#{j}"].y = dy[j]
         fp["#{j}"].visible = true
       end
-      cx, cy = @userSprite.getAnchor
-      x0 = cx - 32*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-      y0 = cy - 32*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
-      cx, cy = @targetSprite.getCenter(true)
+      x0 = ax - 32*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+      y0 = ay - 32*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
       x2 = cx - 96*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
       y2 = cy - 96*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
       fp["#{j}"].x += (x2 - x0)*0.1
@@ -85,7 +84,6 @@ EliteBattle.defineMoveAnimation(:GUNKSHOT) do
     for l in 0...12
       next if i < 16
       next if l>((i-16)/4)
-      cx, cy = @targetSprite.getCenter(true)
       if fp["p#{l}"].opacity <= 0 && i < 64
         fp["p#{l}"].opacity = 255 - rand(101)
         fp["p#{l}"].x = cx

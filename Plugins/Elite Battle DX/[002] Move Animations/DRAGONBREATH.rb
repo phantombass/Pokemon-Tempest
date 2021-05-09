@@ -35,13 +35,14 @@ EliteBattle.defineMoveAnimation(:DRAGONBREATH) do
   for i in 0...96
     pbSEPlay("EBDX/Anim/dragon2") if i==8
     pbSEPlay("EBDX/Anim/dragon1") if i==74
+    uax, uay = @userSprite.getAnchor(true)
+    cx, cy = @targetSprite.getCenter(true)
     for m in 0...2
       for j in 0...96
         next if j>(i*2)
         if fp["#{j}#{m}"].opacity == 0 && fp["#{j}#{m}"].tone.gray == 0
-          cx, cy = @userSprite.getAnchor(true)
-          dx[m][j] = cx - [8,64][m]*@userSprite.zoom_x*0.5 + rndx[m][j]*@userSprite.zoom_x*0.5
-          dy[m][j] = cy - [8,64][m]*@userSprite.zoom_y*0.5 + rndy[m][j]*@userSprite.zoom_y*0.5
+          dx[m][j] = uax - [8,64][m]*@userSprite.zoom_x*0.5 + rndx[m][j]*@userSprite.zoom_x*0.5
+          dy[m][j] = uay - [8,64][m]*@userSprite.zoom_y*0.5 + rndy[m][j]*@userSprite.zoom_y*0.5
           fp["#{j}#{m}"].x = dx[m][j]
           fp["#{j}#{m}"].y = dy[m][j]
           if m == 1
@@ -51,10 +52,8 @@ EliteBattle.defineMoveAnimation(:DRAGONBREATH) do
             fp["#{j}#{m}"].zoom_y = z
           end
         end
-        cx, cy = @userSprite.getAnchor(true)
         x0 = dx[m][j]
         y0 = dy[m][j]
-        cx, cy = @targetSprite.getCenter(true)
         x2 = cx - [8,64][m]*@targetSprite.zoom_x*0.5 + rndx[m][j]*@targetSprite.zoom_x*0.5
         y2 = cy - [8,64][m]*@targetSprite.zoom_y*0.5 + rndy[m][j]*@targetSprite.zoom_y*0.5
         fp["#{j}#{m}"].x += (x2 - x0)*0.1

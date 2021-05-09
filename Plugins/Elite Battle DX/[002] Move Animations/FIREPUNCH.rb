@@ -8,7 +8,7 @@ end
 #  Fire Punch
 #-------------------------------------------------------------------------------
 EliteBattle.defineMoveAnimation(:FIREPUNCH) do | args |
-  kick = *args; kick = false if kick.nil?
+  kick = args[0]; kick = false if kick.nil?
   # set up animation
   fp = {}
   rndx = []

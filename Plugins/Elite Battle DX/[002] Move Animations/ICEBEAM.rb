@@ -37,15 +37,15 @@ EliteBattle.defineMoveAnimation(:ICEBEAM) do
   # start animation
   for i in 0...96
     pbSEPlay("Anim/Ice8") if i == 12
+    ax, ay = @userSprite.getAnchor
+    cx, cy = @targetSprite.getCenter(true)
     for j in 0...72
       if fp["#{j}"].opacity == 0 && fp["#{j}"].tone.gray == 0
-        cx, cy = @userSprite.getAnchor
-        dx[j] = cx - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = cy - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
+        dx[j] = ax - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
         fp["#{j}"].x = dx[j]
         fp["#{j}"].y = dy[j]
       end
-      cx, cy = @targetSprite.getCenter(true)
       next if j>(i)
       x2 = cx - 8*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
       y2 = cy - 8*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
@@ -68,7 +68,6 @@ EliteBattle.defineMoveAnimation(:ICEBEAM) do
     end
     pbSEPlay("Anim/Ice1") if i>32 && (i-32)%4==0
     for j in 0...16
-      cx, cy = @targetSprite.getCenter(true)
       if fp["c#{j}"].opacity == 0 && fp["c#{j}"].tone.gray == 0
         fp["c#{j}"].zoom_x = factor*@targetSprite.zoom_x
         fp["c#{j}"].zoom_y = factor*@targetSprite.zoom_x
@@ -94,7 +93,6 @@ EliteBattle.defineMoveAnimation(:ICEBEAM) do
     end
     fp["bg"].opacity += 5 if fp["bg"].opacity < 255*0.5
     if i >= 32
-      cx, cy = @targetSprite.getCenter(true)
       @targetSprite.tone.red += 5.4 if @targetSprite.tone.red < 108
       @targetSprite.tone.green += 6.4 if @targetSprite.tone.green < 128
       @targetSprite.tone.blue += 8 if @targetSprite.tone.blue < 160
@@ -106,7 +104,6 @@ EliteBattle.defineMoveAnimation(:ICEBEAM) do
     @scene.wait(1,true)
   end
   20.times do
-    cx, cy = @targetSprite.getCenter(true)
     @targetSprite.tone.red -= 5.4
     @targetSprite.tone.green -= 6.4
     @targetSprite.tone.blue -= 8

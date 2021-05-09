@@ -2,7 +2,7 @@
 #  Sludge Bomb
 #-------------------------------------------------------------------------------
 EliteBattle.defineMoveAnimation(:SLUDGEBOMB) do | args |
-  bomb = *args; bomb = true if bomb.nil?
+  bomb = args[0]; bomb = true if bomb.nil?
   fp = {}
   fp["sludge"] = TrailingSprite.new(@viewport,pbBitmap("Graphics/EBDX/Animations/Moves/eb429"))
   fp["sludge"].keyFrame = 1

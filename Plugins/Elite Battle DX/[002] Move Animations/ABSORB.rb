@@ -14,7 +14,7 @@ end
 #  Absorb
 #-------------------------------------------------------------------------------
 EliteBattle.defineMoveAnimation(:ABSORB) do | args |
-  type = *args; type = "absorb" if type.nil?
+  type = args[0]; type = "absorb" if type.nil?
   # set up animation
   fp = {}
   fp["bg"] = Sprite.new(@viewport)

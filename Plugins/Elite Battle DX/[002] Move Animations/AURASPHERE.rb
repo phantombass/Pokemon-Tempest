@@ -137,10 +137,12 @@ EliteBattle.defineMoveAnimation(:AURASPHERE) do
   end
   @targetSprite.ox = @targetSprite.bitmap.width/2
   16.times do
+    fp["bg"].update
     @targetSprite.still
     @scene.wait(1,true)
   end
   16.times do
+    fp["bg"].update
     fp["bg"].opacity -= 16
     @scene.wait(1,true)
   end

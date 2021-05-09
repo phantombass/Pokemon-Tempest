@@ -31,18 +31,18 @@ EliteBattle.defineMoveAnimation(:WATERGUN) do
   end
   for i in 0...64
     pbSEPlay("EBDX/Anim/water1",60) if i%4==0 && i < 48
+    ax, ay = @userSprite.getAnchor
+    cx, cy = @targetSprite.getCenter(true)
     for j in 0...64
       if fp["#{j}"].opacity == 0
-        cx, cy = @userSprite.getAnchor
-        dx[j] = cx - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = cy - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
+        dx[j] = ax - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
         fp["#{j}"].x = dx[j]
         fp["#{j}"].y = dy[j]
         fp["#{j}"].zoom_x = 0.8#(!@targetIsPlayer ? 1.2 : 0.8)#@userSprite.zoom_x
         fp["#{j}"].zoom_y = 0.8#(!@targetIsPlayer ? 1.2 : 0.8)#@userSprite.zoom_y
         fp["#{j}"].opacity = 128 if !(j>i*2)
       end
-      cx, cy = @targetSprite.getCenter(true)
       next if j>(i*2)
       x2 = cx - 8*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
       y2 = cy - 8*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
@@ -67,7 +67,6 @@ EliteBattle.defineMoveAnimation(:WATERGUN) do
     for l in 0...12
       next if i < 2
       next if l>((i-6)/4)
-      cx, cy = @targetSprite.getCenter(true)
       if fp["p#{l}"].opacity <= 0 && i < 48
         fp["p#{l}"].opacity = 255 - rand(101)
         fp["p#{l}"].x = cx

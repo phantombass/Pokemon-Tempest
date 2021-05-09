@@ -33,15 +33,15 @@ EliteBattle.defineMoveAnimation(:CHARGEBEAM) do
   pbSEPlay("Anim/Pollen")
   for i in 0...96
     pbSEPlay("Anim/Paralyze1") if i%8==0
+    cx, cy = @targetSprite.getCenter(true)
+    ax, ay = @userSprite.getAnchor
     for j in 0...72
       if fp["#{j}"].opacity == 0 && fp["#{j}"].tone.gray == 0
-        cx, cy = @userSprite.getAnchor
-        dx[j] = cx - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = cy - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
+        dx[j] = ax - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
         fp["#{j}"].x = dx[j]
         fp["#{j}"].y = dy[j]
       end
-      cx, cy = @targetSprite.getCenter(true)
       next if j>(i)
       x2 = cx - 8*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
       y2 = cy - 8*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5

@@ -73,12 +73,12 @@ EliteBattle.defineMoveAnimation(:ICEPUNCH) do
     end
     fp["bg"].opacity += 4 if  i < 40
     if i >= 40
-      if i >= 56
+      if i >= 56 && i < 72
         @targetSprite.tone.red -= 8
         @targetSprite.tone.green -= 8
         @targetSprite.tone.blue -= 8
         fp["bg"].opacity -= 10
-      else
+      elsif i < 56
         @targetSprite.tone.red += 8
         @targetSprite.tone.green += 8
         @targetSprite.tone.blue += 8

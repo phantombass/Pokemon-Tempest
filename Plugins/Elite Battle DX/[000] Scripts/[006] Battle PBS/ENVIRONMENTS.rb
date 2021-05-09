@@ -37,7 +37,8 @@ EliteBattle.configProcess(:ENVIRONMENTS) do
   }, :BACKDROP, TerrainEBDX::TALLGRASS)
   # concrete base when in cities
   EliteBattle.add_data(proc{ |terrain, environ|
-    next ($game_map.name.downcase).include?("city") || ($game_map.name.downcase).include?("town")
+    next (($game_map.name.downcase).include?("city") || ($game_map.name.downcase).include?("town")) &&
+         EliteBattle.outdoor_map?
   }, :BACKDROP, TerrainEBDX::CONCRETE)
   # water base when surfing and no water environment is defined
   EliteBattle.add_data(proc{ |terrain, environ|

@@ -78,20 +78,19 @@ EliteBattle.defineMoveAnimation(:LEAFSTORM) do
   pbSEPlay("EBDX/Anim/wind1",90)
   for i in 0...96
     pbSEPlay("EBDX/Anim/grass1",60) if i%3==0 && i < 64
+    ax, ay = @userSprite.getCenter
+    cx, cy = @targetSprite.getCenter(true)
     for j in 0...128
       next if j>(i*2)
       if !fp["#{j}"].visible
-        cx, cy = @userSprite.getCenter
-        dx[j] = cx - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = cy - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
+        dx[j] = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
         fp["#{j}"].x = dx[j]
         fp["#{j}"].y = dy[j]
         fp["#{j}"].visible = true
       end
-      cx, cy = @userSprite.getCenter
-      x0 = cx - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-      y0 = cy - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
-      cx, cy = @targetSprite.getCenter(true)
+      x0 = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+      y0 = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
       x2 = cx - 128*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
       y2 = cy - 128*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
       fp["#{j}"].x += (x2 - x0)*0.1
@@ -105,7 +104,7 @@ EliteBattle.defineMoveAnimation(:LEAFSTORM) do
         fp["#{j}"].opacity -= 51 if nextx < cx && nexty > cy
       end
     end
-    fp["cir"].x, fp["cir"].y = @userSprite.getCenter
+    fp["cir"].x, fp["cir"].y = ax, ay
     fp["cir"].angle += 16*(@userIsPlayer ? -1 : 1)
     fp["cir"].opacity -= (i>=72) ? 51 : 2
     k += 1 if i%4==0; k = 0 if k > 1

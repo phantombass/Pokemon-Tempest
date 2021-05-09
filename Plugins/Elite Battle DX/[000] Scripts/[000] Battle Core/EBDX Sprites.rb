@@ -509,6 +509,7 @@ class DynamicPokemonSprite
   # sets animation frame
   #-----------------------------------------------------------------------------
   def setFrame(frame)
+    return if !@bitmap
     @bitmap.to_frame(frame)
     @sprite.bitmap = @bitmap.bitmap.clone
     @shadow.bitmap = @bitmap.bitmap.clone
@@ -697,6 +698,7 @@ class DynamicTrainerSprite  <  DynamicPokemonSprite
   def totalFrames; @bitmap.animationFrames; end
   # jumps to last animation frame of sprite
   def toLastFrame
+    return if !@bitmap
     @bitmap.to_frame("last")
     @sprite.bitmap = @bitmap.bitmap
     @shadow.bitmap = @bitmap.bitmap
@@ -708,7 +710,7 @@ class DynamicTrainerSprite  <  DynamicPokemonSprite
   #-----------------------------------------------------------------------------
   def setTrainerBitmap(file = nil)
     # gets trainer ID
-    file = sprintf("Graphics/Trainers/%s", @trainer.trainer_type) if file.nil? && !@trainer.nil?
+    file = GameData::TrainerType.front_sprite_filename(@trainer.trainer_type) if file.nil? && !@trainer.nil?
     trainerid = file.nil? ? nil : EliteBattle.id_from_trainer_file(file) if !file.nil?
     # gets additional scale (if applicable)
     s = EliteBattle.get_trainer_data(trainerid, :SCALE, @trainer)
@@ -717,7 +719,8 @@ class DynamicTrainerSprite  <  DynamicPokemonSprite
     speed = (!sp.nil? && sp.is_a?(Numeric)) ? sp : 2
     # loads bitmap
     if !pbResolveBitmap(file)
-      EliteBattle.log.warn("Could not find the Trainer sprite: #{file}")
+      tfile = @trainer.nil? ? nil : "Graphics/Trainers/#{@trainer.trainer_type}"
+      EliteBattle.log.warn("Could not find the Trainer sprite: #{file.nil? ? tfile : file}")
       file = "Graphics/EBDX/Battlers/000"
     end
     @bitmap = BitmapEBDX.new(file, scale, speed)

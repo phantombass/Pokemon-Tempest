@@ -26,15 +26,15 @@ EliteBattle.defineMoveAnimation(:AURORABEAM) do
   @sprites["battlebg"].defocus
   for i in 0...128
     pbSEPlay("Anim/Ice1", 75) if i%8==0
+    cx, cy = @targetSprite.getCenter(true)
+    ax, ay = @userSprite.getAnchor
     for j in 0...36
       if fp["#{j}"].opacity == 0 && fp["#{j}"].tone.gray == 0
         fp["#{j}"].zoom_x = @userSprite.zoom_x
         fp["#{j}"].zoom_y = @userSprite.zoom_y
-        cx, cy = @userSprite.getAnchor
-        fp["#{j}"].x = cx
-        fp["#{j}"].y = cy
+        fp["#{j}"].x = ax
+        fp["#{j}"].y = ay
       end
-      cx, cy = @targetSprite.getCenter(true)
       next if j>(i/2)
       x2 = cx - 4*@targetSprite.zoom_x + rndx[j]*@targetSprite.zoom_x
       y2 = cy - 4*@targetSprite.zoom_y + rndy[j]*@targetSprite.zoom_y

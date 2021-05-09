@@ -85,8 +85,8 @@ EliteBattle.defineMoveAnimation(:FLASHCANNON) do
     for j in 0...8
       next if j > i/4
       fp["s#{j}"].opacity += 48
-      fp["s#{j}"].zoom_x -= 0.0625 if i > 4 + j*4
-      fp["s#{j}"].zoom_y -= 0.0625 if i > 4 + j*4
+      fp["s#{j}"].zoom_x -= 0.0625 if i > 4 + j*4 && fp["s#{j}"].zoom_x > 0
+      fp["s#{j}"].zoom_y -= 0.0625 if i > 4 + j*4 && fp["s#{j}"].zoom_y > 0
       fp["s#{j}"].x -= (cx - fp["s#{j}"].x)*0.01
       fp["s#{j}"].y -= (cy - fp["s#{j}"].y)*0.01
     end

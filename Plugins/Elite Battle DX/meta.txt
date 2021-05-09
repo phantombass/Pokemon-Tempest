@@ -1,5 +1,5 @@
 Name         = Elite Battle: DX
-Version      = 1.1.1
+Version      = 1.1.2
 Website      = https://luka-sj.com/res/ebdx
 Requires     = Luka's Scripting Utilities,3.2
 Requires     = v19 Hotfixes,1.0.3

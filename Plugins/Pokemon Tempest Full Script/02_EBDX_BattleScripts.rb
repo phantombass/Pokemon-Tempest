@@ -2,7 +2,7 @@ module BattleScripts
   #Rampaging Pokémon
   METANG = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -18,7 +18,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Metang's anger is shaking the cave!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -27,7 +27,7 @@ module BattleScripts
 
   CHERRIM = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -43,7 +43,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Cherrim's anger is shaking the cliffs!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -52,7 +52,7 @@ module BattleScripts
 
   ARIADOS = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -68,7 +68,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Ariados's anger is shaking the forest!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -77,7 +77,7 @@ module BattleScripts
 
   ELECTRODE = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -93,7 +93,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Electrode's anger is shaking the lab!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -102,7 +102,7 @@ module BattleScripts
 
   MACHOKE = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -118,7 +118,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Machoke's anger is shaking the caverns!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -127,7 +127,7 @@ module BattleScripts
 
   XATU = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -143,7 +143,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Xatu's anger is shaking the lab!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -152,7 +152,7 @@ module BattleScripts
 
   ABSOL = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -168,7 +168,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Absol's anger is shaking the area!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -177,7 +177,7 @@ module BattleScripts
 
   SIDEQUEST = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -193,7 +193,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("The Pokémon's anger is shaking the area!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -202,7 +202,7 @@ module BattleScripts
 
   GROUDON = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -218,7 +218,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Groudon's anger is shaking the mountain!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes
@@ -227,7 +227,7 @@ module BattleScripts
 
   KYOGRE = {
     "turnStart0" => proc do
-      $game_switches[81] = true
+
       # hide databoxes
       @scene.pbHideAllDataboxes
       # show flavor text
@@ -243,7 +243,7 @@ module BattleScripts
       EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
       @scene.pbDisplay("Kyogre's anger is shaking the cave!")
       # change the battle environment (use animation to transition)
-      @sprites["battlebg"].reconfigure(EBEnvironment::DIMENSION, :DISTORTION)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
       @scene.pbDisplay("Its anger distorted the dimensions!")
       # show databoxes
       @scene.pbShowAllDataboxes

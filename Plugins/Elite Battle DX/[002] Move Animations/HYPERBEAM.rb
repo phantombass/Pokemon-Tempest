@@ -70,20 +70,19 @@ EliteBattle.defineMoveAnimation(:HYPERBEAM) do
   @scene.wait(4,true)
   pbSEPlay("Anim/Psych Up")
   for i in 0...96
+    ax, ay = @userSprite.getAnchor
+    cx, cy = @targetSprite.getCenter(true)
     for j in 0...72
       if fp["#{j}"].opacity == 0 && fp["#{j}"].tone.gray == 0
-        cx, cy = @userSprite.getAnchor
-        dx[j] = cx - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = cy - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
+        dx[j] = ax - 8*@userSprite.zoom_x*0.5 + rndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 8*@userSprite.zoom_y*0.5 + rndy[j]*@userSprite.zoom_y*0.5
         fp["#{j}"].x = dx[j]
         fp["#{j}"].y = dy[j]
       end
       @scene.applySpriteProperties(fp["#{j}"],fp["#{j}2"])
       next if j>(i)
-      cx, cy = @userSprite.getAnchor
       x0 = dx[j]
       y0 = dy[j]
-      cx, cy = @targetSprite.getCenter(true)
       x2 = cx - 8*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
       y2 = cy - 8*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
       fp["#{j}"].x += (x2 - x0)*0.1
@@ -106,7 +105,7 @@ EliteBattle.defineMoveAnimation(:HYPERBEAM) do
       @targetSprite.still
     end
     pbSEPlay("Anim/Comet Punch") if i == 64
-    fp["cir"].x, fp["cir"].y = @userSprite.getAnchor
+    fp["cir"].x, fp["cir"].y = ax, ay
     fp["cir"].angle += 32
     fp["cir"].opacity += (i>72) ? -51 : 255
     fp["bg"].update
@@ -115,7 +114,7 @@ EliteBattle.defineMoveAnimation(:HYPERBEAM) do
       fp["#{m}s"].opacity -= 12
       fp["#{m}s"].zoom_x += 0.04*factor if fp["#{m}s"].opacity > 0
       fp["#{m}s"].zoom_y += 0.04*factor if fp["#{m}s"].opacity > 0
-      fp["#{m}s"].x, fp["#{m}s"].y = @userSprite.getAnchor
+      fp["#{m}s"].x, fp["#{m}s"].y = ax, ay
     end
     @vector.set(vector) if i == 32
     @vector.inc = 0.1 if i == 32

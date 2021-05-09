@@ -61,16 +61,16 @@ EliteBattle.defineMoveAnimation(:HYDROPUMP) do
   @scene.wait(4,true)
   for i in 0...96
     pbSEPlay("Anim/Water5") if i == 12
+    ax, ay = @userSprite.getAnchor
+    cx, cy = @targetSprite.getCenter(true)
     for m in 0...2
       for j in 0...20
         if fp["#{j}#{m}"].opacity == 0
-          cx, cy = @userSprite.getAnchor
-          dx[m][j] = cx - 8*@userSprite.zoom_x*0.5 + rndx[m][j]*@userSprite.zoom_x*0.5
-          dy[m][j] = cy - 8*@userSprite.zoom_y*0.5 + rndy[m][j]*@userSprite.zoom_y*0.5
+          dx[m][j] = ax - 8*@userSprite.zoom_x*0.5 + rndx[m][j]*@userSprite.zoom_x*0.5
+          dy[m][j] = ay - 8*@userSprite.zoom_y*0.5 + rndy[m][j]*@userSprite.zoom_y*0.5
           fp["#{j}#{m}"].x = dx[m][j]
           fp["#{j}#{m}"].y = dy[m][j]
         end
-        cx, cy = @targetSprite.getCenter(true)
         next if j>(i/4)
         x2 = cx - 8*@targetSprite.zoom_x*0.5 + rndx[m][j]*@targetSprite.zoom_x*0.5
         y2 = cy - 8*@targetSprite.zoom_y*0.5 + rndy[m][j]*@targetSprite.zoom_y*0.5
@@ -94,7 +94,6 @@ EliteBattle.defineMoveAnimation(:HYDROPUMP) do
     for l in 0...12
       next if i < 12
       next if l>((i-12)/4)
-      cx, cy = @targetSprite.getCenter(true)
       if fp["p#{l}"].opacity <= 0
         fp["p#{l}"].opacity = 255 - rand(101)
         fp["p#{l}"].x = cx
