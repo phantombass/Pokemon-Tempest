@@ -6,7 +6,7 @@
 # own item combinations and add them in their respective sections of this script.
 # Then to call in an event, simply add a Script command that says:
 #
-# pbItemcraft(PBItems::item), where item is the internal name of the item.
+# pbItemcraft(GameData::Item.get(item)), where item is the internal name of the item.
 ################################################################################
 ################################################################################
 
@@ -37,22 +37,22 @@ def useItemCrafter
   pbMessage(_INTL("What would you like to Craft?\\ch[34,11,Chainsaw,Torch,Fulcrum,Hiking Gear,Aqua Rocket, Scuba Tank,Hovercraft,Escape Rope,Hammer,Wingsuit]"))
   choice = $game_variables[Items::Choice]
   case choice
-  when 0; pbItemcraft(PBItems::CHAINSAW)
-  when 1; pbItemcraft(PBItems::TORCH)
-  when 2; pbItemcraft(PBItems::FULCRUM)
-  when 3; pbItemcraft(PBItems::HIKINGGEAR)
-  when 4; pbItemcraft(PBItems::AQUAROCKET)
-  when 5; pbItemcraft(PBItems::SCUBATANK)
-  when 6; pbItemcraft(PBItems::HOVERCRAFT)
-  when 7; pbItemcraft(PBItems::ESCAPEROPE)
-  when 8; pbItemcraft(PBItems::HAMMER)
-  when 9; pbItemcraft(PBItems::WINGSUIT)
+  when 0; pbItemcraft(GameData::Item.get(CHAINSAW))
+  when 1; pbItemcraft(GameData::Item.get(TORCH))
+  when 2; pbItemcraft(GameData::Item.get(FULCRUM))
+  when 3; pbItemcraft(GameData::Item.get(HIKINGGEAR))
+  when 4; pbItemcraft(GameData::Item.get(AQUAROCKET))
+  when 5; pbItemcraft(GameData::Item.get(SCUBATANK))
+  when 6; pbItemcraft(GameData::Item.get(HOVERCRAFT))
+  when 7; pbItemcraft(GameData::Item.get(ESCAPEROPE))
+  when 8; pbItemcraft(GameData::Item.get(HAMMER))
+  when 9; pbItemcraft(GameData::Item.get(WINGSUIT))
   end
 end
 
 def canItemCraft?(item)
   itemName = GameData::Item.get(item).name
-  return false if hasConst?(PBItems,item) && $PokemonBag.pbHasItem?(item)
+  return false if $PokemonBag.pbHasItem?(item)
   case itemName
   when "Wingsuit"
     return true if $PokemonBag.pbHasItem?(:WINGSUIT1) && $PokemonBag.pbHasItem?(:WINGSUIT2) && $PokemonBag.pbHasItem?(:WINGSUIT3)
