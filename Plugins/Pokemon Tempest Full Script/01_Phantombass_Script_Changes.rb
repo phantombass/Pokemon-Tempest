@@ -116,7 +116,7 @@ Events.onMapChange += proc {| sender, e |
 
 def pbChapterRelease
   meName = "Voltorb flip win"
-  if $game_switches[ChapterRelease::Four] && $game_switches[520] && $game_variables[ChapterRelease::Constant] == 0
+  if $game_switches[ChapterRelease::Four] && $game_switches[527] && $game_variables[ChapterRelease::Constant] == 0
     textColor = "7FE00000"
     if $game_switches[Mission::Vinny]
       leader = "Vinny"
