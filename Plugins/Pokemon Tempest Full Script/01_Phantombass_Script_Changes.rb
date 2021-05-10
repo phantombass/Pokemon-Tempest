@@ -5304,6 +5304,114 @@ class PokeBattle_Move
     def beamMove?;          return @flags[/p/]; end
 end
 
+class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
+  def ignoresSubstitute?(user); return true; end
+
+  def initialize(battle,move)
+    super
+    @statDown = [:EVASION,1]
+  end
+
+  def pbFailsAgainstTarget?(user,target)
+    targetSide = target.pbOwnSide
+    targetOpposingSide = target.pbOpposingSide
+    return false if targetSide.effects[PBEffects::AuroraVeil]>0 ||
+                    targetSide.effects[PBEffects::LightScreen]>0 ||
+                    targetSide.effects[PBEffects::Reflect]>0 ||
+                    targetSide.effects[PBEffects::Mist]>0 ||
+                    targetSide.effects[PBEffects::Safeguard]>0
+    return false if targetSide.effects[PBEffects::StealthRock] ||
+                    targetSide.effects[PBEffects::Spikes]>0 ||
+                    targetSide.effects[PBEffects::ToxicSpikes]>0 ||
+                    targetSide.effects[PBEffects::StickyWeb]
+    return false if Settings::MECHANICS_GENERATION >= 6 &&
+                    (targetOpposingSide.effects[PBEffects::StealthRock] ||
+                    targetOpposingSide.effects[PBEffects::Spikes]>0 ||
+                    targetOpposingSide.effects[PBEffects::ToxicSpikes]>0 ||
+                    targetOpposingSide.effects[PBEffects::StickyWeb] ||
+                    targetOpposingSide.effects[PBEffects::CometShards])
+    return false if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
+    return super
+  end
+
+  def pbEffectAgainstTarget(user,target)
+    if target.pbCanLowerStatStage?(@statDown[0],user,self)
+      target.pbLowerStatStage(@statDown[0],@statDown[1],user)
+    end
+    if target.pbOwnSide.effects[PBEffects::AuroraVeil]>0
+      target.pbOwnSide.effects[PBEffects::AuroraVeil] = 0
+      @battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!",target.pbTeam))
+    end
+    if target.pbOwnSide.effects[PBEffects::LightScreen]>0
+      target.pbOwnSide.effects[PBEffects::LightScreen] = 0
+      @battle.pbDisplay(_INTL("{1}'s Light Screen wore off!",target.pbTeam))
+    end
+    if target.pbOwnSide.effects[PBEffects::Reflect]>0
+      target.pbOwnSide.effects[PBEffects::Reflect] = 0
+      @battle.pbDisplay(_INTL("{1}'s Reflect wore off!",target.pbTeam))
+    end
+    if target.pbOwnSide.effects[PBEffects::Mist]>0
+      target.pbOwnSide.effects[PBEffects::Mist] = 0
+      @battle.pbDisplay(_INTL("{1}'s Mist faded!",target.pbTeam))
+    end
+    if target.pbOwnSide.effects[PBEffects::Safeguard]>0
+      target.pbOwnSide.effects[PBEffects::Safeguard] = 0
+      @battle.pbDisplay(_INTL("{1} is no longer protected by Safeguard!!",target.pbTeam))
+    end
+    if target.pbOwnSide.effects[PBEffects::StealthRock] ||
+       (Settings::MECHANICS_GENERATION >= 6 &&
+       target.pbOpposingSide.effects[PBEffects::StealthRock])
+      target.pbOwnSide.effects[PBEffects::StealthRock]      = false
+      target.pbOpposingSide.effects[PBEffects::StealthRock] = false if Settings::MECHANICS_GENERATION >= 6
+      @battle.pbDisplay(_INTL("{1} blew away stealth rocks!",user.pbThis))
+    end
+    if target.pbOwnSide.effects[PBEffects::Spikes]>0 ||
+       (Settings::MECHANICS_GENERATION >= 6 &&
+       target.pbOpposingSide.effects[PBEffects::Spikes]>0)
+      target.pbOwnSide.effects[PBEffects::Spikes]      = 0
+      target.pbOpposingSide.effects[PBEffects::Spikes] = 0 if Settings::MECHANICS_GENERATION >= 6
+      @battle.pbDisplay(_INTL("{1} blew away spikes!",user.pbThis))
+    end
+    if target.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 ||
+       (Settings::MECHANICS_GENERATION >= 6 &&
+       target.pbOpposingSide.effects[PBEffects::ToxicSpikes]>0)
+      target.pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
+      target.pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0 if Settings::MECHANICS_GENERATION >= 6
+      @battle.pbDisplay(_INTL("{1} blew away poison spikes!",user.pbThis))
+    end
+    if target.pbOwnSide.effects[PBEffects::StickyWeb] ||
+       (Settings::MECHANICS_GENERATION >= 6 &&
+       target.pbOpposingSide.effects[PBEffects::StickyWeb])
+      target.pbOwnSide.effects[PBEffects::StickyWeb]      = false
+      target.pbOpposingSide.effects[PBEffects::StickyWeb] = false if Settings::MECHANICS_GENERATION >= 6
+      @battle.pbDisplay(_INTL("{1} blew away sticky webs!",user.pbThis))
+    end
+    if target.pbOwnSide.effects[PBEffects::CometShards] ||
+       (Settings::MECHANICS_GENERATION >= 6 &&
+       target.pbOpposingSide.effects[PBEffects::CometShards])
+      target.pbOwnSide.effects[PBEffects::CometShards]      = false
+      target.pbOpposingSide.effects[PBEffects::CometShards] = false if Settings::MECHANICS_GENERATION >= 6
+      @battle.pbDisplay(_INTL("{1} blew away stealth rocks!",user.pbThis))
+    end
+    if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
+      case @battle.field.terrain
+      when :Electric
+        @battle.pbDisplay(_INTL("The electricity disappeared from the battlefield."))
+      when :Grassy
+        @battle.pbDisplay(_INTL("The grass disappeared from the battlefield."))
+      when :Misty
+        @battle.pbDisplay(_INTL("The mist disappeared from the battlefield."))
+      when :Psychic
+        @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
+      when :Poison
+        @battle.pbDisplay(_INTL("The toxic waste disappeared from the battlefield."))
+      end
+      @battle.field.terrain = :None
+    end
+  end
+end
+
+
 class PokeBattle_Move_103 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
     if user.pbOpposingSide.effects[PBEffects::Spikes]>=3
@@ -5825,7 +5933,7 @@ class PokeBattle_Battle
         PBDebug.log("[Lingering effect] Grassy Terrain heals #{b.pbThis(true)}")
         b.pbRecoverHP(b.totalhp/16)
         pbDisplay(_INTL("{1}'s HP was restored.",b.pbThis))
-      elsif @field.terrain == :Poison && b.affectedByTerrain? && b.pbCanInflictStatus?
+      elsif @field.terrain == :Poison && b.affectedByTerrain? && b.pbCanPoison?(b,false,nil)
           PBDebug.log("[Lingering effect] Poison Terrain poisons #{b.pbThis(true)}")
           b.pbInflictStatus(:POISON)
           pbDisplay(_INTL("{1}'s HP was poisoned by the toxic waste!",b.pbThis))
@@ -7471,6 +7579,33 @@ class PokemonTemp
 end
 
 class PokeBattle_Battle
+  def pbStartTerrain(user,newTerrain,fixedDuration=true)
+    return if @field.terrain==newTerrain
+    @field.terrain = newTerrain
+    duration = (fixedDuration) ? 5 : -1
+    if duration>0 && user && user.itemActive?
+      duration = BattleHandlers.triggerTerrainExtenderItem(user.item,
+         newTerrain,duration,user,self)
+    end
+    @field.terrainDuration = duration
+    terrain_data = GameData::BattleTerrain.try_get(@field.terrain)
+    pbCommonAnimation(terrain_data.animation) if terrain_data
+    pbHideAbilitySplash(user) if user
+    case @field.terrain
+    when :Electric
+      pbDisplay(_INTL("An electric current runs across the battlefield!"))
+    when :Grassy
+      pbDisplay(_INTL("Grass grew to cover the battlefield!"))
+    when :Misty
+      pbDisplay(_INTL("Mist swirled about the battlefield!"))
+    when :Psychic
+      pbDisplay(_INTL("The battlefield got weird!"))
+    when :Poison
+      pbDisplay(_INTL("Toxic waste covers the battlefield!"))
+    end
+    # Check for terrain seeds that boost stats in a terrain
+    eachBattler { |b| b.pbItemTerrainStatBoostCheck }
+  end
   def pbEndOfBattle
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0
