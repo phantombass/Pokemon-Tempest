@@ -1,6 +1,8 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
 [0]
+Name = 
 Filename = mapRegion0.png
-Name = Ufara Region
 Point = 7,11,Shira Town,,22,2,6,
 Point = 7,13,Zephyr Hills,,,,,
 Point = 6,13,Zephyr Hills,Coastal Tunnel,,,,
@@ -34,17 +36,12 @@ Point = 15,5,Mt. Sear East Entrance,,131,3,16,535
 Point = 18,16,SubTerra Trench,,,,,517
 Point = 26,17,Timeless Grotto,,145,28,11,517
 Point = 9,2,Dust-Ridden Pass,,,,,518
-#===================================
+#-------------------------------
 [1]
+Name = 
 Filename = mapRegion1.png
-Name = Sinnoh Region
 Point = 11,11,Spear Pillar,Distortion World,154,9,29,541
-#===================================
+#-------------------------------
 [2]
+Name = 
 Filename = mapRegion2.png
-Name = Tinjo Region
-#===================================
-[3]
-Filename = mapRegion1=3.png
-Name = Zharo Region
-

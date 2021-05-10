@@ -1,5 +1,6 @@
 module SideQuest
   OnOff = 403
+  WingsuitDone = 405
   Activated = 527
   Type = 801
   Pkmn = 802
@@ -47,7 +48,7 @@ module SideQuest
 end
 
 Events.onStepTaken += proc { |_sender,_e|
-  if $game_switches[SideQuest::Activated] == true
+  if $game_switches[SideQuest::WingsuitDone] == true
     if !$game_switches[SideQuest::Switch]
       $game_variables[SideQuest::Steps] += 1
       $game_switches[SideQuest::Available] = true if $game_variables[SideQuest::Steps] >= 200

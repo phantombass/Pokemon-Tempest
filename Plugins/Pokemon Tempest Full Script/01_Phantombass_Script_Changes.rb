@@ -116,7 +116,7 @@ Events.onMapChange += proc {| sender, e |
 
 def pbChapterRelease
   meName = "Voltorb flip win"
-  if $game_switches[ChapterRelease::Four] && $game_switches[527] && $game_variables[ChapterRelease::Constant] == 0
+  if $game_switches[ChapterRelease::Four] && $game_switches[405] && $game_variables[ChapterRelease::Constant] == 0
     textColor = "7FE00000"
     if $game_switches[Mission::Vinny]
       leader = "Vinny"
@@ -128,7 +128,7 @@ def pbChapterRelease
     pbMessage(_INTL("\\me[{3}]<c2={1}>\\PN! It's {2}! Meet me at HQ for our next mission!</c2>",textColor,leader,meName))
     pbCommonEvent(7)
     $game_variables[ChapterRelease::Constant]+=1
-  elsif $game_switches[ChapterRelease::Five] && $game_variables[ChapterRelease::Constant] == 1
+  elsif $game_switches[ChapterRelease::Five] && $game_switches[538] && $game_variables[ChapterRelease::Constant] == 1
     textColor = "7FE00000"
     if $game_switches[Mission::Vinny]
       leader = "Vinny"
@@ -1469,7 +1469,6 @@ end
 
 def canUseMoveFly?
   showmsg = true
-  return false if !$PokemonBag.pbQuantity(:WINGSUIT)==0
   if $game_player.pbHasDependentEvents?
     pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
     return false
@@ -1481,19 +1480,14 @@ def canUseMoveFly?
   end
   return true
 end
+
 def useMoveFly
   if !$PokemonTemp.flydata
     pbMessage(_INTL("Can't use that here."))
     return false
   end
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:WINGSUIT).name))
-  end
+  pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:WINGSUIT).name))
   pbFadeOutIn {
-    for i in 115..121
-      $game_switches[i] = false
-    end
-    $game_switches[125] = false
     $game_temp.player_new_map_id    = $PokemonTemp.flydata[0]
     $game_temp.player_new_x         = $PokemonTemp.flydata[1]
     $game_temp.player_new_y         = $PokemonTemp.flydata[2]
@@ -1505,6 +1499,89 @@ def useMoveFly
   }
   pbEraseEscapePoint
   return true
+end
+
+class PokemonReadyMenu
+  def pbStartReadyMenu(moves,items)
+    commands = [[],[]]   # Moves, items
+    for i in moves
+      commands[0].push([i[0], GameData::Move.get(i[0]).name, true, i[1]])
+    end
+    commands[0].sort! { |a,b| a[1]<=>b[1] }
+    for i in items
+      commands[1].push([i, GameData::Item.get(i).name, false])
+    end
+    commands[1].sort! { |a,b| a[1]<=>b[1] }
+    @scene.pbStartScene(commands)
+    loop do
+      command = @scene.pbShowCommands
+      break if command==-1
+      if command[0]==0   # Use a move
+        move = commands[0][command[1]][0]
+        user = $Trainer.party[commands[0][command[1]][3]]
+        if move == :FLY
+          ret = nil
+          pbFadeOutInWithUpdate(99999,@scene.sprites) {
+            pbHideMenu
+            scene = PokemonRegionMap_Scene.new(-1,false)
+            screen = PokemonRegionMapScreen.new(scene)
+            ret = screen.pbStartFlyScreen
+            pbShowMenu if !ret
+          }
+          if ret
+            $PokemonTemp.flydata = ret
+            $game_temp.in_menu = false
+            pbUseHiddenMove(user,move)
+            break
+          end
+        else
+          pbHideMenu
+          if pbConfirmUseHiddenMove(user,move)
+            $game_temp.in_menu = false
+            pbUseHiddenMove(user,move)
+            break
+          else
+            pbShowMenu
+          end
+        end
+      else   # Use an item
+        item = commands[1][command[1]][0]
+        if item == :WINGSUIT
+          ret = nil
+          pbFadeOutInWithUpdate(99999,@scene.sprites) {
+            pbHideMenu
+            scene = PokemonRegionMap_Scene.new(-1,false)
+            screen = PokemonRegionMapScreen.new(scene)
+            ret = screen.pbStartFlyScreen
+            pbShowMenu if !ret
+          }
+          if ret
+            $PokemonTemp.flydata = ret
+            $game_temp.in_menu = false
+            useMoveFly
+            break
+          end
+        else
+          pbHideMenu
+          if pbConfirmUseHiddenMove(user,move)
+            $game_temp.in_menu = false
+            pbUseHiddenMove(user,move)
+            break
+          else
+            pbShowMenu
+          end
+        end
+        pbHideMenu
+        if ItemHandlers.triggerConfirmUseInField(item)
+          $game_temp.in_menu = false
+          break if pbUseKeyItemInField(item)
+          $game_temp.in_menu = true
+        end
+      end
+      pbShowMenu
+    end
+    @scene.pbEndScene
+  end
 end
 
 def canUseMoveRockSmash?
@@ -1932,7 +2009,7 @@ HiddenMoveHandlers::UseMove.add(:FLASH,proc { |move,pokemon|
 # Fly
 #===============================================================================
 HiddenMoveHandlers::CanUseMove.add(:FLY,proc { |move,pkmn,showmsg|
-  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_FLY,showmsg)
+  next false if !$PokemonBag.pbHasItem?(:WINGSUIT)
   if $game_player.pbHasDependentEvents?
     pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
     next false
@@ -2315,7 +2392,19 @@ ItemHandlers::UseInField.add(:TORCH,proc{|item|
 })
 
 ItemHandlers::UseFromBag.add(:WINGSUIT,proc{|item|
-   next canUseMoveFly? ? 2 : 0
+  ret = nil
+    pbFadeOutIn{
+    scene = PokemonRegionMap_Scene.new(-1,false)
+    screen = PokemonRegionMapScreen.new(scene)
+    ret = screen.pbStartFlyScreen
+    next 0 if !ret
+  if ret
+    $PokemonTemp.flydata = ret
+    $game_temp.in_menu = false
+    useMoveFly
+  end
+  next 2
+}
 })
 
 ItemHandlers::UseInField.add(:WINGSUIT,proc{|item|
@@ -2396,6 +2485,69 @@ ItemHandlers::UseInField.add(:ESCAPEROPE,proc { |item|
   pbEraseEscapePoint
   next 2
 })
+
+Events.onStepTaken += proc {
+  if $PokemonGlobal.repel > 0 && !$game_player.terrain_tag.ice   # Shouldn't count down if on ice
+    $PokemonGlobal.repel -= 1
+    if $PokemonGlobal.repel <= 0
+      if $PokemonBag.pbHasItem?(:REPEL) ||
+         $PokemonBag.pbHasItem?(:SUPERREPEL) ||
+         $PokemonBag.pbHasItem?(:MAXREPEL)
+         if pbConfirmMessage(_INTL("The repellent's effect wore off! Would you like to use another one?"))
+           if $PokemonBag.pbHasItem?(:REPEL) && !$PokemonBag.pbHasItem?(:SUPERREPEL) && !$PokemonBag.pbHasItem?(:MAXREPEL)
+             pbMessage(_INTL("Which one?\\ch[34,2,Repel]"))
+             if pbGet(34) == 0
+               pbUseItem($PokemonBag,:REPEL)
+             end
+           elsif !$PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && !$PokemonBag.pbHasItem?(:MAXREPEL)
+             pbMessage(_INTL("\\ch[34,2,Super Repel]"))
+             if pbGet(34) == 0
+               pbUseItem($PokemonBag,:SUPERREPEL)
+             end
+           elsif !$PokemonBag.pbHasItem?(:REPEL) && !$PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+             pbMessage(_INTL("\\ch[34,2,Max Repel]"))
+             if pbGet(34) == 0
+               pbUseItem($PokemonBag,:MAXREPEL)
+             end
+           elsif $PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && !$PokemonBag.pbHasItem?(:MAXREPEL)
+             pbMessage(_INTL("\\ch[34,3,Repel,Super Repel]"))
+             if pbGet(34) == 0
+               pbUseItem($PokemonBag,:REPEL)
+             elsif pbGet(34) == 1
+               pbUseItem($PokemonBag,:SUPERREPEL)
+             end
+           elsif !$PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+             pbMessage(_INTL("\\ch[34,3,Super Repel,Max Repel]"))
+             if pbGet(34) == 0
+               pbUseItem($PokemonBag,:SUPERREPEL)
+             elsif pbGet(34) == 1
+               pbUseItem($PokemonBag,:MAXREPEL)
+             end
+           elsif $PokemonBag.pbHasItem?(:REPEL) && !$PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+             pbMessage(_INTL("\\ch[34,3,Repel,Max Repel]"))
+             if pbGet(34) == 0
+               pbUseItem($PokemonBag,:REPEL)
+             elsif pbGet(34) == 1
+               pbUseItem($PokemonBag,:MAXREPEL)
+             end
+           elsif $PokemonBag.pbHasItem?(:REPEL) && $PokemonBag.pbHasItem?(:SUPERREPEL) && $PokemonBag.pbHasItem?(:MAXREPEL)
+             pbMessage(_INTL("\\ch[34,3,Repel,Super Repel,Max Repel]"))
+             if pbGet(34) == 0
+               pbUseItem($PokemonBag,:REPEL)
+             elsif pbGet(34) == 1
+               pbUseItem($PokemonBag,:SUPERREPEL)
+             elsif pbGet(34) == 2
+               pbUseItem($PokemonBag,:MAXREPEL)
+             end
+           end
+         end
+       else
+        pbMessage(_INTL("The repellent's effect wore off!"))
+      end
+    end
+  end
+}
+
 ItemHandlers::UseOnPokemon.add(:RARECANDY,proc { |item,pkmn,scene|
   if pkmn.level>=GameData::GrowthRate.max_level || pkmn.shadowPokemon? || pkmn.level>=$game_variables[106]
     scene.pbDisplay(_INTL("It won't have any effect."))
