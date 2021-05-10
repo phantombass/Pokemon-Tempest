@@ -2060,7 +2060,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = POLIWRATH,Item,WATERSTONE,POLITOED,TradeItem,KINGSROCK
+Evolutions = POLIWRATH,Item,WATERSTONE,POLITOED,HoldItem,KINGSROCK
 #-------------------------------
 [62]
 Name = Poliwrath
@@ -4172,7 +4172,7 @@ BattlerEnemyX = -9
 BattlerEnemyY = 9
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = SCIZOR,TradeItem,METALCOAT
+Evolutions = SCIZOR,HoldItem,METALCOAT
 #-------------------------------
 [124]
 Name = Jynx

@@ -2227,6 +2227,7 @@ Abilities = DESERTSTORM
 HiddenAbility = MULTISCALE
 Moves = 0,STEALTHROCK,1,STEALTHROCK,1,RAGE,4,MUDSLAP,7,LEER,10,BITE,13,DRAGONBREATH,17,HEADBUTT,21,FOCUSENERGY,25,BULLDOZE,29,DRAGONCLAW,35,SCORCHINGSANDS,42,SCARYFACE,49,EARTHPOWER,56,SHOREUP
 TutorMoves = EARTHQUAKE,DRAGONCLAW,IRONHEAD,STEALTHROCK,FLAMETHROWER,EARTHPOWER,DRACOMETEOR,DRAGONDANCE
+Evolutions = SALAMENCE,Item,DRACOSTONE
 #-------------------------------
 [SALAMENCE,2]
 FormName = Ufaran Form
@@ -2500,7 +2501,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = GARCHOMP,Level,48
+Evolutions = GARCHOMP,Item,ICESTONE
 #-------------------------------
 [GARCHOMP,2]
 FormName = Ufaran Form
@@ -2805,7 +2806,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 17
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = NIDOQUEEN,Item,MOONSTONE
+Evolutions = NIDOQUEEN,Item,DRACOSTONE
 #-------------------------------
 [NIDOQUEEN,1]
 FormName = Ufaran Form
@@ -2905,7 +2906,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 21
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = NIDOKING,Item,MOONSTONE
+Evolutions = NIDOKING,Item,DRACOSTONE
 #-------------------------------
 [NIDOKING,1]
 FormName = Ufaran Form
@@ -3062,7 +3063,7 @@ BattlerEnemyX = 6
 BattlerEnemyY = 27
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = SIMISAGE,Item,LEAFSTONE
+Evolutions = SIMISAGE,HoldItem,BLACKBELT
 #-------------------------------
 [SIMISAGE,1]
 Type1 = FIGHTING
@@ -3121,7 +3122,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = SIMISEAR,Item,FIRESTONE
+Evolutions = SIMISEAR,HoldItem,SHARPBEAK
 #-------------------------------
 [SIMISEAR,1]
 Type1 = FLYING
@@ -3180,10 +3181,10 @@ BattlerEnemyX = 8
 BattlerEnemyY = 25
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = SIMIPOUR,Item,WATERSTONE
+Evolutions = SIMIPOUR,HoldItem,HARDSTONE
 #-------------------------------
 [SIMIPOUR,1]
-Type1 = WATER
+Type1 = ROCK
 BaseStats = 75,98,63,101,98,63
 GenderRate = FemaleOneEighth
 GrowthRate = Medium
