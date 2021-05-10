@@ -537,7 +537,7 @@ MultipleForms.register(:ALTEMPER,{
 
 class PokeBattle_Battler
   def pbCheckFormOnWeatherChange
-    return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) && !isSpecies?(:CASTFORM))
+    return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) && !isSpecies?(:CASTFORM) && !isSpecies?(:CHERRIM))
     # Castform - Forecast
       if isSpecies?(:CASTFORM)
         if self.ability == :FORECAST
@@ -658,10 +658,10 @@ class PokeBattle_Battler
       end
     # Cherrim - Flower Gift
     if isSpecies?(:CHERRIM)
-      if hasActiveAbility?(:FLOWERGIFT)
+      if self.ability == :FLOWERGIFT
         newForm = 0
         case @battle.pbWeather
-        when :Sun, :HarshSun,:Rainbow then newForm = 1
+        when :Sun, :HarshSun, :Rainbow then newForm = 1
         end
         if @form!=newForm
           @battle.pbShowAbilitySplash(self,true)
@@ -1007,6 +1007,7 @@ end
     end
     oldWeather = weatherChange
     battle.pbHideAbilitySplash(battler)
+    battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
   }
 )
 
@@ -1145,6 +1146,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ELECTROSTATIC,
 BattleHandlers::AbilityOnSwitchIn.add(:FLOWERGIFT,
   proc { |ability,battler,battle|
     pbBattleWeatherAbility(:Rainbow, battler, battle)
+    #battler.pbChangeForm(1,_INTL("{1} transformed!",battler.name))
   }
 )
 
