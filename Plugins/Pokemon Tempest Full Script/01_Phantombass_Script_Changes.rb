@@ -7755,6 +7755,120 @@ class PokemonTemp
 end
 
 class PokeBattle_Battle
+  def pbOnActiveOne(battler)
+    return false if battler.fainted?
+    # Introduce Shadow Pokémon
+    if battler.opposes? && battler.shadowPokemon?
+      pbCommonAnimation("Shadow",battler)
+      pbDisplay(_INTL("Oh!\nA Shadow Pokémon!"))
+    end
+    # Record money-doubling effect of Amulet Coin/Luck Incense
+    if !battler.opposes? && [:AMULETCOIN, :LUCKINCENSE].include?(battler.item_id)
+      @field.effects[PBEffects::AmuletCoin] = true
+    end
+    # Update battlers' participants (who will gain Exp/EVs when a battler faints)
+    eachBattler { |b| b.pbUpdateParticipants }
+    # Healing Wish
+    if @positions[battler.index].effects[PBEffects::HealingWish]
+      pbCommonAnimation("HealingWish",battler)
+      pbDisplay(_INTL("The healing wish came true for {1}!",battler.pbThis(true)))
+      battler.pbRecoverHP(battler.totalhp)
+      battler.pbCureStatus(false)
+      @positions[battler.index].effects[PBEffects::HealingWish] = false
+    end
+    # Lunar Dance
+    if @positions[battler.index].effects[PBEffects::LunarDance]
+      pbCommonAnimation("LunarDance",battler)
+      pbDisplay(_INTL("{1} became cloaked in mystical moonlight!",battler.pbThis))
+      battler.pbRecoverHP(battler.totalhp)
+      battler.pbCureStatus(false)
+      battler.eachMove { |m| m.pp = m.total_pp }
+      @positions[battler.index].effects[PBEffects::LunarDance] = false
+    end
+    # Entry hazards
+    # Stealth Rock
+    if battler.pbOwnSide.effects[PBEffects::CometShards] && battler.takesIndirectDamage? &&
+       GameData::Type.exists?(:COSMIC)
+      bTypes = battler.pbTypes(true)
+      if battler.pbHasType?(:COSMIC)
+        battler.pbOwnSide.effects[PBEffects::CometShards] = false
+        pbDisplay(_INTL("{1} dissipated the Comet Shards!",battler.pbThis))
+      else
+        eff = Effectiveness.calculate(:COSMIC, bTypes[0], bTypes[1], bTypes[2])
+        if !Effectiveness.ineffective?(eff)
+          eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
+          oldHP = battler.hp
+          battler.pbReduceHP(battler.totalhp*eff/8,false)
+          pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
+          battler.pbItemHPHealCheck
+          if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+            return pbOnActiveOne(battler)   # For replacement battler
+          end
+        end
+      end
+    end
+    #Comet Shards
+    if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
+       GameData::Type.exists?(:ROCK)
+      bTypes = battler.pbTypes(true)
+      eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
+      if !Effectiveness.ineffective?(eff)
+        eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
+        oldHP = battler.hp
+        battler.pbReduceHP(battler.totalhp*eff/8,false)
+        pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
+        battler.pbItemHPHealCheck
+        if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+          return pbOnActiveOne(battler)   # For replacement battler
+        end
+      end
+    end
+    # Spikes
+    if battler.pbOwnSide.effects[PBEffects::Spikes]>0 && battler.takesIndirectDamage? &&
+       !battler.airborne?
+      spikesDiv = [8,6,4][battler.pbOwnSide.effects[PBEffects::Spikes]-1]
+      oldHP = battler.hp
+      battler.pbReduceHP(battler.totalhp/spikesDiv,false)
+      pbDisplay(_INTL("{1} is hurt by the spikes!",battler.pbThis))
+      battler.pbItemHPHealCheck
+      if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+        return pbOnActiveOne(battler)   # For replacement battler
+      end
+    end
+    # Toxic Spikes
+    if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 && !battler.fainted? &&
+       !battler.airborne?
+      if battler.pbHasType?(:POISON)
+        battler.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
+        pbDisplay(_INTL("{1} absorbed the poison spikes!",battler.pbThis))
+      elsif battler.pbCanPoison?(nil,false)
+        if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]==2
+          battler.pbPoison(nil,_INTL("{1} was badly poisoned by the poison spikes!",battler.pbThis),true)
+        else
+          battler.pbPoison(nil,_INTL("{1} was poisoned by the poison spikes!",battler.pbThis))
+        end
+      end
+    end
+    # Sticky Web
+    if battler.pbOwnSide.effects[PBEffects::StickyWeb] && !battler.fainted? &&
+       !battler.airborne?
+      pbDisplay(_INTL("{1} was caught in a sticky web!",battler.pbThis))
+      if battler.pbCanLowerStatStage?(:SPEED)
+        battler.pbLowerStatStage(:SPEED,1,nil)
+        battler.pbItemStatRestoreCheck
+      end
+    end
+    # Battler faints if it is knocked out because of an entry hazard above
+    if battler.fainted?
+      battler.pbFaint
+      pbGainExp
+      pbJudge
+      return false
+    end
+    battler.pbCheckForm
+    return true
+  end
+
   def pbStartTerrain(user,newTerrain,fixedDuration=true)
     return if @field.terrain==newTerrain
     @field.terrain = newTerrain

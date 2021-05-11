@@ -19,7 +19,7 @@ EliteBattle.defineMoveAnimation(:PSYBEAM) do
   # start animation
   for i in 0...96
     @vector.reset if i == 12
-    cx, cy = @userSprite.getAnchor
+    ax, ay = @userSprite.getAnchor
     cx, cy = @targetSprite.getCenter(true)
     for j in 0...72
       if fp["#{j}"].opacity == 0 && fp["#{j}"].tone.gray == 0

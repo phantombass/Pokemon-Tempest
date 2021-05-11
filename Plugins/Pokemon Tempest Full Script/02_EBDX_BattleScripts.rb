@@ -250,27 +250,27 @@ module BattleScripts
     end
   }
 #Important Trainer Battles
-AARON = {
-  "turnStart0" => "I'll humor you this time, child.",
-  "lastOpp" => "Hmm. You have become a rather puzzling problem."
-}
-AARONLOSS = {
-  "turnStart0" => "Clearly you do not understand when to give up.",
-  "lastOpp" => "Hmm. You appear to have gotten a little stronger."
-}
-#Rival Battles
-  RIVAL = {
-    "turnStart0" => "You're going to regret challenging me!",
-    "lastOpp" => "Ugh. You are so irritating!"
-  }
+      AARON = {
+        "turnStart0" => "I'll humor you this time, child.",
+        "lastOpp" => "Hmm. You have become a rather puzzling problem."
+      }
+      AARONLOSS = {
+        "turnStart0" => "Clearly you do not understand when to give up.",
+        "lastOpp" => "Hmm. You appear to have gotten a little stronger."
+      }
+      #Rival Battles
+        RIVAL = {
+          "turnStart0" => "You're going to regret challenging me!",
+          "lastOpp" => "Ugh. You are so irritating!"
+        }
 
-  RIVAL1 = {
-    "turnStart0" => "You're going to pay for beating me last time!",
-    "lastOpp" => "Ugh. This can NOT be happening again!"
-  }
+        RIVAL1 = {
+          "turnStart0" => "You're going to pay for beating me last time!",
+          "lastOpp" => "Ugh. This can NOT be happening again!"
+        }
 
-  RIVAL2 = {
-    "turnStart0" => "You are going down again! Just like last time!",
-    "lastOpp" => "Ugh. This can NOT be happening!"
-  }
+        RIVAL2 = {
+          "turnStart0" => "You are going down again! Just like last time!",
+          "lastOpp" => "Ugh. This can NOT be happening!"
+        }
 end

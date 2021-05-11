@@ -23,7 +23,7 @@
 20,LADY,Lady,160,,,HGSSEncounter-Lass,Female,72,
 21,PAINTER,Painter,16,,,HGSSEncounter-Lass,Female,,
 22,POKEMANIAC,Poké Maniac,64,,,HGSSEncounter-SuspiciousPerson,Male,,
-23,POKEMONBREEDER,Pokémon Breeder,48,,,HGSSEncounter-Lass,Female,,
+23,POKEMONBREEDER,Pokemon Breeder,48,,,HGSSEncounter-Lass,Female,,
 24,PROFESSOR,Professor,100,,,,Male,200,
 25,ROCKER,Rocker,24,,,HGSSEncounter-ToughGuy,Male,,
 26,RUINMANIAC,Ruin Maniac,48,,,HGSSEncounter-ToughGuy,Male,,

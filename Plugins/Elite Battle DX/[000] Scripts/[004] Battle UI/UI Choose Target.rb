@@ -71,7 +71,7 @@ class TargetWindowEBDX
       @buttons["#{i}"].bitmap = Bitmap.new(bmp.width, bmp.height)
       @buttons["#{i}"].bitmap.blt(0, 0, bmp, bmp.rect)
       # apply icon sprite if valid target
-      if !texts[i].nil?
+      if !texts[i].nil? && @battle.battlers[i].displayPokemon
         pkmn = @battle.battlers[i].displayPokemon
         icon = pbBitmap(GameData::Species.icon_filename_from_pokemon(pkmn))
         ix = (bmp.width - icon.width/2)/2

@@ -35,7 +35,7 @@ module EliteBattle
     if data.has_key?(:moves) && data[:moves].is_a?(Array)
       genwildpoke.moves.clear
       for move in data.get_key(:moves)
-        genwildpoke.pbLearnMove(move)
+        genwildpoke.learn_move(move)
       end
     end
     # adds ribbons
