@@ -1548,6 +1548,9 @@ class PokemonReadyMenu
       else   # Use an item
         item = commands[1][command[1]][0]
         if item == :WINGSUIT
+          if !canUseMoveFly?
+            break
+          else
           ret = nil
           pbFadeOutInWithUpdate(99999,@scene.sprites) {
             pbHideMenu
@@ -1561,6 +1564,7 @@ class PokemonReadyMenu
             $game_temp.in_menu = false
             useMoveFly
             break
+          end
           end
         else
           pbHideMenu
