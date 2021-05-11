@@ -26,16 +26,16 @@ EliteBattle.defineMoveAnimation(:FLAMETHROWER) do
   # start animation
   @sprites["battlebg"].defocus
   for i in 0...132
+    ax, ay = @userSprite.getAnchor
+    cx, cy = @targetSprite.getCenter(true)
     for j in 0...16
       if fp["#{j}"].opacity == 0 && fp["#{j}"].tone.gray == 0
         fp["#{j}"].zoom_x = @userSprite.zoom_x
         fp["#{j}"].zoom_y = @userSprite.zoom_y
-        cx, cy = @userSprite.getAnchor
-        fp["#{j}"].x = cx
-        fp["#{j}"].y = cy + 50*@userSprite.zoom_y
+        fp["#{j}"].x = ax
+        fp["#{j}"].y = ay + 50*@userSprite.zoom_y
       end
       next if j>(i/4)
-      cx, cy = @targetSprite.getCenter(true)
       x2 = cx - 32*@targetSprite.zoom_x + rndx[j]*@targetSprite.zoom_x
       y2 = cy - 32*@targetSprite.zoom_y + rndy[j]*@targetSprite.zoom_y + 50*@targetSprite.zoom_y
       x0 = fp["#{j}"].x

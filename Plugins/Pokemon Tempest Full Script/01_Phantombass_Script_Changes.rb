@@ -740,7 +740,7 @@ end
 
 BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   proc { |ability,weather,battler,battle|
-    return if battler.fainted?
+    next if battler.fainted?
     newWeather = 0
     oldWeather = battle.pbWeather
     newForm = battler.form
@@ -1564,6 +1564,11 @@ class PokemonReadyMenu
           end
         else
           pbHideMenu
+          if ItemHandlers.triggerConfirmUseInField(item)
+            $game_temp.in_menu = false
+            break if pbUseKeyItemInField(item)
+            $game_temp.in_menu = true
+          end
           if pbConfirmUseHiddenMove(user,move)
             $game_temp.in_menu = false
             pbUseHiddenMove(user,move)
@@ -1573,11 +1578,6 @@ class PokemonReadyMenu
           end
         end
         pbHideMenu
-        if ItemHandlers.triggerConfirmUseInField(item)
-          $game_temp.in_menu = false
-          break if pbUseKeyItemInField(item)
-          $game_temp.in_menu = true
-        end
       end
       pbShowMenu
     end
@@ -6500,17 +6500,17 @@ class PokeBattle_Battle
     # End Primordial Sea, Desolate Land, Delta Stream
     case @field.weather
     when :HarshSun
-      if !pbCheckGlobalAbility(:DESOLATELAND) && $game_screen.weather_type!= :HarshSun
+      if !pbCheckGlobalAbility(:DESOLATELAND) && @field.weather != :HarshSun
         @field.weather = :None
         pbDisplay("The harsh sunlight faded!")
       end
     when :HeavyRain
-      if !pbCheckGlobalAbility(:PRIMORDIALSEA) && $game_screen.weather_type!= :HeavyRain
+      if !pbCheckGlobalAbility(:PRIMORDIALSEA) && @field.weather != :HeavyRain
         @field.weather = :None
         pbDisplay("The heavy rain has lifted!")
       end
     when :StrongWinds
-      if !pbCheckGlobalAbility(:DELTASTREAM)  && $game_screen.weather_type!= :StrongWinds
+      if !pbCheckGlobalAbility(:DELTASTREAM) && @field.weather != :StrongWinds
         @field.weather = :None
         pbDisplay("The mysterious air current has dissipated!")
       end
