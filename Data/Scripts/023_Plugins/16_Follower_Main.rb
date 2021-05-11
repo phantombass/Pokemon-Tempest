@@ -1410,7 +1410,7 @@ if defined?(PluginManager)
   PluginManager.register({
     :name => "Following Pokemon EX",
     :version => "1.2",
-    :credits => ["Golisopod User","Help-14","zingzags","Rayd12smitty","Venom12","mej71","PurpleZaffre","Akizakura16"],
+    :credits => ["Golisopod User","Help-14","zingzags","Rayd12smitty","Venom12","mej71","PurpleZaffre","Akizakura16","Modified to Accommodate Pokémon Tempest by Phantombass"],
     :link => "https://reliccastle.com/resources/"
   })
 else

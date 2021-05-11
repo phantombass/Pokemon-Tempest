@@ -7007,7 +7007,7 @@ Settings::MENU_WINDOWSKINS = [
     "frlgtextskin"
   ]
 Settings::FIELD_MOVES_COUNT_BADGES = false
-Settings::GAME_VERSION = "0.9.0"
+Settings::GAME_VERSION = "1.2.18"
 
 module Settings
   def self.storage_creator_name
