@@ -894,8 +894,9 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
         when :GROUND, :SOUND; newWeather = 3
         when :GHOST, :TIME; newWeather = 7
         when :POISON, :FIGHTING; newWeather = 17
+        when :DRAGON then newWeather = 6
         when :ICE, :GRASS, :BUG, :STEEL, :FAIRY; newWeather = 1
-        when :NORMAL,:FLYING,:ROCK,:FIRE,:WATER,:ELECTRIC,:PSYCHIC,:DRAGON, type1; newWeather = 19
+        when :NORMAL,:FLYING,:ROCK,:FIRE,:WATER,:ELECTRIC,:PSYCHIC, type1; newWeather = 19
         end
       when :TIME
         case type2
