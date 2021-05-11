@@ -750,6 +750,8 @@ end
 # Fixed misnamed variables in Effectiveness methods.
 #==============================================================================
 module Effectiveness
+  module_function
+
   def ineffective_type?(attack_type, defend_type1, defend_type2 = nil, defend_type3 = nil)
     value = calculate(attack_type, defend_type1, defend_type2, defend_type3)
     return ineffective?(value)
@@ -775,3 +777,21 @@ module Effectiveness
     return super_effective?(value)
   end
 end
+
+#==============================================================================
+# Fixed Sketch not working.
+#==============================================================================
+class PokeBattle_Move_05D < PokeBattle_Move
+  def pbFailsAgainstTarget?(user,target)
+    lastMoveData = GameData::Move.try_get(target.lastRegularMoveUsed)
+    if !lastMoveData ||
+       user.pbHasMove?(target.lastRegularMoveUsed) ||
+       @moveBlacklist.include?(lastMoveData.function_code) ||
+       lastMoveData.type == :SHADOW
+      @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+    return false
+  end
+end
+

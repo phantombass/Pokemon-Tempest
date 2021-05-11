@@ -6,7 +6,7 @@
 # https://github.com/Maruno17/pokemon-essentials
 #==============================================================================
 
-Essentials::ERROR_TEXT += "[v19 Hotfixes 1.0.4]\r\n"
+Essentials::ERROR_TEXT += "[v19 Hotfixes 1.0.5]\r\n"
 
 #==============================================================================
 # Fix for dynamic shadows not disappearing if you transfer elsewhere while you
@@ -385,3 +385,216 @@ def pbFindPhoneTrainer(tr_type, tr_name)        # Ignores whether visible or not
   end
   return nil
 end
+
+#==============================================================================
+# Fixed Event Touch not working.
+#==============================================================================
+class Game_Character
+  def move_generic(dir, turn_enabled = true)
+    turn_generic(dir) if turn_enabled
+    if can_move_in_direction?(dir)
+      turn_generic(dir)
+      @x += (dir == 4) ? -1 : (dir == 6) ? 1 : 0
+      @y += (dir == 8) ? -1 : (dir == 2) ? 1 : 0
+      increase_steps
+    else
+      check_event_trigger_touch(dir)
+    end
+  end
+end
+
+class Game_Event < Game_Character
+  def check_event_trigger_touch(dir)
+    return if $game_system.map_interpreter.running?
+    return if @trigger != 2   # Event touch
+    case dir
+    when 2
+      return if $game_player.y != @y + 1
+    when 4
+      return if $game_player.x != @x - 1
+    when 6
+      return if $game_player.x != @x + @width
+    when 8
+      return if $game_player.y != @y - @height
+    end
+    return if !in_line_with_coordinate?($game_player.x, $game_player.y)
+    return if jumping? || over_trigger?
+    start
+  end
+end
+
+class Game_Player < Game_Character
+  def move_generic(dir, turn_enabled = true)
+    turn_generic(dir, true) if turn_enabled
+    if !$PokemonTemp.encounterTriggered
+      if can_move_in_direction?(dir)
+        x_offset = (dir == 4) ? -1 : (dir == 6) ? 1 : 0
+        y_offset = (dir == 8) ? -1 : (dir == 2) ? 1 : 0
+        return if pbLedge(x_offset, y_offset)
+        return if pbEndSurf(x_offset, y_offset)
+        turn_generic(dir, true)
+        if !$PokemonTemp.encounterTriggered
+          @x += x_offset
+          @y += y_offset
+          $PokemonTemp.dependentEvents.pbMoveDependentEvents
+          increase_steps
+        end
+      elsif !check_event_trigger_touch(dir)
+        bump_into_object
+      end
+    end
+    $PokemonTemp.encounterTriggered = false
+  end
+
+  def check_event_trigger_touch(dir)
+    result = false
+    return result if $game_system.map_interpreter.running?
+    # All event loops
+    x_offset = (dir == 4) ? -1 : (dir == 6) ? 1 : 0
+    y_offset = (dir == 8) ? -1 : (dir == 2) ? 1 : 0
+    for event in $game_map.events.values
+      next if ![1, 2].include?(event.trigger)   # Player touch, event touch
+      # If event coordinates and triggers are consistent
+      next if !event.at_coordinate?(@x + x_offset, @y + y_offset)
+      if event.name[/trainer\((\d+)\)/i]
+        distance = $~[1].to_i
+        next if !pbEventCanReachPlayer?(event,self,distance)
+      elsif event.name[/counter\((\d+)\)/i]
+        distance = $~[1].to_i
+        next if !pbEventFacesPlayer?(event,self,distance)
+      end
+      # If starting determinant is front event (other than jumping)
+      next if event.jumping? || event.over_trigger?
+      event.start
+      result = true
+    end
+    return result
+  end
+end
+
+#==============================================================================
+# Fixed encounter sets being duplicated.
+#==============================================================================
+module GameData
+  class Encounter
+    def self.register(hash)
+      self::DATA[hash[:id]] = self.new(hash)
+    end
+  end
+end
+
+#==============================================================================
+# Fixed certain species not learning moves upon changing form like they should.
+#==============================================================================
+MultipleForms.register(:ROTOM,{
+  "onSetForm" => proc { |pkmn, form, oldForm|
+    form_moves = [
+       :OVERHEAT,    # Heat, Microwave
+       :HYDROPUMP,   # Wash, Washing Machine
+       :BLIZZARD,    # Frost, Refrigerator
+       :AIRSLASH,    # Fan
+       :LEAFSTORM    # Mow, Lawnmower
+    ]
+    move_index = -1
+    pkmn.moves.each_with_index do |move, i|
+      next if !form_moves.any? { |m| m == move.id }
+      move_index = i
+      break
+    end
+    if form == 0
+      # Turned back into the base form; forget form-specific moves
+      if move_index >= 0
+        move_name = pkmn.moves[move_index].name
+        pkmn.forget_move_at_index(move_index)
+        pbMessage(_INTL("{1} forgot {2}...", pkmn.name, move_name))
+        pkmn.learn_move(:THUNDERSHOCK) if pkmn.numMoves == 0
+      end
+    else
+      # Turned into an alternate form; try learning that form's unique move
+      new_move_id = form_moves[form - 1]
+      if move_index >= 0
+        # Knows another form's unique move; replace it
+        old_move_name = pkmn.moves[move_index].name
+        if GameData::Move.exists?(new_move_id)
+          pkmn.moves[move_index].id = new_move_id
+          new_move_name = pkmn.moves[move_index].name
+          pbMessage(_INTL("1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[Battle ball drop]\1"))
+          pbMessage(_INTL("{1} forgot how to use {2}.\\nAnd...\1", pkmn.name, old_move_name))
+          pbMessage(_INTL("\\se[]{1} learned {2}!\\se[Pkmn move learnt]", pkmn.name, new_move_name))
+        else
+          pkmn.forget_move_at_index(move_index)
+          pbMessage(_INTL("{1} forgot {2}...", pkmn.name, old_move_name))
+          pkmn.learn_move(:THUNDERSHOCK) if pkmn.numMoves == 0
+        end
+      else
+        # Just try to learn this form's unique move
+        pbLearnMove(pkmn, new_move_id, true)
+      end
+    end
+  }
+})
+
+MultipleForms.register(:KYUREM,{
+  "getFormOnEnteringBattle" => proc { |pkmn,wild|
+    next pkmn.form+2 if pkmn.form==1 || pkmn.form==2
+  },
+  "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
+    next pkmn.form-2 if pkmn.form>=3   # Fused forms stop glowing
+  },
+  "onSetForm" => proc { |pkmn, form, oldForm|
+    case form
+    when 0   # Normal
+      pkmn.moves.each do |move|
+        if [:ICEBURN, :FREEZESHOCK].include?(move.id)
+          move.id = :GLACIATE if GameData::Move.exists?(:GLACIATE)
+        end
+        if [:FUSIONFLARE, :FUSIONBOLT].include?(move.id)
+          move.id = :SCARYFACE if GameData::Move.exists?(:SCARYFACE)
+        end
+      end
+    when 1   # White
+      pkmn.moves.each do |move|
+        move.id = :ICEBURN if move.id == :GLACIATE && GameData::Move.exists?(:ICEBURN)
+        move.id = :FUSIONFLARE if move.id == :SCARYFACE && GameData::Move.exists?(:FUSIONFLARE)
+      end
+    when 2   # Black
+      pkmn.moves.each do |move|
+        move.id = :FREEZESHOCK if move.id == :GLACIATE && GameData::Move.exists?(:FREEZESHOCK)
+        move.id = :FUSIONBOLT if move.id == :SCARYFACE && GameData::Move.exists?(:FUSIONBOLT)
+      end
+    end
+  }
+})
+
+MultipleForms.register(:NECROZMA,{
+  "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
+    # Fused forms are 1 and 2, Ultra form is 3 or 4 depending on which fusion
+    next pkmn.form-2 if pkmn.form>=3 && (pkmn.fainted? || endBattle)
+  },
+  "onSetForm" => proc { |pkmn, form, oldForm|
+    next if form > 2 || oldForm > 2   # Ultra form changes don't affect moveset
+    form_moves = [
+       :SUNSTEELSTRIKE,   # Dusk Mane (with Solgaleo) (form 1)
+       :MOONGEISTBEAM     # Dawn Wings (with Lunala) (form 2)
+    ]
+    if form == 0
+      # Turned back into the base form; forget form-specific moves
+      move_index = -1
+      pkmn.moves.each_with_index do |move, i|
+        next if !form_moves.any? { |m| m == move.id }
+        move_index = i
+        break
+      end
+      if move_index >= 0
+        move_name = pkmn.moves[move_index].name
+        pkmn.forget_move_at_index(move_index)
+        pbMessage(_INTL("{1} forgot {2}...", pkmn.name, move_name))
+        pkmn.learn_move(:CONFUSION) if pkmn.numMoves == 0
+      end
+    else
+      # Turned into an alternate form; try learning that form's unique move
+      new_move_id = form_moves[form - 1]
+      pbLearnMove(pkmn, new_move_id, true)
+    end
+  }
+})

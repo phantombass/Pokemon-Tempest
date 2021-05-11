@@ -519,3 +519,12 @@ module Compiler
     Graphics.update
   end
 end
+
+#==============================================================================
+# Shortened inspect texts for objects.
+#==============================================================================
+class Object
+  def inspect
+    return "#<#{self.class}>"
+  end
+end

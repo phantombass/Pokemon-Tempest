@@ -1,5 +1,5 @@
 ﻿Name      = v19 Hotfixes
-Version   = 1.0.4
+Version   = 1.0.5
 Conflicts = v19 Updates
 Website   = https://github.com/Maruno17/pokemon-essentials
 Credits   = Maruno
@@ -79,7 +79,15 @@ Credits   = Maruno
 #   (causing a crash when calling them).
 # - Fixed being unable to call non-trainer contacts.
 # - Fixed crash when trying to write Battle Tower PBS files.
+#
+# 1.0.5:
 # - Fixed misnamed variables in Effectiveness methods.
+# - Fixed Event Touch not working.
+# - Shortened inspect texts for objects.
+# - Fixed encounter sets being duplicated.
+# - Fixed Sketch not working.
+# - Fixed certain species not learning moves upon changing form
+#   like they should.
 #
 #=================================================================
 # Notes

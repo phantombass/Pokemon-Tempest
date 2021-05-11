@@ -11,6 +11,7 @@
 
 
 Events.onMapUpdate += proc {| sender, e |
+  $game_switches[34] = false
   case $game_variables[Chapter::Count]
   when 1
     $game_variables[Level::Cap] = 13
@@ -7681,6 +7682,22 @@ class PokemonWeatherScreen
 end
 
 class Pokemon
+  def getMegaForm(checkItemOnly = false)
+    ret = 0
+    GameData::Species.each do |data|
+      if data.species != :ALTEMPER
+        next if data.species != @species || data.unmega_form != form_simple
+      end
+      if data.mega_stone && hasItem?(data.mega_stone)
+        ret = data.form
+        break
+      elsif !checkItemOnly && data.mega_move && hasMove?(data.mega_move)
+        ret = data.form
+        break
+      end
+    end
+    return ret   # form number, or 0 if no accessible Mega form
+  end
   def can_relearn_move?
     return false if egg? || shadowPokemon?
     this_level = self.level
