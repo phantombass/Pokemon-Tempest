@@ -740,6 +740,7 @@ end
 
 BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   proc { |ability,weather,battler,battle|
+    return if battler.fainted?
     newWeather = 0
     oldWeather = battle.pbWeather
     newForm = battler.form

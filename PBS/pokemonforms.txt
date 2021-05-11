@@ -357,7 +357,7 @@ Pokedex = It zips around at blistering speeds, looking for an opening to skewer 
 FormName = Mega Gyarados
 MegaStone = GYARADOSITE
 Type1 = WATER
-Type2 = DARK
+Type2 = DRAGON
 BaseStats = 95,155,109,81,70,130
 Abilities = MOLDBREAKER
 HiddenAbility = MOLDBREAKER
@@ -1782,6 +1782,162 @@ Color = Yellow
 FormName = Original Color
 Color = Red
 Pokedex = This gorgeous Magearna looks as it did at the time of its invention. Its luxurious decoration pleased the king's daughter.
+#-------------------------------
+[TORTERRA,1]
+FormName = Mega Torterra
+MegaStone = TORTERRANITE
+BaseStats = 95,119,105,76,125,105
+Abilities = THICKFAT
+#-------------------------------
+[INFERNAPE,1]
+FormName = Mega Infernape
+MegaStone = INFERNITE
+BaseStats = 76,119,111,98,119,111
+Abilities = MINDGAMES
+#-------------------------------
+[EMPOLEON,1]
+FormName = Mega Empoleon
+MegaStone = EMPOLEONITE
+Type1 = WATER
+Type2 = STEEL
+BaseStats = 84,121,73,120,146,86
+Abilities = MAGICBOUNCE
+#-------------------------------
+[JYNX,1]
+FormName = Mega Jynx
+MegaStone = JYNXINITE
+Type1 = ICE
+Type2 = FAIRY
+BaseStats = 65,50,85,125,135,105
+Abilities = PIXILATE
+#-------------------------------
+[WHISCASH,1]
+FormName = Mega Whiscash
+MegaStone = WHISCASHITE
+Type1 = WATER
+Type2 = DRAGON
+BaseStats = 110,98,103,80,76,101
+Abilities = HUGEPOWER
+#-------------------------------
+[MUSHARNA,1]
+FormName = Mega Musharna
+MegaStone = MUSHARNITE
+Type1 = PSYCHIC
+Type2 = COSMIC
+BaseStats = 116,55,115,29,157,115
+Abilities = DIMENSIONSHIFT
+#-------------------------------
+[BEHEEYEM,1]
+FormName = Mega Beheeyem
+MegaStone = BEHEEYEMITE
+Type1 = PSYCHIC
+Type2 = BUG
+BaseStats = 75,75,130,20,145,140
+Abilities = DIMENSIONSHIFT
+#-------------------------------
+[LANTURN,1]
+FormName = Mega Lanturn
+MegaStone = LANTURNITE
+BaseStats = 125,58,88,77,126,86
+Abilities = RAGINGSEA
+#-------------------------------
+[TROPIUS,1]
+FormName = Mega Tropius
+MegaStone = TROPIUSITE
+Type1 = GRASS
+Type2 = TIME
+BaseStats = 99,138,93,81,52,97
+Abilities = REGENERATOR
+#-------------------------------
+[JUMPLUFF,1]
+FormName = Mega Jumpluff
+MegaStone = JUMPLUFFITE
+Type1 = GRASS
+Type2 = FLYING
+BaseStats = 75,135,70,150,45,85
+Abilities = AERILATE
+#-------------------------------
+[CHIMECHO,1]
+FormName = Mega Chimecho
+MegaStone = CHIMECHONITE
+Type1 = COSMIC
+Type2 = SOUND
+BaseStats = 85,50,120,95,125,120
+Abilities = DIMENSIONBLOCK
+HiddenAbility = DIMENSIONBLOCK
+#-------------------------------
+[CHERRIM,2]
+FormName = Mega Cherrim
+MegaStone = CHERRIMITE
+Type1 = GRASS
+Type2 = COSMIC
+BaseStats = 70,60,100,110,112,98
+Abilities = FLOWERGIFT
+#-------------------------------
+[SEVIPER,1]
+FormName = Mega Seviper
+MegaStone = SEVIPERITE
+Type1 = POISON
+Type2 = DRAGON
+BaseStats = 73,130,80,125,70,80
+Abilities = STRONGJAW
+HiddenAbility = STRONGJAW
+#-------------------------------
+[ZANGOOSE,1]
+FormName = Mega Zangoose
+MegaStone = ZANGOOSITE
+Type1 = NORMAL
+Type2 = FIGHTING
+BaseStats = 73,155,65,140,60,65
+Abilities = IRONFIST
+#-------------------------------
+[CHATOT,1]
+FormName = Mega Chatot
+MegaStone = CHATOTITE
+Type1 = SOUND
+Type2 = FLYING
+BaseStats = 76,45,85,101,122,82
+Abilities = SUBWOOFER
+#-------------------------------
+[XATU,1]
+FormName = Mega Xatu
+MegaStone = XATUNITE
+Type1 = COSMIC
+Type2 = DRAGON
+BaseStats = 65,75,110,75,135,110
+Abilities = STARSPRINT
+#-------------------------------
+[ELECTIVIRE,1]
+FormName = Mega Electivire
+MegaStone = ELECTIVITE
+Type1 = ELECTRIC
+Type2 = FIGHTING
+BaseStats = 75,163,87,115,105,95
+Abilities = IRONFIST
+#-------------------------------
+[MAGMORTAR,1]
+FormName = Mega Magmortar
+MegaStone = MAGMORTITE
+Type1 = FIRE
+Type2 = POISON
+BaseStats = 75,95,97,103,165,105
+Abilities = URBANCLOUD
+#-------------------------------
+[DUNSPARCE,1]
+FormName = Mega Dunsparce
+MegaStone = DUNSPARCINITE
+Type1 = FAIRY
+Type2 = DRAGON
+BaseStats = 100,70,100,45,105,95
+Abilities = COMPOSURE
+#-------------------------------
+[BEARTIC,1]
+FormName = Mega Beartic
+MegaStone = BEARTINITE
+Type1 = ICE
+Type2 = FIGHTING
+BaseStats = 95,160,95,90,70,95
+Abilities = DRYSKIN
 #-------------------------------
 [ALTEMPER,1]
 FormName = Sunny Form
