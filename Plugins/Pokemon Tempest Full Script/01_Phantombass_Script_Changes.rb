@@ -5079,25 +5079,25 @@ BattleHandlers::MoveImmunityTargetAbility.add(:LEGENDARMOR,
 
 BattleHandlers::MoveImmunityTargetAbility.add(:UNTAINTED,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityAbility(user,target,move,type,:DARK,battle)
+    next pbBattleMoveImmunityHealAbility(user,target,move,type,:DARK,battle)
   }
 )
 
 BattleHandlers::MoveImmunityTargetAbility.add(:CORRUPTION,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityAbility(user,target,move,type,:FAIRY,battle)
+    next pbBattleMoveImmunityHealAbility(user,target,move,type,:FAIRY,battle)
   }
 )
 
 BattleHandlers::MoveImmunityTargetAbility.add(:DIMENSIONBLOCK,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityAbility(user,target,move,type,:COSMIC,battle) || pbBattleMoveImmunityAbility(user,target,move,type,:TIME,battle)
+    next pbBattleMoveImmunityHealAbility(user,target,move,type,:COSMIC,battle)
   }
 )
 
 BattleHandlers::MoveImmunityTargetAbility.add(:MENTALBLOCK,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityAbility(user,target,move,type,:PSYCHIC,battle)
+    next pbBattleMoveImmunityHealAbility(user,target,move,type,:PSYCHIC,battle)
   }
 )
 

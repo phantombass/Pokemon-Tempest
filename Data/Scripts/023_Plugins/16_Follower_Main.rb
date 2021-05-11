@@ -379,17 +379,17 @@ def pbEndSurf(xOffset,yOffset)
 end
 
 # Update when starting diving to incorporate hiddden move animation
-def Kernel.pbDive
+def pbDive
   divemap = GameData::Metadata.get($game_map.map_id).dive_map_id
   return false if !divemap
 
   if !$DEBUG  && $PokemonBag.pbQuantity(GameData::Item.get(:SCUBATANK))==0
-    Kernel.pbMessage(_INTL("The sea is deep here."))
+    pbMessage(_INTL("The sea is deep here."))
     return false
   end
-  if Kernel.pbConfirmMessage(_INTL("The sea is deep here. Would you like to use the Scuba Tank?"))
+  if pbConfirmMessage(_INTL("The sea is deep here. Would you like to use the Scuba Tank?"))
     if $PokemonBag.pbQuantity(GameData::Item.get(:SCUBATANK))>0
-      Kernel.pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
+      pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
       pbHiddenMoveAnimation(nil)
     end
     pbFadeOutIn(99999){
@@ -397,9 +397,9 @@ def Kernel.pbDive
        $game_temp.player_new_x         = $game_player.x
        $game_temp.player_new_y         = $game_player.y
        $game_temp.player_new_direction = $game_player.direction
-       Kernel.pbCancelVehicles
+       pbCancelVehicles
        $PokemonGlobal.diving = true
-       Kernel.pbUpdateVehicle
+       pbUpdateVehicle
        $scene.transfer_player(false)
        $game_map.autoplay
        $game_map.refresh
@@ -1166,18 +1166,18 @@ class DependentEvents
       for i in 0...facings.length
         facing=facings[i]
         tile=$MapFactory.getFacingTile(facing,leader)
-        if defined?(GameData::TerrainTag.get(:StairLeft))
-          if tile[1] > $game_player.x
-            tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == :StairLeft && $game_map.terrain_tags($game_player.x,$game_player.y) == :StairLeft
-          elsif tile[1] < $game_player.x
-            tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == :StairLeft
-          end
-          if tile[1] > $game_player.x
-            tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == :StairRight
-          elsif tile[1] < $game_player.x
-            tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == :StairRight && $game_map.terrain_tags($game_player.x,$game_player.y) == :StairRight
-          end
-        end
+  #      if defined?(GameData::TerrainTag.get(:StairLeft))
+  #        if tile[1] > $game_player.x
+  #          tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == :StairLeft && $game_map.terrain_tags($game_player.x,$game_player.y) == :StairLeft
+  #        elsif tile[1] < $game_player.x
+  #          tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == :StairLeft
+  #        end
+  #        if tile[1] > $game_player.x
+  #          tile[2] += 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]+1) == :StairRight
+  #        elsif tile[1] < $game_player.x
+  #          tile[2] -= 1 if $MapFactory.getTerrainTag(tile[0],tile[1],tile[2]-1) == :StairRight && $game_map.terrain_tags($game_player.x,$game_player.y) == :StairRight
+  #        end
+  #      end
         passable = tile && $MapFactory.isPassable?(tile[0],tile[1],tile[2],follower)
         if !passable && $PokemonGlobal.bridge>0
           passable = GameData::TerrainTag.get($MapFactory.getTerrainTag(tile[0],tile[1],tile[2])).bridge
