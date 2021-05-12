@@ -745,6 +745,13 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
     newWeather = 0
     oldWeather = battle.pbWeather
     newForm = battler.form
+    if newForm >= 21
+      if newForm >= 42
+        newForm -= 42
+      else
+        newForm -= 21
+      end
+    end
     newWeather = newForm
     battle.eachOtherSideBattler(battler.index) do |b|
       type1 = b.type1
@@ -920,62 +927,61 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   if newWeather==newForm
     weatherChange = battle.pbWeather
   else
-  case newWeather
-  when 1 then weatherChange = :Sun  if weather != :Sun
-  when 2 then weatherChange = :Rain  if weather != :Rain
-  when 3 then weatherChange = :Sleet  if weather != :Sleet
-  when 4 then weatherChange = :Fog  if weather != :Fog
-  when 5 then weatherChange = :Overcast  if weather != :Overcast
-  when 6 then weatherChange = :Starstorm  if weather != :Starstorm
-  when 7 then weatherChange = :Eclipse  if weather != :Eclipse
-  when 8 then weatherChange = :Windy  if weather != :Windy
-  when 9 then weatherChange = :HeatLight  if weather != :HeatLight
-  when 10 then weatherChange = :StrongWinds  if weather != :StrongWinds
-  when 11 then weatherChange = :AcidRain  if weather != :AcidRain
-  when 12 then weatherChange = :Sandstorm  if weather != :Sandstorm
-  when 13 then weatherChange = :Rainbow  if weather != :Rainbow
-  when 14 then weatherChange = :DustDevil  if weather != :DustDevil
-  when 15 then weatherChange = :DAshfall  if weather != :DAshfall
-  when 16 then weatherChange = :VolcanicAsh  if weather != :VolcanicAsh
-  when 17 then weatherChange = :Borealis  if weather != :Borealis
-  when 18 then weatherChange = :Humid  if weather != :Humid
-  when 19 then weatherChange = :TimeWarp  if weather != :TimeWarp
-  when 20 then weatherChange = :Reverb  if weather != :Reverb
-  end
-  battle.pbShowAbilitySplash(battler)
-  battle.field.weather = weatherChange
-  battle.field.weatherDuration = 5
-  case weatherChange
-  when :Starstorm then   battle.pbDisplay(_INTL("Stars fill the sky."))
-  when :Thunder then     battle.pbDisplay(_INTL("Lightning flashes in th sky."))
-  when :Humid then       battle.pbDisplay(_INTL("The air is humid."))
-  when :Overcast then    battle.pbDisplay(_INTL("The sky is overcast."))
-  when :Eclipse then     battle.pbDisplay(_INTL("The sky is dark."))
-  when :Fog then         battle.pbDisplay(_INTL("The fog is deep."))
-  when :AcidRain then    battle.pbDisplay(_INTL("Acid rain is falling."))
-  when :VolcanicAsh then battle.pbDisplay(_INTL("Volcanic Ash sprinkles down."))
-  when :Rainbow then     battle.pbDisplay(_INTL("A rainbow crosses the sky."))
-  when :Borealis then    battle.pbDisplay(_INTL("The sky is ablaze with color."))
-  when :TimeWarp then    battle.pbDisplay(_INTL("Time has stopped."))
-  when :Reverb then      battle.pbDisplay(_INTL("A dull echo hums."))
-  when :DClear then      battle.pbDisplay(_INTL("The sky is distorted."))
-  when :DRain then       battle.pbDisplay(_INTL("Rain is falling upward."))
-  when :DWind then       battle.pbDisplay(_INTL("The wind is haunting."))
-  when :DAshfall then    battle.pbDisplay(_INTL("Ash floats in midair."))
-  when :Sleet then       battle.pbDisplay(_INTL("Sleet began to fall."))
-  when :Windy then       battle.pbDisplay(_INTL("There is a slight breeze."))
-  when :HeatLight then   battle.pbDisplay(_INTL("Static fills the air."))
-  when :DustDevil then   battle.pbDisplay(_INTL("A dust devil approaches."))
-  when :Sun then         battle.pbDisplay(_INTL("The sunlight is strong."))
-  when :Rain then        battle.pbDisplay(_INTL("It is raining."))
-  when :Sandstorm then   battle.pbDisplay(_INTL("A sandstorm is raging."))
-  when :Hail then        battle.pbDisplay(_INTL("Hail is falling."))
-  when :HarshSun then    battle.pbDisplay(_INTL("The sunlight is extremely harsh."))
-  when :HeavyRain then   battle.pbDisplay(_INTL("It is raining heavily."))
-  when :StrongWinds then battle.pbDisplay(_INTL("The wind is strong."))
-  when :ShadowSky then   battle.pbDisplay(_INTL("The sky is shadowy."))
-  end
-end
+    case newWeather
+    when 1 then weatherChange = :Sun  if weather != :Sun
+    when 2 then weatherChange = :Rain  if weather != :Rain
+    when 3 then weatherChange = :Sleet  if weather != :Sleet
+    when 4 then weatherChange = :Fog  if weather != :Fog
+    when 5 then weatherChange = :Overcast  if weather != :Overcast
+    when 6 then weatherChange = :Starstorm  if weather != :Starstorm
+    when 7 then weatherChange = :Eclipse  if weather != :Eclipse
+    when 8 then weatherChange = :Windy  if weather != :Windy
+    when 9 then weatherChange = :HeatLight  if weather != :HeatLight
+    when 10 then weatherChange = :StrongWinds  if weather != :StrongWinds
+    when 11 then weatherChange = :AcidRain  if weather != :AcidRain
+    when 12 then weatherChange = :Sandstorm  if weather != :Sandstorm
+    when 13 then weatherChange = :Rainbow  if weather != :Rainbow
+    when 14 then weatherChange = :DustDevil  if weather != :DustDevil
+    when 15 then weatherChange = :DAshfall  if weather != :DAshfall
+    when 16 then weatherChange = :VolcanicAsh  if weather != :VolcanicAsh
+    when 17 then weatherChange = :Borealis  if weather != :Borealis
+    when 18 then weatherChange = :Humid  if weather != :Humid
+    when 19 then weatherChange = :TimeWarp  if weather != :TimeWarp
+    when 20 then weatherChange = :Reverb  if weather != :Reverb
+    end
+    battle.pbShowAbilitySplash(battler)
+    battle.field.weather = weatherChange
+    battle.field.weatherDuration = 5
+    case weatherChange
+    when :Starstorm then   battle.pbDisplay(_INTL("Stars fill the sky."))
+    when :Thunder then     battle.pbDisplay(_INTL("Lightning flashes in th sky."))
+    when :Humid then       battle.pbDisplay(_INTL("The air is humid."))
+    when :Overcast then    battle.pbDisplay(_INTL("The sky is overcast."))
+    when :Eclipse then     battle.pbDisplay(_INTL("The sky is dark."))
+    when :Fog then         battle.pbDisplay(_INTL("The fog is deep."))
+    when :AcidRain then    battle.pbDisplay(_INTL("Acid rain is falling."))
+    when :VolcanicAsh then battle.pbDisplay(_INTL("Volcanic Ash sprinkles down."))
+    when :Rainbow then     battle.pbDisplay(_INTL("A rainbow crosses the sky."))
+    when :Borealis then    battle.pbDisplay(_INTL("The sky is ablaze with color."))
+    when :TimeWarp then    battle.pbDisplay(_INTL("Time has stopped."))
+    when :Reverb then      battle.pbDisplay(_INTL("A dull echo hums."))
+    when :DClear then      battle.pbDisplay(_INTL("The sky is distorted."))
+    when :DRain then       battle.pbDisplay(_INTL("Rain is falling upward."))
+    when :DWind then       battle.pbDisplay(_INTL("The wind is haunting."))
+    when :DAshfall then    battle.pbDisplay(_INTL("Ash floats in midair."))
+    when :Sleet then       battle.pbDisplay(_INTL("Sleet began to fall."))
+    when :Windy then       battle.pbDisplay(_INTL("There is a slight breeze."))
+    when :HeatLight then   battle.pbDisplay(_INTL("Static fills the air."))
+    when :DustDevil then   battle.pbDisplay(_INTL("A dust devil approaches."))
+    when :Sun then         battle.pbDisplay(_INTL("The sunlight is strong."))
+    when :Rain then        battle.pbDisplay(_INTL("It is raining."))
+    when :Sandstorm then   battle.pbDisplay(_INTL("A sandstorm is raging."))
+    when :Hail then        battle.pbDisplay(_INTL("Hail is falling."))
+    when :HarshSun then    battle.pbDisplay(_INTL("The sunlight is extremely harsh."))
+    when :HeavyRain then   battle.pbDisplay(_INTL("It is raining heavily."))
+    when :StrongWinds then battle.pbDisplay(_INTL("The wind is strong."))
+    when :ShadowSky then   battle.pbDisplay(_INTL("The sky is shadowy."))
+    end
     newForm = newWeather
     case newForm
     when 4 then                       battler.effects[PBEffects::Type3] = :FAIRY
@@ -998,6 +1004,7 @@ end
     when 2 then                       battler.effects[PBEffects::Type3] = :WATER
     when 3 then                       battler.effects[PBEffects::Type3] = :ICE
     end
+  end
     if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
       if battler.form >= 42 && battler.isSpecies?(:ALTEMPER)
         newForm += 42
@@ -1005,7 +1012,7 @@ end
         newForm += 21
       end
     end
-    if @form!=newForm
+    if battler.form != newForm
       battler.pbChangeForm(newForm,_INTL("{1} transformed!",battler.pbThis))
     end
     oldWeather = weatherChange
@@ -6603,9 +6610,9 @@ class PokeBattle_Battle
       if b.isSpecies?(:CASTFORM)
         b.pbCheckFormOnWeatherChange
       end
+      b.pbFaint if b.fainted?
       if !b.isSpecies?(:ALTEMPER)
         BattleHandlers.triggerEORWeatherAbility(b.ability,curWeather,b,self)
-        b.pbFaint if b.fainted?
       end
       case curWeather
       when :Sandstorm
@@ -7778,6 +7785,46 @@ class PokemonTemp
 end
 
 class PokeBattle_Battle
+  def pbMegaEvolve(idxBattler)
+    battler = @battlers[idxBattler]
+    return if !battler || !battler.pokemon
+    return if !battler.hasMega? || battler.mega?
+    trainerName = pbGetOwnerName(idxBattler)
+    # Break Illusion
+    if battler.hasActiveAbility?(:ILLUSION)
+      BattleHandlers.triggerTargetAbilityOnHit(battler.ability,nil,battler,nil,self)
+    end
+    # Mega Evolve
+    case battler.pokemon.megaMessage
+    when 1   # Rayquaza
+      pbDisplay(_INTL("{1}'s fervent wish has reached {2}!",trainerName,battler.pbThis))
+    else
+      pbDisplay(_INTL("{1}'s {2} is reacting to {3}'s {4}!",
+         battler.pbThis,battler.itemName,trainerName,pbGetMegaRingName(idxBattler)))
+    end
+    pbCommonAnimation("MegaEvolution",battler)
+    battler.pokemon.makeMega
+    battler.form = battler.pokemon.form
+    battler.pbUpdate(true)
+    @scene.pbChangePokemon(battler,battler.pokemon)
+    @scene.pbRefreshOne(idxBattler)
+    pbCommonAnimation("MegaEvolution2",battler)
+    megaName = battler.pokemon.megaName
+    if !megaName || megaName==""
+      megaName = _INTL("Mega {1}", battler.pokemon.speciesName)
+    end
+    pbDisplay(_INTL("{1} has Mega Evolved into {2}!",battler.pbThis,megaName))
+    side  = battler.idxOwnSide
+    owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+    @megaEvolution[side][owner] = -2
+    if battler.isSpecies?(:GENGAR) && battler.mega?
+      battler.effects[PBEffects::Telekinesis] = 0
+    end
+    pbCalculatePriority(false,[idxBattler]) if Settings::RECALCULATE_TURN_ORDER_AFTER_MEGA_EVOLUTION
+    # Trigger ability
+    battler.pbEffectsOnSwitchIn
+    battler.pbCheckFormOnWeatherChange
+  end
   def pbOnActiveOne(battler)
     return false if battler.fainted?
     # Introduce Shadow Pokémon

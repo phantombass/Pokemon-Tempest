@@ -315,7 +315,7 @@ class Game_Player
       increase_steps
       moving_vertically(1)
     else
-      if !check_event_trigger_touch(@x, @y+1)
+      if !check_event_trigger_touch(2)
         if !@bump_se || @bump_se<=0
           pbSEPlay("Player bump"); @bump_se = 10
         end
@@ -334,7 +334,7 @@ class Game_Player
       increase_steps
       moving_vertically(-1)
     else
-      if !check_event_trigger_touch(@x, @y-1)
+      if !check_event_trigger_touch(8)
         if !@bump_se || @bump_se<=0
           pbSEPlay("Player bump"); @bump_se = 10
         end
