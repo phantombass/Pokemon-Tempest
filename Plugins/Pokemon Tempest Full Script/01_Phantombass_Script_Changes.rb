@@ -5923,7 +5923,15 @@ class PokeBattle_Battle
     @scene.pbRecall(idxBattler) if !@battlers[idxBattler].fainted?
     @battlers[idxBattler].pbAbilitiesOnSwitchOut   # Inc. primordial weather check
     if (@battlers[idxBattler].ability == :BAROMETRIC && @battlers[idxBattler].isSpecies?(:ALTEMPER)) || (@battlers[idxBattler].ability == :FORECAST && @battlers[idxBattler].isSpecies?(:CASTFORM))
-      @battlers[idxBattler].form = 0
+      if @battlers[idxBattler].form >= 21
+        if @battlers[idxBattler].form >= 42
+          @battlers[idxBattler].form = 42
+        else
+          @battlers[idxBattler].form = 21
+        end
+      else
+        @battlers[idxBattler].form = 0
+      end
     end
     @scene.pbShowPartyLineup(idxBattler&1) if pbSideSize(idxBattler)==1
     pbMessagesOnReplace(idxBattler,idxParty) if !randomReplacement

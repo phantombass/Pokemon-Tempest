@@ -46,56 +46,6 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       party[i].level = level
       #now we evolve the pokémon, if applicable
       species = party[i].species
-      if badges > 4
-      newspecies = pbGetBabySpecies(species) # revert to the first evolution
-      evoflag=0 #used to track multiple evos not done by lvl
-      endevo=false
-      loop do #beginning of loop to evolve species
-      nl = level + 5
-      nl = levelcap if nl > levelcap
-      pkmn = PokeBattle_Pokemon.new(newspecies, nl)
-      cevo = Kernel.pbCheckEvolution(pkmn)
-      evo = pbGetEvolvedFormData(newspecies)
-      if evo
-        evo = evo[rand(evo.length - 1)]
-        # here we evolve things that don't evolve through level
-        # that's what we check with evo[0]!=4
-        #notice that such species have cevo==-1 and wouldn't pass the last check
-        #to avoid it we set evoflag to 1 (with some randomness) so that
-        #pokemon may have its second evolution (Raichu, for example)
-        if evo && cevo < 1 && rand(50) <= level
-          if evo[0] != 4 && rand(50) <= level
-          newspecies = evo[2]
-             if evoflag == 0 && rand(50) <= level
-               evoflag=1
-             else
-               evoflag=0
-             end
-           end
-        else
-        endevo=true
-        end
-      end
-      if evoflag==0 || endevo
-      if  cevo == -1 || rand(50) > level
-        # Breaks if there no more evolutions or randomnly
-        # Randomness applies only if the level is under 50
-        break
-      else
-        newspecies = evo[2]
-      end
-      end
-    end #end of loop do
-    #fixing some things such as Bellossom would turn into Vileplume
-    #check if original species could evolve (Bellosom couldn't)
-    couldevo=pbGetEvolvedFormData(species)
-    #check if current species can evolve
-    evo = pbGetEvolvedFormData(newspecies)
-      if evo.length<1 && couldevo.length<1
-      else
-         species=newspecies
-      end #end of evolving script
-    end
       party[i].name=GameData::Species.get(species).name
       party[i].species=species
       party[i].calc_stats
