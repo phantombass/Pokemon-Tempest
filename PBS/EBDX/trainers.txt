@@ -82,3 +82,13 @@ BattleEnv        = MOUNTAIN
 BattleScript     = RIVAL2
 Ace              = 5
 #-------------------------------
+[CHAMPION1]
+BattleBGM        = giratinabattle.ogg
+BattleVS         = integratedVS
+Scale            = 1
+#-------------------------------
+[CHAMPION1,Cynthia]
+BattleEnv        = DIMENSION
+BattleScript     = CYNTHIA
+Ace              = 6
+#-------------------------------

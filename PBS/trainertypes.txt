@@ -75,3 +75,4 @@
 72,RIVAL3,Rival,36,HGSS-138-RivalBattle,,HGSSEncounter-Rival,Male,199,
 73,SCIENTIST1,Scientist,0,,,,Male,16,
 74,NURSE,Nurse,0,160,,,Female,100,
+75,CHAMPION1,Champion,100,giratinabattle,Battle victory leader,,Female,200,

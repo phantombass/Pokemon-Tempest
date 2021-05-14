@@ -80,3 +80,12 @@ BattleEnv       = DIMENSION
 [156]
 BattleEnv       = DIMENSION
 #-------------------------------
+[157]
+BattleEnv       = DIMENSION
+#-------------------------------
+[159]
+BattleEnv       = CAVE
+#-------------------------------
+[160]
+BattleEnv       = MOUNTAIN
+#-------------------------------

@@ -568,6 +568,29 @@ Pokemon = CHIMECHO,49
   Ability = 2
   Item = CHIMECHONITE
   Moves = HYPERVOICE,STARBEAM,DEATHTOLL,POLARITYPULSE
+  
+#-------------------------------
+# Distortion World
+#-------------------------------
+[CHAMPION1,Cynthia]
+LoseText = "Interesting."
+Pokemon = HIPPOWDON,63
+  Form = 2
+  Moves = LIQUIDATION,STEALTHROCK,SLACKOFF,WHIRLWIND
+Pokemon = DUSKNOIR,62
+  Moves = DRAINPUNCH,SHADOWPUNCH,EARTHQUAKE,TEMPORALRAZE
+Pokemon = MAGMORTAR,61
+  Moves = FLAMETHROWER,PSYCHIC,SLUDGEBOMB,FLAMECHARGE
+Pokemon = ELECTIVIRE,61
+  Moves = THUNDERPUNCH,CLOSECOMBAT,EARTHQUAKE,ICEPUNCH
+Pokemon = GARCHOMP,65
+  Form = 2
+  Item = MUSCLEBAND
+  Moves = ICICLECRASH,EARTHQUAKE,SWORDSDANCE,ROCKSLIDE
+Pokemon = LUCARIO,66
+  Item = LUCARIONITE
+  Moves = CLOSECOMBAT,ICEPUNCH,METEORMASH,IRONHEAD
+  
 #-------------------------------
 #Level Trainer
 #-------------------------------

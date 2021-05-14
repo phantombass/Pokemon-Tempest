@@ -623,7 +623,7 @@ Cave
 #-------------------------------
 155 # Distortion World
 25,10,10
-Distortion
+Land
     OMANYTE,50,52
     KABUTO,50,52
     LILEEP,50,52
@@ -639,7 +639,7 @@ Distortion
 #-------------------------------
 156 # Distortion World
 25,10,10
-Distortion
+Land
     OMANYTE,50,52
     KABUTO,50,52
     LILEEP,50,52
@@ -652,4 +652,52 @@ Distortion
     TYRUNT,50,52
     AERODACTYL,52,54
     AERODACTYL,52,54
+#-------------------------------
+157 # Menzopolis Outlands
+25,10,10
+Land
+    OMANYTE,50,52
+    KABUTO,50,52
+    LILEEP,50,52
+    ANORITH,50,52
+    CRANIDOS,50,52
+    SHIELDON,50,52
+    TIRTOUGA,50,52
+    ARCHEN,50,52
+    AMAURA,50,52
+    TYRUNT,50,52
+    AERODACTYL,52,54
+    AERODACTYL,52,54
+#-------------------------------
+159 # Tinjo Mines
+25,10,10
+Cave
+    GIGALITH,55,57
+    GOLBAT,55,57
+    GIGALITH,55,57
+    GOLBAT,55,57
+    EXPLOUD,55,57
+    EXPLOUD,55,57
+    NOIVERN,55,57
+    NOIVERN,55,57
+    CROBAT,55,57
+    LUCARIO,55,57
+    CROBAT,58,60
+    LUCARIO,58,60
+#-------------------------------
+160 # Route 8
+25,10,10
+Land
+    GIGALITH,55,57
+    CHERRIM,55,57
+    GIGALITH,55,57
+    CHERRIM,55,57
+    CHINGLING,55,57
+    CHINGLING,55,57
+    XATU,55,57
+    XATU,55,57
+    CHIMECHO,55,57
+    SHELGON,55,57
+    CHIMECHO,58,60
+    SALAMENCE,58,60
 #-------------------------------

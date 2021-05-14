@@ -11,7 +11,6 @@
 
 
 Events.onMapUpdate += proc {| sender, e |
-  $game_switches[34] = false
   case $game_variables[Chapter::Count]
   when 1
     $game_variables[Level::Cap] = 13
@@ -48,6 +47,12 @@ Events.onMapUpdate += proc {| sender, e |
       $game_variables[Level::Cap] = 55
     elsif $game_variables[Mission::Mission5] >= 1 && $game_variables[Mission::Mission5] <=3
       $game_variables[Level::Cap] = 60
+    elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=6
+      $game_variables[Level::Cap] = 66
+    elsif $game_variables[Mission::Mission5] >= 7 && $game_variables[Mission::Mission4]<=8
+      $game_variables[Level::Cap] = 70
+    elsif $game_variables[Mission::Mission5] >= 9
+      $game_variables[Level::Cap] = 75
     end
   end
   #Weather Setting
@@ -97,6 +102,12 @@ Events.onStepTaken += proc {| sender, e |
       $game_variables[Level::Cap] = 55
     elsif $game_variables[Mission::Mission5] >= 1 && $game_variables[Mission::Mission5] <=3
       $game_variables[Level::Cap] = 60
+    elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=6
+      $game_variables[Level::Cap] = 66
+    elsif $game_variables[Mission::Mission5] >= 7 && $game_variables[Mission::Mission4]<=8
+      $game_variables[Level::Cap] = 70
+    elsif $game_variables[Mission::Mission5] >= 9
+      $game_variables[Level::Cap] = 75
     end
   end
 }
@@ -112,7 +123,7 @@ end
 
 Events.onMapChange += proc {| sender, e |
     $game_switches[ChapterRelease::Four] = true
-    #$game_switches[ChapterRelease::Five] = true
+    $game_switches[ChapterRelease::Five] = true
 }
 
 def pbChapterRelease
@@ -1689,10 +1700,38 @@ def useMoveWaterfall
   return true
 end
 
+module GameData
+  class TerrainTag
+    attr_reader :rock_climb
+    def initialize(hash)
+      @id                     = hash[:id]
+      @id_number              = hash[:id_number]
+      @real_name              = hash[:id].to_s                || "Unnamed"
+      @can_surf               = hash[:can_surf]               || false
+      @waterfall              = hash[:waterfall]              || false
+      @rock_climb             = hash[:rock_climb]             || false
+      @waterfall_crest        = hash[:waterfall_crest]        || false
+      @can_fish               = hash[:can_fish]               || false
+      @can_dive               = hash[:can_dive]               || false
+      @deep_bush              = hash[:deep_bush]              || false
+      @shows_grass_rustle     = hash[:shows_grass_rustle]     || false
+      @land_wild_encounters   = hash[:land_wild_encounters]   || false
+      @double_wild_encounters = hash[:double_wild_encounters] || false
+      @battle_environment     = hash[:battle_environment]
+      @ledge                  = hash[:ledge]                  || false
+      @ice                    = hash[:ice]                    || false
+      @bridge                 = hash[:bridge]                 || false
+      @shows_reflections      = hash[:shows_reflections]      || false
+      @must_walk              = hash[:must_walk]              || false
+      @ignore_passability     = hash[:ignore_passability]     || false
+    end
+  end
+end
+
 def canUseMoveRockClimb?
   showmsg = true
   return false if !$PokemonBag.pbQuantity(:HIKINGGEAR)==0
-   if pbFacingTerrainTag!=PBTerrain::RockClimb
+   if !$game_player.pbFacingTerrainTag.rock_climb
      pbMessage(_INTL("Can't use that here.")) if showmsg
      return false
    end
@@ -1739,6 +1778,73 @@ def pbRockSmashRandomItem
       pbItemBall(:BIGNUGGET)
   end
 end
+
+def pbRockClimbUp(event=nil)
+  event = $game_player if !event
+  return if !event
+  return if event.direction != 8   # can't ascend if not facing up
+  oldthrough   = event.through
+  oldmovespeed = event.move_speed
+  return if !$game_player.pbFacingTerrainTag.rock_climb
+  event.through = true
+  event.move_speed += 2
+  loop do
+    event.move_up
+    if !$game_player.pbFacingTerrainTag.rock_climb
+      event.move_up
+      break
+    end
+  end
+  event.through    = oldthrough
+  event.move_speed = oldmovespeed
+end
+
+def pbRockClimbDown(event=nil)
+  event = $game_player if !event
+  return if !event
+  return if event.direction != 2    # Can't descend if not facing down
+  oldthrough   = event.through
+  oldmovespeed = event.move_speed
+  return if !$game_player.pbFacingTerrainTag.rock_climb
+  event.through = true
+  event.move_speed += 2
+  loop do
+    event.move_down
+    if !$game_player.pbFacingTerrainTag.rock_climb
+      event.move_down
+      break
+    end
+  end
+  event.through    = oldthrough
+  event.move_speed = oldmovespeed
+end
+
+def pbRockClimb
+  event = $game_player if !event
+  if $PokemonBag.pbQuantity(:HIKINGGEAR)==0
+    pbMessage(_INTL("These rocks look climbable."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("It's a large rock wall. Would you like to climb it?"))
+    if $PokemonBag.pbQuantity(:HIKINGGEAR)>0
+      pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(PBItems::HIKINGGEAR).name))
+      pbHiddenMoveAnimation(nil)
+    end
+    if event.direction==8
+      pbRockClimbUp
+    elsif event.direction==2
+      pbRockClimbDown
+    end
+    return true
+  end
+  return false
+end
+
+Events.onAction += proc { |_sender,_e|
+  if $game_player.pbFacingTerrainTag.rock_climb
+    pbRockClimb
+  end
+}
 
 def pbCut
   if !$PokemonBag.pbHasItem?(:CHAINSAW)
@@ -3004,6 +3110,143 @@ BattleHandlers::DamageCalcUserItem.add(:TEMPORALPLATE,
 # Misc
 #===================================
 
+class PokeBattle_AI
+  def pbEnemyShouldWithdrawEx?(idxBattler,forceSwitch)
+    return false if @battle.wildBattle?
+    shouldSwitch = forceSwitch
+    batonPass = -1
+    moveType = -1
+    skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill_level || 0
+    battler = @battle.battlers[idxBattler]
+    # If Pokémon is within 6 levels of the foe, and foe's last move was
+    # super-effective and powerful
+    if !shouldSwitch && battler.turnCount>0 && skill>=PBTrainerAI.highSkill
+      target = battler.pbDirectOpposing(true)
+      if !target.fainted? && target.lastMoveUsed &&
+         (target.level-battler.level).abs<=6
+        moveData = GameData::Move.get(target.lastMoveUsed)
+        moveType = moveData.type
+        typeMod = pbCalcTypeMod(moveType,target,battler)
+        if Effectiveness.super_effective?(typeMod) && moveData.base_damage > 50
+          switchChance = (moveData.base_damage > 70) ? 30 : 20
+          shouldSwitch = (pbAIRandom(100) < switchChance)
+        end
+      end
+    end
+    # Pokémon can't do anything (must have been in battle for at least 5 rounds)
+    if !@battle.pbCanChooseAnyMove?(idxBattler) &&
+       battler.turnCount && battler.turnCount>=5
+      shouldSwitch = true
+    end
+    # Pokémon is Perish Songed and has Baton Pass
+    if skill>=PBTrainerAI.highSkill && battler.effects[PBEffects::PerishSong]==1
+      battler.eachMoveWithIndex do |m,i|
+        next if m.function!="0ED"   # Baton Pass
+        next if !@battle.pbCanChooseMove?(idxBattler,i,false)
+        batonPass = i
+        break
+      end
+    end
+    # Pokémon will faint because of bad poisoning at the end of this round, but
+    # would survive at least one more round if it were regular poisoning instead
+    if battler.status == :POISON && battler.statusCount > 0 &&
+       skill>=PBTrainerAI.highSkill
+      toxicHP = battler.totalhp/16
+      nextToxicHP = toxicHP*(battler.effects[PBEffects::Toxic]+1)
+      if battler.hp<=nextToxicHP && battler.hp>toxicHP*2
+        shouldSwitch = true if pbAIRandom(100)<80
+      end
+    end
+    # Pokémon is Encored into an unfavourable move
+    if battler.effects[PBEffects::Encore]>0 && skill>=PBTrainerAI.mediumSkill
+      idxEncoredMove = battler.pbEncoredMoveIndex
+      if idxEncoredMove>=0
+        scoreSum   = 0
+        scoreCount = 0
+        battler.eachOpposing do |b|
+          scoreSum += pbGetMoveScore(battler.moves[idxEncoredMove],battler,b,skill)
+          scoreCount += 1
+        end
+        if scoreCount>0 && scoreSum/scoreCount<=20
+          shouldSwitch = true if pbAIRandom(100)<80
+        end
+      end
+    end
+    # If there is a single foe and it is resting after Hyper Beam or is
+    # Truanting (i.e. free turn)
+    if @battle.pbSideSize(battler.index+1)==1 &&
+       !battler.pbDirectOpposing.fainted? && skill>=PBTrainerAI.highSkill
+      opp = battler.pbDirectOpposing
+      if opp.effects[PBEffects::HyperBeam]>0 ||
+         (opp.hasActiveAbility?(:TRUANT) && opp.effects[PBEffects::Truant])
+        shouldSwitch = false if pbAIRandom(100)<80
+      end
+    end
+    # Sudden Death rule - I'm not sure what this means
+    if @battle.rules["suddendeath"] && battler.turnCount>0
+      if battler.hp<=battler.totalhp/4 && pbAIRandom(100)<30
+        shouldSwitch = true
+      elsif battler.hp<=battler.totalhp/2 && pbAIRandom(100)<80
+        shouldSwitch = true
+      end
+    end
+    # Pokémon is about to faint because of Perish Song
+    if battler.effects[PBEffects::PerishSong]==1
+      shouldSwitch = true
+    end
+    if shouldSwitch
+      list = []
+      @battle.pbParty(idxBattler).each_with_index do |pkmn,i|
+        next if !@battle.pbCanSwitch?(idxBattler,i)
+        # If perish count is 1, it may be worth it to switch
+        # even with Spikes, since Perish Song's effect will end
+        if battler.effects[PBEffects::PerishSong]!=1
+          # Will contain effects that recommend against switching
+          spikes = battler.pbOwnSide.effects[PBEffects::Spikes]
+          # Don't switch to this if too little HP
+          if spikes>0
+            spikesDmg = [8,6,4][spikes-1]
+            if pkmn.hp<=pkmn.totalhp/spikesDmg
+              next if !pkmn.hasType?(:FLYING) && !pkmn.hasActiveAbility?(:LEVITATE)
+            end
+          end
+        end
+        # moveType is the type of the target's last used move
+        if moveType.id>=0 && Effectiveness.ineffective?(pbCalcTypeMod(moveType,battler,battler))
+          weight = 65
+          typeMod = pbCalcTypeModPokemon(pkmn,battler.pbDirectOpposing(true))
+          if Effectiveness.super_effective?(typeMod)
+            # Greater weight if new Pokemon's type is effective against target
+            weight = 85
+          end
+          list.unshift(i) if pbAIRandom(100)<weight   # Put this Pokemon first
+        elsif moveType.id>=0 && Effectiveness.resistant?(pbCalcTypeMod(moveType,battler,battler))
+          weight = 40
+          typeMod = pbCalcTypeModPokemon(pkmn,battler.pbDirectOpposing(true))
+          if Effectiveness.super_effective?(typeMod)
+            # Greater weight if new Pokemon's type is effective against target
+            weight = 60
+          end
+          list.unshift(i) if pbAIRandom(100)<weight   # Put this Pokemon first
+        else
+          list.push(i)   # put this Pokemon last
+        end
+      end
+      if list.length>0
+        if batonPass>=0 && @battle.pbRegisterMove(idxBattler,batonPass,false)
+          PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will use Baton Pass to avoid Perish Song")
+          return true
+        end
+        if @battle.pbRegisterSwitch(idxBattler,list[0])
+          PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will switch with " +
+                      "#{@battle.pbParty(idxBattler)[list[0]].name}")
+          return true
+        end
+      end
+    end
+    return false
+  end
+end
 
 class PokemonEncounters
   def has_sandy_encounters?
@@ -3053,7 +3296,8 @@ GameData::TerrainTag.register({
 
 GameData::TerrainTag.register({
   :id                     => :RockClimb,
-  :id_number              => 19
+  :id_number              => 19,
+  :rock_climb             => true
 })
 
 GameData::TerrainTag.register({
@@ -3402,7 +3646,6 @@ class PokemonPauseMenu
     cmdTrainer  = -1
     cmdSave     = -1
     cmdOption   = -1
-    cmdQuests = -1
     cmdWeather = -1
     cmdDebug    = -1
     cmdQuit     = -1
@@ -3412,7 +3655,6 @@ class PokemonPauseMenu
     end
     commands[cmdPokemon = commands.length]   = _INTL("Pokémon") if $Trainer.party_count > 0
     commands[cmdBag = commands.length]       = _INTL("Bag") if !pbInBugContest?
-    commands[cmdQuests = commands.length]  = _INTL("Mission Log") if $game_switches[Mission::One]
     commands[cmdWeather = commands.length]  = _INTL("Weather Reader") if $game_switches[400]
     commands[cmdTrainer = commands.length]   = $Trainer.name
     if pbInSafari?
@@ -3496,14 +3738,6 @@ class PokemonPauseMenu
           pbUseKeyItemInField(item)
           return
         end
-      elsif cmdQuests>=0 && command==cmdQuests
-        pbPlayDecisionSE
-        pbFadeOutIn {
-          scene = QuestScene.new
-          screen = QuestScreen.new(scene)
-          screen.pbStartScreen
-          @scene.pbRefresh
-        }
       elsif cmdWeather>=0 && command==cmdWeather
         pbPlayDecisionSE
         pbFadeOutIn {

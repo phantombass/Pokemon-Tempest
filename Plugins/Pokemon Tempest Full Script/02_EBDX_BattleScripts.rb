@@ -249,6 +249,46 @@ module BattleScripts
       @scene.pbShowAllDataboxes
     end
   }
+
+  DIALGA1 = {
+    "turnStart0" => proc do
+      # hide databoxes
+      @scene.pbHideAllDataboxes
+      # show flavor text
+      @scene.pbDisplay("Dialga is carefully eyeing you...")
+      pbBGMPlay("Legendary")
+      EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
+      @vector.reset # AURAFLARE doesn't reset the vector by default
+      @scene.wait(16, true) # set true to anchor the sprites to vector
+      # raise battler Attack sharply (doesn't display text)
+      @scene.pbDisplay("Dialga's stats rose!")
+      @scene.wait(16)
+      # play common animation
+      EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
+      @scene.pbDisplay("Dialga is raring to go!")
+      @scene.pbShowAllDataboxes
+    end
+  }
+
+  PALKIA = {
+    "turnStart0" => proc do
+      # hide databoxes
+      @scene.pbHideAllDataboxes
+      # show flavor text
+      @scene.pbDisplay("Palkia is carefully eyeing you...")
+      pbBGMPlay("Legendary")
+      EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
+      @vector.reset # AURAFLARE doesn't reset the vector by default
+      @scene.wait(16, true) # set true to anchor the sprites to vector
+      # raise battler Attack sharply (doesn't display text)
+      @scene.pbDisplay("Palkia's stats rose!")
+      @scene.wait(16)
+      # play common animation
+      EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
+      @scene.pbDisplay("Palkia is raring to go!")
+      @scene.pbShowAllDataboxes
+    end
+  }
 #Important Trainer Battles
       AARON = {
         "turnStart0" => "I'll humor you this time, child.",
@@ -272,5 +312,10 @@ module BattleScripts
         RIVAL2 = {
           "turnStart0" => "You are going down again! Just like last time!",
           "lastOpp" => "Ugh. This can NOT be happening!"
+        }
+
+        CYNTHIA = {
+          "turnStart0" => "Come at me with everything! I want to know just how strong your team is!",
+          "lastOpp" => "It's been a long time since I was backed into a corner like this."
         }
 end
