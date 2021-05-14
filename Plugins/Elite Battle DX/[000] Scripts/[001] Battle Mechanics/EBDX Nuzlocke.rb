@@ -15,6 +15,12 @@ module EliteBattle
     return self.nuzlocke? && self.get(:nuzlocke)
   end
   #-----------------------------------------------------------------------------
+  #  toggle nuzlocke state
+  #-----------------------------------------------------------------------------
+  def self.toggle_nuzlocke(force = nil)
+    @nuzlocke = force.nil? ? !@nuzlocke : force
+  end
+  #-----------------------------------------------------------------------------
   #  recurring function to get the very first species in the evolutionary line
   #-----------------------------------------------------------------------------
   def self.getFirstEvo(species)
@@ -59,9 +65,9 @@ module EliteBattle
     ret = self.nuzlockeSelection unless skip
     $PokemonGlobal.qNuzlocke = ret
     # sets the nuzlocke to true if already has a bag and Pokeballs
-    for i in GameData::Item.keys
+    for i in GameData::Item.values
       break if !$PokemonBag
-      if pbIsPokeBall?(i) && $PokemonBag.pbHasItem?(i)
+      if GameData::Item.get(i).is_poke_ball? && $PokemonBag.pbHasItem?(i)
         @nuzlocke = ret
         $PokemonGlobal.isNuzlocke = ret
         break
@@ -308,7 +314,7 @@ class PokemonBag
   def pbStoreItem(*args)
     ret = pbStoreItem_ebdx_nuzlocke(*args)
     item = args[0]
-    if $PokemonGlobal && $PokemonGlobal.qNuzlocke && pbIsPokeBall?(item)
+    if $PokemonGlobal && $PokemonGlobal.qNuzlocke && GameData::Item.get(item).is_poke_ball?
       EliteBattle.set(:nuzlocke, true)
       EliteBattle.add_data(:NUZLOCKE, :RULES, $PokemonGlobal.nuzlockeRules) if !$PokemonGlobal.nuzlockeRules.nil?
       $PokemonGlobal.isNuzlocke = true
@@ -323,7 +329,10 @@ class PokemonLoadScreen
   alias pbStartLoadScreen_ebdx_nuzlocke pbStartLoadScreen unless self.method_defined?(:pbStartLoadScreen_ebdx_nuzlocke)
   def pbStartLoadScreen
     ret = pbStartLoadScreen_ebdx_nuzlocke
-    EliteBattle.startNuzlocke(true) if $PokemonGlobal && $PokemonGlobal.isNuzlocke
+    if $PokemonGlobal && $PokemonGlobal.isNuzlocke
+      EliteBattle.set(:nuzlocke, true)
+      EliteBattle.add_data(:NUZLOCKE, :RULES, $PokemonGlobal.nuzlockeRules) if !$PokemonGlobal.nuzlockeRules.nil?
+    end
     return ret
   end
 end

@@ -691,7 +691,7 @@ class PokeBattle_Move_0B6 < PokeBattle_Move
 end
 
 #==============================================================================
-# Fixed broken AI for Conversion and Conversion 2.
+# Fixed broken AI for Conversio, Conversion 2 and Camouflage.
 #==============================================================================
 class PokeBattle_AI
   alias __hotfixes__pbGetMoveScoreFunctionCode pbGetMoveScoreFunctionCode
@@ -738,6 +738,49 @@ class PokeBattle_AI
           end
           score -= 90 if !has_possible_type
         end
+      end
+    when "060"
+      if !user.canChangeType?
+        score -= 90
+      elsif skill>=PBTrainerAI.mediumSkill
+        new_type = nil
+        case @battle.field.terrain
+        when :Electric
+          new_type = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
+        when :Grassy
+          new_type = :GRASS if GameData::Type.exists?(:GRASS)
+        when :Misty
+          new_type = :FAIRY if GameData::Type.exists?(:FAIRY)
+        when :Psychic
+          new_type = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
+        end
+        if !new_type
+          envtypes = {
+             :None        => :NORMAL,
+             :Grass       => :GRASS,
+             :TallGrass   => :GRASS,
+             :MovingWater => :WATER,
+             :StillWater  => :WATER,
+             :Puddle      => :WATER,
+             :Underwater  => :WATER,
+             :Cave        => :ROCK,
+             :Rock        => :GROUND,
+             :Sand        => :GROUND,
+             :Forest      => :BUG,
+             :ForestGrass => :BUG,
+             :Snow        => :ICE,
+             :Ice         => :ICE,
+             :Volcano     => :FIRE,
+             :Graveyard   => :GHOST,
+             :Sky         => :FLYING,
+             :Space       => :DRAGON,
+             :UltraSpace  => :PSYCHIC
+          }
+          new_type = envtypes[@battle.environment]
+          new_type = nil if !GameData::Type.exists?(new_type)
+          new_type ||= :NORMAL
+        end
+        score -= 90 if !user.pbHasOtherType?(new_type)
       end
     else
 	  score = __hotfixes__pbGetMoveScoreFunctionCode(score,move,user,target,skill)
@@ -795,3 +838,13 @@ class PokeBattle_Move_05D < PokeBattle_Move
   end
 end
 
+#==============================================================================
+# Fixed Poké Flute not working in battle if it has an effect.
+#==============================================================================
+ItemHandlers::UseInBattle.add(:POKEFLUTE,proc { |item,battler,battle|
+  battle.eachBattler do |b|
+    next if b.status != :SLEEP || b.hasActiveAbility?(:SOUNDPROOF)
+    b.pbCureStatus(false)
+  end
+  battle.pbDisplay(_INTL("All Pokémon were roused by the tune!"))
+})

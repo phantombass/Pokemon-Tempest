@@ -36,7 +36,7 @@ end
 #  Safari Zone compatibility
 #===============================================================================
 class PokeBattle_SafariZone
-  attr_accessor :opponents, :players
+  attr_accessor :opponents, :players, :scene
   alias initialize_ebdx initialize unless self.method_defined?(:initialize_ebdx)
   def initialize(*args)
     args[0].safaribattle = true

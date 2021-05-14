@@ -447,11 +447,11 @@ class DataBoxEBDX  <  SpriteWrapper
     # updates the HP increase/decrease animation
     if @animatingHP
       if @currenthp < @endhp
-        @currenthp += (@endhp - @currenthp)/10.0
+        @currenthp += (@endhp - @currenthp)/10.0.delta_add(false)
         @currenthp = @currenthp.ceil
         @currenthp = @endhp if @currenthp > @endhp
       elsif @currenthp > @endhp
-        @currenthp -= (@currenthp - @endhp)/10.0
+        @currenthp -= (@currenthp - @endhp)/10.0.delta_add(false)
         @currenthp = @currenthp.floor
         @currenthp = @endhp if @currenthp < @endhp
       end
@@ -463,11 +463,11 @@ class DataBoxEBDX  <  SpriteWrapper
       if !@showexp
         @currentexp = @endexp
       elsif @currentexp < @endexp
-        @currentexp += (@endexp - @currentexp)/10.0
+        @currentexp += (@endexp - @currentexp)/10.0.delta_add(false)
         @currentexp = @currentexp.ceil
         @currentexp = @endexp if @currentexp > @endexp
       elsif @currentexp > @endexp
-        @currentexp -= (@currentexp - @endexp)/10.0
+        @currentexp -= (@currentexp - @endexp)/10.0.delta_add(false)
         @currentexp = @currentexp.floor
         @currentexp = @endexp if @currentexp < @endexp
       end
@@ -503,8 +503,8 @@ class DataBoxEBDX  <  SpriteWrapper
     # bobbing effect
     if @selected
       @frame += 1
-      self.y = self.defY + (@frame <= 8 ? 2 : 0) - (@frame > 8 ? 2 : 0)
-      @frame = 0 if @frame > 16
+      self.y = self.defY + (@frame <= 8.delta_add ? 2 : 0) - (@frame > 8.delta_add ? 2 : 0)
+      @frame = 0 if @frame > 16.delta_add
     else
       self.y = self.defY
     end
@@ -573,7 +573,7 @@ class SafariDataBoxEBDX < SpriteWrapper
     bmp = pbBitmap("Graphics/EBDX/Pictures/UI/safariBar")
     self.bitmap.blt((self.bitmap.width-bmp.width)/2,self.bitmap.height-bmp.height,bmp,Rect.new(0,0,bmp.width,bmp.height))
     str = _INTL("Safari Balls: {1}", @battle.ballCount)
-    pbDrawOutlineText(self.bitmap,0,12,self.bitmap.width,self.bitmap.height,str,Color.white,Color.new(0,0,0,125),1)
+    pbDrawOutlineText(self.bitmap,0,38,self.bitmap.width,self.bitmap.height,str,Color.white,Color.new(0,0,0,125),1)
   end
   #-----------------------------------------------------------------------------
   #  update (temp)

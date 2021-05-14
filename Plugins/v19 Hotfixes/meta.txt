@@ -1,5 +1,5 @@
 ﻿Name      = v19 Hotfixes
-Version   = 1.0.5
+Version   = 1.0.6
 Conflicts = v19 Updates
 Website   = https://github.com/Maruno17/pokemon-essentials
 Credits   = Maruno
@@ -88,6 +88,14 @@ Credits   = Maruno
 # - Fixed Sketch not working.
 # - Fixed certain species not learning moves upon changing form
 #   like they should.
+#
+# 1.0.6:
+# - Made events and the player recalculate their bush depth less
+#   often (lag-busting).
+# - Fixed Shadow Pokémon knowing the same move repeatedly.
+# - Fixed prevolution data not being compiled properly.
+# - Fixed Poké Flute not working in battle if it has an effect.
+# - Fixed broken AI for Camouflage.
 #
 #=================================================================
 # Notes

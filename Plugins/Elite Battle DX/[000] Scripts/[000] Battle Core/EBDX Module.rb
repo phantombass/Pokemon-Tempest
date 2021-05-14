@@ -476,7 +476,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.all_species
     keys = []
-    GameData::Species.each { |species| keys.push(s.id) if species.form == 0 }
+    GameData::Species.each { |species| keys.push(species.id) if species.form == 0 }
     return keys
   end
   #-----------------------------------------------------------------------------

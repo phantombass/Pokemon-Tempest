@@ -210,6 +210,8 @@ class PokeBattle_Scene
       # play animation when wild is caught
       @caughtBattler = @battle.pbParty(1)[targetBattler/2]
       spritePoke.visible = false
+      spritePoke.resetParticles
+      spritePoke.charged = false
       self.wait(40)
       pbSEPlay("Battle ball drop", 80)
       pokeball.color = Color.new(0, 0, 0, 0)

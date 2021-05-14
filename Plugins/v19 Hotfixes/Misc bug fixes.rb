@@ -6,7 +6,7 @@
 # https://github.com/Maruno17/pokemon-essentials
 #==============================================================================
 
-Essentials::ERROR_TEXT += "[v19 Hotfixes 1.0.5]\r\n"
+Essentials::ERROR_TEXT += "[v19 Hotfixes 1.0.6]\r\n"
 
 #==============================================================================
 # Fix for dynamic shadows not disappearing if you transfer elsewhere while you
@@ -598,3 +598,82 @@ MultipleForms.register(:NECROZMA,{
     end
   }
 })
+
+#==============================================================================
+# Made events and the player recalculate their bush depth less often
+# (lag-busting).
+#==============================================================================
+class Game_Character
+  def bush_depth
+    return @bush_depth || 0
+  end
+
+  def calculate_bush_depth
+    if @tile_id > 0 || @always_on_top || jumping?
+      @bush_depth = 0
+    else
+      deep_bush = regular_bush = false
+      xbehind = @x + (@direction == 4 ? 1 : @direction == 6 ? -1 : 0)
+      ybehind = @y + (@direction == 8 ? 1 : @direction == 2 ? -1 : 0)
+      this_map = (self.map.valid?(@x, @y)) ? [self.map, @x, @y] : $MapFactory.getNewMap(@x, @y)
+      if this_map[0].deepBush?(this_map[1], this_map[2]) && self.map.deepBush?(xbehind, ybehind)
+        @bush_depth = Game_Map::TILE_HEIGHT
+      elsif !moving? && this_map[0].bush?(this_map[1], this_map[2])
+        @bush_depth = 12
+      else
+        @bush_depth = 0
+      end
+    end
+  end
+
+  alias __hotfixes__update update
+  def update
+    @stopped_last_frame = @stopped_this_frame
+    __hotfixes__update
+  end
+
+  alias __hotfixes__update_move update_move
+  def update_move
+    __hotfixes__update_move
+    # End of a step, so perform events that happen at this time
+    if !jumping? && !moving?
+      calculate_bush_depth
+      @stopped_this_frame = true
+    elsif !@moved_last_frame || @stopped_last_frame   # Started a new step
+      calculate_bush_depth
+      @stopped_this_frame = false
+    end
+  end
+
+  alias __hotfixes__update_stop update_stop
+  def update_stop
+    __hotfixes__update_stop
+    @stopped_this_frame = false
+  end
+end
+
+class Game_Player < Game_Character
+  def bush_depth
+    return @bush_depth || 0
+  end
+end
+
+#===============================================================================
+# Fixed Shadow Pokémon knowing the same move repeatedly.
+#===============================================================================
+class Pokemon
+  def replace_moves(new_moves)
+    new_moves.each do |move|
+      next if !move || !GameData::Move.exists?(move) || hasMove?(move)
+      if numMoves < Pokemon::MAX_MOVES   # Has an empty slot; just learn move
+        learn_move(move)
+        next
+      end
+      @moves.each do |m|
+        next if new_moves.include?(m.id)
+        m.id = GameData::Move.get(move).id
+        break
+      end
+    end
+  end
+end

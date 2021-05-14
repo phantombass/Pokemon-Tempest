@@ -195,7 +195,7 @@ class EliteBattle_Pokedex
       Graphics.update
     end
     # play cry
-    GameData::Species.play_cry(@species)
+    GameData::Species.cry_filename_from_pokemon(@pokemon)
     # begin loop
     loop do
       Graphics.update
