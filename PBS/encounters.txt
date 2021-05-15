@@ -701,3 +701,19 @@ Land
     CHIMECHO,58,60
     SALAMENCE,58,60
 #-------------------------------
+161 # Route 7
+25,10,10
+Land
+    XATU,58,60
+    CHERRIM,58,60
+    XATU,58,60
+    CHERRIM,58,60
+    CHINGLING,58,60
+    CHINGLING,58,60
+    MEDICHAM,58,60
+    MEDICHAM,58,60
+    CHIMECHO,60,62
+    SALAMENCE,60,62
+    CHIMECHO,60,62
+    SALAMENCE,60,62
+#-------------------------------

@@ -592,6 +592,49 @@ Pokemon = LUCARIO,66
   Moves = CLOSECOMBAT,ICEPUNCH,METEORMASH,IRONHEAD
   
 #-------------------------------
+# Abandoned Galactic Lab
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,17]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = XATU,63
+Pokemon = CLEFABLE,63
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,18]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = ABSOL,64
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,19]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = MEDICHAM,61
+Pokemon = SALAMENCE,61
+Pokemon = CHIMECHO,62
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,20]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = ELECTRODE,63
+Pokemon = HYPNO,63
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,21]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = SABLEYE,63
+Pokemon = MEDICHAM,63
+#-------------------------------
+[TEAMMAELSTROM_M,Admin]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = MUSHARNA,61
+Pokemon = CHATOT,61
+Pokemon = EMPOLEON,62
+	Item = EMPOLEONITE
+#-------------------------------
+[TEAMMAELSTROM_M,Admin,1]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = MUSHARNA,61
+Pokemon = CHATOT,61
+Pokemon = TORTERRA,62
+	Item = TORTERRANITE
+#-------------------------------
+  
+#-------------------------------
 #Level Trainer
 #-------------------------------
 [SCIENTIST1,Nivel]

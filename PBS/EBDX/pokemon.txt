@@ -3983,6 +3983,6 @@ SpriteScalePlayer = 1.5
 #-------------------------------
 [LUCARIO,1]
 BattlerPlayerY  = 8
-BattlerEnemyY   = 14
+BattlerEnemyY   = 24
 BattlerAltitude = 0
 #-------------------------------

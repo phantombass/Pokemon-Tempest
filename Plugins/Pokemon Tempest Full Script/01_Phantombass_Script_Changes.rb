@@ -49,7 +49,7 @@ Events.onMapUpdate += proc {| sender, e |
       $game_variables[Level::Cap] = 60
     elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=6
       $game_variables[Level::Cap] = 66
-    elsif $game_variables[Mission::Mission5] >= 7 && $game_variables[Mission::Mission4]<=8
+    elsif $game_variables[Mission::Mission5] >= 8 && $game_variables[Mission::Mission4]< 9
       $game_variables[Level::Cap] = 70
     elsif $game_variables[Mission::Mission5] >= 9
       $game_variables[Level::Cap] = 75
@@ -104,7 +104,7 @@ Events.onStepTaken += proc {| sender, e |
       $game_variables[Level::Cap] = 60
     elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=6
       $game_variables[Level::Cap] = 66
-    elsif $game_variables[Mission::Mission5] >= 7 && $game_variables[Mission::Mission4]<=8
+    elsif $game_variables[Mission::Mission5] >= 8 && $game_variables[Mission::Mission4]< 9
       $game_variables[Level::Cap] = 70
     elsif $game_variables[Mission::Mission5] >= 9
       $game_variables[Level::Cap] = 75
@@ -1827,7 +1827,7 @@ def pbRockClimb
   end
   if pbConfirmMessage(_INTL("It's a large rock wall. Would you like to climb it?"))
     if $PokemonBag.pbQuantity(:HIKINGGEAR)>0
-      pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(PBItems::HIKINGGEAR).name))
+      pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:HIKINGGEAR).name))
       pbHiddenMoveAnimation(nil)
     end
     if event.direction==8
