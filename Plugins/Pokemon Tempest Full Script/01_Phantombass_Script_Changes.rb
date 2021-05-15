@@ -547,6 +547,27 @@ MultipleForms.register(:ALTEMPER,{
   }
 })
 
+MultipleForms.register(:DIALGA,{
+  "getPrimalForm" => proc { |pkmn|
+    next 1 if pkmn.hasItem?(:ADAMANTORB)
+    next
+  }
+})
+
+MultipleForms.register(:PALKIA,{
+  "getPrimalForm" => proc { |pkmn|
+    next 1 if pkmn.hasItem?(:LUSTROUSORB)
+    next
+  }
+})
+
+MultipleForms.register(:GIRATINA,{
+  "getPrimalForm" => proc { |pkmn|
+    next 2 if pkmn.hasItem?(:DEVIANTORB)
+    next
+  }
+})
+
 class PokeBattle_Battler
   def pbCheckFormOnWeatherChange
     return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) && !isSpecies?(:CASTFORM) && !isSpecies?(:CHERRIM))
@@ -1129,7 +1150,16 @@ BattleHandlers::AbilityOnSwitchIn.add(:DUAT,
   proc { |ability,battler,battle|
     battler.effects[PBEffects::Type3] = :TIME
     battle.pbShowAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1} is shrouded in the Duat !",battler.pbThis))
+    battle.pbDisplay(_INTL("{1} is shrouded in the Duat!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:SHADOWGUARD,
+  proc { |ability,battler,battle|
+    battler.effects[PBEffects::Type3] = :DARK
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} is shrouded in the shadows!",battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
 )

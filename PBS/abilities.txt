@@ -251,7 +251,7 @@
 249,STELLARIZE,Stellarize,"Normal-type moves become Cosmic-type moves."
 250,RESURGENCE,Resurgence,"This Pokémon heals some HP at the end of the turn."
 251,NITRIC,Nitric,"Allows Poison-type moves to hit Steel-type Pokémon."
-252,SHADOWGUARD,Shadow Guard,"Gains Dark as a defensive typing."
+252,SHADOWGUARD,Shadow Guard,"Gains Dark as a third typing."
 253,TIMEWARP,Time Warp,"This Pokémon only takes damage from quad Super Effective moves."
 254,HYPERSPACE,Hyperspace,"This Pokémon only takes damage from quad Super Effective moves."
 255,ACCLIMATE,Acclimate,"This Pokémon changes the weather, then changes its form to match."

@@ -32,7 +32,7 @@ class Player_Quests
   def activateQuest(questID)
     q = "QUEST" + "#{questID}"
     @active_quests.push(QuestsData.const_get(q)["Name"])
-    @quest_stage = "#{QuestsData.const_get(q)["Stage1"]}"
+    @quest_stage = "<ac>Chapter #{$Trainer.badge_count}\n#{QuestsData.const_get(q)["Name"]}\n#{QuestsData.const_get(q)["Stage1"]}</ac>"
     scene = Quest_Show.new
     scene.pbShow(@quest_stage)
     return scene
@@ -49,23 +49,23 @@ class Player_Quests
     when 1
       @quest_stage = "#{QuestsData.const_get(q)["Stage1"]}"
     when 2
-      @quest_stage = "#{QuestsData.const_get(q)["Stage2"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage2"]}</ac>"
     when 3
-      @quest_stage = "#{QuestsData.const_get(q)["Stage3"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage3"]}</ac>"
     when 4
-      @quest_stage = "#{QuestsData.const_get(q)["Stage4"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage4"]}</ac>"
     when 5
-      @quest_stage = "#{QuestsData.const_get(q)["Stage5"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage5"]}</ac>"
     when 6
-      @quest_stage = "#{QuestsData.const_get(q)["Stage6"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage6"]}</ac>"
     when 7
-      @quest_stage = "#{QuestsData.const_get(q)["Stage7"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage7"]}</ac>"
     when 8
-      @quest_stage = "#{QuestsData.const_get(q)["Stage8"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage8"]}</ac>"
     when 9
-      @quest_stage = "#{QuestsData.const_get(q)["Stage9"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage9"]}</ac>"
     when 10
-      @quest_stage = "#{QuestsData.const_get(q)["Stage10"]}"
+      @quest_stage = "<ac>New Objective \n#{QuestsData.const_get(q)["Stage10"]}</ac>"
     end
     scene = Quest_Show.new
     scene.pbShow(@quest_stage)

@@ -108,7 +108,11 @@ def pbNewMission(num)
     $game_variables[Chapter::Count] += 1
   when 5
     $game_variables[Mission::Mission5] = 1
-    $PokemonGlobal.quests.activateQuest(10)
+    if $game_switches[Mission::Vinny]
+      $PokemonGlobal.quests.activateQuest(10)
+    elsif $game_switches[Mission::Stella]
+      $PokemonGlobal.quests.activateQuest(11)
+    end
     $Trainer.badges[4] = true
     if $game_switches[Mission::Vinny]
       $PokemonGlobal.quests.completeQuest(6)

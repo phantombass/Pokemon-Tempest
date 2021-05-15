@@ -47,7 +47,7 @@ module QuestsData
       #====================================
       QUEST6 = {
       "ID" => "6",
-      "Name" => "Problem at Mt. Sear S",
+      "Name" => "Problem at Mt. Sear",
       "Stage1" => "Meet Vinny at the Southwest exit of Distura City.",
       "Stage2" => "Go to Mt. Sear base to meet up with Vinny.",
       "Stage3" => "Scale Mt. Sear.",
@@ -62,7 +62,7 @@ module QuestsData
       #====================================
       QUEST7 = {
       "ID" => "7",
-      "Name" => "Problem at Mt. Sear E",
+      "Name" => "Problem at Mt. Sear",
       "Stage1" => "Meet Stella at the Northwest exit of Astral Peak.",
       "Stage2" => "Go to Mt. Sear base to meet up with Stella.",
       "Stage3" => "Descend into Mt. Sear's core.",
@@ -102,16 +102,24 @@ module QuestsData
       "Stage4" => "Make your way to Sephala in Tinjo!",
       "Stage5" => "Go to the Abandoned Galactic Lab.",
       "Stage6" => "Enter the Distortion World and find Aaron.",
-      "Stage7" => proc do
-        if $game_switches[517]
-          "Calm Palkia down."
-        elsif $game_switches[518]
-          "Calm Dialga down."
-        end
-      end,
+      "Stage7" => "Calm Dialga down!",
       "Stage8" => "Head to Menzopolis to meet with Cynthia.",
       "Stage9" => "Explore Tinjo and the Distortion World as you wait for instructions on the next Mission from Cynthia!"
     }
+    #====================================
+    QUEST11 = {
+    "ID" => "11",
+    "Name" => "A Trip to New Lands",
+    "Stage1" => "Meet Cynthia at her villa in Coastal Steppes.",
+    "Stage2" => "Go to the Pokémon Center in Coastal Steppes.",
+    "Stage3" => "Meet Cynthia in the Menzopolis Outlands.",
+    "Stage4" => "Make your way to Sephala in Tinjo!",
+    "Stage5" => "Go to the Abandoned Galactic Lab.",
+    "Stage6" => "Enter the Distortion World and find Aaron.",
+    "Stage7" => "Calm Palkia down!",
+    "Stage8" => "Head to Menzopolis to meet with Cynthia.",
+    "Stage9" => "Explore Tinjo and the Distortion World as you wait for instructions on the next Mission from Cynthia!"
+  }
 #====================================
 
 #DO NOT REMOVE THE END!!!!!!!!
