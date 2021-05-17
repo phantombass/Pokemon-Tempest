@@ -118,7 +118,7 @@ module QuestsData
     "Stage6" => "Enter the Distortion World and find Aaron.",
     "Stage7" => "Calm Palkia down!",
     "Stage8" => "Head back to Shira to meet with Cynthia and your mother.",
-    "Stage9" => "Explore Tinjo and the Distortion World as you wait for instructions on the next Mission from Cynthia!"
+    "Stage9" => "Train up as you wait for instructions on the next Mission from Cynthia!"
   }
 #====================================
 
