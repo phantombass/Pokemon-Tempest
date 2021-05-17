@@ -1,4 +1,4 @@
-{"RIVAL1{"__pk__{"BattleBGM["Battle Elite.mid"RIVAL1,Blue{@{"BattleVS["forestSM"RIVAL1,Blue,1{@{@["flamesSM"RIVAL1,Blue,2{@{@["wavesSM"LEADER_Brock{@{"TrainerPositionX[ió"BattleEnv["INDOOR@["classicVS"LEADER_Brock,Brock{@{"BattleScript["
+{"RIVAL1{"__pk__{"BattleBGM["Battle Elite.mid"RIVAL1,Blue{@{"BattleVS["forestSM"RIVAL1,Blue,1{@{@["flamesSM"RIVAL1,Blue,2{@{@["wavesSM"LEADER_Brock{@{"TrainerPositionX[ió"BattleEnv["INDOOR@["classicVS"LEADER_Brock,Brock{@{"BattleScript["
 BROCK"TEAMMAELSTROM_M{@{"BattleIntro["evilTeam@["trainerSM"TEAMMAELSTROM_F{@{@0["evilTeam@["trainerSM"MAELSTROMBOSS{@{@0["evilTeam@["trainerSM"Ace[i
 "MAELSTROMBOSS,Aaron{@{@"["
 MAGMA@*["
@@ -13,10 +13,15 @@ MAGMA@*["AARONLOSS@C[i
 MAGMA@*["AARONLOSS@C[i
 "MAELSTROMBOSS,Aaron,5{@{@"["
 MAGMA@*["AARONLOSS@C[i
+"MAELSTROMBOSS,Aaron,6{@{@"["DIMENSION@*["AARON2@C[i
+"MAELSTROMBOSS,Aaron,7{@{@"["DIMENSION@*["AARON2@C[i
+"MAELSTROMBOSS,Aaron,8{@{@"["DIMENSION@*["AARON2@C[i
+"MAELSTROMBOSS,Aaron,10{@{@"["DIMENSION@*["AARON2@C[i
+"MAELSTROMBOSS,Aaron,11{@{@"["DIMENSION@*["AARON2@C[i
 "RIVAL3{@{@
 ["HGSS-138-RivalBattle.ogg@["integratedVS"
 Scale[i"RIVAL3,Akron{@{@"["	SNOW@*["
 RIVAL@C[i"RIVAL3,Akron,1{@{@"["MOUNTAIN@*["RIVAL1@C[i
 "RIVAL3,Akron,2{@{@"["MOUNTAIN@*["RIVAL2@C[i
 "CHAMPION1{@{@
-["giratinabattle.ogg@["integratedVS@|[i"CHAMPION1,Cynthia{@{@"["DIMENSION@*["CYNTHIA@C[i
+["giratinabattle.ogg@["integratedVS@Ÿ[i"CHAMPION1,Cynthia{@{@"["DIMENSION@*["CYNTHIA@C[i

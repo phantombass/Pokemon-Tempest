@@ -951,3 +951,17 @@ SnapEdges = true
 ShowArea = true
 MapPosition = 2,16,17
 SnapEdges = true
+#-------------------------------
+[168]
+# Temporal Apex
+ShowArea = true
+Weather = Rain,0
+MapPosition = 1,10,11
+SnapEdges = true
+#-------------------------------
+[169]
+# Spacial Plateau
+ShowArea = true
+Weather = Rain,0
+MapPosition = 1,11,11
+SnapEdges = true

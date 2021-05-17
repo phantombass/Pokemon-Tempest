@@ -62,6 +62,36 @@ BattleEnv        = MAGMA
 BattleScript     = AARONLOSS
 Ace              = 5
 #-------------------------------
+[MAELSTROMBOSS,Aaron,6]
+BattleEnv        = DIMENSION
+BattleScript     = AARON2
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,7]
+BattleEnv        = DIMENSION
+BattleScript     = AARON2
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,8]
+BattleEnv        = DIMENSION
+BattleScript     = AARON2
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,8]
+BattleEnv        = DIMENSION
+BattleScript     = AARON2
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,10]
+BattleEnv        = DIMENSION
+BattleScript     = AARON2
+Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,11]
+BattleEnv        = DIMENSION
+BattleScript     = AARON2
+Ace              = 5
+#-------------------------------
 [RIVAL3]
 BattleBGM        = HGSS-138-RivalBattle.ogg
 BattleVS         = integratedVS

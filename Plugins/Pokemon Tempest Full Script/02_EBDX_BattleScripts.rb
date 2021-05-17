@@ -298,6 +298,10 @@ module BattleScripts
         "turnStart0" => "Clearly you do not understand when to give up.",
         "lastOpp" => "Hmm. You appear to have gotten a little stronger."
       }
+      AARON2 = {
+        "turnStart0" => "You have interfered for the last time.",
+        "lastOpp" => "Hmm. You appear to have gotten a little stronger."
+      }
       #Rival Battles
         RIVAL = {
           "turnStart0" => "You're going to regret challenging me!",
