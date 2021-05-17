@@ -83,4 +83,5 @@ module BattleScripts
       @scene.pbShowAllDataboxes
     end
   }
+  #-----------------------------------------------------------------------------
 end

@@ -323,14 +323,14 @@ class PokeBattle_AI
     return -1 if !enemies || enemies.length==0
     best    = -1
     bestSum = 0
-  # get opponent info
+    # get opponent info
     opponent = @battle.pbGetOwnerFromBattlerIndex(idxBattler)
     selAce = EliteBattle.get_trainer_data(opponent.trainer_type, :ACE, opponent) if !opponent.nil?
     selAce = nil if !selAce.is_a?(Numeric) || selAce < 1 || selAce > 6
-  # loop through possible selections
+    # loop through possible selections
     enemies.each do |i|
       pkmn = party[i]
-    # skip ace if not last sendout
+      # skip ace if not last sendout
       if !selAce.nil?
         cnt = 0
         party.each { |pl| cnt += 1 if pl.able? }

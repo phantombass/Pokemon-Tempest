@@ -118,12 +118,14 @@ Events.onStepTaken += proc {| sender, e |
 module ChapterRelease
   Four = 525
   Five = 540
+  Six = 556
   Constant = 1000
 end
 
 Events.onMapChange += proc {| sender, e |
     $game_switches[ChapterRelease::Four] = true
     $game_switches[ChapterRelease::Five] = true
+    #$game_switches[ChapterRelease::Six] = true
 }
 
 def pbChapterRelease
@@ -150,6 +152,18 @@ def pbChapterRelease
     pbWait(64)
     pbCommonEvent(6)
     pbMessage(_INTL("\\me[{3}]<c2={1}>\\PN! It's {2}! Meet me at HQ for our next mission!</c2>",textColor,leader,meName))
+    pbCommonEvent(7)
+    $game_variables[ChapterRelease::Constant]+=1
+  elsif $game_switches[ChapterRelease::Six] && $game_switches[555] && $game_variables[ChapterRelease::Constant] == 2
+    textColor = "7FE00000"
+    if $game_switches[Mission::Vinny]
+      leader = "Vinny"
+    elsif $game_switches[Mission::Stella]
+      leader = "Stella"
+    end
+    pbWait(64)
+    pbCommonEvent(6)
+    pbMessage(_INTL("\\me[{3}]<c2={1}>\\PN! It's {2}! Meet me and Cynthia at her villa in Coastal Steppes for your next mission!</c2>",textColor,leader,meName))
     pbCommonEvent(7)
     $game_variables[ChapterRelease::Constant]+=1
     #elsif
