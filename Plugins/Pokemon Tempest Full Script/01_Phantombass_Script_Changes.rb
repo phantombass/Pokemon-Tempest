@@ -7833,7 +7833,7 @@ class Pokemon
       if data.mega_stone && hasItem?(data.mega_stone)
         ret = data.form
         break
-      elsif !checkItemOnly && data.mega_move && hasMove?(data.mega_move)
+      elsif !checkItemOnly && data.mega_move && hasMove?(data.mega_move) && form <= 41
         ret = data.form
         break
       end
@@ -8447,6 +8447,8 @@ class DataBoxEBDX
     elsif @battler.primal? || (@battler.form >= 42)
       @sprites["mega"].bitmap = @prKyogre.clone if @battler.isSpecies?(:KYOGRE)
       @sprites["mega"].bitmap = @prGroudon.clone if @battler.isSpecies?(:GROUDON)
+      @sprites["mega"].bitmap = @prKyogre.clone if @battler.isSpecies?(:PALKIA)
+      @sprites["mega"].bitmap = @prGroudon.clone if @battler.isSpecies?(:DIALGA)
       @sprites["mega"].bitmap = @prKyogre.clone if @battler.isSpecies?(:ALTEMPER)
     elsif @sprites["mega"].bitmap
       @sprites["mega"].bitmap.clear
