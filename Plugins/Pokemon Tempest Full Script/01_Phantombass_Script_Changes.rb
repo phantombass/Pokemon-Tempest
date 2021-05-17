@@ -8,7 +8,7 @@
   module Chapter
     Count = 502
   end
-
+EliteBattle::TRAINER_SPRITE_SCALE = 1
 
 Events.onMapUpdate += proc {| sender, e |
   case $game_variables[Chapter::Count]
