@@ -103,8 +103,8 @@ module QuestsData
       "Stage5" => "Go to the Abandoned Galactic Lab.",
       "Stage6" => "Enter the Distortion World and find Aaron.",
       "Stage7" => "Calm Dialga down!",
-      "Stage8" => "Head to Menzopolis to meet with Cynthia.",
-      "Stage9" => "Explore Tinjo and the Distortion World as you wait for instructions on the next Mission from Cynthia!"
+      "Stage8" => "Head back to Shira to meet with Cynthia and your mother.",
+      "Stage9" => "Train up as you wait for instructions on the next Mission from Cynthia!"
     }
     #====================================
     QUEST11 = {
