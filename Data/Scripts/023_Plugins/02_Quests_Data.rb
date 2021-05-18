@@ -42,7 +42,9 @@ module QuestsData
       "Stage1" => "Meet Stella at the Northeast exit.",
       "Stage2" => "Make your way through the Pixie Caverns!",
       "Stage3" => "Head on to Astral Peak!",
-      "Stage4" => "Meet Stella at Comet HQ!"
+      "Stage4" => "Meet Stella at Comet HQ!",
+      "Stage5" => "Go investigate the Comet Lab!",
+      "Stage6" => "Report back to Stella!"
     }
       #====================================
       QUEST6 = {
