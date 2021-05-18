@@ -1382,21 +1382,6 @@ BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
     end
   }
 )
-
-class PokeBattle_Move_012 < PokeBattle_FlinchMove
-  def pbMoveFailed?(user,targets)
-    if user.turnCount > 1
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    elsif targets.hasActiveAbility?(:INNERFOCUS)
-      @battle.pbShowAbilitySplash
-      @battle.pbDisplay(_INTL("{1}'s {2} prevents flinching!"))
-      @battle.pbHideAbilitySplash
-      return true
-    end
-    return false
-  end
-end
 #===================================
 # Item Scripts
 #===================================
