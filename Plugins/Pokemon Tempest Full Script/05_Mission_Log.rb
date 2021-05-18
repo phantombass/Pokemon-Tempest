@@ -82,6 +82,7 @@ def pbNewMission(num)
     $PokemonGlobal.quests.activateQuest(3)
   when 3
     $game_variables[Mission::Mission3] = 1
+    $Trainer.badges[2] = true
     $PokemonGlobal.quests.completeQuest(3)
     $game_switches[Mission::Three] = true
     $game_variables[Chapter::Count] += 1
@@ -90,7 +91,6 @@ def pbNewMission(num)
     elsif $game_switches[Mission::Stella]
       $PokemonGlobal.quests.activateQuest(5)
     end
-    $Trainer.badges[2] = true
   when 4
     $game_variables[Mission::Mission4] = 1
     $Trainer.badges[3] = true
