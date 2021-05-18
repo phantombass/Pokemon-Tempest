@@ -8,7 +8,7 @@
   module Chapter
     Count = 502
   end
-  
+
 EliteBattle::TRAINER_SPRITE_SCALE = 1
 
 Events.onMapUpdate += proc {| sender, e |
@@ -1361,7 +1361,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:CACOPHONY,
 
 BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather)
+    if move.specialMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1369,7 +1369,7 @@ BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
 
 BattleHandlers::DamageCalcUserAllyAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather)
+    if move.specialMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1377,7 +1377,7 @@ BattleHandlers::DamageCalcUserAllyAbility.add(:FLOWERGIFT,
 
 BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if [:Sun, :HarshSun].include?(user.battle.pbWeather)
+    if [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
       mults[:defense_multiplier] *= 1.5
     end
   }

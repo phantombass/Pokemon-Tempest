@@ -23,7 +23,7 @@ def pbMissionUpdate
       $PokemonGlobal.quests.advanceQuestToStage(1,$game_variables[Mission::Mission1])
     end
   elsif $game_switches[Mission::Two] == true && $game_switches[Mission::Three] == false
-    if $game_variables[Mission::Mission2] >= 2
+    if $game_variables[Mission::Mission2] >= 4
       $game_variables[Mission::Mission2] += 0
     else
       $game_variables[Mission::Mission2] += 1
