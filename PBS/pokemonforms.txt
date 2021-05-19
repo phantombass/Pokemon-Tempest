@@ -2292,7 +2292,7 @@ BaseStats = 80,30,90,120,140,90
 #-------------------------------
 [ALTEMPER,42]
 FormName = Primal Altemper
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 Type1 = TIME
 Type2 = COSMIC
 #-------------------------------
@@ -2301,7 +2301,7 @@ FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FIRE
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 Color = Red
 Pokedex = This is the form ALTEMPER takes on the brightest of days. Its skin is unexpectedly hot to the touch, so approach with care.
 #-------------------------------
@@ -2310,7 +2310,7 @@ FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = WATER
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 Color = Blue
 Pokedex = This is the form ALTEMPER takes when soaked with rain. When its body is compressed, water will seep out as if from a sponge.
 #-------------------------------
@@ -2319,7 +2319,7 @@ FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = ICE
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 Color = White
 Pokedex = This is the form ALTEMPER takes when covered in snow. Its body becomes an ice-like material, with a temperature near -5 degrees Celsius.
 #-------------------------------
@@ -2328,117 +2328,117 @@ FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FAIRY
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,47]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = GHOST
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,48]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,49]
 FormName = Mega Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = DARK
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,50]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FLYING
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,51]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = ELECTRIC
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,52]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = DRAGON
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,53]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = POISON
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,54]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = ROCK
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,55]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = GRASS
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,56]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = GROUND
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,57]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = FIGHTING
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,58]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = STEEL
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,59]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = PSYCHIC
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,60]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = BUG
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,61]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [ALTEMPER,62]
 FormName = Primal Altemper
 Type1 = TIME
 Type2 = COSMIC
 Type3 = SOUND
-BaseStats = 80,30,115,140,170,115
+BaseStats = 80,30,145,70,130,145
 #-------------------------------
 [BAGON,2]
 FormName = Ufaran Form
