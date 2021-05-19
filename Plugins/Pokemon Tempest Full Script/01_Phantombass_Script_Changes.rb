@@ -3096,23 +3096,23 @@ ItemHandlers::UseOnPokemon.add(:ABILITYPATCH,proc { |item,pkmn,scene|
     abil2 = i[0] if i[1]==1
     hAbil = i[0] if i[1]==2
   end
-  if pkmn.isSpecies?(:HOPPALM) || pkmn.isSpecies?(:PAPYRUN) || pkmn.isSpecies?(:NEFLORA) || pkmn.isSpecies?(:CHARPHINCH) || pkmn.isSpecies?(:PHIRUNDO) || pkmn.isSpecies?(:PHIRENIX) || pkmn.isSpecies?(:BARBOL) || pkmn.isSpecies?(:BOWLTISIS) || pkmn.isSpecies?(:SATURABTU) || pkmn.isSpecies?(:APOPHICARY) || pkmn.isSpecies?(:FALKMUNRA) || pkmn.isSpecies?(:CASTFORM) || pkmn.isSpecies?(:FORMETEOS) || pkmn.isSpecies?(:UNOWN) || pkmn.isSpecies?(:EYEROGLYPH) || pkmn.isSpecies?(:SPOOKLOTH) || pkmn.isSpecies?(:RELICLOTH) || pkmn.isSpecies?(:CORPUSCUFF) || pkmn.isSpecies?(:YAMASK) || pkmn.isSpecies?(:COFAGRIGUS) || pkmn.isSpecies?(:RUNERIGUS)
+  if pkmn.isSpecies?(:HOPPALM) || pkmn.isSpecies?(:PAPYRUN) || pkmn.isSpecies?(:ALTEMPER) || pkmn.isSpecies?(:NEFLORA) || pkmn.isSpecies?(:CHARPHINCH) || pkmn.isSpecies?(:PHIRUNDO) || pkmn.isSpecies?(:PHIRENIX) || pkmn.isSpecies?(:BARBOL) || pkmn.isSpecies?(:BOWLTISIS) || pkmn.isSpecies?(:SATURABTU) || pkmn.isSpecies?(:APOPHICARY) || pkmn.isSpecies?(:FALKMUNRA) || pkmn.isSpecies?(:CASTFORM) || pkmn.isSpecies?(:FORMETEOS) || pkmn.isSpecies?(:UNOWN) || pkmn.isSpecies?(:EYEROGLYPH) || pkmn.isSpecies?(:SPOOKLOTH) || pkmn.isSpecies?(:RELICLOTH) || pkmn.isSpecies?(:CORPUSCUFF) || pkmn.isSpecies?(:YAMASK) || pkmn.isSpecies?(:COFAGRIGUS) || pkmn.isSpecies?(:RUNERIGUS)
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
   if pkmn.hasHiddenAbility? && abil2 != nil
     abilChoose = rand(2)+1
     newabil = pkmn.abilityIndex-abilChoose
-    newabilname = GameData::Ability.get((newabil==0) ? abil1 : abil2)
+    newabilname = GameData::Ability.get((newabil==0) ? abil1 : abil2).name
       if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
-        pkmn.setAbility(newabil)
+        pkmn.ability = newabil
         scene.pbRefresh
         scene.pbDisplay(_INTL("{1}'s Ability changed to {2}!",pkmn.name,newabilname))
         next true
       end
   elsif pkmn.hasHiddenAbility? && abil2 == nil
     newabil = pkmn.abilityIndex-2
-    newabilname = GameData::Ability.get((newabil==0) ? abil1 : abil2)
+    newabilname = GameData::Ability.get((newabil==0) ? abil1 : abil2).name
     if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
       pkmn.setAbility(newabil)
       scene.pbRefresh
@@ -3121,9 +3121,9 @@ ItemHandlers::UseOnPokemon.add(:ABILITYPATCH,proc { |item,pkmn,scene|
     end
   else
     !pkmn.hasHiddenAbility?
-    newabilname = GameData::Ability.get(hAbil)
+    newabilname = GameData::Ability.get(hAbil).name
     if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
-      pkmn.setAbility(2)
+      pkmn.ability = hAbil
       scene.pbRefresh
       scene.pbDisplay(_INTL("{1}'s Ability changed to {2}!",pkmn.name,newabilname))
       next true
