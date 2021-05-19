@@ -5130,6 +5130,7 @@ class PokeBattle_Move
   def pbFlinchChance(user,target)
     return 0 if flinchingMove?
     return 0 if target.hasActiveAbility?(:SHIELDDUST) && !@battle.moldBreaker
+    return 0 if target.hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
     ret = 0
     if user.hasActiveAbility?(:STENCH,true)
       ret = 10
@@ -5306,6 +5307,13 @@ BattleHandlers::DamageCalcTargetAbility.add(:ICESCALES,
 )
 
 class PokeBattle_Battler
+  def pbFlinch(_user=nil)
+    if hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
+      @effects[PBEffects::Flinch] = false
+    else
+      @effects[PBEffects::Flinch] = true
+    end
+  end
   def pbLowerSpAtkStatStageMindGames(user)
     return false if fainted?
     # NOTE: Substitute intentially blocks Intimidate even if self has Contrary.
