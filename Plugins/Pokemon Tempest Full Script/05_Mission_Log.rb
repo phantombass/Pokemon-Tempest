@@ -140,6 +140,22 @@ def pbNewMission(num)
     elsif $game_switches[Mission::Stella]
       $PokemonGlobal.quests.completeQuest(7)
     end
+  when 5
+    $game_variables[Mission::Mission6] = 1
+    $Trainer.badges[4] = true
+    $game_switches[Mission::Six] = true
+    $game_variables[Chapter::Count] += 1
+    if $game_switches[Mission::Vinny]
+      $PokemonGlobal.quests.activateQuest(12)
+    elsif $game_switches[Mission::Stella]
+      $PokemonGlobal.quests.activateQuest(13)
+    end
+    if $game_switches[Mission::Vinny]
+      $PokemonGlobal.quests.completeQuest(10)
+    elsif $game_switches[Mission::Stella]
+      $PokemonGlobal.quests.completeQuest(11)
+    end
+    $PokemonGlobal.encounter_version = 1
   when 0
     $game_switches[Readouts::Readout] = true
     $PokemonGlobal.quests.activateQuest(2)
