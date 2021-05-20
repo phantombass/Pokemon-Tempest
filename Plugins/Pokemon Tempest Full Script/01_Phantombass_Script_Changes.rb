@@ -649,11 +649,7 @@ class PokeBattle_Battler
             when :Hail, :Sleet then               newForm = 3
             end
               if @form >= 21
-                if @form >= 42
-                  newForm += 42
-                else
-                  newForm += 21
-                end
+                newForm += 21
               end
             case newForm
             when 4 then                       self.effects[PBEffects::Type3] = :FAIRY
@@ -695,11 +691,53 @@ class PokeBattle_Battler
             when 23 then                       self.effects[PBEffects::Type3] = :WATER
             when 24 then                       self.effects[PBEffects::Type3] = :ICE
             end
-            if @form!=newForm
+            if @form!=newForm && @form <= 41
               @battle.pbShowAbilitySplash(self,true)
               @battle.pbHideAbilitySplash(self)
               pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
+            elsif @form >= 42
+              case newForm
+              when 4 then                       self.effects[PBEffects::Type3] = :FAIRY
+              when 0 then                       self.effects[PBEffects::Type3] = :NORMAL
+              when 5 then                       self.effects[PBEffects::Type3] = :GHOST
+              when 7 then                       self.effects[PBEffects::Type3] = :DARK
+              when 8 then                       self.effects[PBEffects::Type3] = :FLYING
+              when 9 then                       self.effects[PBEffects::Type3] = :ELECTRIC
+              when 10 then                      self.effects[PBEffects::Type3] = :DRAGON
+              when 11 then                      self.effects[PBEffects::Type3] = :POISON
+              when 12 then                      self.effects[PBEffects::Type3] = :ROCK
+              when 13 then                      self.effects[PBEffects::Type3] = :GRASS
+              when 14 then                      self.effects[PBEffects::Type3] = :GROUND
+              when 15 then                      self.effects[PBEffects::Type3] = :FIGHTING
+              when 16 then                      self.effects[PBEffects::Type3] = :STEEL
+              when 17 then                      self.effects[PBEffects::Type3] = :PSYCHIC
+              when 18 then                      self.effects[PBEffects::Type3] = :BUG
+              when 20 then                      self.effects[PBEffects::Type3] = :SOUND
+              when 1 then                       self.effects[PBEffects::Type3] = :FIRE
+              when 2 then                       self.effects[PBEffects::Type3] = :WATER
+              when 3 then                       self.effects[PBEffects::Type3] = :ICE
+              when 25 then                       self.effects[PBEffects::Type3] = :FAIRY
+              when 21 then                       self.effects[PBEffects::Type3] = :NORMAL
+              when 26 then                       self.effects[PBEffects::Type3] = :GHOST
+              when 28 then                       self.effects[PBEffects::Type3] = :DARK
+              when 29 then                       self.effects[PBEffects::Type3] = :FLYING
+              when 30 then                       self.effects[PBEffects::Type3] = :ELECTRIC
+              when 31 then                      self.effects[PBEffects::Type3] = :DRAGON
+              when 32 then                      self.effects[PBEffects::Type3] = :POISON
+              when 33 then                      self.effects[PBEffects::Type3] = :ROCK
+              when 34 then                      self.effects[PBEffects::Type3] = :GRASS
+              when 35 then                      self.effects[PBEffects::Type3] = :GROUND
+              when 36 then                      self.effects[PBEffects::Type3] = :FIGHTING
+              when 37 then                      self.effects[PBEffects::Type3] = :STEEL
+              when 38 then                      self.effects[PBEffects::Type3] = :PSYCHIC
+              when 39 then                      self.effects[PBEffects::Type3] = :BUG
+              when 41 then                      self.effects[PBEffects::Type3] = :SOUND
+              when 22 then                       self.effects[PBEffects::Type3] = :FIRE
+              when 23 then                       self.effects[PBEffects::Type3] = :WATER
+              when 24 then                       self.effects[PBEffects::Type3] = :ICE
+              end
             end
+                p self.effects[PBEffects::Type3]
           else
           pbChangeForm(0,_INTL("{1} transformed!",pbThis))
         end
@@ -1059,7 +1097,7 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
         newForm += 21
       end
     end
-    if battler.form != newForm
+    if battler.form != newForm && battler.form <= 41
       battler.pbChangeForm(newForm,_INTL("{1} transformed!",battler.pbThis))
     end
     oldWeather = weatherChange
