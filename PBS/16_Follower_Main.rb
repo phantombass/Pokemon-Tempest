@@ -95,10 +95,10 @@ def pbTalkToFollower
     return false
   end
   firstPkmn = $Trainer.indexAltemper(true)
-  pbPlayCry(firstPkmn)
+  play_cry_from_species(:ALTEMPER,0)
   event = pbGetDependency("FollowerPkmn")
   randomVal = rand(6)
-  Events.OnTalkToFollower.trigger(firstPkmn,event.x,event.y-2,randomVal)
+  Events.OnTalkToFollower.trigger(:ALTEMPER,event.x,event.y-2,randomVal)
   pbTurnTowardEvent(event,$game_player)
 end
 

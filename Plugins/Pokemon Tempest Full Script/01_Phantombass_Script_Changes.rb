@@ -585,7 +585,7 @@ MultipleForms.register(:GIRATINA,{
 
 class PokeBattle_Battler
   def pbCheckFormOnWeatherChange
-    return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) && !isSpecies?(:CASTFORM) && !isSpecies?(:CHERRIM))
+    return if fainted? || @effects[PBEffects::Transform] || (!isSpecies?(:ALTEMPER) && !isSpecies?(:CASTFORM) && !isSpecies?(:CHERRIM) && !isSpecies?(:FORMETEOS))
     # Castform - Forecast
       if isSpecies?(:CASTFORM)
         if self.ability == :FORECAST
@@ -739,6 +739,60 @@ class PokeBattle_Battler
             end
           else
           pbChangeForm(0,_INTL("{1} transformed!",pbThis))
+        end
+      end
+      if isSpecies?(:FORMETEOS)
+        if self.ability == :ACCLIMATE
+          newForm = 0
+          case @battle.pbWeather
+          when :Fog then                        newForm = 4
+          when :Overcast then                   newForm = 5
+          when :Starstorm then   			        	newForm = 6
+          when :DClear then 				          	newForm = 6
+          when :Eclipse then                    newForm = 7
+          when :Windy then                      newForm = 8
+          when :HeatLight then                  newForm = 9
+          when :StrongWinds then                newForm = 10
+          when :AcidRain then                   newForm = 11
+          when :Sandstorm then                  newForm = 12
+          when :Rainbow then                    newForm = 13
+          when :DustDevil then                  newForm = 14
+          when :DAshfall then                   newForm = 15
+          when :VolcanicAsh then                newForm = 16
+          when :Borealis then                   newForm = 17
+          when :Humid then                      newForm = 18
+          when :TimeWarp then                   newForm = 19
+          when :Reverb then                     newForm = 20
+          when :Sun, :HarshSun then             newForm = 1
+          when :Rain, :Storm, :HeavyRain then   newForm = 2
+          when :Hail, :Sleet then               newForm = 3
+          end
+          case newForm
+          when 4 then                       self.type1 = :FAIRY
+          when 0 then                       self.type1 = :NORMAL
+          when 5 then                       self.type1 = :GHOST
+          when 7 then                       self.type1 = :DARK
+          when 8 then                       self.type1 = :FLYING
+          when 9 then                       self.type1 = :ELECTRIC
+          when 10 then                      self.type1 = :DRAGON
+          when 11 then                      self.type1 = :POISON
+          when 12 then                      self.type1 = :ROCK
+          when 13 then                      self.type1 = :GRASS
+          when 14 then                      self.type1 = :GROUND
+          when 15 then                      self.type1 = :FIGHTING
+          when 16 then                      self.type1 = :STEEL
+          when 17 then                      self.type1 = :PSYCHIC
+          when 18 then                      self.type1 = :BUG
+          when 20 then                      self.type1 = :SOUND
+          when 1 then                       self.type1 = :FIRE
+          when 2 then                       self.type1 = :WATER
+          when 3 then                       self.type1 = :ICE
+          end
+          if @form!=newForm
+            @battle.pbShowAbilitySplash(self,true)
+            @battle.pbHideAbilitySplash(self)
+            self.form = newForm
+          end
         end
       end
     # Cherrim - Flower Gift
@@ -1067,26 +1121,50 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
     when :ShadowSky then   battle.pbDisplay(_INTL("The sky is shadowy."))
     end
     newForm = newWeather
-    case newForm
-    when 4 then                       battler.effects[PBEffects::Type3] = :FAIRY
-    when 0 then                       battler.effects[PBEffects::Type3] = :NORMAL
-    when 5 then                       battler.effects[PBEffects::Type3] = :GHOST
-    when 7 then                       battler.effects[PBEffects::Type3] = :DARK
-    when 8 then                       battler.effects[PBEffects::Type3] = :FLYING
-    when 9 then                       battler.effects[PBEffects::Type3] = :ELECTRIC
-    when 10 then                      battler.effects[PBEffects::Type3] = :DRAGON
-    when 11 then                      battler.effects[PBEffects::Type3] = :POISON
-    when 12 then                      battler.effects[PBEffects::Type3] = :ROCK
-    when 13 then                      battler.effects[PBEffects::Type3] = :GRASS
-    when 14 then                      battler.effects[PBEffects::Type3] = :GROUND
-    when 15 then                      battler.effects[PBEffects::Type3] = :FIGHTING
-    when 16 then                      battler.effects[PBEffects::Type3] = :STEEL
-    when 17 then                      battler.effects[PBEffects::Type3] = :PSYCHIC
-    when 18 then                      battler.effects[PBEffects::Type3] = :BUG
-    when 20 then                      battler.effects[PBEffects::Type3] = :SOUND
-    when 1 then                       battler.effects[PBEffects::Type3] = :FIRE
-    when 2 then                       battler.effects[PBEffects::Type3] = :WATER
-    when 3 then                       battler.effects[PBEffects::Type3] = :ICE
+    if battler.isSpecies?(:ALTEMPER)
+      case newForm
+      when 4 then                       battler.effects[PBEffects::Type3] = :FAIRY
+      when 0 then                       battler.effects[PBEffects::Type3] = :NORMAL
+      when 5 then                       battler.effects[PBEffects::Type3] = :GHOST
+      when 7 then                       battler.effects[PBEffects::Type3] = :DARK
+      when 8 then                       battler.effects[PBEffects::Type3] = :FLYING
+      when 9 then                       battler.effects[PBEffects::Type3] = :ELECTRIC
+      when 10 then                      battler.effects[PBEffects::Type3] = :DRAGON
+      when 11 then                      battler.effects[PBEffects::Type3] = :POISON
+      when 12 then                      battler.effects[PBEffects::Type3] = :ROCK
+      when 13 then                      battler.effects[PBEffects::Type3] = :GRASS
+      when 14 then                      battler.effects[PBEffects::Type3] = :GROUND
+      when 15 then                      battler.effects[PBEffects::Type3] = :FIGHTING
+      when 16 then                      battler.effects[PBEffects::Type3] = :STEEL
+      when 17 then                      battler.effects[PBEffects::Type3] = :PSYCHIC
+      when 18 then                      battler.effects[PBEffects::Type3] = :BUG
+      when 20 then                      battler.effects[PBEffects::Type3] = :SOUND
+      when 1 then                       battler.effects[PBEffects::Type3] = :FIRE
+      when 2 then                       battler.effects[PBEffects::Type3] = :WATER
+      when 3 then                       battler.effects[PBEffects::Type3] = :ICE
+      end
+    elsif battler.isSpecies?(:FORMETEOS)
+        case newForm
+        when 4 then                       battler.type1 = :FAIRY
+        when 0 then                       battler.type1 = :NORMAL
+        when 5 then                       battler.type1 = :GHOST
+        when 7 then                       battler.type1 = :DARK
+        when 8 then                       battler.type1 = :FLYING
+        when 9 then                       battler.type1 = :ELECTRIC
+        when 10 then                      battler.type1 = :DRAGON
+        when 11 then                      battler.type1 = :POISON
+        when 12 then                      battler.type1 = :ROCK
+        when 13 then                      battler.type1 = :GRASS
+        when 14 then                      battler.type1 = :GROUND
+        when 15 then                      battler.type1 = :FIGHTING
+        when 16 then                      battler.type1 = :STEEL
+        when 17 then                      battler.type1 = :PSYCHIC
+        when 18 then                      battler.type1 = :BUG
+        when 20 then                      battler.type1 = :SOUND
+        when 1 then                       battler.type1 = :FIRE
+        when 2 then                       battler.type1 = :WATER
+        when 3 then                       battler.type1 = :ICE
+        end
     end
   end
     if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
@@ -1096,7 +1174,10 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
         newForm += 21
       end
     end
-    if battler.form != newForm && battler.form <= 41
+    if battler.isSpecies?(:FORMETEOS)
+      battler.form = newForm
+    end
+    if battler.form != newForm && battler.form <= 41 && !battler.isSpecies?(:FORMETEOS)
       battler.pbChangeForm(newForm,_INTL("{1} transformed!",battler.pbThis))
     end
     oldWeather = weatherChange

@@ -27072,6 +27072,43 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions =
 #-------------------------------
+[948]
+Name = Formeteos
+InternalName = FORMETEOS
+Type1 = NORMAL
+Type2 = COSMIC
+BaseStats = 100,80,90,120,120,90
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 302
+EffortPoints = 0,0,0,1,1,0
+Rareness = 45
+Happiness = 70
+Abilities = ACCLIMATE
+Moves = 0,BAROMETERBOMB,1,STELLARWIND,1,SWIFT,10,WATERGUN,10,EMBER,10,POWDERSNOW,15,TRIATTACK,20,RAINDANCE,20,SUNNYDAY,20,HAIL,20,STARSTORM,25,WEATHERBALL,30,STARBEAM,35,SCALD,35,LAVAPLUME,35,FREEZEDRY,40,THUNDER,40,HURRICANE,40,SOLARBEAM,45,ICEBEAM,45,FLAMETHROWER,45,SURF,50,METEORSHOWER,55,HYDROPUMP,55,FIREBLAST,55,BLIZZARD,60,RECOVER,65,ASTROBOMB
+TutorMoves = WEATHERBALL,STARBEAM,COMETSHARDS,ATTRACT,BLIZZARD,CONFIDE,DEFOG,DOUBLETEAM,ENERGYBALL,FACADE,FIREBLAST,FLAMETHROWER,FRUSTRATION,HAIL,HIDDENPOWER,ICEBEAM,ICYWIND,LASTRESORT,PROTECT,PSYCHUP,RAINDANCE,REST,RETURN,ROUND,SANDSTORM,SCALD,SHADOWBALL,SHOCKWAVE,SLEEPTALK,SNORE,SOLARBEAM,SUBSTITUTE,SUNNYDAY,SWAGGER,TAILWIND,THIEF,THUNDER,THUNDERBOLT,THUNDERWAVE,TOXIC,WATERPULSE,WORKUP
+Compatibility = Fairy,Amorphous
+StepsToHatch = 6400
+Height = 0.3
+Weight = 0.8
+Color = Gray
+Shape = 1
+Habitat = Grassland
+RegionalNumbers = 62
+Kind = Weather
+Pokedex = It alters the weather at will. It is said to know its opponent's weaknesses better than they do.
+FormName = Normal Form
+WildItemCommon = WEATHERROCK
+WildItemUncommon = WEATHERROCK
+WildItemRare = WEATHERROCK
+BattlerPlayerX = 1
+BattlerPlayerY = 0
+BattlerEnemyX = -2
+BattlerEnemyY = 11
+BattlerShadowX = 0
+BattlerShadowSize = 1
+Evolutions =
+#-------------------------------
 [976]
 Name = Altemper
 InternalName = ALTEMPER

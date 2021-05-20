@@ -2440,6 +2440,134 @@ Type2 = COSMIC
 Type3 = SOUND
 BaseStats = 80,30,145,70,130,145
 #-------------------------------
+[FORMETEOS,1]
+FormName = Sunny Form
+Type1 = FIRE
+Type2 = COSMIC
+Color = Red
+Pokedex = This is the form FORMETEOS takes on the brightest of days. Its skin is unexpectedly hot to the touch, so approach with care.
+BattlerPlayerY = 0
+BattlerEnemyY = 21
+#-------------------------------
+[FORMETEOS,2]
+FormName = Rainy Form
+Type1 = WATER
+Type2 = COSMIC
+Color = Blue
+Pokedex = This is the form FORMETEOS takes when soaked with rain. When its body is compressed, water will seep out as if from a sponge.
+BattlerPlayerY = 0
+BattlerEnemyY = 21
+#-------------------------------
+[FORMETEOS,3]
+FormName = Snowy Form
+Type1 = ICE
+Type2 = COSMIC
+Color = White
+Pokedex = This is the form FORMETEOS takes when covered in snow. Its body becomes an ice-like material, with a temperature near -5 degrees Celsius.
+BattlerPlayerY = 0
+BattlerEnemyY = 20
+#-------------------------------
+[FORMETEOS,4]
+FormName = Foggy Form
+Type1 = FAIRY
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,5]
+FormName = Overcast Form
+Type1 = GHOST
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,6]
+FormName = Starry Form
+Type1 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,7]
+FormName = Eclipse Form
+Type1 = DARK
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,8]
+FormName = Windy Form
+Type1 = FLYING
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,9]
+FormName = Heat Lightning Form
+Type1 = ELECTRIC
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,10]
+FormName = Delta Stream Form
+Type1 = DRAGON
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,11]
+FormName = Acid Rain Form
+Type1 = POISON
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,12]
+FormName = Sandstorm Form
+Type1 = ROCK
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,13]
+FormName = Rainbow Form
+Type1 = GRASS
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,14]
+FormName = Dust Devil Form
+Type1 = GROUND
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,15]
+FormName = Distortion Ashfall Form
+Type1 = FIGHTING
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,16]
+FormName = Volcanic Ash Form
+Type1 = STEEL
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,17]
+FormName = Borealis Form
+Type1 = PSYCHIC
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,18]
+FormName = Humid Form
+Type1 = BUG
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,19]
+FormName = Time Warp Form
+Type1 = TIME
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
+[FORMETEOS,20]
+FormName = Echo Chamber Form
+Type1 = SOUND
+Type2 = COSMIC
+BattlerEnemyY = 28
+#-------------------------------
 [BAGON,2]
 FormName = Ufaran Form
 Type1 = GROUND
