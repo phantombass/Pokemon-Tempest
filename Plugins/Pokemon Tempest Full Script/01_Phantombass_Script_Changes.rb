@@ -1,5 +1,37 @@
+#==========================================================
+# Welcome to Phantombass's Pokémon Tempest Script Plug-in.
+# Here you will find the entire list of modified scripts changed within
+# Pokémon Essentials v19. This was made so that updating Essentials within
+# v19 and even further would be as simple as possible. Having this said, I
+# have developed a Table of Contents of sorts to help you find the scripts
+# you may be looking for:
+#
+# Level Cap
+# Chapter Release
+# Honey Tree
+# Mid Battle Status Scripts
+# Weather
+# Effects
+# Multiple Forms
+# Items
+# Terrain Tags and Encounters
+# Various Screen Changes
+# Move and Ability Effects
+# Overworld Weather
+# Battle Weather
+# Battle Terrain
+# Weather Readouts
+# Various Modifications (Tempest Specific)
+# EBDX Animations
+# Settings
+#
+# All other changes not listed in here are either within the Plugins folder within the Data folder,
+# or are in the other scripts within this Plug-in's folder. Hope you enjoy playing Tempest and seeing
+# just what all went into making this game!
+#==========================================================
+
 #===================================
-# Level Cap Scripts
+# Level Cap
 #===================================
   module Level
     Cap = 106
@@ -8,8 +40,6 @@
   module Chapter
     Count = 502
   end
-
-EliteBattle::TRAINER_SPRITE_SCALE = 1
 
 Events.onMapUpdate += proc {| sender, e |
   case $game_variables[Chapter::Count]
@@ -114,7 +144,7 @@ Events.onStepTaken += proc {| sender, e |
 }
 
 #===================================
-# Chapter Release Scripts
+# Chapter Release
 #===================================
 module ChapterRelease
   Four = 525
@@ -248,9 +278,9 @@ class PokeBattle_Battle
     end
   end
 end
-#===================================
-# Weather Scripts
-#===================================
+#===============
+# Weather
+#===============
 begin
   module PBFieldWeather
     None        = 0   # None must be 0 (preset RMXP weather)
@@ -295,192 +325,9 @@ rescue Exception
   end
 end
 
-class PokemonLoadScreen
-  def initialize(scene)
-    @scene = scene
-    if SaveData.exists?
-      @save_data = load_save_file(SaveData::FILE_PATH)
-    else
-      @save_data = {}
-    end
-  end
-
-  # @param file_path [String] file to load save data from
-  # @return [Hash] save data
-  def load_save_file(file_path)
-    save_data = SaveData.read_from_file(file_path)
-    unless SaveData.valid?(save_data)
-      if File.file?(file_path + '.bak')
-        pbMessage(_INTL('The save file is corrupt. A backup will be loaded.'))
-        save_data = load_save_file(file_path + '.bak')
-      else
-        self.prompt_save_deletion
-        return {}
-      end
-    end
-    return save_data
-  end
-
-  # Called if all save data is invalid.
-  # Prompts the player to delete the save files.
-  def prompt_save_deletion
-    pbMessage(_INTL('The save file is corrupt, or is incompatible with this game.'))
-    exit unless pbConfirmMessageSerious(
-      _INTL('Do you want to delete the save file and start anew?')
-    )
-    self.delete_save_data
-    $game_system   = Game_System.new
-    $PokemonSystem = PokemonSystem.new
-  end
-
-  def pbStartDeleteScreen
-    @scene.pbStartDeleteScene
-    @scene.pbStartScene2
-    if SaveData.exists?
-      if pbConfirmMessageSerious(_INTL("Delete all saved data?"))
-        pbMessage(_INTL("Once data has been deleted, there is no way to recover it.\1"))
-        if pbConfirmMessageSerious(_INTL("Delete the saved data anyway?"))
-          pbMessage(_INTL("Deleting all data. Don't turn off the power.\\wtnp[0]"))
-          self.delete_save_data
-        end
-      end
-    else
-      pbMessage(_INTL("No save file was found."))
-    end
-    @scene.pbEndScene
-    $scene = pbCallTitle
-  end
-
-  def delete_save_data
-    begin
-      SaveData.delete_file
-      pbMessage(_INTL('The saved data was deleted.'))
-    rescue SystemCallError
-      pbMessage(_INTL('All saved data could not be deleted.'))
-    end
-  end
-
-  def pbStartLoadScreen
-    commands = []
-    cmd_continue     = -1
-    cmd_new_game     = -1
-    cmd_options      = -1
-    cmd_language     = -1
-    cmd_mystery_gift = -1
-    cmd_debug        = -1
-    cmd_quit         = -1
-    show_continue = !@save_data.empty?
-    if show_continue
-      commands[cmd_continue = commands.length] = _INTL('Continue')
-      if @save_data[:player].mystery_gift_unlocked
-        commands[cmd_mystery_gift = commands.length] = _INTL('Mystery Gift')
-      end
-    end
-    commands[cmd_new_game = commands.length]  = _INTL('New Game')
-    commands[cmd_options = commands.length]   = _INTL('Options')
-    commands[cmd_language = commands.length]  = _INTL('Language') if Settings::LANGUAGES.length >= 2
-    commands[cmd_debug = commands.length]     = _INTL('Debug') if $DEBUG
-    commands[cmd_quit = commands.length]      = _INTL('Quit Game')
-    map_id = show_continue ? @save_data[:map_factory].map.map_id : 0
-    @scene.pbStartScene(commands, show_continue, @save_data[:player],
-                        @save_data[:frame_count] || 0, map_id)
-    @scene.pbSetParty(@save_data[:player]) if show_continue
-    @scene.pbStartScene2
-    loop do
-      command = @scene.pbChoose(commands)
-      pbPlayDecisionSE if command != cmd_quit
-      case command
-      when cmd_continue
-        $currentDexSearch = nil
-        @scene.pbEndScene
-        Game.load(@save_data)
-        return
-      when cmd_new_game
-        @scene.pbEndScene
-        Game.start_new
-        return
-      when cmd_mystery_gift
-        pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
-      when cmd_options
-        pbFadeOutIn do
-          scene = PokemonOption_Scene.new
-          screen = PokemonOptionScreen.new(scene)
-          screen.pbStartScreen(true)
-        end
-      when cmd_language
-        @scene.pbEndScene
-        $PokemonSystem.language = pbChooseLanguage
-        pbLoadMessages('Data/' + Settings::LANGUAGES[$PokemonSystem.language][1])
-        if show_continue
-          @save_data[:pokemon_system] = $PokemonSystem
-          File.open(SaveData::FILE_PATH, 'wb') { |file| Marshal.dump(@save_data, file) }
-        end
-        $scene = pbCallTitle
-        return
-      when cmd_debug
-        pbFadeOutIn { pbDebugMenu(false) }
-      when cmd_quit
-        pbPlayCloseMenuSE
-        @scene.pbEndScene
-        $scene = nil
-        return
-      else
-        pbPlayBuzzerSE
-      end
-    end
-  end
-end
-
-class PokemonLoadPanel
-  def refresh
-    return if @refreshing
-    return if disposed?
-    @refreshing = true
-    if !self.bitmap || self.bitmap.disposed?
-      self.bitmap = BitmapWrapper.new(@bgbitmap.width,111*2)
-      pbSetSystemFont(self.bitmap)
-    end
-    if @refreshBitmap
-      @refreshBitmap = false
-      self.bitmap.clear if self.bitmap
-      if @isContinue
-        self.bitmap.blt(0,0,@bgbitmap.bitmap,Rect.new(0,(@selected) ? 111*2 : 0,@bgbitmap.width,111*2))
-      else
-        self.bitmap.blt(0,0,@bgbitmap.bitmap,Rect.new(0,111*2*2+((@selected) ? 23*2 : 0),@bgbitmap.width,23*2))
-      end
-      textpos = []
-      if @isContinue
-        textpos.push([@title,16*2,2*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Chapter:"),16*2,53*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
-        textpos.push([@trainer.badge_count.to_s,103*2,53*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Pokédex:"),16*2,69*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
-        textpos.push([@trainer.pokedex.seen_count.to_s,103*2,69*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Time:"),16*2,85*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
-        hour = @totalsec / 60 / 60
-        min  = @totalsec / 60 % 60
-        if hour>0
-          textpos.push([_INTL("{1}h {2}m",hour,min),103*2,85*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
-        else
-          textpos.push([_INTL("{1}m",min),103*2,85*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
-        end
-        if @trainer.male?
-          textpos.push([@trainer.name,56*2,29*2,0,MALETEXTCOLOR,MALETEXTSHADOWCOLOR])
-        elsif @trainer.female?
-          textpos.push([@trainer.name,56*2,29*2,0,FEMALETEXTCOLOR,FEMALETEXTSHADOWCOLOR])
-        else
-          textpos.push([@trainer.name,56*2,29*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
-        end
-        mapname = pbGetMapNameFromId(@mapid)
-        mapname.gsub!(/\\PN/,@trainer.name)
-        textpos.push([mapname,193*2,2*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
-      else
-        textpos.push([@title,16*2,1*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
-      end
-      pbDrawTextPositions(self.bitmap,textpos)
-    end
-    @refreshing = false
-  end
-end
+#=============
+#Effects
+#=============
 
 module PBEffects
   GorillaTactics      = 114
@@ -503,6 +350,9 @@ module PBEffects
   NeutralizingGas = 13
 end
 
+#================
+#Multiple Forms
+#================
 
 MultipleForms.register(:ALTEMPER,{
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
@@ -814,694 +664,8 @@ class PokeBattle_Battler
   end
 end
 
-class PokeBattle_Move_087 < PokeBattle_Move
-  def pbBaseDamage(baseDmg,user,target)
-    baseDmg *= 2 if @battle.pbWeather != :None
-    return baseDmg
-  end
-
-  def pbBaseType(user)
-    ret = :NORMAL
-    case @battle.pbWeather
-    when :Sun, :HarshSun
-      ret = :FIRE if GameData::Type.exists?(:FIRE)
-    when :Rain, :HeavyRain, :Storm
-      ret = :WATER if GameData::Type.exists?(:WATER)
-    when :Sandstorm
-      ret = :ROCK if GameData::Type.exists?(:ROCK)
-    when :Hail, :Sleet
-      ret = :ICE if GameData::Type.exists?(:ICE)
-    when :Starstorm
-      ret = :COSMIC if GameData::Type.exists?(:COSMIC)
-    when :Fog
-      ret = :FAIRY if GameData::Type.exists?(:FAIRY)
-    when :Humid
-      ret = :BUG if GameData::Type.exists?(:BUG)
-    when :Overcast
-      ret = :GHOST if GameData::Type.exists?(:GHOST)
-    when :Eclipse
-      ret = :DARK if GameData::Type.exists?(:DARK)
-    when :Windy
-      ret = :FLYING if GameData::Type.exists?(:FLYING)
-    when :HeatLight
-      ret = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
-    when :AcidRain
-      ret = :POISON if GameData::Type.exists?(:POISON)
-    when :StrongWinds
-      ret = :DRAGON if GameData::Type.exists?(:DRAGON)
-    when :Rainbow
-      ret = :GRASS if GameData::Type.exists?(:GRASS)
-    when :DustDevil
-      ret = :GROUND if GameData::Type.exists?(:GROUND)
-    when :DAshfall
-      ret = :FIGHTING if GameData::Type.exists?(:FIGHTING)
-    when :VolcanicAsh
-      ret = :STEEL if GameData::Type.exists?(:STEEL)
-    when :Borealis
-      ret = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
-    when :TimeWarp
-      ret = :TIME if GameData::Type.exists?(:TIME)
-    when :Reverb
-      ret = :SOUND if GameData::Type.exists?(:SOUND)
-    end
-    return ret
-  end
-
-  def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
-    t = pbBaseType(user)
-    hitNum = 1 if t == :FIRE   # Type-specific anims
-    hitNum = 2 if t == :WATER
-    hitNum = 3 if t == :ROCK
-    hitNum = 4 if t == :ICE
-    super
-  end
-end
-
-BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
-  proc { |ability,weather,battler,battle|
-    next if battler.fainted?
-    newWeather = 0
-    oldWeather = battle.pbWeather
-    newForm = battler.form
-    if newForm >= 21
-      if newForm >= 42
-        newForm -= 42
-      else
-        newForm -= 21
-      end
-    end
-    newWeather = newForm
-    battle.eachOtherSideBattler(battler.index) do |b|
-      type1 = b.type1
-      type2 = b.type2
-      case type1
-      when :NORMAL
-        case type2
-        when :GHOST, :PSYCHIC, :TIME; newWeather = 7
-        when :FAIRY; newWeather = 16
-        when :FLYING, :SOUND; newWeather = 3
-        when :BUG; newWeather = 1
-        when :NORMAL,:FIGHTING,:POISON,:GROUND,:ROCK,:STEEL,:FIRE,:WATER,:GRASS,:ELECTRIC,:ICE,:DRAGON,:DARK,:COSMIC, type1; newWeather = 15
-        end
-      when :FIGHTING
-        case type2
-        when :POISON, :COSMIC; newWeather = 17
-        when :STEEL; newWeather = 20
-        when :FLYING, :FIRE; newWeather = 19
-        when :NORMAL,:FIGHTING,:GROUND,:ROCK,:BUG,:GHOST,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY,:TIME,:SOUND, type1; newWeather = 4
-        end
-      when :FLYING
-        case type2
-        when :GROUND, :DRAGON, :SOUND, :COSMIC, :GHOST; newWeather = 3
-        when :FIRE, :ICE, :ROCK, :POISON, :BUG; newWeather = 12
-        when :NORMAL,:FIGHTING,:STEEL,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:DARK,:FAIRY,:TIME, type1; newWeather = 20
-        end
-      when :ROCK
-        case type2
-        when :ICE, :DARK; newWeather = 15
-        when :FLYING, :BUG, :GRASS, :TIME, :FAIRY; newWeather = 16
-        when :WATER, :GROUND, :SOUND; newWeather = 13
-        when :FIRE; newWeather = 2
-        when :COSMIC; newWeather = 19
-        when :NORMAL, :FIGHTING, :POISON, :GHOST, :STEEL, :ELECTRIC, :DRAGON, :PSYCHIC, type1; newWeather = 14
-        end
-      when :GROUND
-        case type2
-        when :WATER, :ROCK, :ELECTRIC, type1; newWeather = 13
-        when :DRAGON, :FLYING, :SOUND, :GRASS; newWeather = 3
-        when :COSMIC; newWeather = 17
-        when :TIME; newWeather = 5
-        when :NORMAL,:FIGHTING,:POISON,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY; newWeather = 2
-        end
-      when :POISON
-        case type2
-        when :DARK, :STEEL, :ELECTRIC, :ROCK, :FIRE; newWeather = 14
-        when :TIME, :PSYCHIC, :GHOST; newWeather = 7
-        when :SOUND, :BUG, :ICE, :FLYING; newWeather = 12
-        when :NORMAL,:FIGHTING,:POISON,:GROUND,:WATER,:GRASS,:DRAGON,:FAIRY,:COSMIC, type1; newWeather = 17
-        end
-      when :BUG
-        case type2
-        when :GROUND, :WATER, :FIGHTING; newWeather = 8
-        when :GRASS, :STEEL, :COSMIC; newWeather = 1
-        when :TIME; newWeather = 16
-        when :NORMAL,:FLYING,:POISON,:ROCK,:GHOST,:FIRE,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY,:SOUND, type1; newWeather = 12
-        end
-      when :GHOST
-        case type2
-        when :FIGHTING, :DARK; newWeather = 4
-        when :FAIRY; newWeather = 16
-        when :BUG; newWeather = 1
-        when :NORMAL,:FLYING,:POISON,:GROUND,:ROCK,:STEEL,:FIRE,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:COSMIC,:TIME,:SOUND, type1; newWeather = 7
-        end
-      when :STEEL
-        case type2
-        when :WATER; newWeather = 9
-        when :TIME, :GROUND; newWeather = 20
-        when :FIRE, :ROCK; newWeather = 14
-        when :DARK, :NORMAL; newWeather = 15
-        when :DRAGON, :SOUND; newWeather = 6
-        when :FLYING,:POISON,:BUG,:GHOST,:STEEL,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:FAIRY,:COSMIC, type1; newWeather = 1
-        end
-      when :GRASS
-        case type2
-        when :STEEL, :COSMIC, :ICE; newWeather = 1
-        when :TIME, :FAIRY, :SOUND; newWeather = 11
-        when :DRAGON, :GROUND, :FLYING, :ELECTRIC; newWeather = 3
-        when :DARK, :PSYCHIC; newWeather = 18
-        when :ROCK; newWeather = 16
-        when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :FIRE, :WATER, type1; newWeather = 8
-        end
-      when :FIRE
-        case type2
-        when :GRASS; newWeather = 8
-        when :WATER; newWeather = 9
-        when :COSMIC, :ROCK, :FIGHTING, :FLYING; newWeather = 19
-        when :DRAGON, :ELECTRIC, :TIME; newWeather = 14
-        when :SOUND; newWeather = 12
-        when :NORMAL,:POISON,:GROUND,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY, type1; newWeather = 2
-        end
-      when :WATER
-        case type2
-        when :FIRE, :FLYING; newWeather = 9
-        when :GHOST; newWeather = 7
-        when :GROUND, :ROCK; newWeather = 13
-        when :PSYCHIC, :TIME; newWeather = 20
-        when :NORMAL,:FIGHTING,:POISON,:BUG,:STEEL,:GRASS,:ELECTRIC,:ICE,:DRAGON,:DARK,:FAIRY,:COSMIC,:SOUND, type1; newWeather = 6
-        end
-      when :ELECTRIC
-        case type2
-        when :FLYING, :GRASS; newWeather = 3
-        when :TIME,:WATER; newWeather = 20
-        when :BUG,:ICE; newWeather = 1
-        when :NORMAL,:FIGHTING,:POISON,:GROUND,:ROCK,:GHOST,:STEEL,:FIRE,:PSYCHIC,:DRAGON,:DARK,:FAIRY,:COSMIC,:SOUND, type1; newWeather = 14
-        end
-      when :ICE
-        case type2
-        when :GHOST, :PSYCHIC, :TIME, :FAIRY, :ROCK, type1; newWeather = 16
-        when :SOUND, :FIRE, :FLYING, :POISON; newWeather = 12
-        when :GRASS, :BUG, :STEEL, :COSMIC; newWeather = 1
-        when :NORMAL, :FIGHTING, :GROUND, :WATER, :DRAGON, :ELECTRIC, :DARK; newWeather = 15
-        end
-      when :PSYCHIC
-        case type2
-        when :DARK, :GRASS; newWeather = 18
-        when :FLYING, :WATER; newWeather = 20
-        when :FIGHTING; newWeather = 19
-        when :SOUND; newWeather = 5
-        when :ICE, :FAIRY; newWeather = 16
-        when :NORMAL,:POISON,:GROUND,:ROCK,:BUG,:GHOST,:STEEL,:FIRE,:ELECTRIC,:DRAGON,:COSMIC,:TIME, type1; newWeather = 7
-        end
-      when :DRAGON
-        case type2
-        when :SOUND, :GROUND, :FLYING, :GRASS; newWeather = 3
-        when :DARK, :FIGHTING, :TIME, type1; newWeather = 4
-        when :FIRE; newWeather = 12
-        when :PSYCHIC; newWeather = 7
-        when :NORMAL,:POISON,:ROCK,:BUG,:GHOST,:STEEL,:WATER,:ELECTRIC,:ICE,:DRAGON,:FAIRY,:COSMIC; newWeather = 6
-        end
-      when :DARK
-        case type2
-        when :NORMAL,:FIGHTING,:FLYING,:GROUND,:BUG,:GHOST,:WATER,:ELECTRIC,:DRAGON,:FAIRY,:TIME,:SOUND,type1; newWeather = 4
-        when :POISON,:FIRE; newWeather = 14
-        when :GRASS,:PSYCHIC,:COSMIC; newWeather = 18
-        when :ROCK,:STEEL,:ICE; newWeather = 15
-        end
-      when :FAIRY
-        case type2
-        when :FIRE; newWeather = 12
-        when :COSMIC; newWeather = 1
-        when :GRASS, :SOUND, :TIME; newWeather = 11
-        when :ROCK, :ICE; newWeather = 16
-        when :NORMAL,:FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:STEEL,:WATER,:GRASS,:ELECTRIC,:DRAGON,:DARK, type1; newWeather = 6
-        end
-      when :COSMIC
-        case type2
-        when :GROUND, :SOUND; newWeather = 3
-        when :GHOST, :TIME; newWeather = 7
-        when :POISON, :FIGHTING; newWeather = 17
-        when :DRAGON then newWeather = 6
-        when :ICE, :GRASS, :BUG, :STEEL, :FAIRY; newWeather = 1
-        when :NORMAL,:FLYING,:ROCK,:FIRE,:WATER,:ELECTRIC,:PSYCHIC, type1; newWeather = 19
-        end
-      when :TIME
-        case type2
-        when :NORMAL, :DARK, :SOUND, :GRASS, :FAIRY; newWeather = 11
-        when :GHOST, :ROCK, :ICE, :COSMIC; newWeather = 7
-        when :FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:STEEL,:FIRE,:WATER,:ELECTRIC,:PSYCHIC,:DRAGON, type1; newWeather = 20
-        end
-      when :SOUND
-        case type2
-        when :GROUND, :FLYING, :GRASS, :DRAGON, :COSMIC; newWeather = 3
-        when :POISON, :ROCK, :STEEL; newWeather = 14
-        when :GHOST; newWeather = 7
-        when :TIME; newWeather = 5
-        when :WATER; newWeather = 6
-        when :FIGHTING; newWeather = 11
-        when :NORMAL,:BUG,:GHOST,:FIRE,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY, type1; newWeather = 12
-        end
-      end
-    end
-  if newWeather==newForm
-    weatherChange = battle.pbWeather
-  else
-    case newWeather
-    when 1 then weatherChange = :Sun  if weather != :Sun
-    when 2 then weatherChange = :Rain  if weather != :Rain
-    when 3 then weatherChange = :Sleet  if weather != :Sleet
-    when 4 then weatherChange = :Fog  if weather != :Fog
-    when 5 then weatherChange = :Overcast  if weather != :Overcast
-    when 6 then weatherChange = :Starstorm  if weather != :Starstorm
-    when 7 then weatherChange = :Eclipse  if weather != :Eclipse
-    when 8 then weatherChange = :Windy  if weather != :Windy
-    when 9 then weatherChange = :HeatLight  if weather != :HeatLight
-    when 10 then weatherChange = :StrongWinds  if weather != :StrongWinds
-    when 11 then weatherChange = :AcidRain  if weather != :AcidRain
-    when 12 then weatherChange = :Sandstorm  if weather != :Sandstorm
-    when 13 then weatherChange = :Rainbow  if weather != :Rainbow
-    when 14 then weatherChange = :DustDevil  if weather != :DustDevil
-    when 15 then weatherChange = :DAshfall  if weather != :DAshfall
-    when 16 then weatherChange = :VolcanicAsh  if weather != :VolcanicAsh
-    when 17 then weatherChange = :Borealis  if weather != :Borealis
-    when 18 then weatherChange = :Humid  if weather != :Humid
-    when 19 then weatherChange = :TimeWarp  if weather != :TimeWarp
-    when 20 then weatherChange = :Reverb  if weather != :Reverb
-    end
-    battle.pbShowAbilitySplash(battler)
-    battle.field.weather = weatherChange
-    battle.field.weatherDuration = 5
-    case weatherChange
-    when :Starstorm then   battle.pbDisplay(_INTL("Stars fill the sky."))
-    when :Thunder then     battle.pbDisplay(_INTL("Lightning flashes in th sky."))
-    when :Humid then       battle.pbDisplay(_INTL("The air is humid."))
-    when :Overcast then    battle.pbDisplay(_INTL("The sky is overcast."))
-    when :Eclipse then     battle.pbDisplay(_INTL("The sky is dark."))
-    when :Fog then         battle.pbDisplay(_INTL("The fog is deep."))
-    when :AcidRain then    battle.pbDisplay(_INTL("Acid rain is falling."))
-    when :VolcanicAsh then battle.pbDisplay(_INTL("Volcanic Ash sprinkles down."))
-    when :Rainbow then     battle.pbDisplay(_INTL("A rainbow crosses the sky."))
-    when :Borealis then    battle.pbDisplay(_INTL("The sky is ablaze with color."))
-    when :TimeWarp then    battle.pbDisplay(_INTL("Time has stopped."))
-    when :Reverb then      battle.pbDisplay(_INTL("A dull echo hums."))
-    when :DClear then      battle.pbDisplay(_INTL("The sky is distorted."))
-    when :DRain then       battle.pbDisplay(_INTL("Rain is falling upward."))
-    when :DWind then       battle.pbDisplay(_INTL("The wind is haunting."))
-    when :DAshfall then    battle.pbDisplay(_INTL("Ash floats in midair."))
-    when :Sleet then       battle.pbDisplay(_INTL("Sleet began to fall."))
-    when :Windy then       battle.pbDisplay(_INTL("There is a slight breeze."))
-    when :HeatLight then   battle.pbDisplay(_INTL("Static fills the air."))
-    when :DustDevil then   battle.pbDisplay(_INTL("A dust devil approaches."))
-    when :Sun then         battle.pbDisplay(_INTL("The sunlight is strong."))
-    when :Rain then        battle.pbDisplay(_INTL("It is raining."))
-    when :Sandstorm then   battle.pbDisplay(_INTL("A sandstorm is raging."))
-    when :Hail then        battle.pbDisplay(_INTL("Hail is falling."))
-    when :HarshSun then    battle.pbDisplay(_INTL("The sunlight is extremely harsh."))
-    when :HeavyRain then   battle.pbDisplay(_INTL("It is raining heavily."))
-    when :StrongWinds then battle.pbDisplay(_INTL("The wind is strong."))
-    when :ShadowSky then   battle.pbDisplay(_INTL("The sky is shadowy."))
-    end
-    newForm = newWeather
-    if battler.isSpecies?(:ALTEMPER)
-      case newForm
-      when 4 then                       battler.effects[PBEffects::Type3] = :FAIRY
-      when 0 then                       battler.effects[PBEffects::Type3] = :NORMAL
-      when 5 then                       battler.effects[PBEffects::Type3] = :GHOST
-      when 7 then                       battler.effects[PBEffects::Type3] = :DARK
-      when 8 then                       battler.effects[PBEffects::Type3] = :FLYING
-      when 9 then                       battler.effects[PBEffects::Type3] = :ELECTRIC
-      when 10 then                      battler.effects[PBEffects::Type3] = :DRAGON
-      when 11 then                      battler.effects[PBEffects::Type3] = :POISON
-      when 12 then                      battler.effects[PBEffects::Type3] = :ROCK
-      when 13 then                      battler.effects[PBEffects::Type3] = :GRASS
-      when 14 then                      battler.effects[PBEffects::Type3] = :GROUND
-      when 15 then                      battler.effects[PBEffects::Type3] = :FIGHTING
-      when 16 then                      battler.effects[PBEffects::Type3] = :STEEL
-      when 17 then                      battler.effects[PBEffects::Type3] = :PSYCHIC
-      when 18 then                      battler.effects[PBEffects::Type3] = :BUG
-      when 20 then                      battler.effects[PBEffects::Type3] = :SOUND
-      when 1 then                       battler.effects[PBEffects::Type3] = :FIRE
-      when 2 then                       battler.effects[PBEffects::Type3] = :WATER
-      when 3 then                       battler.effects[PBEffects::Type3] = :ICE
-      end
-    elsif battler.isSpecies?(:FORMETEOS)
-        case newForm
-        when 4 then                       battler.type1 = :FAIRY
-        when 0 then                       battler.type1 = :NORMAL
-        when 5 then                       battler.type1 = :GHOST
-        when 7 then                       battler.type1 = :DARK
-        when 8 then                       battler.type1 = :FLYING
-        when 9 then                       battler.type1 = :ELECTRIC
-        when 10 then                      battler.type1 = :DRAGON
-        when 11 then                      battler.type1 = :POISON
-        when 12 then                      battler.type1 = :ROCK
-        when 13 then                      battler.type1 = :GRASS
-        when 14 then                      battler.type1 = :GROUND
-        when 15 then                      battler.type1 = :FIGHTING
-        when 16 then                      battler.type1 = :STEEL
-        when 17 then                      battler.type1 = :PSYCHIC
-        when 18 then                      battler.type1 = :BUG
-        when 20 then                      battler.type1 = :SOUND
-        when 1 then                       battler.type1 = :FIRE
-        when 2 then                       battler.type1 = :WATER
-        when 3 then                       battler.type1 = :ICE
-        end
-    end
-  end
-    if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
-      if battler.form >= 42 && battler.isSpecies?(:ALTEMPER)
-        newForm += 42
-      else
-        newForm += 21
-      end
-    end
-    if battler.isSpecies?(:FORMETEOS)
-      battler.form = newForm
-    end
-    if battler.form != newForm && battler.form <= 41 && !battler.isSpecies?(:FORMETEOS)
-      battler.pbChangeForm(newForm,_INTL("{1} transformed!",battler.pbThis))
-    end
-    oldWeather = weatherChange
-    battle.pbHideAbilitySplash(battler)
-    battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
-  }
-)
-
-BattleHandlers::EORWeatherAbility.copy(:ACCLIMATE,:BAROMETRIC)
-
-BattleHandlers::EORHealingAbility.add(:RESURGENCE,
-  proc { |ability,battler,battle|
-    next if !battler.canHeal?
-    battle.pbShowAbilitySplash(battler)
-    battler.pbRecoverHP(battler.totalhp/16)
-    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
-      battle.pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
-    else
-      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.",battler.pbThis,battler.abilityName))
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::EORHealingAbility.add(:ASPIRANT,
-  proc { |ability,battler,battle|
-    wishHeal = $game_variables[103]
-    $game_variables[101] -= 1
-    if $game_variables[101]==0
-      wishMaker = $game_variables[102]
-      battler.pbRecoverHP(wishHeal)
-      battle.pbDisplay(_INTL("{1}'s wish came true!",wishMaker))
-    end
-    next if $game_variables[101]>0
-    if $game_variables[101]<0
-      battle.pbShowAbilitySplash(battler)
-      if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
-        $game_variables[103] = (battler.totalhp/2)
-        $game_variables[102] = battler.pbThis
-        $game_variables[101] += 2
-        battle.pbDisplay(_INTL("{1} made a wish!",battler.pbThis))
-      else
-        battle.pbDisplay(_INTL("{1} made a wish with {2}",battler.pbThis,battler.abilityName))
-      end
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::EORHealingAbility.add(:HOPEFULTOLL,
-  proc { |ability,battler,battle|
-    battler.status = 0
-    def pbAromatherapyHeal(pkmn,battler=nil)
-      oldStatus = (battler) ? battler.status : pkmn.status
-      curedName = (battler) ? battler.pbThis : pkmn.name
-      if battler
-        battler.pbCureStatus(false)
-      else
-        pkmn.status      = 0
-        pkmn.statusCount = 0
-      end
-    end
-    battle.pbShowAbilitySplash(battler)
-    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
-      battle.pbDisplay(_INTL("{1} rang a healing bell!",battler.pbThis))
-    else
-      battle.pbDisplay(_INTL("{1} sounded a {2}",battler.pbThis,battler.abilityName))
-    end
-    battle.pbParty(battler.index).each_with_index do |pkmn,i|
-      next if !pkmn || !pkmn.able? || pkmn.status==0
-      pkmn.status = 0
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::EORWeatherAbility.add(:ACIDDRAIN,
-  proc { |ability,weather,battler,battle|
-    next unless weather==:AcidRain
-    next if !battler.canHeal?
-    battle.pbShowAbilitySplash(battler)
-    battler.pbRecoverHP(battler.totalhp/16)
-    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
-      battle.pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
-    else
-      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.",battler.pbThis,battler.abilityName))
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::EORWeatherAbility.copy(:POISONHEAL,:ACIDDRAIN)
-
-BattleHandlers::AbilityOnSwitchIn.add(:GAIAFORCE,
-  proc { |ability,battler,battle|
-    battle.pbShowAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1} is gathering power from the earth!",battler.pbThis))
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:DUAT,
-  proc { |ability,battler,battle|
-    battler.effects[PBEffects::Type3] = :TIME
-    battle.pbShowAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1} is shrouded in the Duat!",battler.pbThis))
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:SHADOWGUARD,
-  proc { |ability,battler,battle|
-    battler.effects[PBEffects::Type3] = :DARK
-    battle.pbShowAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1} is shrouded in the shadows!",battler.pbThis))
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:EQUINOX,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Starstorm, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:URBANCLOUD,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:AcidRain, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:FIGHTERSWRATH,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:DAshfall, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:MUGGYAIR,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Humid, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:ELECTROSTATIC,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:HeatLight, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:FLOWERGIFT,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Rainbow, battler, battle)
-    #battler.pbChangeForm(1,_INTL("{1} transformed!",battler.name))
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:RAGINGSEA,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Storm, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:DESERTSTORM,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:DustDevil, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:ASHCOVER,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:VolcanicAsh, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:NIGHTFALL,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Eclipse, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:SHROUD,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Fog, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:BOREALIS,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Borealis, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:HAILSTORM,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Sleet, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:CLOUDCOVER,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Overcast, battler, battle)
-  }
-)
-
-BattleHandlers::DamageCalcUserAbility.add(:WINDRAGE,
-  proc { |ability,user,target,move,mults,baseDmg,type|
-    if (user.battle.pbWeather == :Windy || user.battle.pbWeather == :StrongWinds) &&
-       [:FLYING, :DRAGON].include?(type)
-      mults[:base_damage_multiplier] *= 1.3
-    end
-  }
-)
-
-BattleHandlers::DamageCalcUserAbility.add(:SOOTSURGE,
-  proc { |ability,user,target,move,mults,baseDmg,type|
-    if (user.battle.pbWeather == :VolcanicAsh || user.battle.pbWeather == :DAshfall) &&
-       [:STEEL, :FIGHTING].include?(type)
-      mults[:base_damage_multiplier] *= 1.3
-    end
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:TOXICSURGE,
-  proc { |ability,battler,battle|
-    next if battle.field.terrain == :Poison
-    battle.pbShowAbilitySplash(battler)
-    battle.pbStartTerrain(battler, :Poison)
-    # NOTE: The ability splash is hidden again in def pbStartTerrain.
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:GALEFORCE,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Windy, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:PINDROP,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:Reverb, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:WORMHOLE,
-  proc { |ability,battler,battle|
-    pbBattleWeatherAbility(:TimeWarp, battler, battle)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:MINDGAMES,
-  proc { |ability,battler,battle|
-    battle.pbShowAbilitySplash(battler)
-    battle.eachOtherSideBattler(battler.index) do |b|
-      next if !b.near?(battler)
-      b.pbLowerSpAtkStatStageMindGames(battler)
-      b.pbItemOnIntimidatedCheck
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:MEDUSOID,
-  proc { |ability,battler,battle|
-    battle.pbShowAbilitySplash(battler)
-    battle.eachOtherSideBattler(battler.index) do |b|
-      next if !b.near?(battler)
-      b.pbLowerSpeedStatStageMedusoid(battler)
-      b.pbItemOnIntimidatedCheck
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:DIMENSIONSHIFT,
-  proc { |ability,battler,battle|
-    battle.pbShowAbilitySplash(battler)
-    if battle.field.effects[PBEffects::TrickRoom] > 0
-      battle.field.effects[PBEffects::TrickRoom] = 0
-      battle.pbDisplay(_INTL("{1} reverted the dimensions!",battler.pbThis))
-    end
-    if battle.field.weather == :TimeWarp
-      battle.field.effects[PBEffects::TrickRoom] = 7
-      battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
-    else
-      battle.field.effects[PBEffects::TrickRoom] = 5
-      battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::AbilityOnSwitchIn.add(:CACOPHONY,
-  proc { |ability,battler,battle|
-    battle.pbShowAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1} is creating an uproar!",battler.pbThis))
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
-  proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
-      mults[:attack_multiplier] *= 1.5
-    end
-  }
-)
-
-BattleHandlers::DamageCalcUserAllyAbility.add(:FLOWERGIFT,
-  proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
-      mults[:attack_multiplier] *= 1.5
-    end
-  }
-)
-
-BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
-  proc { |ability,user,target,move,mults,baseDmg,type|
-    if [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
-      mults[:defense_multiplier] *= 1.5
-    end
-  }
-)
 #===================================
-# Item Scripts
+#Items
 #===================================
 module ItemHandlers
   def pbRaiseEffortValues(pkmn, stat, evGain = 10, ev_limit = true)
@@ -2009,647 +1173,6 @@ Events.onAction += proc { |_sender,_e|
   end
 }
 
-def pbCut
-  if !$PokemonBag.pbHasItem?(:CHAINSAW)
-    pbMessage(_INTL("This tree looks like it can be cut down."))
-    return false
-  end
-  pbMessage(_INTL("This tree looks like it can be cut down!\1"))
-  if pbConfirmMessage(_INTL("Would you like to cut it?"))
-    speciesname = $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:CHAINSAW).name))
-    return true
-  end
-  return false
-end
-
-def pbSmashEvent(event)
-  return if !event
-  if event.name[/cuttree/i]
-    pbSEPlay("Cut",80)
-  elsif event.name[/smashrock/i]
-    pbSEPlay("Rock Smash",80)
-  end
-  pbMoveRoute(event,[
-     PBMoveRoute::Wait,2,
-     PBMoveRoute::TurnLeft,
-     PBMoveRoute::Wait,2,
-     PBMoveRoute::TurnRight,
-     PBMoveRoute::Wait,2,
-     PBMoveRoute::TurnUp,
-     PBMoveRoute::Wait,2
-  ])
-  pbWait(Graphics.frame_rate*4/10)
-  event.erase
-  $PokemonMap.addErasedEvent(event.id) if $PokemonMap
-end
-
-
-
-#===============================================================================
-# Dig
-#===============================================================================
-HiddenMoveHandlers::CanUseMove.add(:DIG,proc { |move,pkmn,showmsg|
-  escape = ($PokemonGlobal.escapePoint rescue nil)
-  if !escape || escape==[]
-    pbMessage(_INTL("Can't use that here.")) if showmsg
-    next false
-  end
-  if $game_player.pbHasDependentEvents?
-    pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
-    next false
-  end
-  next true
-})
-
-HiddenMoveHandlers::ConfirmUseMove.add(:DIG,proc { |move,pkmn|
-  escape = ($PokemonGlobal.escapePoint rescue nil)
-  next false if !escape || escape==[]
-  mapname = pbGetMapNameFromId(escape[0])
-  next pbConfirmMessage(_INTL("Want to escape from here and return to {1}?",mapname))
-})
-
-HiddenMoveHandlers::UseMove.add(:DIG,proc { |move,pokemon|
-  escape = ($PokemonGlobal.escapePoint rescue nil)
-  if escape
-    if !pbHiddenMoveAnimation(pokemon)
-      pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
-    end
-    pbFadeOutIn {
-      $game_temp.player_new_map_id    = escape[0]
-      $game_temp.player_new_x         = escape[1]
-      $game_temp.player_new_y         = escape[2]
-      $game_temp.player_new_direction = escape[3]
-      $scene.transfer_player
-      $game_map.autoplay
-      $game_map.refresh
-    }
-    pbEraseEscapePoint
-    next true
-  end
-  next false
-})
-
-
-
-#===============================================================================
-# Dive
-#===============================================================================
-def pbDive
-  return false if $game_player.pbFacingEvent
-  map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-  return false if !map_metadata || !map_metadata.dive_map_id
-  if !$PokemonBag.pbHasItem?(:SCUBATANK)
-    pbMessage(_INTL("The sea is deep here. A Pokémon may be able to go underwater."))
-    return false
-  end
-  if pbConfirmMessage(_INTL("The sea is deep here. Would you like to use Dive?"))
-    speciesname = $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
-    pbFadeOutIn {
-       $game_temp.player_new_map_id    = map_metadata.dive_map_id
-       $game_temp.player_new_x         = $game_player.x
-       $game_temp.player_new_y         = $game_player.y
-       $game_temp.player_new_direction = $game_player.direction
-       $PokemonGlobal.surfing = false
-       $PokemonGlobal.diving  = true
-       pbUpdateVehicle
-       $scene.transfer_player(false)
-       $game_map.autoplay
-       $game_map.refresh
-    }
-    return true
-  end
-  return false
-end
-
-def pbSurfacing
-  return if !$PokemonGlobal.diving
-  return false if $game_player.pbFacingEvent
-  surface_map_id = nil
-  GameData::MapMetadata.each do |map_data|
-    next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
-    surface_map_id = map_data.id
-    break
-  end
-  return if !surface_map_id
-  move = :DIVE
-  movefinder = $Trainer.get_pokemon_with_move(move)
-  if !$PokemonBag.pbHasItem?(:SCUBATANK)
-    pbMessage(_INTL("Light is filtering down from above. A Pokémon may be able to surface here."))
-    return false
-  end
-  if pbConfirmMessage(_INTL("Light is filtering down from above. Would you like to use Dive?"))
-    speciesname = $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
-    pbFadeOutIn {
-       $game_temp.player_new_map_id    = surface_map_id
-       $game_temp.player_new_x         = $game_player.x
-       $game_temp.player_new_y         = $game_player.y
-       $game_temp.player_new_direction = $game_player.direction
-       $PokemonGlobal.surfing = true
-       $PokemonGlobal.diving  = false
-       pbUpdateVehicle
-       $scene.transfer_player(false)
-       surfbgm = GameData::Metadata.get.surf_BGM
-       (surfbgm) ?  pbBGMPlay(surfbgm) : $game_map.autoplayAsCue
-       $game_map.refresh
-    }
-    return true
-  end
-  return false
-end
-
-def pbTransferUnderwater(mapid,x,y,direction=$game_player.direction)
-  pbFadeOutIn {
-    $game_temp.player_new_map_id    = mapid
-    $game_temp.player_new_x         = x
-    $game_temp.player_new_y         = y
-    $game_temp.player_new_direction = direction
-    $scene.transfer_player(false)
-    $game_map.autoplay
-    $game_map.refresh
-  }
-end
-
-Events.onAction += proc { |_sender, _e|
-  if $PokemonGlobal.diving
-    surface_map_id = nil
-    GameData::MapMetadata.each do |map_data|
-      next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
-      surface_map_id = map_data.id
-      break
-    end
-    if surface_map_id &&
-       $MapFactory.getTerrainTag(surface_map_id, $game_player.x, $game_player.y).can_dive
-      pbSurfacing
-    end
-  else
-    pbDive if $game_player.terrain_tag.can_dive
-  end
-}
-
-HiddenMoveHandlers::CanUseMove.add(:DIVE,proc { |move,pkmn,showmsg|
-  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_DIVE,showmsg)
-  if $PokemonGlobal.diving
-    surface_map_id = nil
-    GameData::MapMetadata.each do |map_data|
-      next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
-      surface_map_id = map_data.id
-      break
-    end
-    if !surface_map_id ||
-       !$MapFactory.getTerrainTag(surface_map_id, $game_player.x, $game_player.y).can_dive
-      pbMessage(_INTL("Can't use that here.")) if showmsg
-      next false
-    end
-  else
-    if !GameData::MapMetadata.exists?($game_map.map_id) ||
-       !GameData::MapMetadata.get($game_map.map_id).dive_map_id
-      pbMessage(_INTL("Can't use that here.")) if showmsg
-      next false
-    end
-    if !$game_player.terrain_tag.can_dive
-      pbMessage(_INTL("Can't use that here.")) if showmsg
-      next false
-    end
-  end
-  next true
-})
-
-HiddenMoveHandlers::UseMove.add(:DIVE,proc { |move,pokemon|
-  wasdiving = $PokemonGlobal.diving
-  if $PokemonGlobal.diving
-    dive_map_id = nil
-    GameData::MapMetadata.each do |map_data|
-      next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
-      dive_map_id = map_data.id
-      break
-    end
-  else
-    map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-    dive_map_id = map_metadata.dive_map_id if map_metadata
-  end
-  next false if !dive_map_id
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
-  end
-  pbFadeOutIn {
-    $game_temp.player_new_map_id    = dive_map_id
-    $game_temp.player_new_x         = $game_player.x
-    $game_temp.player_new_y         = $game_player.y
-    $game_temp.player_new_direction = $game_player.direction
-    $PokemonGlobal.surfing = wasdiving
-    $PokemonGlobal.diving  = !wasdiving
-    pbUpdateVehicle
-    $scene.transfer_player(false)
-    $game_map.autoplay
-    $game_map.refresh
-  }
-  next true
-})
-
-
-
-#===============================================================================
-# Flash
-#===============================================================================
-HiddenMoveHandlers::CanUseMove.add(:FLASH,proc { |move,pkmn,showmsg|
-  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_FLASH,showmsg)
-  if !GameData::MapMetadata.exists?($game_map.map_id) ||
-     !GameData::MapMetadata.get($game_map.map_id).dark_map
-    pbMessage(_INTL("Can't use that here.")) if showmsg
-    next false
-  end
-  if $PokemonGlobal.flashUsed
-    pbMessage(_INTL("Flash is already being used.")) if showmsg
-    next false
-  end
-  next true
-})
-
-HiddenMoveHandlers::UseMove.add(:FLASH,proc { |move,pokemon|
-  darkness = $PokemonTemp.darknessSprite
-  next false if !darkness || darkness.disposed?
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
-  end
-  $PokemonGlobal.flashUsed = true
-  radiusDiff = 8*20/Graphics.frame_rate
-  while darkness.radius<darkness.radiusMax
-    Graphics.update
-    Input.update
-    pbUpdateSceneMap
-    darkness.radius += radiusDiff
-    darkness.radius = darkness.radiusMax if darkness.radius>darkness.radiusMax
-  end
-  next true
-})
-
-
-
-#===============================================================================
-# Fly
-#===============================================================================
-HiddenMoveHandlers::CanUseMove.add(:FLY,proc { |move,pkmn,showmsg|
-  next false if !$PokemonBag.pbHasItem?(:WINGSUIT)
-  if $game_player.pbHasDependentEvents?
-    pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
-    next false
-  end
-  if !GameData::MapMetadata.exists?($game_map.map_id) ||
-     !GameData::MapMetadata.get($game_map.map_id).outdoor_map
-    pbMessage(_INTL("Can't use that here.")) if showmsg
-    next false
-  end
-  next true
-})
-
-HiddenMoveHandlers::UseMove.add(:FLY,proc { |move,pokemon|
-  if !$PokemonTemp.flydata
-    pbMessage(_INTL("Can't use that here."))
-    next false
-  end
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Item.get(:WINGSUIT).name))
-  end
-  pbFadeOutIn {
-    $game_temp.player_new_map_id    = $PokemonTemp.flydata[0]
-    $game_temp.player_new_x         = $PokemonTemp.flydata[1]
-    $game_temp.player_new_y         = $PokemonTemp.flydata[2]
-    $game_temp.player_new_direction = 2
-    $PokemonTemp.flydata = nil
-    $scene.transfer_player
-    $game_map.autoplay
-    $game_map.refresh
-  }
-  pbEraseEscapePoint
-  next true
-})
-
-
-
-#===============================================================================
-# Headbutt
-#===============================================================================
-def pbHeadbuttEffect(event=nil)
-  event = $game_player.pbFacingEvent(true) if !event
-  a = (event.x+(event.x/24).floor+1)*(event.y+(event.y/24).floor+1)
-  a = (a*2/5)%10   # Even 2x as likely as odd, 0 is 1.5x as likely as odd
-  b = $Trainer.public_ID % 10   # Practically equal odds of each value
-  chance = 1                             # ~50%
-  if a==b;                  chance = 8   # 10%
-  elsif a>b && (a-b).abs<5; chance = 5   # ~30.3%
-  elsif a<b && (a-b).abs>5; chance = 5   # ~9.7%
-  end
-  if rand(10)>=chance
-    pbMessage(_INTL("Nope. Nothing..."))
-  else
-    enctype = (chance==1) ? :HeadbuttLow : :HeadbuttHigh
-    if !pbEncounter(enctype)
-      pbMessage(_INTL("Nope. Nothing..."))
-    end
-  end
-end
-
-def pbHeadbutt(event=nil)
-  move = :HEADBUTT
-  movefinder = $Trainer.get_pokemon_with_move(move)
-  if !$DEBUG && !movefinder
-    pbMessage(_INTL("A Pokémon could be in this tree. Maybe a Pokémon could shake it."))
-    return false
-  end
-  if pbConfirmMessage(_INTL("A Pokémon could be in this tree. Would you like to use Headbutt?"))
-    speciesname = (movefinder) ? movefinder.name : $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Move.get(move).name))
-    pbHiddenMoveAnimation(movefinder)
-    pbHeadbuttEffect(event)
-    return true
-  end
-  return false
-end
-
-HiddenMoveHandlers::CanUseMove.add(:HEADBUTT,proc { |move,pkmn,showmsg|
-  facingEvent = $game_player.pbFacingEvent
-  if !facingEvent || !facingEvent.name[/headbutttree/i]
-    pbMessage(_INTL("Can't use that here.")) if showmsg
-    next false
-  end
-  next true
-})
-
-HiddenMoveHandlers::UseMove.add(:HEADBUTT,proc { |move,pokemon|
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Move.get(move).name))
-  end
-  facingEvent = $game_player.pbFacingEvent
-  pbHeadbuttEffect(facingEvent)
-})
-
-
-
-#===============================================================================
-# Rock Smash
-#===============================================================================
-def pbRockSmashRandomEncounter
-  if $PokemonEncounters.encounter_triggered?(:RockSmash, false, false)
-    pbEncounter(:RockSmash)
-  end
-end
-
-def pbRockSmash
-  if !$PokemonBag.pbHasItem?(:HAMMER)
-    pbMessage(_INTL("It's a rugged rock, but a Pokémon may be able to smash it."))
-    return false
-  end
-  if pbConfirmMessage(_INTL("This rock appears to be breakable. Would you like to use Rock Smash?"))
-    speciesname = $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:HAMMER).name))
-    return true
-  end
-  return false
-end
-
-HiddenMoveHandlers::CanUseMove.add(:ROCKSMASH,proc { |move,pkmn,showmsg|
-  next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_ROCKSMASH,showmsg)
-  facingEvent = $game_player.pbFacingEvent
-  if !facingEvent || !facingEvent.name[/smashrock/i]
-    pbMessage(_INTL("Can't use that here.")) if showmsg
-    next false
-  end
-  next true
-})
-
-HiddenMoveHandlers::UseMove.add(:ROCKSMASH,proc { |move,pokemon|
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used {2}!",pokemon.name,GameData::Item.get(:HAMMER).name))
-  end
-  facingEvent = $game_player.pbFacingEvent
-  if facingEvent
-    pbSmashEvent(facingEvent)
-    pbRockSmashRandomEncounter
-    pbRockSmashRandomItem
-  end
-  next true
-})
-
-
-
-#===============================================================================
-# Strength
-#===============================================================================
-def pbStrength
-  if $PokemonMap.strengthUsed
-    pbMessage(_INTL("Strength made it possible to move boulders around."))
-    return false
-  end
-  if !$PokemonBag.pbHasItem?(:FULCRUM)
-    pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside."))
-    return false
-  end
-  pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside.\1"))
-  if pbConfirmMessage(_INTL("Would you like to use Strength?"))
-    speciesname = $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:FULCRUM).name))
-    pbMessage(_INTL("{1}'s Strength made it possible to move boulders around!",speciesname))
-    $PokemonMap.strengthUsed = true
-    return true
-  end
-  return false
-end
-
-Events.onAction += proc { |_sender,_e|
-  facingEvent = $game_player.pbFacingEvent
-  pbStrength if facingEvent && facingEvent.name[/strengthboulder/i]
-}
-
-HiddenMoveHandlers::CanUseMove.add(:STRENGTH,proc { |move,pkmn,showmsg|
-  next false if !$PokemonBag.pbHasItem?(:FULCRUM)
-  if $PokemonMap.strengthUsed
-    pbMessage(_INTL("Strength is already being used.")) if showmsg
-    next false
-  end
-  next true
-})
-
-HiddenMoveHandlers::UseMove.add(:STRENGTH,proc { |move,pokemon|
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:FULCRUM).name))
-  end
-  pbMessage(_INTL("The {1}'s Strength made it possible to move boulders around!",GameData::Item.get(:FULCRUM).name))
-  $PokemonMap.strengthUsed = true
-  next true
-})
-
-
-
-#===============================================================================
-# Surf
-#===============================================================================
-def pbSurf
-  return false if $game_player.pbFacingEvent
-  return false if $game_player.pbHasDependentEvents?
-  if !$PokemonBag.pbHasItem?(:HOVERCRAFT)
-    return false
-  end
-  if pbConfirmMessage(_INTL("The water is a deep blue...\nWould you like to surf on it?"))
-    speciesname = $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:HOVERCRAFT).name))
-    pbCancelVehicles
-    surfbgm = GameData::Metadata.get.surf_BGM
-    pbCueBGM(surfbgm,0.5) if surfbgm
-    pbStartSurfing
-    return true
-  end
-  return false
-end
-
-def pbStartSurfing
-  pbCancelVehicles
-  $PokemonEncounters.reset_step_count
-  $PokemonGlobal.surfing = true
-  pbUpdateVehicle
-  $PokemonTemp.surfJump = $MapFactory.getFacingCoords($game_player.x,$game_player.y,$game_player.direction)
-  pbJumpToward
-  $PokemonTemp.surfJump = nil
-  $game_player.check_event_trigger_here([1,2])
-end
-
-def pbEndSurf(_xOffset,_yOffset)
-  return false if !$PokemonGlobal.surfing
-  x = $game_player.x
-  y = $game_player.y
-  if $game_map.terrain_tag(x,y).can_surf && !$game_player.pbFacingTerrainTag.can_surf
-    $PokemonTemp.surfJump = [x,y]
-    if pbJumpToward(1,false,true)
-      $game_map.autoplayAsCue
-      $game_player.increase_steps
-      result = $game_player.check_event_trigger_here([1,2])
-      pbOnStepTaken(result)
-    end
-    $PokemonTemp.surfJump = nil
-    return true
-  end
-  return false
-end
-
-def pbTransferSurfing(mapid,xcoord,ycoord,direction=$game_player.direction)
-  pbFadeOutIn {
-    $game_temp.player_new_map_id    = mapid
-    $game_temp.player_new_x         = xcoord
-    $game_temp.player_new_y         = ycoord
-    $game_temp.player_new_direction = direction
-    $scene.transfer_player(false)
-    $game_map.autoplay
-    $game_map.refresh
-  }
-end
-
-Events.onAction += proc { |_sender,_e|
-  next if $PokemonGlobal.surfing
-  next if GameData::MapMetadata.exists?($game_map.map_id) &&
-          GameData::MapMetadata.get($game_map.map_id).always_bicycle
-  next if !$game_player.pbFacingTerrainTag.can_surf_freely
-  next if !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player)
-  pbSurf
-}
-
-HiddenMoveHandlers::CanUseMove.add(:SURF,proc { |move,pkmn,showmsg|
-  next false if !$PokemonBag.pbHasItem?(:HOVERCRAFT)
-  if $PokemonGlobal.surfing
-    pbMessage(_INTL("You're already surfing.")) if showmsg
-    next false
-  end
-  if $game_player.pbHasDependentEvents?
-    pbMessage(_INTL("It can't be used when you have someone with you.")) if showmsg
-    next false
-  end
-  if GameData::MapMetadata.exists?($game_map.map_id) &&
-     GameData::MapMetadata.get($game_map.map_id).always_bicycle
-    pbMessage(_INTL("Let's enjoy cycling!")) if showmsg
-    next false
-  end
-  if !$game_player.pbFacingTerrainTag.can_surf_freely ||
-     !$game_map.passable?($game_player.x,$game_player.y,$game_player.direction,$game_player)
-    pbMessage(_INTL("No surfing here!")) if showmsg
-    next false
-  end
-  next true
-})
-
-HiddenMoveHandlers::UseMove.add(:SURF,proc { |move,pokemon|
-  $game_temp.in_menu = false
-  pbCancelVehicles
-  if !pbHiddenMoveAnimation(pokemon)
-      pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
-  end
-  surfbgm = GameData::Metadata.get.surf_BGM
-  pbCueBGM(surfbgm,0.5) if surfbgm
-  pbStartSurfing
-  next true
-})
-
-
-#===============================================================================
-# Waterfall
-#===============================================================================
-def pbAscendWaterfall
-  return if $game_player.direction != 8   # Can't ascend if not facing up
-  terrain = $game_player.pbFacingTerrainTag
-  return if !terrain.waterfall && !terrain.waterfall_crest
-  oldthrough   = $game_player.through
-  oldmovespeed = $game_player.move_speed
-  $game_player.through    = true
-  $game_player.move_speed = 2
-  loop do
-    $game_player.move_up
-    terrain = $game_player.pbTerrainTag
-    break if !terrain.waterfall && !terrain.waterfall_crest
-  end
-  $game_player.through    = oldthrough
-  $game_player.move_speed = oldmovespeed
-end
-
-def pbDescendWaterfall
-  return if $game_player.direction != 2   # Can't descend if not facing down
-  terrain = $game_player.pbFacingTerrainTag
-  return if !terrain.waterfall && !terrain.waterfall_crest
-  oldthrough   = $game_player.through
-  oldmovespeed = $game_player.move_speed
-  $game_player.through    = true
-  $game_player.move_speed = 2
-  loop do
-    $game_player.move_down
-    terrain = $game_player.pbTerrainTag
-    break if !terrain.waterfall && !terrain.waterfall_crest
-  end
-  $game_player.through    = oldthrough
-  $game_player.move_speed = oldmovespeed
-end
-
-def pbWaterfall
-  if !$PokemonBag.pbHasItem?(:AQUAROCKET)
-    pbMessage(_INTL("A wall of water is crashing down with a mighty roar."))
-    return false
-  end
-  if pbConfirmMessage(_INTL("It's a large waterfall. Would you like to use Waterfall?"))
-    speciesname = $Trainer.name
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:AQUAROCKET).name))
-    pbAscendWaterfall
-    return true
-  end
-  return false
-end
-
-Events.onAction += proc { |_sender,_e|
-  terrain = $game_player.pbFacingTerrainTag
-  if terrain.waterfall
-    pbWaterfall
-  elsif terrain.waterfall_crest
-    pbMessage(_INTL("A wall of water is crashing down with a mighty roar."))
-  end
-}
-
 ItemHandlers::UseFromBag.add(:CHAINSAW,proc{|item|
   next canUseMoveCut? ? 2 : 0
 })
@@ -2733,6 +1256,7 @@ ItemHandlers::UseFromBag.add(:HIKINGGEAR,proc{|item|
 ItemHandlers::UseInField.add(:HIKINGGEAR,proc{|item|
    useMoveRockClimb if canUseMoveRockClimb?
 })
+
 ItemHandlers::UseFromBag.add(:ESCAPEROPE,proc { |item|
   if $game_player.pbHasDependentEvents?
     pbMessage(_INTL("It can't be used when you have someone with you."))
@@ -2744,6 +1268,7 @@ ItemHandlers::UseFromBag.add(:ESCAPEROPE,proc { |item|
   pbMessage(_INTL("Can't use that here."))
   next 0
 })
+
 ItemHandlers::UseInField.add(:ESCAPEROPE,proc { |item|
   escape = ($PokemonGlobal.escapePoint rescue nil)
   if !escape || escape==[]
@@ -3270,7 +1795,7 @@ BattleHandlers::DamageCalcUserItem.add(:TEMPORALPLATE,
 
 
 #===================================
-# Misc
+# Terrain Tags and Encounters
 #===================================
 
 
@@ -3382,6 +1907,10 @@ GameData::EncounterType.register({
   :old_slots      => [20, 20, 10, 10, 10, 10, 5, 5, 4, 4, 1, 1]
 })
 
+#=======================
+#Various Screen Changes
+#=======================
+
 class PokemonSave_Scene
   def pbStartScreen
     @viewport=Viewport.new(0,0,Graphics.width,Graphics.height)
@@ -3414,156 +1943,6 @@ class PokemonSave_Scene
     @sprites["locwindow"].width=228 if @sprites["locwindow"].width<228
     @sprites["locwindow"].visible=true
   end
-end
-
-EliteBattle::REPLACE_MISSING_ANIM = true
-EliteBattle.defineMoveAnimation(:STELLARWIND) do
-  vector = @scene.getRealVector(@targetIndex, @targetIsPlayer)
-  vector2 = @scene.getRealVector(@userIndex, @userIsPlayer)
-  # set up animation
-  fp = {}
-  rndx = []; prndx = []
-  rndy = []; prndy = []
-  rangl = []
-  dx = []
-  dy = []
-  for i in 0...128
-    fp["#{i}"] = Sprite.new(@viewport)
-    fp["#{i}"].bitmap = pbBitmap("Graphics/EBDX/Animations/Moves/eb423")
-    fp["#{i}"].ox = fp["#{i}"].bitmap.width/2
-    fp["#{i}"].oy = fp["#{i}"].bitmap.height/2
-    fp["#{i}"].visible = false
-    fp["#{i}"].z = @targetSprite.z + 1
-    rndx.push(rand(256)); prndx.push(rand(72))
-    rndy.push(rand(256)); prndy.push(rand(72))
-    rangl.push(rand(9))
-    dx.push(0)
-    dy.push(0)
-  end
-  shake = 4
-  # start animation
-  @vector.set(vector2)
-  pbSEPlay("Anim/Whirlwind")
-  for i in 0...72
-    ax, ay = @userSprite.getCenter
-    cx, cy = @targetSprite.getCenter(true)
-    for j in 0...128
-      next if j>(i*2)
-      if !fp["#{j}"].visible
-        dx[j] = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
-        fp["#{j}"].x = dx[j]
-        fp["#{j}"].y = dy[j]
-        fp["#{j}"].visible = true
-      end
-      x0 = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-      y0 = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
-      x2 = cx - 128*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
-      y2 = cy - 128*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
-      fp["#{j}"].x += (x2 - x0)*0.1
-      fp["#{j}"].y += (y2 - y0)*0.1
-      fp["#{j}"].angle += rangl[j]*2
-      nextx = fp["#{j}"].x
-      nexty = fp["#{j}"].y
-      if !@targetIsPlayer
-        fp["#{j}"].opacity -= 51 if nextx > cx && nexty < cy
-      else
-        fp["#{j}"].opacity -= 51 if nextx < cx && nexty > cy
-      end
-    end
-    if i >= 64
-  #    @targetSprite.x += 64*(@targetIsPlayer ? -1 : 1)
-    elsif i >= 52
-      @targetSprite.ox += shake
-      shake = -4 if @targetSprite.ox > @targetSprite.bitmap.width/2 + 2
-      shake = 4 if @targetSprite.ox < @targetSprite.bitmap.width/2 - 2
-      @targetSprite.still
-    end
-    @vector.set(vector) if i == 16
-    @vector.inc = 0.1 if i == 16
-    @scene.wait(1,i < 64)
-  end
-#  @targetSprite.visible = false
-#  @targetSprite.hidden = true
-#  @targetSprite.ox = @targetSprite.bitmap.width/2
-  pbDisposeSpriteHash(fp)
-  @vector.reset
-  @vector.inc = 0.2
-  @scene.wait(16,true)
-end
-EliteBattle.defineMoveAnimation(:TIMEWIND) do
-  vector = @scene.getRealVector(@targetIndex, @targetIsPlayer)
-  vector2 = @scene.getRealVector(@userIndex, @userIsPlayer)
-  # set up animation
-  fp = {}
-  rndx = []; prndx = []
-  rndy = []; prndy = []
-  rangl = []
-  dx = []
-  dy = []
-  for i in 0...128
-    fp["#{i}"] = Sprite.new(@viewport)
-    fp["#{i}"].bitmap = pbBitmap("Graphics/EBDX/Animations/Moves/eb423")
-    fp["#{i}"].ox = fp["#{i}"].bitmap.width/2
-    fp["#{i}"].oy = fp["#{i}"].bitmap.height/2
-    fp["#{i}"].visible = false
-    fp["#{i}"].z = @targetSprite.z + 1
-    rndx.push(rand(256)); prndx.push(rand(72))
-    rndy.push(rand(256)); prndy.push(rand(72))
-    rangl.push(rand(9))
-    dx.push(0)
-    dy.push(0)
-  end
-  shake = 4
-  # start animation
-  @vector.set(vector2)
-  pbSEPlay("Anim/Whirlwind")
-  for i in 0...72
-    ax, ay = @userSprite.getCenter
-    cx, cy = @targetSprite.getCenter(true)
-    for j in 0...128
-      next if j>(i*2)
-      if !fp["#{j}"].visible
-        dx[j] = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-        dy[j] = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
-        fp["#{j}"].x = dx[j]
-        fp["#{j}"].y = dy[j]
-        fp["#{j}"].visible = true
-      end
-      x0 = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
-      y0 = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
-      x2 = cx - 128*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
-      y2 = cy - 128*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
-      fp["#{j}"].x += (x2 - x0)*0.1
-      fp["#{j}"].y += (y2 - y0)*0.1
-      fp["#{j}"].angle += rangl[j]*2
-      nextx = fp["#{j}"].x
-      nexty = fp["#{j}"].y
-      if !@targetIsPlayer
-        fp["#{j}"].opacity -= 51 if nextx > cx && nexty < cy
-      else
-        fp["#{j}"].opacity -= 51 if nextx < cx && nexty > cy
-      end
-    end
-    if i >= 64
-  #    @targetSprite.x += 64*(@targetIsPlayer ? -1 : 1)
-    elsif i >= 52
-      @targetSprite.ox += shake
-      shake = -4 if @targetSprite.ox > @targetSprite.bitmap.width/2 + 2
-      shake = 4 if @targetSprite.ox < @targetSprite.bitmap.width/2 - 2
-      @targetSprite.still
-    end
-    @vector.set(vector) if i == 16
-    @vector.inc = 0.1 if i == 16
-    @scene.wait(1,i < 64)
-  end
-#  @targetSprite.visible = false
-#  @targetSprite.hidden = true
-#  @targetSprite.ox = @targetSprite.bitmap.width/2
-  pbDisposeSpriteHash(fp)
-  @vector.reset
-  @vector.inc = 0.2
-  @scene.wait(16,true)
 end
 
 class PokemonPauseMenu_Scene
@@ -4588,6 +2967,10 @@ class BattleSceneRoom
   end
 end
 
+#===================
+# Move and Ability Effects
+#===================
+
 module Effectiveness
 
   module_function
@@ -5261,6 +3644,700 @@ class PokeBattle_Move
   end
 end
 
+module BattleHandlers
+  StatLossImmunityAbilityNonIgnorableSandy = AbilityHandlerHash.new   # Unshaken
+  def self.triggerStatLossImmunityAbilityNonIgnorableSandy(ability,battler,stat,battle,showMessages)
+    ret = StatLossImmunityAbilityNonIgnorableSandy.trigger(ability,battler,stat,battle,showMessages)
+    return (ret!=nil) ? ret : false
+  end
+end
+
+class PokeBattle_Move_087 < PokeBattle_Move
+  def pbBaseDamage(baseDmg,user,target)
+    baseDmg *= 2 if @battle.pbWeather != :None
+    return baseDmg
+  end
+
+  def pbBaseType(user)
+    ret = :NORMAL
+    case @battle.pbWeather
+    when :Sun, :HarshSun
+      ret = :FIRE if GameData::Type.exists?(:FIRE)
+    when :Rain, :HeavyRain, :Storm
+      ret = :WATER if GameData::Type.exists?(:WATER)
+    when :Sandstorm
+      ret = :ROCK if GameData::Type.exists?(:ROCK)
+    when :Hail, :Sleet
+      ret = :ICE if GameData::Type.exists?(:ICE)
+    when :Starstorm
+      ret = :COSMIC if GameData::Type.exists?(:COSMIC)
+    when :Fog
+      ret = :FAIRY if GameData::Type.exists?(:FAIRY)
+    when :Humid
+      ret = :BUG if GameData::Type.exists?(:BUG)
+    when :Overcast
+      ret = :GHOST if GameData::Type.exists?(:GHOST)
+    when :Eclipse
+      ret = :DARK if GameData::Type.exists?(:DARK)
+    when :Windy
+      ret = :FLYING if GameData::Type.exists?(:FLYING)
+    when :HeatLight
+      ret = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
+    when :AcidRain
+      ret = :POISON if GameData::Type.exists?(:POISON)
+    when :StrongWinds
+      ret = :DRAGON if GameData::Type.exists?(:DRAGON)
+    when :Rainbow
+      ret = :GRASS if GameData::Type.exists?(:GRASS)
+    when :DustDevil
+      ret = :GROUND if GameData::Type.exists?(:GROUND)
+    when :DAshfall
+      ret = :FIGHTING if GameData::Type.exists?(:FIGHTING)
+    when :VolcanicAsh
+      ret = :STEEL if GameData::Type.exists?(:STEEL)
+    when :Borealis
+      ret = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
+    when :TimeWarp
+      ret = :TIME if GameData::Type.exists?(:TIME)
+    when :Reverb
+      ret = :SOUND if GameData::Type.exists?(:SOUND)
+    end
+    return ret
+  end
+
+  def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
+    t = pbBaseType(user)
+    hitNum = 1 if t == :FIRE   # Type-specific anims
+    hitNum = 2 if t == :WATER
+    hitNum = 3 if t == :ROCK
+    hitNum = 4 if t == :ICE
+    super
+  end
+end
+
+BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
+  proc { |ability,weather,battler,battle|
+    next if battler.fainted?
+    newWeather = 0
+    oldWeather = battle.pbWeather
+    newForm = battler.form
+    if newForm >= 21
+      if newForm >= 42
+        newForm -= 42
+      else
+        newForm -= 21
+      end
+    end
+    newWeather = newForm
+    battle.eachOtherSideBattler(battler.index) do |b|
+      type1 = b.type1
+      type2 = b.type2
+      case type1
+      when :NORMAL
+        case type2
+        when :GHOST, :PSYCHIC, :TIME; newWeather = 7
+        when :FAIRY; newWeather = 16
+        when :FLYING, :SOUND; newWeather = 3
+        when :BUG; newWeather = 1
+        when :NORMAL,:FIGHTING,:POISON,:GROUND,:ROCK,:STEEL,:FIRE,:WATER,:GRASS,:ELECTRIC,:ICE,:DRAGON,:DARK,:COSMIC, type1; newWeather = 15
+        end
+      when :FIGHTING
+        case type2
+        when :POISON, :COSMIC; newWeather = 17
+        when :STEEL; newWeather = 20
+        when :FLYING, :FIRE; newWeather = 19
+        when :NORMAL,:FIGHTING,:GROUND,:ROCK,:BUG,:GHOST,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY,:TIME,:SOUND, type1; newWeather = 4
+        end
+      when :FLYING
+        case type2
+        when :GROUND, :DRAGON, :SOUND, :COSMIC, :GHOST; newWeather = 3
+        when :FIRE, :ICE, :ROCK, :POISON, :BUG; newWeather = 12
+        when :NORMAL,:FIGHTING,:STEEL,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:DARK,:FAIRY,:TIME, type1; newWeather = 20
+        end
+      when :ROCK
+        case type2
+        when :ICE, :DARK; newWeather = 15
+        when :FLYING, :BUG, :GRASS, :TIME, :FAIRY; newWeather = 16
+        when :WATER, :GROUND, :SOUND; newWeather = 13
+        when :FIRE; newWeather = 2
+        when :COSMIC; newWeather = 19
+        when :NORMAL, :FIGHTING, :POISON, :GHOST, :STEEL, :ELECTRIC, :DRAGON, :PSYCHIC, type1; newWeather = 14
+        end
+      when :GROUND
+        case type2
+        when :WATER, :ROCK, :ELECTRIC, type1; newWeather = 13
+        when :DRAGON, :FLYING, :SOUND, :GRASS; newWeather = 3
+        when :COSMIC; newWeather = 17
+        when :TIME; newWeather = 5
+        when :NORMAL,:FIGHTING,:POISON,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY; newWeather = 2
+        end
+      when :POISON
+        case type2
+        when :DARK, :STEEL, :ELECTRIC, :ROCK, :FIRE; newWeather = 14
+        when :TIME, :PSYCHIC, :GHOST; newWeather = 7
+        when :SOUND, :BUG, :ICE, :FLYING; newWeather = 12
+        when :NORMAL,:FIGHTING,:POISON,:GROUND,:WATER,:GRASS,:DRAGON,:FAIRY,:COSMIC, type1; newWeather = 17
+        end
+      when :BUG
+        case type2
+        when :GROUND, :WATER, :FIGHTING; newWeather = 8
+        when :GRASS, :STEEL, :COSMIC; newWeather = 1
+        when :TIME; newWeather = 16
+        when :NORMAL,:FLYING,:POISON,:ROCK,:GHOST,:FIRE,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY,:SOUND, type1; newWeather = 12
+        end
+      when :GHOST
+        case type2
+        when :FIGHTING, :DARK; newWeather = 4
+        when :FAIRY; newWeather = 16
+        when :BUG; newWeather = 1
+        when :NORMAL,:FLYING,:POISON,:GROUND,:ROCK,:STEEL,:FIRE,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:COSMIC,:TIME,:SOUND, type1; newWeather = 7
+        end
+      when :STEEL
+        case type2
+        when :WATER; newWeather = 9
+        when :TIME, :GROUND; newWeather = 20
+        when :FIRE, :ROCK; newWeather = 14
+        when :DARK, :NORMAL; newWeather = 15
+        when :DRAGON, :SOUND; newWeather = 6
+        when :FLYING,:POISON,:BUG,:GHOST,:STEEL,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:FAIRY,:COSMIC, type1; newWeather = 1
+        end
+      when :GRASS
+        case type2
+        when :STEEL, :COSMIC, :ICE; newWeather = 1
+        when :TIME, :FAIRY, :SOUND; newWeather = 11
+        when :DRAGON, :GROUND, :FLYING, :ELECTRIC; newWeather = 3
+        when :DARK, :PSYCHIC; newWeather = 18
+        when :ROCK; newWeather = 16
+        when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :FIRE, :WATER, type1; newWeather = 8
+        end
+      when :FIRE
+        case type2
+        when :GRASS; newWeather = 8
+        when :WATER; newWeather = 9
+        when :COSMIC, :ROCK, :FIGHTING, :FLYING; newWeather = 19
+        when :DRAGON, :ELECTRIC, :TIME; newWeather = 14
+        when :SOUND; newWeather = 12
+        when :NORMAL,:POISON,:GROUND,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY, type1; newWeather = 2
+        end
+      when :WATER
+        case type2
+        when :FIRE, :FLYING; newWeather = 9
+        when :GHOST; newWeather = 7
+        when :GROUND, :ROCK; newWeather = 13
+        when :PSYCHIC, :TIME; newWeather = 20
+        when :NORMAL,:FIGHTING,:POISON,:BUG,:STEEL,:GRASS,:ELECTRIC,:ICE,:DRAGON,:DARK,:FAIRY,:COSMIC,:SOUND, type1; newWeather = 6
+        end
+      when :ELECTRIC
+        case type2
+        when :FLYING, :GRASS; newWeather = 3
+        when :TIME,:WATER; newWeather = 20
+        when :BUG,:ICE; newWeather = 1
+        when :NORMAL,:FIGHTING,:POISON,:GROUND,:ROCK,:GHOST,:STEEL,:FIRE,:PSYCHIC,:DRAGON,:DARK,:FAIRY,:COSMIC,:SOUND, type1; newWeather = 14
+        end
+      when :ICE
+        case type2
+        when :GHOST, :PSYCHIC, :TIME, :FAIRY, :ROCK, type1; newWeather = 16
+        when :SOUND, :FIRE, :FLYING, :POISON; newWeather = 12
+        when :GRASS, :BUG, :STEEL, :COSMIC; newWeather = 1
+        when :NORMAL, :FIGHTING, :GROUND, :WATER, :DRAGON, :ELECTRIC, :DARK; newWeather = 15
+        end
+      when :PSYCHIC
+        case type2
+        when :DARK, :GRASS; newWeather = 18
+        when :FLYING, :WATER; newWeather = 20
+        when :FIGHTING; newWeather = 19
+        when :SOUND; newWeather = 5
+        when :ICE, :FAIRY; newWeather = 16
+        when :NORMAL,:POISON,:GROUND,:ROCK,:BUG,:GHOST,:STEEL,:FIRE,:ELECTRIC,:DRAGON,:COSMIC,:TIME, type1; newWeather = 7
+        end
+      when :DRAGON
+        case type2
+        when :SOUND, :GROUND, :FLYING, :GRASS; newWeather = 3
+        when :DARK, :FIGHTING, :TIME, type1; newWeather = 4
+        when :FIRE; newWeather = 12
+        when :PSYCHIC; newWeather = 7
+        when :NORMAL,:POISON,:ROCK,:BUG,:GHOST,:STEEL,:WATER,:ELECTRIC,:ICE,:DRAGON,:FAIRY,:COSMIC; newWeather = 6
+        end
+      when :DARK
+        case type2
+        when :NORMAL,:FIGHTING,:FLYING,:GROUND,:BUG,:GHOST,:WATER,:ELECTRIC,:DRAGON,:FAIRY,:TIME,:SOUND,type1; newWeather = 4
+        when :POISON,:FIRE; newWeather = 14
+        when :GRASS,:PSYCHIC,:COSMIC; newWeather = 18
+        when :ROCK,:STEEL,:ICE; newWeather = 15
+        end
+      when :FAIRY
+        case type2
+        when :FIRE; newWeather = 12
+        when :COSMIC; newWeather = 1
+        when :GRASS, :SOUND, :TIME; newWeather = 11
+        when :ROCK, :ICE; newWeather = 16
+        when :NORMAL,:FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:STEEL,:WATER,:GRASS,:ELECTRIC,:DRAGON,:DARK, type1; newWeather = 6
+        end
+      when :COSMIC
+        case type2
+        when :GROUND, :SOUND; newWeather = 3
+        when :GHOST, :TIME; newWeather = 7
+        when :POISON, :FIGHTING; newWeather = 17
+        when :DRAGON then newWeather = 6
+        when :ICE, :GRASS, :BUG, :STEEL, :FAIRY; newWeather = 1
+        when :NORMAL,:FLYING,:ROCK,:FIRE,:WATER,:ELECTRIC,:PSYCHIC, type1; newWeather = 19
+        end
+      when :TIME
+        case type2
+        when :NORMAL, :DARK, :SOUND, :GRASS, :FAIRY; newWeather = 11
+        when :GHOST, :ROCK, :ICE, :COSMIC; newWeather = 7
+        when :FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:STEEL,:FIRE,:WATER,:ELECTRIC,:PSYCHIC,:DRAGON, type1; newWeather = 20
+        end
+      when :SOUND
+        case type2
+        when :GROUND, :FLYING, :GRASS, :DRAGON, :COSMIC; newWeather = 3
+        when :POISON, :ROCK, :STEEL; newWeather = 14
+        when :GHOST; newWeather = 7
+        when :TIME; newWeather = 5
+        when :WATER; newWeather = 6
+        when :FIGHTING; newWeather = 11
+        when :NORMAL,:BUG,:GHOST,:FIRE,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY, type1; newWeather = 12
+        end
+      end
+    end
+  if newWeather==newForm
+    weatherChange = battle.pbWeather
+  else
+    case newWeather
+    when 1 then weatherChange = :Sun  if weather != :Sun
+    when 2 then weatherChange = :Rain  if weather != :Rain
+    when 3 then weatherChange = :Sleet  if weather != :Sleet
+    when 4 then weatherChange = :Fog  if weather != :Fog
+    when 5 then weatherChange = :Overcast  if weather != :Overcast
+    when 6 then weatherChange = :Starstorm  if weather != :Starstorm
+    when 7 then weatherChange = :Eclipse  if weather != :Eclipse
+    when 8 then weatherChange = :Windy  if weather != :Windy
+    when 9 then weatherChange = :HeatLight  if weather != :HeatLight
+    when 10 then weatherChange = :StrongWinds  if weather != :StrongWinds
+    when 11 then weatherChange = :AcidRain  if weather != :AcidRain
+    when 12 then weatherChange = :Sandstorm  if weather != :Sandstorm
+    when 13 then weatherChange = :Rainbow  if weather != :Rainbow
+    when 14 then weatherChange = :DustDevil  if weather != :DustDevil
+    when 15 then weatherChange = :DAshfall  if weather != :DAshfall
+    when 16 then weatherChange = :VolcanicAsh  if weather != :VolcanicAsh
+    when 17 then weatherChange = :Borealis  if weather != :Borealis
+    when 18 then weatherChange = :Humid  if weather != :Humid
+    when 19 then weatherChange = :TimeWarp  if weather != :TimeWarp
+    when 20 then weatherChange = :Reverb  if weather != :Reverb
+    end
+    battle.pbShowAbilitySplash(battler)
+    battle.field.weather = weatherChange
+    battle.field.weatherDuration = 5
+    case weatherChange
+    when :Starstorm then   battle.pbDisplay(_INTL("Stars fill the sky."))
+    when :Thunder then     battle.pbDisplay(_INTL("Lightning flashes in th sky."))
+    when :Humid then       battle.pbDisplay(_INTL("The air is humid."))
+    when :Overcast then    battle.pbDisplay(_INTL("The sky is overcast."))
+    when :Eclipse then     battle.pbDisplay(_INTL("The sky is dark."))
+    when :Fog then         battle.pbDisplay(_INTL("The fog is deep."))
+    when :AcidRain then    battle.pbDisplay(_INTL("Acid rain is falling."))
+    when :VolcanicAsh then battle.pbDisplay(_INTL("Volcanic Ash sprinkles down."))
+    when :Rainbow then     battle.pbDisplay(_INTL("A rainbow crosses the sky."))
+    when :Borealis then    battle.pbDisplay(_INTL("The sky is ablaze with color."))
+    when :TimeWarp then    battle.pbDisplay(_INTL("Time has stopped."))
+    when :Reverb then      battle.pbDisplay(_INTL("A dull echo hums."))
+    when :DClear then      battle.pbDisplay(_INTL("The sky is distorted."))
+    when :DRain then       battle.pbDisplay(_INTL("Rain is falling upward."))
+    when :DWind then       battle.pbDisplay(_INTL("The wind is haunting."))
+    when :DAshfall then    battle.pbDisplay(_INTL("Ash floats in midair."))
+    when :Sleet then       battle.pbDisplay(_INTL("Sleet began to fall."))
+    when :Windy then       battle.pbDisplay(_INTL("There is a slight breeze."))
+    when :HeatLight then   battle.pbDisplay(_INTL("Static fills the air."))
+    when :DustDevil then   battle.pbDisplay(_INTL("A dust devil approaches."))
+    when :Sun then         battle.pbDisplay(_INTL("The sunlight is strong."))
+    when :Rain then        battle.pbDisplay(_INTL("It is raining."))
+    when :Sandstorm then   battle.pbDisplay(_INTL("A sandstorm is raging."))
+    when :Hail then        battle.pbDisplay(_INTL("Hail is falling."))
+    when :HarshSun then    battle.pbDisplay(_INTL("The sunlight is extremely harsh."))
+    when :HeavyRain then   battle.pbDisplay(_INTL("It is raining heavily."))
+    when :StrongWinds then battle.pbDisplay(_INTL("The wind is strong."))
+    when :ShadowSky then   battle.pbDisplay(_INTL("The sky is shadowy."))
+    end
+    newForm = newWeather
+    if battler.isSpecies?(:ALTEMPER)
+      case newForm
+      when 4 then                       battler.effects[PBEffects::Type3] = :FAIRY
+      when 0 then                       battler.effects[PBEffects::Type3] = :NORMAL
+      when 5 then                       battler.effects[PBEffects::Type3] = :GHOST
+      when 7 then                       battler.effects[PBEffects::Type3] = :DARK
+      when 8 then                       battler.effects[PBEffects::Type3] = :FLYING
+      when 9 then                       battler.effects[PBEffects::Type3] = :ELECTRIC
+      when 10 then                      battler.effects[PBEffects::Type3] = :DRAGON
+      when 11 then                      battler.effects[PBEffects::Type3] = :POISON
+      when 12 then                      battler.effects[PBEffects::Type3] = :ROCK
+      when 13 then                      battler.effects[PBEffects::Type3] = :GRASS
+      when 14 then                      battler.effects[PBEffects::Type3] = :GROUND
+      when 15 then                      battler.effects[PBEffects::Type3] = :FIGHTING
+      when 16 then                      battler.effects[PBEffects::Type3] = :STEEL
+      when 17 then                      battler.effects[PBEffects::Type3] = :PSYCHIC
+      when 18 then                      battler.effects[PBEffects::Type3] = :BUG
+      when 20 then                      battler.effects[PBEffects::Type3] = :SOUND
+      when 1 then                       battler.effects[PBEffects::Type3] = :FIRE
+      when 2 then                       battler.effects[PBEffects::Type3] = :WATER
+      when 3 then                       battler.effects[PBEffects::Type3] = :ICE
+      end
+    elsif battler.isSpecies?(:FORMETEOS)
+        case newForm
+        when 4 then                       battler.type1 = :FAIRY
+        when 0 then                       battler.type1 = :NORMAL
+        when 5 then                       battler.type1 = :GHOST
+        when 7 then                       battler.type1 = :DARK
+        when 8 then                       battler.type1 = :FLYING
+        when 9 then                       battler.type1 = :ELECTRIC
+        when 10 then                      battler.type1 = :DRAGON
+        when 11 then                      battler.type1 = :POISON
+        when 12 then                      battler.type1 = :ROCK
+        when 13 then                      battler.type1 = :GRASS
+        when 14 then                      battler.type1 = :GROUND
+        when 15 then                      battler.type1 = :FIGHTING
+        when 16 then                      battler.type1 = :STEEL
+        when 17 then                      battler.type1 = :PSYCHIC
+        when 18 then                      battler.type1 = :BUG
+        when 20 then                      battler.type1 = :SOUND
+        when 1 then                       battler.type1 = :FIRE
+        when 2 then                       battler.type1 = :WATER
+        when 3 then                       battler.type1 = :ICE
+        end
+    end
+  end
+    if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
+      if battler.form >= 42 && battler.isSpecies?(:ALTEMPER)
+        newForm += 42
+      else
+        newForm += 21
+      end
+    end
+    if battler.isSpecies?(:FORMETEOS)
+      battler.form = newForm
+    end
+    if battler.form != newForm && battler.form <= 41 && !battler.isSpecies?(:FORMETEOS)
+      battler.pbChangeForm(newForm,_INTL("{1} transformed!",battler.pbThis))
+    end
+    oldWeather = weatherChange
+    battle.pbHideAbilitySplash(battler)
+    battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+  }
+)
+
+BattleHandlers::EORWeatherAbility.copy(:ACCLIMATE,:BAROMETRIC)
+
+BattleHandlers::EORHealingAbility.add(:RESURGENCE,
+  proc { |ability,battler,battle|
+    next if !battler.canHeal?
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP(battler.totalhp/16)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.",battler.pbThis,battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::EORHealingAbility.add(:ASPIRANT,
+  proc { |ability,battler,battle|
+    wishHeal = $game_variables[103]
+    $game_variables[101] -= 1
+    if $game_variables[101]==0
+      wishMaker = $game_variables[102]
+      battler.pbRecoverHP(wishHeal)
+      battle.pbDisplay(_INTL("{1}'s wish came true!",wishMaker))
+    end
+    next if $game_variables[101]>0
+    if $game_variables[101]<0
+      battle.pbShowAbilitySplash(battler)
+      if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+        $game_variables[103] = (battler.totalhp/2)
+        $game_variables[102] = battler.pbThis
+        $game_variables[101] += 2
+        battle.pbDisplay(_INTL("{1} made a wish!",battler.pbThis))
+      else
+        battle.pbDisplay(_INTL("{1} made a wish with {2}",battler.pbThis,battler.abilityName))
+      end
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::EORHealingAbility.add(:HOPEFULTOLL,
+  proc { |ability,battler,battle|
+    battler.status = 0
+    def pbAromatherapyHeal(pkmn,battler=nil)
+      oldStatus = (battler) ? battler.status : pkmn.status
+      curedName = (battler) ? battler.pbThis : pkmn.name
+      if battler
+        battler.pbCureStatus(false)
+      else
+        pkmn.status      = 0
+        pkmn.statusCount = 0
+      end
+    end
+    battle.pbShowAbilitySplash(battler)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1} rang a healing bell!",battler.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1} sounded a {2}",battler.pbThis,battler.abilityName))
+    end
+    battle.pbParty(battler.index).each_with_index do |pkmn,i|
+      next if !pkmn || !pkmn.able? || pkmn.status==0
+      pkmn.status = 0
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::EORWeatherAbility.add(:ACIDDRAIN,
+  proc { |ability,weather,battler,battle|
+    next unless weather==:AcidRain
+    next if !battler.canHeal?
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP(battler.totalhp/16)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.",battler.pbThis,battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::EORWeatherAbility.copy(:POISONHEAL,:ACIDDRAIN)
+
+BattleHandlers::AbilityOnSwitchIn.add(:GAIAFORCE,
+  proc { |ability,battler,battle|
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} is gathering power from the earth!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:DUAT,
+  proc { |ability,battler,battle|
+    battler.effects[PBEffects::Type3] = :TIME
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} is shrouded in the Duat!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:SHADOWGUARD,
+  proc { |ability,battler,battle|
+    battler.effects[PBEffects::Type3] = :DARK
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} is shrouded in the shadows!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:EQUINOX,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Starstorm, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:URBANCLOUD,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:AcidRain, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:FIGHTERSWRATH,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:DAshfall, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:MUGGYAIR,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Humid, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:ELECTROSTATIC,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:HeatLight, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:FLOWERGIFT,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Rainbow, battler, battle)
+    #battler.pbChangeForm(1,_INTL("{1} transformed!",battler.name))
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:RAGINGSEA,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Storm, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:DESERTSTORM,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:DustDevil, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:ASHCOVER,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:VolcanicAsh, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:NIGHTFALL,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Eclipse, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:SHROUD,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Fog, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:BOREALIS,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Borealis, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:HAILSTORM,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Sleet, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:CLOUDCOVER,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Overcast, battler, battle)
+  }
+)
+
+BattleHandlers::DamageCalcUserAbility.add(:WINDRAGE,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if (user.battle.pbWeather == :Windy || user.battle.pbWeather == :StrongWinds) &&
+       [:FLYING, :DRAGON].include?(type)
+      mults[:base_damage_multiplier] *= 1.3
+    end
+  }
+)
+
+BattleHandlers::DamageCalcUserAbility.add(:SOOTSURGE,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if (user.battle.pbWeather == :VolcanicAsh || user.battle.pbWeather == :DAshfall) &&
+       [:STEEL, :FIGHTING].include?(type)
+      mults[:base_damage_multiplier] *= 1.3
+    end
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:TOXICSURGE,
+  proc { |ability,battler,battle|
+    next if battle.field.terrain == :Poison
+    battle.pbShowAbilitySplash(battler)
+    battle.pbStartTerrain(battler, :Poison)
+    # NOTE: The ability splash is hidden again in def pbStartTerrain.
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:GALEFORCE,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Windy, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:PINDROP,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Reverb, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:WORMHOLE,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:TimeWarp, battler, battle)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:MINDGAMES,
+  proc { |ability,battler,battle|
+    battle.pbShowAbilitySplash(battler)
+    battle.eachOtherSideBattler(battler.index) do |b|
+      next if !b.near?(battler)
+      b.pbLowerSpAtkStatStageMindGames(battler)
+      b.pbItemOnIntimidatedCheck
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:MEDUSOID,
+  proc { |ability,battler,battle|
+    battle.pbShowAbilitySplash(battler)
+    battle.eachOtherSideBattler(battler.index) do |b|
+      next if !b.near?(battler)
+      b.pbLowerSpeedStatStageMedusoid(battler)
+      b.pbItemOnIntimidatedCheck
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:DIMENSIONSHIFT,
+  proc { |ability,battler,battle|
+    battle.pbShowAbilitySplash(battler)
+    if battle.field.effects[PBEffects::TrickRoom] > 0
+      battle.field.effects[PBEffects::TrickRoom] = 0
+      battle.pbDisplay(_INTL("{1} reverted the dimensions!",battler.pbThis))
+    end
+    if battle.field.weather == :TimeWarp
+      battle.field.effects[PBEffects::TrickRoom] = 7
+      battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
+    else
+      battle.field.effects[PBEffects::TrickRoom] = 5
+      battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:CACOPHONY,
+  proc { |ability,battler,battle|
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} is creating an uproar!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if move.specialMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
+      mults[:attack_multiplier] *= 1.5
+    end
+  }
+)
+
+BattleHandlers::DamageCalcUserAllyAbility.add(:FLOWERGIFT,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if move.specialMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
+      mults[:attack_multiplier] *= 1.5
+    end
+  }
+)
+
+BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
+      mults[:defense_multiplier] *= 1.5
+    end
+  }
+)
 
 BattleHandlers::SpeedCalcAbility.add(:SANDRUSH,
   proc { |ability,battler,mult|
@@ -5316,14 +4393,6 @@ BattleHandlers::DamageCalcTargetAbility.add(:FEVERPITCH,
     end
   }
 )
-
-module BattleHandlers
-  StatLossImmunityAbilityNonIgnorableSandy = AbilityHandlerHash.new   # Unshaken
-  def self.triggerStatLossImmunityAbilityNonIgnorableSandy(ability,battler,stat,battle,showMessages)
-    ret = StatLossImmunityAbilityNonIgnorableSandy.trigger(ability,battler,stat,battle,showMessages)
-    return (ret!=nil) ? ret : false
-  end
-end
 
 BattleHandlers::StatLossImmunityAbilityNonIgnorableSandy.add(:UNSHAKEN,
   proc { |ability,battler,stat,battle,showMessages|
@@ -6974,6 +6043,10 @@ class PokeBattle_Battle
   end
 end
 
+#===================
+#Overworld Weather
+#===================
+
 GameData::Weather.register({
   :id               => :AcidRain,
   :id_number        => 17,
@@ -7164,6 +6237,10 @@ GameData::Weather.register({
   }
 })
 
+#=========================
+#Battle Weather
+#=========================
+
 GameData::BattleWeather.register({
   :id        => :Starstorm,
   :name      => _INTL("Starstorm"),
@@ -7240,77 +6317,19 @@ GameData::BattleWeather.register({
   :name      => _INTL("Echo Chamber"),
 })
 
-Settings::TIME_SHADING = false
-Settings::SPEECH_WINDOWSKINS = [
-#    "speech hgss 1",
-#    "speech hgss 2",
-#    "speech hgss 3",
-#    "speech hgss 4",
-#    "speech hgss 5",
-#    "speech hgss 6",
-#    "speech hgss 7",
-#    "speech hgss 8",
-#    "speech hgss 9",
-#    "speech hgss 10",
-#    "speech hgss 11",
-#    "speech hgss 12",
-#    "speech hgss 13",
-#    "speech hgss 14",
-#    "speech hgss 15",
-#    "speech hgss 16",
-#    "speech hgss 17",
-#    "speech hgss 18",
-#    "speech hgss 19",
-#    "speech hgss 20",
-#    "speech pl 18",
-    "frlgtextskin"
-  ]
-Settings::MENU_WINDOWSKINS = [
-#    "choice 1",
-#    "choice 2",
-#    "choice 3",
-#    "choice 4",
-#    "choice 5",
-#    "choice 6",
-#    "choice 7",
-#    "choice 8",
-#    "choice 9",
-#    "choice 10",
-#    "choice 11",
-#    "choice 12",
-#    "choice 13",
-#    "choice 14",
-#    "choice 15",
-#    "choice 16",
-#    "choice 17",
-#    "choice 18",
-#    "choice 19",
-#    "choice 20",
-#    "choice 21",
-#    "choice 22",
-#    "choice 23",
-#    "choice 24",
-#    "choice 25",
-#    "choice 26",
-#    "choice 27",
-#    "choice 28",
-    "frlgtextskin"
-  ]
-Settings::FIELD_MOVES_COUNT_BADGES = false
-Settings::GAME_VERSION = "1.2.18"
+#====================
+#Battle Terrain
+#====================
 
-module Settings
-  def self.storage_creator_name
-    return _INTL("Lyptus")
-  end
+GameData::BattleTerrain.register({
+  :id        => :Poison,
+  :name      => _INTL("Poison"),
+  :animation => "PsychicTerrain"
+})
 
-  def self.pokedex_names
-    return [
-      [_INTL("Ufara Pokédex"), 0],
-      _INTL("National Pokédex")
-    ]
-  end
-end
+#====================
+#Weather Readouts
+#====================
 
 module Readouts
   Count = 29
@@ -7964,6 +6983,10 @@ class PokemonWeatherScreen
   end
 end
 
+#=======================
+#Various Modifications to fit Tempest specifically
+#=======================
+
 class Pokemon
   def getMegaForm(checkItemOnly = false)
     ret = 0
@@ -8600,13 +7623,6 @@ class DataBoxEBDX
   end
 end
 
-
- GameData::BattleTerrain.register({
-   :id        => :Poison,
-   :name      => _INTL("Poison"),
-   :animation => "PsychicTerrain"
- })
-
 class PokemonSaveScreen
   def pbStartScreen
     @viewport=Viewport.new(0,0,Graphics.width,Graphics.height)
@@ -8638,5 +7654,423 @@ class PokemonSaveScreen
     @sprites["locwindow"].y=0
     @sprites["locwindow"].width=228 if @sprites["locwindow"].width<228
     @sprites["locwindow"].visible=true
+  end
+end
+
+class PokemonLoadScreen
+  def initialize(scene)
+    @scene = scene
+    if SaveData.exists?
+      @save_data = load_save_file(SaveData::FILE_PATH)
+    else
+      @save_data = {}
+    end
+  end
+
+  # @param file_path [String] file to load save data from
+  # @return [Hash] save data
+  def load_save_file(file_path)
+    save_data = SaveData.read_from_file(file_path)
+    unless SaveData.valid?(save_data)
+      if File.file?(file_path + '.bak')
+        pbMessage(_INTL('The save file is corrupt. A backup will be loaded.'))
+        save_data = load_save_file(file_path + '.bak')
+      else
+        self.prompt_save_deletion
+        return {}
+      end
+    end
+    return save_data
+  end
+
+  # Called if all save data is invalid.
+  # Prompts the player to delete the save files.
+  def prompt_save_deletion
+    pbMessage(_INTL('The save file is corrupt, or is incompatible with this game.'))
+    exit unless pbConfirmMessageSerious(
+      _INTL('Do you want to delete the save file and start anew?')
+    )
+    self.delete_save_data
+    $game_system   = Game_System.new
+    $PokemonSystem = PokemonSystem.new
+  end
+
+  def pbStartDeleteScreen
+    @scene.pbStartDeleteScene
+    @scene.pbStartScene2
+    if SaveData.exists?
+      if pbConfirmMessageSerious(_INTL("Delete all saved data?"))
+        pbMessage(_INTL("Once data has been deleted, there is no way to recover it.\1"))
+        if pbConfirmMessageSerious(_INTL("Delete the saved data anyway?"))
+          pbMessage(_INTL("Deleting all data. Don't turn off the power.\\wtnp[0]"))
+          self.delete_save_data
+        end
+      end
+    else
+      pbMessage(_INTL("No save file was found."))
+    end
+    @scene.pbEndScene
+    $scene = pbCallTitle
+  end
+
+  def delete_save_data
+    begin
+      SaveData.delete_file
+      pbMessage(_INTL('The saved data was deleted.'))
+    rescue SystemCallError
+      pbMessage(_INTL('All saved data could not be deleted.'))
+    end
+  end
+
+  def pbStartLoadScreen
+    commands = []
+    cmd_continue     = -1
+    cmd_new_game     = -1
+    cmd_options      = -1
+    cmd_language     = -1
+    cmd_mystery_gift = -1
+    cmd_debug        = -1
+    cmd_quit         = -1
+    show_continue = !@save_data.empty?
+    if show_continue
+      commands[cmd_continue = commands.length] = _INTL('Continue')
+      if @save_data[:player].mystery_gift_unlocked
+        commands[cmd_mystery_gift = commands.length] = _INTL('Mystery Gift')
+      end
+    end
+    commands[cmd_new_game = commands.length]  = _INTL('New Game')
+    commands[cmd_options = commands.length]   = _INTL('Options')
+    commands[cmd_language = commands.length]  = _INTL('Language') if Settings::LANGUAGES.length >= 2
+    commands[cmd_debug = commands.length]     = _INTL('Debug') if $DEBUG
+    commands[cmd_quit = commands.length]      = _INTL('Quit Game')
+    map_id = show_continue ? @save_data[:map_factory].map.map_id : 0
+    @scene.pbStartScene(commands, show_continue, @save_data[:player],
+                        @save_data[:frame_count] || 0, map_id)
+    @scene.pbSetParty(@save_data[:player]) if show_continue
+    @scene.pbStartScene2
+    loop do
+      command = @scene.pbChoose(commands)
+      pbPlayDecisionSE if command != cmd_quit
+      case command
+      when cmd_continue
+        $currentDexSearch = nil
+        @scene.pbEndScene
+        Game.load(@save_data)
+        return
+      when cmd_new_game
+        @scene.pbEndScene
+        Game.start_new
+        return
+      when cmd_mystery_gift
+        pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
+      when cmd_options
+        pbFadeOutIn do
+          scene = PokemonOption_Scene.new
+          screen = PokemonOptionScreen.new(scene)
+          screen.pbStartScreen(true)
+        end
+      when cmd_language
+        @scene.pbEndScene
+        $PokemonSystem.language = pbChooseLanguage
+        pbLoadMessages('Data/' + Settings::LANGUAGES[$PokemonSystem.language][1])
+        if show_continue
+          @save_data[:pokemon_system] = $PokemonSystem
+          File.open(SaveData::FILE_PATH, 'wb') { |file| Marshal.dump(@save_data, file) }
+        end
+        $scene = pbCallTitle
+        return
+      when cmd_debug
+        pbFadeOutIn { pbDebugMenu(false) }
+      when cmd_quit
+        pbPlayCloseMenuSE
+        @scene.pbEndScene
+        $scene = nil
+        return
+      else
+        pbPlayBuzzerSE
+      end
+    end
+  end
+end
+
+class PokemonLoadPanel
+  def refresh
+    return if @refreshing
+    return if disposed?
+    @refreshing = true
+    if !self.bitmap || self.bitmap.disposed?
+      self.bitmap = BitmapWrapper.new(@bgbitmap.width,111*2)
+      pbSetSystemFont(self.bitmap)
+    end
+    if @refreshBitmap
+      @refreshBitmap = false
+      self.bitmap.clear if self.bitmap
+      if @isContinue
+        self.bitmap.blt(0,0,@bgbitmap.bitmap,Rect.new(0,(@selected) ? 111*2 : 0,@bgbitmap.width,111*2))
+      else
+        self.bitmap.blt(0,0,@bgbitmap.bitmap,Rect.new(0,111*2*2+((@selected) ? 23*2 : 0),@bgbitmap.width,23*2))
+      end
+      textpos = []
+      if @isContinue
+        textpos.push([@title,16*2,2*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
+        textpos.push([_INTL("Chapter:"),16*2,53*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
+        textpos.push([@trainer.badge_count.to_s,103*2,53*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
+        textpos.push([_INTL("Pokédex:"),16*2,69*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
+        textpos.push([@trainer.pokedex.seen_count.to_s,103*2,69*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
+        textpos.push([_INTL("Time:"),16*2,85*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
+        hour = @totalsec / 60 / 60
+        min  = @totalsec / 60 % 60
+        if hour>0
+          textpos.push([_INTL("{1}h {2}m",hour,min),103*2,85*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
+        else
+          textpos.push([_INTL("{1}m",min),103*2,85*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
+        end
+        if @trainer.male?
+          textpos.push([@trainer.name,56*2,29*2,0,MALETEXTCOLOR,MALETEXTSHADOWCOLOR])
+        elsif @trainer.female?
+          textpos.push([@trainer.name,56*2,29*2,0,FEMALETEXTCOLOR,FEMALETEXTSHADOWCOLOR])
+        else
+          textpos.push([@trainer.name,56*2,29*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
+        end
+        mapname = pbGetMapNameFromId(@mapid)
+        mapname.gsub!(/\\PN/,@trainer.name)
+        textpos.push([mapname,193*2,2*2,1,TEXTCOLOR,TEXTSHADOWCOLOR])
+      else
+        textpos.push([@title,16*2,1*2,0,TEXTCOLOR,TEXTSHADOWCOLOR])
+      end
+      pbDrawTextPositions(self.bitmap,textpos)
+    end
+    @refreshing = false
+  end
+end
+
+#======================
+#EBDX Animations
+#======================
+
+EliteBattle::REPLACE_MISSING_ANIM = true
+EliteBattle::TRAINER_SPRITE_SCALE = 1
+EliteBattle.defineMoveAnimation(:STELLARWIND) do
+  vector = @scene.getRealVector(@targetIndex, @targetIsPlayer)
+  vector2 = @scene.getRealVector(@userIndex, @userIsPlayer)
+  # set up animation
+  fp = {}
+  rndx = []; prndx = []
+  rndy = []; prndy = []
+  rangl = []
+  dx = []
+  dy = []
+  for i in 0...128
+    fp["#{i}"] = Sprite.new(@viewport)
+    fp["#{i}"].bitmap = pbBitmap("Graphics/EBDX/Animations/Moves/eb423")
+    fp["#{i}"].ox = fp["#{i}"].bitmap.width/2
+    fp["#{i}"].oy = fp["#{i}"].bitmap.height/2
+    fp["#{i}"].visible = false
+    fp["#{i}"].z = @targetSprite.z + 1
+    rndx.push(rand(256)); prndx.push(rand(72))
+    rndy.push(rand(256)); prndy.push(rand(72))
+    rangl.push(rand(9))
+    dx.push(0)
+    dy.push(0)
+  end
+  shake = 4
+  # start animation
+  @vector.set(vector2)
+  pbSEPlay("Anim/Whirlwind")
+  for i in 0...72
+    ax, ay = @userSprite.getCenter
+    cx, cy = @targetSprite.getCenter(true)
+    for j in 0...128
+      next if j>(i*2)
+      if !fp["#{j}"].visible
+        dx[j] = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
+        fp["#{j}"].x = dx[j]
+        fp["#{j}"].y = dy[j]
+        fp["#{j}"].visible = true
+      end
+      x0 = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+      y0 = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
+      x2 = cx - 128*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
+      y2 = cy - 128*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
+      fp["#{j}"].x += (x2 - x0)*0.1
+      fp["#{j}"].y += (y2 - y0)*0.1
+      fp["#{j}"].angle += rangl[j]*2
+      nextx = fp["#{j}"].x
+      nexty = fp["#{j}"].y
+      if !@targetIsPlayer
+        fp["#{j}"].opacity -= 51 if nextx > cx && nexty < cy
+      else
+        fp["#{j}"].opacity -= 51 if nextx < cx && nexty > cy
+      end
+    end
+    if i >= 64
+  #    @targetSprite.x += 64*(@targetIsPlayer ? -1 : 1)
+    elsif i >= 52
+      @targetSprite.ox += shake
+      shake = -4 if @targetSprite.ox > @targetSprite.bitmap.width/2 + 2
+      shake = 4 if @targetSprite.ox < @targetSprite.bitmap.width/2 - 2
+      @targetSprite.still
+    end
+    @vector.set(vector) if i == 16
+    @vector.inc = 0.1 if i == 16
+    @scene.wait(1,i < 64)
+  end
+#  @targetSprite.visible = false
+#  @targetSprite.hidden = true
+#  @targetSprite.ox = @targetSprite.bitmap.width/2
+  pbDisposeSpriteHash(fp)
+  @vector.reset
+  @vector.inc = 0.2
+  @scene.wait(16,true)
+end
+EliteBattle.defineMoveAnimation(:TIMEWIND) do
+  vector = @scene.getRealVector(@targetIndex, @targetIsPlayer)
+  vector2 = @scene.getRealVector(@userIndex, @userIsPlayer)
+  # set up animation
+  fp = {}
+  rndx = []; prndx = []
+  rndy = []; prndy = []
+  rangl = []
+  dx = []
+  dy = []
+  for i in 0...128
+    fp["#{i}"] = Sprite.new(@viewport)
+    fp["#{i}"].bitmap = pbBitmap("Graphics/EBDX/Animations/Moves/eb423")
+    fp["#{i}"].ox = fp["#{i}"].bitmap.width/2
+    fp["#{i}"].oy = fp["#{i}"].bitmap.height/2
+    fp["#{i}"].visible = false
+    fp["#{i}"].z = @targetSprite.z + 1
+    rndx.push(rand(256)); prndx.push(rand(72))
+    rndy.push(rand(256)); prndy.push(rand(72))
+    rangl.push(rand(9))
+    dx.push(0)
+    dy.push(0)
+  end
+  shake = 4
+  # start animation
+  @vector.set(vector2)
+  pbSEPlay("Anim/Whirlwind")
+  for i in 0...72
+    ax, ay = @userSprite.getCenter
+    cx, cy = @targetSprite.getCenter(true)
+    for j in 0...128
+      next if j>(i*2)
+      if !fp["#{j}"].visible
+        dx[j] = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+        dy[j] = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
+        fp["#{j}"].x = dx[j]
+        fp["#{j}"].y = dy[j]
+        fp["#{j}"].visible = true
+      end
+      x0 = ax - 46*@userSprite.zoom_x*0.5 + prndx[j]*@userSprite.zoom_x*0.5
+      y0 = ay - 46*@userSprite.zoom_y*0.5 + prndy[j]*@userSprite.zoom_y*0.5
+      x2 = cx - 128*@targetSprite.zoom_x*0.5 + rndx[j]*@targetSprite.zoom_x*0.5
+      y2 = cy - 128*@targetSprite.zoom_y*0.5 + rndy[j]*@targetSprite.zoom_y*0.5
+      fp["#{j}"].x += (x2 - x0)*0.1
+      fp["#{j}"].y += (y2 - y0)*0.1
+      fp["#{j}"].angle += rangl[j]*2
+      nextx = fp["#{j}"].x
+      nexty = fp["#{j}"].y
+      if !@targetIsPlayer
+        fp["#{j}"].opacity -= 51 if nextx > cx && nexty < cy
+      else
+        fp["#{j}"].opacity -= 51 if nextx < cx && nexty > cy
+      end
+    end
+    if i >= 64
+  #    @targetSprite.x += 64*(@targetIsPlayer ? -1 : 1)
+    elsif i >= 52
+      @targetSprite.ox += shake
+      shake = -4 if @targetSprite.ox > @targetSprite.bitmap.width/2 + 2
+      shake = 4 if @targetSprite.ox < @targetSprite.bitmap.width/2 - 2
+      @targetSprite.still
+    end
+    @vector.set(vector) if i == 16
+    @vector.inc = 0.1 if i == 16
+    @scene.wait(1,i < 64)
+  end
+#  @targetSprite.visible = false
+#  @targetSprite.hidden = true
+#  @targetSprite.ox = @targetSprite.bitmap.width/2
+  pbDisposeSpriteHash(fp)
+  @vector.reset
+  @vector.inc = 0.2
+  @scene.wait(16,true)
+end
+
+#=====================
+#Settings
+#=====================
+
+Settings::TIME_SHADING = false
+Settings::SPEECH_WINDOWSKINS = [
+#    "speech hgss 1",
+#    "speech hgss 2",
+#    "speech hgss 3",
+#    "speech hgss 4",
+#    "speech hgss 5",
+#    "speech hgss 6",
+#    "speech hgss 7",
+#    "speech hgss 8",
+#    "speech hgss 9",
+#    "speech hgss 10",
+#    "speech hgss 11",
+#    "speech hgss 12",
+#    "speech hgss 13",
+#    "speech hgss 14",
+#    "speech hgss 15",
+#    "speech hgss 16",
+#    "speech hgss 17",
+#    "speech hgss 18",
+#    "speech hgss 19",
+#    "speech hgss 20",
+#    "speech pl 18",
+    "frlgtextskin"
+  ]
+Settings::MENU_WINDOWSKINS = [
+#    "choice 1",
+#    "choice 2",
+#    "choice 3",
+#    "choice 4",
+#    "choice 5",
+#    "choice 6",
+#    "choice 7",
+#    "choice 8",
+#    "choice 9",
+#    "choice 10",
+#    "choice 11",
+#    "choice 12",
+#    "choice 13",
+#    "choice 14",
+#    "choice 15",
+#    "choice 16",
+#    "choice 17",
+#    "choice 18",
+#    "choice 19",
+#    "choice 20",
+#    "choice 21",
+#    "choice 22",
+#    "choice 23",
+#    "choice 24",
+#    "choice 25",
+#    "choice 26",
+#    "choice 27",
+#    "choice 28",
+    "frlgtextskin"
+  ]
+Settings::FIELD_MOVES_COUNT_BADGES = false
+Settings::GAME_VERSION = "1.3.7"
+
+module Settings
+  def self.storage_creator_name
+    return _INTL("Lyptus")
+  end
+
+  def self.pokedex_names
+    return [
+      [_INTL("Ufara Pokédex"), 0],
+      _INTL("National Pokédex")
+    ]
   end
 end
