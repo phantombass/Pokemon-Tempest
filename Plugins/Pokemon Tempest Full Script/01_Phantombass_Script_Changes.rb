@@ -737,7 +737,6 @@ class PokeBattle_Battler
               when 24 then                       self.effects[PBEffects::Type3] = :ICE
               end
             end
-                p self.effects[PBEffects::Type3]
           else
           pbChangeForm(0,_INTL("{1} transformed!",pbThis))
         end
