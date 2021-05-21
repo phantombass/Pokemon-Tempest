@@ -204,10 +204,11 @@ module EliteBattle
   def self.resetRandomizer
     EliteBattle.reset(:randomizer)
     if $PokemonGlobal
-      $PokemonGlobal.randomizedData
-      $PokemonGlobal.isRandomizer
-      $PokemonGlobal.randomizerRules
+      $PokemonGlobal.randomizedData = nil
+      $PokemonGlobal.isRandomizer = nil
+      $PokemonGlobal.randomizerRules = nil
     end
+    $PokemonEncounters.setup($game_map.map_id) if $PokemonEncounters
   end
   #-----------------------------------------------------------------------------
 end

@@ -9,6 +9,15 @@ class PokeBattle_Scene
   attr_accessor :playerLineUp, :opponentLineUp
   attr_reader :viewport, :dexview, :battle, :battlers, :commandWindow, :fightWindow, :bagWindow
   attr_reader :smTrainerSequence, :smSpeciesSequence, :firstsendout
+  #-----------------------------------------------------------------------------
+  #  class inspector
+  #-----------------------------------------------------------------------------
+  def inspect
+    return self.to_s.chop
+  end
+  #-----------------------------------------------------------------------------
+  #  All component disposing
+  #-----------------------------------------------------------------------------
   def pbDisposeSprites
     pbDisposeSpriteHash(@sprites)
     @bagWindow.dispose
@@ -103,7 +112,6 @@ class PokeBattle_Scene
     # initializes trainer sprite
     if @battle.opponent
       @battle.opponent.each_with_index do |t, i|
-        trfile = GameData::TrainerType.front_sprite_filename(t.trainer_type)
         @sprites["trainer_#{i}"] = DynamicTrainerSprite.new(@battle.doublebattle?, -1, @viewport, @battle.opponent.length > 1, t)
         @sprites["trainer_#{i}"].setTrainerBitmap
         @sprites["trainer_#{i}"].z = (@minorAnimation || @integratedVS) ? 100 : @sprites["battlebg"].battler(i*2 + 1).z
@@ -212,7 +220,7 @@ class PokeBattle_Scene
         break if EliteBattle.get(:smAnim)
         playBattlerCry(@battlers[i*2 + 1])
       end
-      pbShowPartyLineup(0) if EliteBattle::SHOW_LINEUP_WILD && !EliteBattle.get(:smAnim)
+      pbShowPartyLineup(0) if EliteBattle::SHOW_LINEUP_WILD && !EliteBattle.get(:smAnim) && !@safaribattle
       # makes databoxes for wild battles appear
       for m in 0...@battle.pbParty(1).length
         next if !@sprites["dataBox_#{m*2 + 1}"]

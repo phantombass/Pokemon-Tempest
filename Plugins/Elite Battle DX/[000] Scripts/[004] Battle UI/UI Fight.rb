@@ -276,6 +276,7 @@ class FightWindowEBDX
     end
   end
   def showPlay
+    @megaButton.src_rect.x = 0
     @background.y = @viewport.height
     8.times do
       self.show; @scene.wait(1, true)
@@ -293,6 +294,7 @@ class FightWindowEBDX
       @button["#{i}"].x -= ((i%2 == 0 ? 1 : -1)*@viewport.width/16)
     end
     @showMega = false
+    @megaButton.src_rect.x = 0
   end
   def hidePlay
     8.times do

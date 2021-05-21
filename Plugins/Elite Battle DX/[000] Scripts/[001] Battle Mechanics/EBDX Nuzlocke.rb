@@ -53,7 +53,7 @@ module EliteBattle
   def self.checkEvoNuzlocke?(species)
     return false if !$PokemonGlobal || !$PokemonGlobal.nuzlockeData
     for poke in self.getEvolutionaryLine(species)
-      return true if $Trainer.owned[poke]
+      return true if $Trainer.owned?(poke)
     end
     return false
   end
@@ -139,10 +139,10 @@ module EliteBattle
   def self.resetNuzlocke
     EliteBattle.reset(:nuzlocke)
     if $PokemonGlobal
-      $PokemonGlobal.qNuzlocke
-      $PokemonGlobal.nuzlockeData
-      $PokemonGlobal.isNuzlocke
-      $PokemonGlobal.nuzlockeRules
+      $PokemonGlobal.qNuzlocke = nil
+      $PokemonGlobal.nuzlockeData = nil
+      $PokemonGlobal.isNuzlocke = nil
+      $PokemonGlobal.nuzlockeRules = nil
     end
   end
   #-----------------------------------------------------------------------------
