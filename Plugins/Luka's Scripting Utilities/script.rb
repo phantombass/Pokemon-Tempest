@@ -1171,6 +1171,96 @@ module Env
     return str
   end
   #-----------------------------------------------------------------------------
+  # interpret file stream and convert to appropriate Hash map
+  #-----------------------------------------------------------------------------
+  def self.interpret(filename)
+    # failsafe
+    return {} if !safeExists?(filename)
+    # read file
+    contents = File.open(filename, 'rb') {|f| f.read.gsub("\t", "  ") }
+    # begin interpretation
+    data = {}; entries = []
+    # skip if empty
+    return data if !contents || contents.empty?
+    indexes = contents.scan(/(?<=\[)(.*?)(?=\])/i); indexes.push(indexes[-1])
+    # iterate through each index and compile data points
+    for j in 0...indexes.length
+      i = indexes[j]
+      if j == indexes.length - 1 # when final entry
+        m = contents.split("[#{i[0]}]")[1]
+        next if m.nil?
+      else # fetch data contents
+        m = contents.split("[#{i[0]}]")[0]
+        next if m.nil?
+        contents.gsub!(m, "")
+      end
+      m.gsub!("[#{i[0]}]\r\n", "")
+      entries.push(m.split("\r\n")) # push into array
+    end
+    # delete first empty data point
+    entries.delete_at(0)
+    # loop to iterate through each data point and compile usable information
+    for i in 0...entries.length
+      d = {}
+      # set primary section
+      section = "__pk__"
+      # compiles data into proper structure
+      for e in entries[i]
+        d[section] = {} if !d.keys.include?(section)
+        e = e.split("#")[0]
+        next if e.nil? || e == "" || (e.include?("[") && e.include?("]"))
+        a = e.split("=")
+        a[0] = a[0] ? a[0].strip : ""
+        a[1] = a[1] ? a[1].strip : ""
+        next section = a[0] if a[1].nil? || a[1] == "" || a[1].empty?
+        # split array
+        a[1] = a[1].split(",")
+        # raise error
+        if a[0] == "XY" && a[1].length < 2
+          raise self.lengthError(filename, indexes[i][0], section, 2, a[0], a[1])
+        elsif a[0] == "XYZ" && a[1].length < 3
+          raise self.lengthError(filename, indexes[i][0], section, 3, a[0], a[1])
+        end
+        # convert to proper type
+        for q in 0...a[1].length
+          typ = "String"
+          begin
+            if a[1][q].is_numeric? && a[1][q].include?('.')
+              typ = "Float"
+              a[1][q] = a[1][q].to_f
+            elsif a[1][q].is_numeric?
+              typ = "Integer"
+              a[1][q] = a[1][q].to_i
+            elsif a[1][q].downcase == "true" || a[1][q].downcase == "false"
+              typ = "Boolean"
+              a[1][q] = a[1][q].downcase == "true"
+            end
+          rescue
+            self.log.error(self.formatError(filename, indexes[i][0], section, typ, a[0], a[1][q]))
+          end
+        end
+        # add data to section
+        d[section][a[0]] = a[1]
+      end
+      # delete primary if empty
+      d.delete("__pk__") if d["__pk__"] && d["__pk__"].empty?
+      # push data entry
+      data[indexes[i][0]] = d
+    end
+    return data
+  end
+  #-----------------------------------------------------------------------------
+  # print out formatting error
+  #-----------------------------------------------------------------------------
+  def self.formatError(filename, section, sub, type, key, val)
+    sectn = (sub == "__pk__") ? "[#{section}]" : "[#{section}]\nSub-section: #{sub}"
+    return "File: #{filename}\nError compiling data in Section: #{sectn}\nCould not implicitly convert value for Key: #{key} to type (#{type})\n#{key} = #{val}"
+  end
+  def self.lengthError(filename, section, sub, len, key, val)
+    sectn = (sub == "__pk__") ? "[#{section}]" : "[#{section}]\nSub-section: #{sub}"
+    return "File: #{filename}\nError compiling data in Section: #{sectn}\nWrong number of arguments for Key: #{key}, got #{val.length} expected #{len}"
+  end
+  #-----------------------------------------------------------------------------
 end
 #===============================================================================
 #  Safe bitmap loading method
