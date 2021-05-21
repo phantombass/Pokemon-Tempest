@@ -38,10 +38,28 @@ Point = 26,17,Timeless Grotto,,145,28,11,517
 Point = 9,2,Dust-Ridden Pass,,,,,518
 #-------------------------------
 [1]
-Name = 
+Name = Sinnoh
 Filename = mapRegion1.png
 Point = 11,11,Spear Pillar,Distortion World,154,9,29,541
 #-------------------------------
 [2]
-Name = 
+Name = Tinjo
 Filename = mapRegion2.png
+Point = 22,17,Sephala,,162,24,28,
+Point = 24,18,Route 8,,,,,
+Point = 22,18,Route 7,,,,,
+Point = 16,18,Galactic Field,,,,,
+Point = 16,17,Abandoned Galactic Lab,,,,,
+#-------------------------------
+[3]
+Name = Zharo
+Filename = mapRegion3.png
+Point = 28,0,Isani Peninsula,,,,,
+Point = 28,1,Route 15,,,,,
+Point = 28,3,Route 16,,,,,
+Point = 28,5,Klinsper,,,,,
+Point = 26,5,Route 17,,,,,
+Point = 24,5,Ezgal,,,,,
+Point = 24,4,Route 18,,,,,
+Point = 25,3,Route 19,,,,,
+Point = 26,3,Thera Comet,,,,,

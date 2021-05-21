@@ -78,12 +78,22 @@ Events.onMapUpdate += proc {| sender, e |
       $game_variables[Level::Cap] = 55
     elsif $game_variables[Mission::Mission5] >= 1 && $game_variables[Mission::Mission5] <=3
       $game_variables[Level::Cap] = 60
-    elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=6
+    elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=7
       $game_variables[Level::Cap] = 66
-    elsif $game_variables[Mission::Mission5] >= 8 && $game_variables[Mission::Mission4]< 9
+    elsif $game_variables[Mission::Mission5] >= 8 && $game_variables[Mission::Mission5]< 9
       $game_variables[Level::Cap] = 70
     elsif $game_variables[Mission::Mission5] >= 9
       $game_variables[Level::Cap] = 75
+    end
+  when 6
+    if $game_variables[Mission::Mission6] <= 0
+      $game_variables[Level::Cap] = 75
+    elsif $game_variables[Mission::Mission6] >= 1 && $game_variables[Mission::Mission6] <=3
+      $game_variables[Level::Cap] = 82
+    elsif $game_variables[Mission::Mission6] >= 4 && $game_variables[Mission::Mission6] <=7
+      $game_variables[Level::Cap] = 89
+    elsif $game_variables[Mission::Mission6] >= 8
+      $game_variables[Level::Cap] = 100
     end
   end
   #Weather Setting
@@ -133,12 +143,22 @@ Events.onStepTaken += proc {| sender, e |
       $game_variables[Level::Cap] = 55
     elsif $game_variables[Mission::Mission5] >= 1 && $game_variables[Mission::Mission5] <=3
       $game_variables[Level::Cap] = 60
-    elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=6
+    elsif $game_variables[Mission::Mission5] >= 4 && $game_variables[Mission::Mission5] <=7
       $game_variables[Level::Cap] = 66
-    elsif $game_variables[Mission::Mission5] >= 8 && $game_variables[Mission::Mission4]< 9
+    elsif $game_variables[Mission::Mission5] >= 8 && $game_variables[Mission::Mission5]< 9
       $game_variables[Level::Cap] = 70
     elsif $game_variables[Mission::Mission5] >= 9
       $game_variables[Level::Cap] = 75
+    end
+  when 6
+    if $game_variables[Mission::Mission6] <= 0
+      $game_variables[Level::Cap] = 75
+    elsif $game_variables[Mission::Mission6] >= 1 && $game_variables[Mission::Mission6] <=3
+      $game_variables[Level::Cap] = 82
+    elsif $game_variables[Mission::Mission6] >= 4 && $game_variables[Mission::Mission6] <=7
+      $game_variables[Level::Cap] = 89
+    elsif $game_variables[Mission::Mission6] >= 8
+      $game_variables[Level::Cap] = 100
     end
   end
 }

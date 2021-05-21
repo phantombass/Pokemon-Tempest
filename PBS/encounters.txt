@@ -178,6 +178,41 @@ SuperRod
     10,CHINCHOU,25,30
     5,LANTURN,30,35
 #-------------------------------
+[097,1] # Trail of Affliction
+
+Land,21
+    20,NIDOQUEEN,69,71
+    20,NIDOKING,69,71
+    10,POLIWRATH,70,72
+    10,SEVIPER,71,73
+    10,POLITOED,70,72
+    10,YANMEGA,70,72
+    5,YANMEGA,70,72
+    5,ZANGOOSE,71,73
+    4,PINSIR,71,73
+    4,HERACROSS,71,73
+    1,PINSIR,71,73
+    1,SCYTHER,71,73
+Water,2
+    70,MAGIKARP,14,19
+    10,POLIWAG,18,22
+    5,GYARADOS,20,25
+    10,HIPPOPOTAS,20,23
+    5,PIPLUP,10,15
+OldRod
+    70,MAGIKARP,5
+    30,MAGIKARP,10
+GoodRod
+    70,MAGIKARP,15
+    20,POLIWAG,15
+    10,CHINCHOU,20
+SuperRod
+    70,MAGIKARP,15,35
+    10,POLIWHIRL,25
+    5,GYARADOS,25,30
+    10,CHINCHOU,25,30
+    5,LANTURN,30,35
+#-------------------------------
 [099] # Haunted Forest
 
 Land,21
@@ -213,6 +248,41 @@ SuperRod
     10,CHINCHOU,25,30
     5,LANTURN,30,35
 #-------------------------------
+[099,1] # Haunted Forest
+
+Land,21
+    20,ARIADOS,69,71
+    20,BANETTE,69,71
+    10,ARIADOS,69,71
+    10,BANETTE,71,73
+    10,DUSCLOPS,70,72
+    10,DUSKNOIR,70,72
+    5,CHATOT,70,72
+    5,CHATOT,70,72
+    4,YANMEGA,71,73
+    4,HERACROSS,71,73
+    1,YANMEGA,71,73
+    1,SCYTHER,71,73
+Water,2
+    70,MAGIKARP,14,19
+    10,POLIWAG,18,22
+    5,GYARADOS,20,25
+    10,HIPPOPOTAS,20,23
+    5,PIPLUP,10,15
+OldRod
+    70,MAGIKARP,5
+    30,MAGIKARP,10
+GoodRod
+    70,MAGIKARP,15
+    20,POLIWAG,15
+    10,CHINCHOU,20
+SuperRod
+    70,MAGIKARP,15,35
+    10,POLIWHIRL,25
+    5,GYARADOS,25,30
+    10,CHINCHOU,25,30
+    5,LANTURN,30,35
+#-------------------------------
 [111] # Venom Lab
 
 Cave,5
@@ -228,6 +298,22 @@ Cave,5
     4,SNEASEL,25,27
     1,SEVIPER,25,27
     1,SNEASEL,25,27
+#-------------------------------
+[111,1] # Venom Lab
+
+Cave,5
+    20,ELECTRODE,73,75
+    20,ELECTIVIRE,73,75
+    10,ELECTRODE,73,75
+    10,ELECTIVIRE,73,75
+    10,CHIMECHO,74,76
+    10,CHIMECHO,74,76
+    5,METAGROSS,74,76
+    5,METAGROSS,74,76
+    4,SEVIPER,75,77
+    4,WEAVILE,75,77
+    1,SEVIPER,75,77
+    1,WEAVILE,75,77
 #-------------------------------
 [115] # Cosmic Coast
 
@@ -589,6 +675,22 @@ Cave,5
     1,PANPOUR,27,29
     1,PANSEAR,27,29
 #-------------------------------
+[133,1] # Mt Sear
+
+Cave,5
+    20,CROBAT,76,78
+    20,EXPLOUD,76,78
+    10,CROBAT,76,78
+    10,EXPLOUD,76,78
+    10,GIGALITH,76,78
+    10,CONKELDURR,76,78
+    5,GIGALITH,76,78
+    5,SIMISAGE,77,79
+    4,SIMIPOUR,77,79
+    4,SIMISEAR,77,79
+    1,SIMIPOUR,77,79
+    1,SIMISEAR,77,79
+#-------------------------------
 [134] # Mt. Sear Up
 
 Cave,5
@@ -636,6 +738,41 @@ Cave,5
     4,PIPLUP,27,29
     1,POLIWHIRL,31,33
     1,PIPLUP,27,29
+Water,2
+    70,MAGIKARP,14,19
+    10,POLIWAG,18,22
+    5,GYARADOS,20,25
+    10,HIPPOPOTAS,20,23
+    5,SKRELP,10,15
+OldRod
+    70,MAGIKARP,5
+    30,BARBOACH,10
+GoodRod
+    70,MAGIKARP,15
+    20,SKRELP,15
+    10,BARBOACH,20
+SuperRod
+    70,MAGIKARP,15,35
+    10,SKRELP,25
+    5,GYARADOS,25,30
+    10,BARBOACH,25,30
+    5,WHISCASH,30,35
+#-------------------------------
+[135,1] # Mt. Sear Down
+
+Cave,5
+    20,CROBAT,76,78
+    20,EXPLOUD,76,78
+    10,CROBAT,76,78
+    10,EXPLOUD,76,78
+    10,GIGALITH,77,79
+    10,CONKELDURR,77,79
+    5,GIGALITH,77,79
+    5,POLIWRATH,77,79
+    4,POLITOED,78,80
+    4,EMPOLEON,78,80
+    1,POLITOED,78,80
+    1,EMPOLEON,78,80
 Water,2
     70,MAGIKARP,14,19
     10,POLIWAG,18,22
@@ -790,6 +927,22 @@ Land,21
     1,AERODACTYL,52,54
     1,AERODACTYL,52,54
 #-------------------------------
+[155,1] # Distortion World
+
+Land,21
+    20,OMANYTE,78,80
+    20,KABUTO,78,80
+    10,LILEEP,78,80
+    10,ANORITH,78,80
+    10,CRANIDOS,78,80
+    10,SHIELDON,78,80
+    5,TIRTOUGA,78,80
+    5,ARCHEN,78,80
+    4,AMAURA,78,80
+    4,TYRUNT,78,80
+    1,AERODACTYL,79,81
+    1,AERODACTYL,79,81
+#-------------------------------
 [156] # Distortion World
 
 Land,21
@@ -805,6 +958,22 @@ Land,21
     4,TYRUNT,50,52
     1,AERODACTYL,52,54
     1,AERODACTYL,52,54
+#-------------------------------
+[156,1] # Distortion World
+
+Land,21
+    20,OMANYTE,78,80
+    20,KABUTO,78,80
+    10,LILEEP,78,80
+    10,ANORITH,78,80
+    10,CRANIDOS,78,80
+    10,SHIELDON,78,80
+    5,TIRTOUGA,78,80
+    5,ARCHEN,78,80
+    4,AMAURA,78,80
+    4,TYRUNT,78,80
+    1,AERODACTYL,79,81
+    1,AERODACTYL,79,81
 #-------------------------------
 [157] # Menzopolis Outlands
 
@@ -822,6 +991,22 @@ Land,21
     1,AERODACTYL,52,54
     1,AERODACTYL,52,54
 #-------------------------------
+[157,1] # Menzopolis Outlands
+
+Land,21
+    20,OMANYTE,78,80
+    20,KABUTO,78,80
+    10,LILEEP,78,80
+    10,ANORITH,78,80
+    10,CRANIDOS,78,80
+    10,SHIELDON,78,80
+    5,TIRTOUGA,78,80
+    5,ARCHEN,78,80
+    4,AMAURA,78,80
+    4,TYRUNT,78,80
+    1,AERODACTYL,79,81
+    1,AERODACTYL,79,81
+#-------------------------------
 [159] # Tinjo Mines
 
 Cave,5
@@ -838,6 +1023,22 @@ Cave,5
     1,CROBAT,58,60
     1,LUCARIO,58,60
 #-------------------------------
+[159,1] # Tinjo Mines
+
+Cave,5
+    20,GIGALITH,78,80
+    20,GOLBAT,78,80
+    10,GIGALITH,78,80
+    10,GOLBAT,78,80
+    10,EXPLOUD,78,80
+    10,EXPLOUD,78,80
+    5,NOIVERN,78,80
+    5,NOIVERN,78,80
+    4,CROBAT,78,80
+    4,LUCARIO,78,80
+    1,CROBAT,79,81
+    1,LUCARIO,79,81
+#-------------------------------
 [160] # Route 8
 
 Land,21
@@ -845,14 +1046,30 @@ Land,21
     20,CHERRIM,55,57
     10,GIGALITH,55,57
     10,CHERRIM,55,57
-    10,CHINGLING,55,57
-    10,CHINGLING,55,57
+    10,AUDINO,55,57
+    10,AUDINO,55,57
     5,XATU,55,57
     5,XATU,55,57
     4,CHIMECHO,55,57
     4,SHELGON,55,57
     1,CHIMECHO,58,60
     1,SALAMENCE,58,60
+#-------------------------------
+[160,1] # Route 8
+
+Land,21
+    20,GIGALITH,78,80
+    20,CHERRIM,78,80
+    10,GIGALITH,78,80
+    10,CHERRIM,78,80
+    10,AUDINO,78,80
+    10,AUDINO,78,80
+    5,XATU,78,80
+    5,XATU,78,80
+    4,CHIMECHO,78,80
+    4,SHELGON,78,80
+    1,CHIMECHO,79,81
+    1,SALAMENCE,79,81
 #-------------------------------
 [161] # Route 7
 
@@ -869,4 +1086,20 @@ Land,21
     4,SALAMENCE,60,62
     1,CHIMECHO,60,62
     1,SALAMENCE,60,62
+#-------------------------------
+[161,1] # Route 7
+
+Land,21
+    20,XATU,78,80
+    20,CHERRIM,78,80
+    10,XATU,78,80
+    10,CHERRIM,78,80
+    10,CHINGLING,78,80
+    10,CHINGLING,78,80
+    5,MEDICHAM,78,80
+    5,MEDICHAM,78,80
+    4,CHIMECHO,79,81
+    4,SALAMENCE,79,81
+    1,CHIMECHO,79,81
+    1,SALAMENCE,79,81
 #-------------------------------

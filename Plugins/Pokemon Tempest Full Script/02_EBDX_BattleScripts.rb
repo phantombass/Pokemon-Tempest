@@ -289,6 +289,106 @@ module BattleScripts
       @scene.pbShowAllDataboxes
     end
   }
+
+  CLEFABLE = {
+    "turnStart0" => proc do
+
+      # hide databoxes
+      @scene.pbHideAllDataboxes
+      # show flavor text
+      @scene.pbDisplay("The Clefable is seething with rage!")
+      pbBGMPlay("Legendary")
+      EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
+      @vector.reset # AURAFLARE doesn't reset the vector by default
+      @scene.wait(16, true) # set true to anchor the sprites to vector
+      # raise battler Attack sharply (doesn't display text)
+      @scene.pbDisplay("Clefable's stats rose!")
+      @scene.wait(16)
+      # play common animation
+      EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
+      @scene.pbDisplay("Clefable's anger is shaking the caverns!")
+      # change the battle environment (use animation to transition)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
+      @scene.pbDisplay("Its anger distorted the dimensions!")
+      # show databoxes
+      @scene.pbShowAllDataboxes
+    end
+  }
+
+  ELECTIVIRE = {
+    "turnStart0" => proc do
+
+      # hide databoxes
+      @scene.pbHideAllDataboxes
+      # show flavor text
+      @scene.pbDisplay("The Electivire is seething with rage!")
+      pbBGMPlay("Legendary")
+      EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
+      @vector.reset # AURAFLARE doesn't reset the vector by default
+      @scene.wait(16, true) # set true to anchor the sprites to vector
+      # raise battler Attack sharply (doesn't display text)
+      @scene.pbDisplay("Electivire's stats rose!")
+      @scene.wait(16)
+      # play common animation
+      EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
+      @scene.pbDisplay("Electivire's anger is shaking the lab!")
+      # change the battle environment (use animation to transition)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
+      @scene.pbDisplay("Its anger distorted the dimensions!")
+      # show databoxes
+      @scene.pbShowAllDataboxes
+    end
+  }
+
+  DUSKNOIR = {
+    "turnStart0" => proc do
+
+      # hide databoxes
+      @scene.pbHideAllDataboxes
+      # show flavor text
+      @scene.pbDisplay("The Dusknoir is seething with rage!")
+      pbBGMPlay("Legendary")
+      EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
+      @vector.reset # AURAFLARE doesn't reset the vector by default
+      @scene.wait(16, true) # set true to anchor the sprites to vector
+      # raise battler Attack sharply (doesn't display text)
+      @scene.pbDisplay("Dusknoir's stats rose!")
+      @scene.wait(16)
+      # play common animation
+      EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
+      @scene.pbDisplay("Dusknoir's anger is shaking the forest!")
+      # change the battle environment (use animation to transition)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
+      @scene.pbDisplay("Its anger distorted the dimensions!")
+      # show databoxes
+      @scene.pbShowAllDataboxes
+    end
+  }
+
+  WEAVILE = {
+    "turnStart0" => proc do
+
+      # hide databoxes
+      @scene.pbHideAllDataboxes
+      # show flavor text
+      @scene.pbDisplay("The Weavile is seething with rage!")
+      pbBGMPlay("Legendary")
+      EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
+      @vector.reset # AURAFLARE doesn't reset the vector by default
+      @scene.wait(16, true) # set true to anchor the sprites to vector
+      # raise battler Attack sharply (doesn't display text)
+      @scene.pbDisplay("Weavile's stats rose!")
+      @scene.wait(16)
+      # play common animation
+      EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
+      @scene.pbDisplay("Weavile's anger is shaking the lab!")
+      # change the battle environment (use animation to transition)
+      @sprites["battlebg"].reconfigure(EnvironmentEBDX::DIMENSION, :DISTORTION)
+      @scene.pbDisplay("Its anger distorted the dimensions!")
+      # show databoxes
+      @scene.pbShowAllDataboxes
+    end
+  }
 #Important Trainer Battles
       AARON = {
         "turnStart0" => "I'll humor you this time, child.",
