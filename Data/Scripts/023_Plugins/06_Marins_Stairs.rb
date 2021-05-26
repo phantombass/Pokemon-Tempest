@@ -223,7 +223,7 @@ end
 class Game_Event
   alias stair_cett check_event_trigger_touch
   def check_event_trigger_touch(x, y)
-    return if on_stair?
+    return if !on_stair?
     return stair_cett(x, y)
   end
 
@@ -287,9 +287,9 @@ end
 
 class Game_Player
   alias stair_cetc check_event_trigger_touch
-  def check_event_trigger_touch(x, y)
+  def check_event_trigger_touch(triggers)
     return if on_stair?
-    return stair_cetc(x, y)
+    return stair_cetc(triggers)
   end
 
   alias stair_ceth check_event_trigger_here
@@ -437,7 +437,7 @@ class Game_Character
       increase_steps
       moving_vertically(1)
     else
-      check_event_trigger_touch(2)
+      check_event_trigger_touch(@y,2)
     end
   end
 
@@ -449,7 +449,7 @@ class Game_Character
       increase_steps
       moving_vertically(-1)
     else
-      check_event_trigger_touch(8)
+      check_event_trigger_touch(@y,8)
     end
   end
 

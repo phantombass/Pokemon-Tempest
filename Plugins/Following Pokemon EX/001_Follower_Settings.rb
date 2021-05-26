@@ -15,7 +15,7 @@ module FollowerSettings
   Emo_love            = 9
 
   # Allow the player to toggle followers on/off by pressing a key
-  ALLOWTOGGLEFOLLOW = true
+  ALLOWTOGGLEFOLLOW = false
   # The key the player needs to press to toggle followers. :JUMPUP is the A key by default
   TOGGLEFOLLOWERKEY = :JUMPUP
 
@@ -54,7 +54,10 @@ module FollowerSettings
     :TAPUBULU, :COSMOG, :COSMOEM, :LUNALA, :NIHILEGO, :KARTANA, :NECROZMA,
     :MAGEARNA, :POIPOLE, :NAGANADEL,
     # Gen 8
-    :FROSMOTH, :DREEPY, :DRAKLOAK, :DRAGAPULT
+    :ORBEETLE, :FLAPPLE, :SINISTEA, :POLTEAGEIST, :FROSMOTH, :DREEPY, :DRAKLOAK,
+    :DRAGAPULT, :ETERNATUS, :REGIELEKI, :REGIDRAGO, :CALYREX,
+    #Tempest
+    :ALTEMPER
   ]
 
   # List of Pokemon that will not appear behind the player when surfing,
@@ -105,4 +108,4 @@ module Events
   def self.FollowerRefresh=(v); @@FollowerRefresh = v; end
 end
 
-echoln("Loaded plugin: Overworld Shadows EX") if Essentials::VERSION != "19.1"
+echoln("Loaded plugin: Following Pokemon EX") if !Essentials::VERSION.include?(".")

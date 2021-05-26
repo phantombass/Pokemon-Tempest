@@ -58,7 +58,6 @@ def pbTalkToFollower
   end
   first_pkmn = $Trainer.indexAltemper(true)
   GameData::Species.play_cry(first_pkmn)
-  echo GameData::Species.cry_filename_from_pokemon(first_pkmn)
   event = pbGetFollowerDependentEvent
   random_val = rand(6)
   Events.OnTalkToFollower.trigger(first_pkmn,event.x,event.y,random_val)
@@ -148,7 +147,7 @@ class DependentEvents
   def remove_except_follower
     events=$PokemonGlobal.dependentEvents
     for i in 0...events.length
-      if events[i] && !events[i][8][/FollowerPkmn/i]
+      if events[i] && !events[i][8][/FollowerPkmn/]
         events[i]=nil
         @realEvents[i]=nil
         @lastUpdate+=1
@@ -162,7 +161,7 @@ class DependentEvents
   def follower_dependent_event
     events = $PokemonGlobal.dependentEvents
     for i in 0...events.length
-      if events[i] && events[i][8][/FollowerPkmn/i]
+      if events[i] && events[i][8][/FollowerPkmn/]
         return @realEvents[i]
       end
     end
@@ -184,7 +183,7 @@ class DependentEvents
   def change_sprite(params)
     events = $PokemonGlobal.dependentEvents
     for k in 0...events.length
-      if events[k] && events[k][8][/FollowerPkmn/i]
+      if events[k] && events[k][8][/FollowerPkmn/]
         fname = GameData::Species.ow_sprite_filename(params[0],params[1],params[2],params[3],params[4]).gsub!("Graphics/Characters/","")
         events[k][6] = fname
         @realEvents[k].character_name = fname
@@ -207,8 +206,8 @@ class DependentEvents
   def remove_sprite
     events = $PokemonGlobal.dependentEvents
     for i in 0...events.length
-      next if !events[i] && events[i][8][/FollowerPkmn/i]
-      events[i][6] = sprintf("")
+      next if !events[i] && events[i][8][/FollowerPkmn/]
+      events[i][6] = ""
       @realEvents[i].character_name = ""
       $PokemonGlobal.time_taken = 0
     end
@@ -223,10 +222,10 @@ class DependentEvents
     if anim
       events = $PokemonGlobal.dependentEvents
       for i in 0...events.length
-        next if !events[i] && events[i][8][/FollowerPkmn/i]
+        next if !events[i] && events[i][8][/FollowerPkmn/]
         anim = getConst(FollowerSettings,(ret == true)? :Animation_Come_Out : :Animation_Come_In)
         $scene.spriteset.addUserAnimation(anim,@realEvents[i].x,@realEvents[i].y)
-        pbWait(Graphics.frame_rate/10)
+        pbMoveRoute($game_player,[PBMoveRoute::Wait,10])
       end
     end
     change_sprite([first_pkmn.species, first_pkmn.form,
@@ -244,13 +243,38 @@ class DependentEvents
   def set_move_route(commands,waitComplete=true)
     events=$PokemonGlobal.dependentEvents
     for i in 0...events.length
-      if events[i] && events[i][8][/FollowerPkmn/i]
+      if events[i] && events[i][8][/FollowerPkmn/]
         pbMoveRoute(@realEvents[i],commands,waitComplete)
       end
     end
   end
-end
 
+# Define the Follower Dependent events as a different class from Game_Event
+  def createEvent(eventData)
+    rpgEvent = RPG::Event.new(eventData[3],eventData[4])
+    rpgEvent.id = eventData[1]
+    if eventData[9]
+      # Must setup common event list here and now
+      commonEvent = Game_CommonEvent.new(eventData[9])
+      rpgEvent.pages[0].list = commonEvent.list
+    end
+    if eventData[8][/FollowerPkmn/]
+      newEvent = Game_FollowerEvent.new(eventData[0],rpgEvent,
+                                        $MapFactory.getMap(eventData[2]))
+    else
+      newEvent = Game_Event.new(eventData[0],rpgEvent,$MapFactory.getMap(eventData[2]))
+    end
+    newEvent.character_name = eventData[6]
+    newEvent.character_hue  = eventData[7]
+    case eventData[5]   # direction
+    when 2 then newEvent.turn_down
+    when 4 then newEvent.turn_left
+    when 6 then newEvent.turn_right
+    when 8 then newEvent.turn_up
+    end
+    return newEvent
+  end
+end
 
 #-------------------------------------------------------------------------------
 # Adding a new method to GameData to easily get the appropriate Follower Graphic
@@ -262,6 +286,37 @@ module GameData
 	  ret = "Graphics/Characters/Followers/000" if nil_or_empty?(ret)
 	  return ret
     end
+  end
+end
+
+#-------------------------------------------------------------------------------
+# Defining a new class for Following Pokemon event which will have constant
+# rate of move animation
+#-------------------------------------------------------------------------------
+class Game_FollowerEvent < Game_Event
+
+  def update_pattern
+    return if @lock_pattern
+    if @moved_last_frame && !@moved_this_frame && !@step_anime
+      @pattern = @original_pattern
+      @anime_count = 0
+      return
+    end
+    # Character has started to move, change pattern immediately
+    if !@moved_last_frame && @moved_this_frame && !@step_anime
+      @pattern = (@pattern + 1) % 4 if @walk_anime
+      @anime_count = 0
+      return
+    end
+    # Calculate how many frames each pattern should display for, i.e. the time
+    # it takes to move half a tile (or a whole tile if cycling). We assume the
+    # game uses square tiles.
+    frames_per_pattern = Game_Map::REAL_RES_X / 17.06
+    frames_per_pattern *= 2 if move_speed == 6   # Cycling/fastest speed
+    return if @anime_count < frames_per_pattern
+    # Advance to the next animation frame
+    @pattern = (@pattern + 1) % 4
+    @anime_count -= frames_per_pattern
   end
 end
 
@@ -367,7 +422,7 @@ end
 alias follow_HMAnim pbHiddenMoveAnimation
 def pbHiddenMoveAnimation(pokemon,followAnim = true)
   ret = follow_HMAnim(pokemon)
-  if ret && followAnim && $PokemonTemp.dependentEvents.can_refresh? && pokemon == $Trainer.first_able_pokemon
+  if ret && followAnim && $PokemonTemp.dependentEvents.can_refresh? && pokemon == $Trainer.indexAltemper(true)
     value = $game_player.direction
     follower_move_route([PBMoveRoute::Forward])
     case pbGetFollowerDependentEvent.direction
@@ -376,16 +431,16 @@ def pbHiddenMoveAnimation(pokemon,followAnim = true)
     when 6; pbMoveRoute($game_player,[PBMoveRoute::Left],true)
     when 8; pbMoveRoute($game_player,[PBMoveRoute::Down],true)
     end
-    pbWait(Graphics.frame_rate/5)
+    pbMoveRoute($game_player,[PBMoveRoute::Wait,(Graphics.frame_rate/5)])
     pbTurnTowardEvent($game_player,pbGetFollowerDependentEvent)
-    pbWait(Graphics.frame_rate/5)
+    pbMoveRoute($game_player,[PBMoveRoute::Wait,(Graphics.frame_rate/5)])
     case value
     when 2; follower_move_route([PBMoveRoute::TurnDown])
     when 4; follower_move_route([PBMoveRoute::TurnLeft])
     when 6; follower_move_route([PBMoveRoute::TurnRight])
     when 8; follower_move_route([PBMoveRoute::TurnUp])
     end
-    pbWait(Graphics.frame_rate/5)
+    pbMoveRoute($game_player,[PBMoveRoute::Wait,(Graphics.frame_rate/5)])
     case value
     when 2; pbMoveRoute($game_player,[PBMoveRoute::TurnDown],true)
     when 4; pbMoveRoute($game_player,[PBMoveRoute::TurnLeft],true)
@@ -394,7 +449,7 @@ def pbHiddenMoveAnimation(pokemon,followAnim = true)
     end
     pbSEPlay("Player jump")
     follower_move_route([PBMoveRoute::Jump,0,0])
-    pbWait(Graphics.frame_rate/5)
+    pbMoveRoute($game_player,[PBMoveRoute::Wait,(Graphics.frame_rate/5)])
   end
 end
 
@@ -445,6 +500,26 @@ class PokeballPlayerSendOutAnimation < PokeBattle_Animation
 end
 
 #-------------------------------------------------------------------------------
+# Refresh a Following Pokemon after taking a step, when a refresh is queued
+#-------------------------------------------------------------------------------
+Events.onStepTaken += proc { |_sender,_e|
+  if $PokemonGlobal.call_refresh[0]
+    $PokemonTemp.dependentEvents.refresh_sprite($PokemonGlobal.call_refresh[1])
+    $PokemonGlobal.call_refresh = [false,false]
+  end
+}
+
+#-------------------------------------------------------------------------------
+# Registering a fake bridge terrain tag to account for weirdness in the
+# base essentials tileset
+#-------------------------------------------------------------------------------
+GameData::TerrainTag.register({
+  :id                     => :FakeBridge,
+  :id_number              => 42
+})
+
+
+#-------------------------------------------------------------------------------
 # Functions for handling the work that the variables did earlier
 #-------------------------------------------------------------------------------
 class PokemonGlobalMetadata
@@ -452,6 +527,8 @@ class PokemonGlobalMetadata
   attr_accessor :call_refresh
   attr_accessor :time_taken
   attr_accessor :follower_hold_item
+  attr_accessor :current_surfing
+  attr_accessor :current_diving
   attr_writer :dependentEvents
 
   def call_refresh
@@ -479,6 +556,16 @@ class PokemonGlobalMetadata
     @follower_hold_item = false if !@follower_hold_item
     return @follower_hold_item
   end
+
+  def current_surfing
+    @current_surfing = nil if !@current_surfing
+    return @current_surfing
+  end
+
+  def current_diving
+    @current_diving = nil if !@current_diving
+    return @current_diving
+  end
 end
 
 class Trainer
@@ -499,10 +586,3 @@ class Trainer
     return ret
   end
 end
-
-Events.onStepTaken += proc { |_sender,_e|
-  if $PokemonGlobal.call_refresh[0]
-    $PokemonTemp.dependentEvents.refresh_sprite($PokemonGlobal.call_refresh[1])
-    $PokemonGlobal.call_refresh = [false,false]
-  end
-}

@@ -10,15 +10,21 @@ def pbSurf
     return false
   end
   if pbConfirmMessage(_INTL("The water is a deep blue...\nWould you like to surf on it?"))
-    speciesname = (movefinder) ? movefinder.name : $Trainer.name
+    if movefinder
+      speciesname = movefinder.name
+      $PokemonGlobal.current_surfing = movefinder
+    else
+      speciesname = $Trainer.name
+    end
     pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Move.get(move).name))
     pbCancelVehicles
-    pbHiddenMoveAnimation(movefinder)
+    pbHiddenMoveAnimation(movefinder,false)
     surfbgm = GameData::Metadata.get.surf_BGM
     pbCueBGM(surfbgm,0.5) if surfbgm
-    surf_anim = $PokemonTemp.dependentEvents.can_refresh?
+    $PokemonGlobal.surfing = true
+    surf_anim = !$PokemonTemp.dependentEvents.can_refresh?
+    $PokemonTemp.dependentEvents.refresh_sprite(surf_anim)
     pbStartSurfing
-    $PokemonTemp.dependentEvents.refresh_sprite(surf_anim) if !$PokemonTemp.dependentEvents.can_refresh?
     return true
   end
   return false
@@ -29,7 +35,10 @@ alias follow_pbEndSurf pbEndSurf
 def pbEndSurf(_xOffset,_yOffset)
   hidden = !$PokemonTemp.dependentEvents.can_refresh?
   ret = follow_pbEndSurf(_xOffset,_yOffset)
-  $PokemonGlobal.call_refresh = [true, hidden] if ret
+  if ret
+    $PokemonGlobal.current_surfing = nil
+    $PokemonGlobal.call_refresh = [true, hidden]
+  end
 end
 
 # Update when starting diving to incorporate hiddden move animation
@@ -44,7 +53,12 @@ def pbDive
     return false
   end
   if pbConfirmMessage(_INTL("The sea is deep here. Would you like to use Dive?"))
-    speciesname = (movefinder) ? movefinder.name : $Trainer.name
+    if movefinder
+      speciesname = movefinder.name
+      $PokemonGlobal.diving = movefinder
+    else
+      speciesname = $Trainer.name
+    end
     pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Move.get(move).name))
     pbHiddenMoveAnimation(movefinder,false)
     pbFadeOutIn {
@@ -85,6 +99,7 @@ def pbSurfacing
     speciesname = (movefinder) ? movefinder.name : $Trainer.name
     pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Move.get(move).name))
     pbHiddenMoveAnimation(movefinder,false)
+    $PokemonGlobal.current_diving = nil
     pbFadeOutIn {
        $game_temp.player_new_map_id    = surface_map_id
        $game_temp.player_new_x         = $game_player.x
@@ -98,6 +113,7 @@ def pbSurfacing
        (surfbgm) ?  pbBGMPlay(surfbgm) : $game_map.autoplayAsCue
        $game_map.refresh
     }
+
     return true
   end
   return false
@@ -266,6 +282,7 @@ class Game_Map
       return true if GameData::TerrainTag.try_get(@terrain_tags[event.tile_id]).ledge
       return true if GameData::TerrainTag.try_get(@terrain_tags[event.tile_id]).can_surf
       return true if GameData::TerrainTag.try_get(@terrain_tags[event.tile_id]).bridge
+      return true if GameData::TerrainTag.try_get(@terrain_tags[event.tile_id]).id_number == 42
       return false if @passages[event.tile_id] & 0x0f != 0
       return true if @priorities[event.tile_id] == 0
     end
@@ -276,6 +293,7 @@ class Game_Map
       return true if GameData::TerrainTag.try_get(@terrain_tags[tile_id]).ledge
       return true if GameData::TerrainTag.try_get(@terrain_tags[tile_id]).can_surf
       return true if GameData::TerrainTag.try_get(@terrain_tags[tile_id]).bridge
+      return true if GameData::TerrainTag.try_get(@terrain_tags[tile_id]).id_number == 42
       return false if @passages[tile_id] & 0x0f != 0
       return true if @priorities[tile_id] == 0
     end
@@ -283,12 +301,13 @@ class Game_Map
   end
 end
 
+# Add a check for dependent events in the passablity method
 module Game
 
   class << self
-    alias follower_load load
-    def load(save_data)
-      follower_load(save_data)
+    alias follower_load_map load_map
+    def load_map
+      follower_load_map
       $PokemonTemp.dependentEvents.refresh_sprite(false)
     end
   end
@@ -300,7 +319,7 @@ def pbStartOver(gameover=false)
     return
   end
   $Trainer.heal_party
-  if $PokemonGlobal.pokecenterMapId && $PokemonGlobal.pokecenterMapId>=0
+  if $PokemonGlobal.pokecenterMapId && $PokemonGlobal.pokecenterMapId >= 0
     if gameover
       pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back to a Pokémon Center."))
     else
@@ -494,7 +513,7 @@ class DependentEventSprites
     for i in 0...@sprites.length
       pbDayNightTint(@sprites[i])
       first_pkmn = $Trainer.first_able_pokemon
-      next if !$PokemonGlobal.dependentEvents[i] || !$PokemonGlobal.dependentEvents[i][8][/FollowerPkmn/i]
+      next if !$PokemonGlobal.dependentEvents[i] || !$PokemonGlobal.dependentEvents[i][8][/FollowerPkmn/]
       if $PokemonGlobal.follower_toggled && FollowerSettings::APPLYSTATUSTONES && first_pkmn
         status_tone = getConst(FollowerSettings,"#{first_pkmn.status}TONE")
         @sprites[i].tone.set(@sprites[i].tone.red + status_tone[0],
@@ -707,15 +726,13 @@ end
 # Tiny fix for emote Animations not playing in v19
 class SpriteAnimation
 
-  alias follower_effect effect?
   def effect?
-    @_animation_duration if !@_animation_duration
-    return follower_effect
+    return @_animation_duration > 0 if @_animation_duration
   end
 end
 
-#Fix for followers having animations (grass, etc) when toggled off
-#Treats followers as if they are under a bridge when toggled
+# Fix for followers having animations (grass, etc) when toggled off
+# Treats followers as if they are under a bridge when toggled
 class PokemonMapFactory
 
   alias follow_getTerrainTag getTerrainTag
@@ -723,7 +740,7 @@ class PokemonMapFactory
     ret = follow_getTerrainTag(mapid,x,y,countBridge)
     return ret if $PokemonTemp.dependentEvents.can_refresh?
     for devent in $PokemonGlobal.dependentEvents
-      if devent && devent[8][/FollowerPkmn/i] && devent[3] == x && devent[4] == y && ret.shows_grass_rustle
+      if devent && devent[8][/FollowerPkmn/] && devent[3] == x && devent[4] == y && ret.shows_grass_rustle
         ret = GameData::TerrainTag.try_get(:Bridge)
         ret = GameData::TerrainTag.get(:None) if !ret
         break

@@ -170,7 +170,7 @@ def pbCreateMessageWindow(viewport=nil,skin=nil)
   end
   msgwindow.visible=true
   msgwindow.letterbyletter=true
-  msgwindow.back_opacity=MessageConfig::WindowOpacity
+  msgwindow.back_opacity=MessageConfig::WINDOW_OPACITY
   pbBottomLeftLines(msgwindow,2)
   $game_temp.message_window_showing=true if $game_temp
   $game_message.visible=true if $game_message

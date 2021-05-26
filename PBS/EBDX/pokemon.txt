@@ -2451,7 +2451,7 @@ BattleIntro     = minorLegendary
 BattlerPlayerY  = 30
 BattlerEnemyY   = 36
 BattlerAltitude = 0
-BattleIntro     = minorLegendary
+BattleIntro     = giratinabattle
 #-------------------------------
 [CRESSELIA]
 BattlerPlayerY  = 30
