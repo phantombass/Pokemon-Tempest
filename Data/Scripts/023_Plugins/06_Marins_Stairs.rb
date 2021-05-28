@@ -222,9 +222,9 @@ end
 
 class Game_Event
   alias stair_cett check_event_trigger_touch
-  def check_event_trigger_touch(x, y)
+  def check_event_trigger_touch(triggers)
     return if !on_stair?
-    return stair_cett(x, y)
+    return stair_cett(triggers)
   end
 
   alias stair_ceta check_event_trigger_auto
