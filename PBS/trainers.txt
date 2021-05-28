@@ -1,5 +1,105 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
+# Quad Region Elder Battles
+#-------------------------------
+[ELITEFOUR_Marie,Marie]
+LoseText = "Wow! You've grown so much!"
+Pokemon = DRAGAPULT,96
+  Item = EXPERTBELT
+  Form = 1
+  Ability = 1
+  Moves = UTURN,BOOMBURST,SPECTRALSHRIEK,FLAMETHROWER
+Pokemon = CHIMECHO,95
+  Item = LEFTOVERS
+  Moves = COMETSHARDS,WISH,STARBEAM,BOOMBURST
+Pokemon = NOIVERN,94
+  Item = HEAVYDUTYBOOTS
+  Moves = BOOMBURST,MACHPULSE,FLAMETHROWER,DEFOG
+Pokemon = EXPLOUD,94
+  Item = LIFEORB
+  Ability = 0
+  Moves = BOOMBURST,MACHPULSE,ICEBEAM,FOCUSBLAST
+Pokemon = ELECTRODE,96
+  Item = AIRBALLOON
+  Ability = 2
+  Moves = OVERCHARGE,POLARITYPULSE,BOOMBURST,VOLTSWITCH
+Pokemon = CHATOT,98
+  Ability = 2
+  Item = CHATOTITE
+  Moves = BOOMBURST,CHATTER,POLARITYPULSE,ROOST
+#-------------------------------
+[ELITEFOUR_Cynthia,Cynthia]
+LoseText = "It's amazing just how strong you are!"
+Pokemon = HIPPOWDON,96
+  Form = 2
+  Item = LEFTOVERS
+  Moves = LIQUIDATION,STEALTHROCK,SLACKOFF,WHIRLWIND
+Pokemon = DUSKNOIR,95
+  Item = ASSAULTVEST
+  Moves = DRAINPUNCH,SHADOWPUNCH,EARTHQUAKE,TEMPORALRAZE
+Pokemon = MAGMORTAR,94
+  Item = WISEGLASSES
+  Moves = FLAMETHROWER,PSYCHIC,SLUDGEBOMB,FLAMECHARGE
+Pokemon = ELECTIVIRE,94
+  Item = MUSCLEBAND
+  Moves = THUNDERPUNCH,CLOSECOMBAT,EARTHQUAKE,ICEPUNCH
+Pokemon = GARCHOMP,96
+  Form = 2
+  Item = LIFEORB
+  Moves = ICICLECRASH,EARTHQUAKE,SWORDSDANCE,ROCKSLIDE
+Pokemon = LUCARIO,98
+  Item = LUCARIONITE
+  Moves = CLOSECOMBAT,ICEPUNCH,METEORMASH,IRONHEAD
+#-------------------------------
+[ELITEFOUR_Simon,Simon]
+LoseText = "Very well done!"
+Pokemon = BASTIODON,96
+  Item = LEFTOVERS
+  Moves = STEALTHROCK,HEAVYSLAM,ROAR,QUANTUMCRUSH
+Pokemon = RAMPARDOS,95
+  Item = LIFEORB
+  Moves = EARTHQUAKE,HEADSMASH,QUANTUMCRUSH,ROCKSLIDE
+Pokemon = CRADILY,94
+  Item = LEFTOVERS
+  Moves = GIGADRAIN,TOXIC,QUANTUMWAVE,RECOVER
+Pokemon = HYPNO,94
+  Item = WEATHERROCK
+  Ability = 2
+  Moves = QUANTUMWAVE,PSYSHOCK,NASTYPLOT,WISH
+Pokemon = AERODACTYL,96
+  Item = EXPERTBELT
+  Moves = ROCKSLIDE,QUANTUMCRUSH,EARTHQUAKE,ROOST
+Pokemon = ABSOL,98
+  Item = ABSOLITE
+  Moves = KNOCKOFF,QUANTUMCRUSH,PSYCHOCUT,SWORDSDANCE
+#-------------------------------
+[ELITEFOUR_Barry,Barry]
+LoseText = "You've got some promise!"
+Pokemon = STARAPTOR,96
+  Item = CHOICEBAND
+  Moves = BRAVEBIRD,CLOSECOMBAT,ROAR,QUANTUMCRUSH
+Pokemon = HERACROSS,95
+  Item = FLAMEORB
+  Ability = 1
+  Moves = EARTHQUAKE,CLOSECOMBAT,MEGAHORN,KNOCKOFF
+Pokemon = LUXRAY,94
+  Item = LIFEORB
+  Ability = 2
+  Moves = CRUNCH,THUNDERFANG,LEECHLIFE,ICEFANG
+Pokemon = VICTREEBEL,94
+  Item = LEFTOVERS
+  Form = 1
+  Ability = 2
+  Moves = SPIKECANNON,SEEDBOMB,LEECHSEED,STEALTHROCK
+Pokemon = CLEFABLE,96
+  Ability = 1
+  Item = LEFTOVERS
+  Moves = MOONBLAST,STARBEAM,WISH,AROMATHERAPY
+Pokemon = INFERNAPE,98
+  Item = INFERNITE
+  Moves = AURASPHERE,MAGMATREK,SLACKOFF,HYPERVOICE
+#-------------------------------
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL3,Akron]
@@ -34,6 +134,46 @@ Pokemon = CLEFAIRY,38
 Pokemon = SALAMENCE,40
   Form = 2
   Ability = 0
+#-------------------------------
+[RIVAL3,Akron,3]
+LoseText = "That'll have to do."
+Pokemon = HYPNO,84
+  Ability = 2
+Pokemon = FROSLASS,83
+  Ability = 2
+Pokemon = GYARADOS,83
+Pokemon = CLEFABLE,84
+Pokemon = SALAMENCE,86
+  Item = USALAMENCITE
+  Form = 2
+  Ability = 0
+#-------------------------------
+[RIVAL3,Akron,4]
+LoseText = "That'll have to do."
+Pokemon = HYPNO,86
+  Ability = 2
+Pokemon = FROSLASS,85
+  Ability = 2
+Pokemon = GYARADOS,85
+Pokemon = CLEFABLE,86
+Pokemon = SALAMENCE,88
+  Item = USALAMENCITE
+  Form = 2
+  Ability = 0
+#-------------------------------
+[RIVAL3,Akron,5]
+LoseText = "Congrats."
+Pokemon = HYPNO,97
+  Ability = 2
+Pokemon = FROSLASS,96
+  Ability = 2
+Pokemon = GYARADOS,96
+Pokemon = CLEFABLE,97
+Pokemon = SALAMENCE,99
+  Item = USALAMENCITE
+  Form = 2
+  Ability = 0
+Pokemon = FORMETEOS,100
 #-------------------------------
 # Zephyr Hills
 #-------------------------------
@@ -573,7 +713,7 @@ Pokemon = CHIMECHO,49
 # Distortion World
 #-------------------------------
 [CHAMPION1,Cynthia]
-LoseText = "Interesting."
+LoseText = "Oh wow!"
 Pokemon = HIPPOWDON,63
   Form = 2
   Moves = LIQUIDATION,STEALTHROCK,SLACKOFF,WHIRLWIND

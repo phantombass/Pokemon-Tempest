@@ -112,13 +112,68 @@ BattleEnv        = MOUNTAIN
 BattleScript     = RIVAL2
 Ace              = 5
 #-------------------------------
+[RIVAL3,Akron,3]
+BattleEnv        = MOUNTAIN
+BattleScript     = RIVAL3
+Ace              = 5
+#-------------------------------
+[RIVAL3,Akron,4]
+BattleEnv        = MOUNTAIN
+BattleScript     = RIVAL3
+Ace              = 5
+#-------------------------------
+[RIVAL3,Akron,4]
+BattleEnv        = INDOOR
+BattleScript     = RIVAL4
+Ace              = 5
+#-------------------------------
 [CHAMPION1]
 BattleBGM        = giratinabattle.ogg
+BattleVS         = integratedVS
+Scale            = 1
+#-------------------------------
+[ELITEFOUR_Barry]
+BattleBGM        = B2W2-ColressBattle.ogg
+BattleVS         = integratedVS
+Scale            = 1
+#-------------------------------
+[ELITEFOUR_Simon]
+BattleBGM        = B2W2-ColressBattle.ogg
+BattleVS         = integratedVS
+Scale            = 1
+#-------------------------------
+[ELITEFOUR_Cynthia]
+BattleBGM        = B2W2-ColressBattle.ogg
+BattleVS         = integratedVS
+Scale            = 1
+#-------------------------------
+[ELITEFOUR_Marie]
+BattleBGM        = B2W2-ColressBattle.ogg
 BattleVS         = integratedVS
 Scale            = 1
 #-------------------------------
 [CHAMPION1,Cynthia]
 BattleEnv        = DIMENSION
 BattleScript     = CYNTHIA
+Ace              = 6
+#-------------------------------
+[ELITEFOUR_Cynthia,Cynthia]
+BattleEnv        = INDOOR
+BattleScript     = CYNTHIA
+Ace              = 6
+#-------------------------------
+[ELITEFOUR_Marie,Marie]
+BattleEnv        = INDOOR
+BattleScript     = MOM
+Ace              = 6
+#-------------------------------
+[ELITEFOUR_Barry,Barry]
+BattleEnv        = INDOOR
+BattleScript     = BARRY
+Ace              = 6
+#-------------------------------
+[ELITEFOUR_Simon,Simon]
+BattleEnv        = INDOOR
+BattleScript     = SIMON
 Ace              = 6
 #-------------------------------

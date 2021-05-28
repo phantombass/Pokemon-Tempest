@@ -758,7 +758,7 @@
 739,LIFEDEW,Life Dew,17E,0,WATER,Status,0,10,0,UserAndAllies,0,d,"The user scatters mysterious water around and restores the HP of itself."
 740,SURGINGSTRIKES,Surging Strikes,188,25,WATER,Physical,100,5,0,NearOther,0,abef,"The user, having mastered the Water style, strikes the target with a flowing motion three times in a row. This attack always results in a critical hit."
 741,FLIPTURN,Flip Turn,0EE,60,WATER,Physical,100,20,0,NearOther,0,abef,"After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
-900,MAGMATREK,Magma Trek,075,95,FIRE,Special,100,15,0,AllNearOthers,0,bef,"It swamps the area around the user with a giant eruption. It can also be used for crossing lava."
+900,MAGMATREK,Magma Trek,075,95,FIRE,Special,100,15,0,AllNearOthers,0,bef,"It swamps the area around the user with a giant eruption."
 901,STARBEAM,Star Beam,003,95,COSMIC,Special,100,10,10,NearOther,0,befp,"A powerful beam of stardust shot from the heavens, It may cause the opponent to fall asleep."
 902,ASTROBOMB,Astro Bomb,03F,130,COSMIC,Special,90,5,0,NearOther,0,befn,"The sun blasts a powerful ray of light on the target. The user's Sp.Atk is harshly cut."
 903,ASTROPUNCH,Astro Punch,000,40,COSMIC,Physical,100,30,0,NearOther,1,abefj,"A swift punch that will most likely go first."

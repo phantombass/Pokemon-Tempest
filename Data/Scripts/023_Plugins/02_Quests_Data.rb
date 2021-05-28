@@ -134,7 +134,7 @@ module QuestsData
   "Stage6" => "Enter the Distortion World and find Aaron.",
   "Stage7" => "Calm Giratina down!",
   "Stage8" => "Return to Coastal Steppes and debrief with Cynthia.",
-  "Stage9" => "Scale Reverb Range to meet the Quad-Region Elders.",
+  "Stage9" => "Scale Reverb Mountain to meet the Quad-Region Elders.",
   "Stage10" => "Challenge and defeat the Quad-Region Elders."
 }
   #====================================
@@ -149,7 +149,7 @@ module QuestsData
   "Stage6" => "Enter the Distortion World and find Aaron.",
   "Stage7" => "Calm Giratina down!",
   "Stage8" => "Return to Coastal Steppes and debrief with Cynthia.",
-  "Stage9" => "Scale Reverb Range to meet the Quad-Region Elders.",
+  "Stage9" => "Scale Reverb Mountain to meet the Quad-Region Elders.",
   "Stage10" => "Challenge and defeat the Quad-Region Elders."
   }
 #====================================

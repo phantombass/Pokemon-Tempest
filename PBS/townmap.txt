@@ -54,11 +54,11 @@ Point = 16,17,Abandoned Galactic Lab,,,,,
 [3]
 Name = Zharo
 Filename = mapRegion3.png
-Point = 28,0,Isani Peninsula,,,,,
+Point = 28,0,Isani Peninsula,,172,17,19,
 Point = 28,1,Route 15,,,,,
 Point = 28,3,Route 16,,,,,
-Point = 28,5,Klinsper,,,,,
+Point = 28,5,Klinsper,,176,9,32,
 Point = 26,5,Route 17,,,,,
-Point = 24,5,Ezgal,,,,,
+Point = 24,5,Ezgal,,179,38,16,
 Point = 24,3,Route 18,,,,,
-Point = 26,3,Thera Comet,,,,,
+Point = 26,3,Thera Comet,,182,15,29,

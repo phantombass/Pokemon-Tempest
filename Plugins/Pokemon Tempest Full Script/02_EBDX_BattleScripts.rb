@@ -647,8 +647,33 @@ module BattleScripts
           "lastOpp" => "Ugh. This can NOT be happening!"
         }
 
+        RIVAL3 = {
+          "turnStart0" => "You are going to have to prove to me you can do this!",
+          "lastOpp" => "Come on! Is that all you got?!?"
+        }
+
+        RIVAL3 = {
+          "turnStart0" => "I want to see the strongest trainer in Ufara's team!",
+          "lastOpp" => "I knew you were strong. But not this strong..."
+        }
+
         CYNTHIA = {
           "turnStart0" => "Come at me with everything! I want to know just how strong your team is!",
           "lastOpp" => "It's been a long time since I was backed into a corner like this."
+        }
+
+        MOM = {
+          "turnStart0" => "I don't want you holding back, honey. I know I won't!",
+          "lastOpp" => "Oh my. I had no idea you were this strong!"
+        }
+
+        BARRY = {
+          "turnStart0" => "Let's see just how strong you are!",
+          "lastOpp" => "Wow! You're really good!"
+        }
+
+        SIMON = {
+          "turnStart0" => "Alright, my friend. Let's put that team to the test!",
+          "lastOpp" => "You're pushing me to my limits! What a blast!"
         }
 end

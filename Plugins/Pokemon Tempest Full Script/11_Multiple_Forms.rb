@@ -25,6 +25,20 @@ MultipleForms.register(:BAGON,{
 
 MultipleForms.copy(:BAGON,:SHELGON,:SALAMENCE,:MACHOP,:MACHOKE,:MACHAMP,:HIPPOPOTAS,:HIPPOWDON,:GIBLE,:GABITE,:GARCHOMP,:PINSIR,:TREECKO,:GROVYLE,:SCEPTILE,:TORCHIC,:COMBUSKEN,:BLAZIKEN,:MUDKIP,:MARSHTOMP,:SWAMPERT,:PIDOVE,:TRANQUILL,:UNFEZANT)
 
+MultipleForms.register(:RIOLU,{
+  "getFormOnCreation" => proc { |pkmn|
+    next if pkmn.form_simple>=3
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+      next 2 if map_metadata && map_metadata.town_map_position &&
+                map_metadata.town_map_position[0] == 3   # Zharo region
+    end
+    next 0
+  }
+})
+
+MultipleForms.copy(:RIOLU,:LUCARIO)
+
 MultipleForms.register(:GASTLY,{
   "getFormOnCreation" => proc { |pkmn|
     next if pkmn.form_simple>=4
@@ -52,6 +66,20 @@ MultipleForms.register(:DREEPY,{
 })
 
 MultipleForms.copy(:DREEPY,:DRAKLOAK,:DRAGAPULT,:DRAGALGE,:SNEASEL,:WEAVILE,:NIDORANmA,:NIDORINO,:NIDOKING,:NIDORANfE,:NIDORINA,:NIDOQUEEN,:BELLSPROUT,:WEEPINBELL,:VICTREEBEL,:SPINARAK,:ARIADOS,:PANSAGE,:SIMISAGE,:PANSEAR,:SIMISEAR,:PANPOUR,:SIMIPOUR,:SKRELP,:DRAGALGE)
+
+MultipleForms.register(:EXEGGCUTE,{
+  "getFormOnCreation" => proc { |pkmn|
+    next if pkmn.form_simple>=2
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)   # Map IDs for Zharonian/Alolan Forme
+      next 1 if map_metadata && map_metadata.town_map_position &&
+                map_metadata.town_map_position[0] == 3   # Zharo region
+    end
+    next 0
+  }
+})
+
+MultipleForms.copy(:EXEGGCUTE,:EXEGGUTOR,:LUVDISC,:QWILFISH)
 
 MultipleForms.register(:ALTEMPER,{
   "getPrimalForm" => proc { |pkmn|
