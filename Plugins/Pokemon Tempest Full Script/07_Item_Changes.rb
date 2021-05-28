@@ -2,20 +2,6 @@
 #Items
 #===================================
 module ItemHandlers
-  def pbRaiseEffortValues(pkmn, stat, evGain = 10, ev_limit = true)
-    stat = GameData::Stat.get(stat).id
-    return 0 if ev_limit && pkmn.ev[stat] >= 252
-    evTotal = 0
-    GameData::Stat.each_main { |s| evTotal += pkmn.ev[s.id] }
-    evGain = evGain.clamp(0, Pokemon::EV_STAT_LIMIT - pkmn.ev[stat])
-    evGain = evGain.clamp(0, 252 - pkmn.ev[stat]) if ev_limit
-    evGain = evGain.clamp(0, Pokemon::EV_LIMIT - evTotal)
-    if evGain > 0
-      pkmn.ev[stat] += evGain
-      pkmn.calc_stats
-    end
-    return evGain
-  end
 
   def pbRaiseHappinessAndLowerEV(pkmn,scene,stat,messages)
     h = pkmn.happiness<255
@@ -36,6 +22,157 @@ module ItemHandlers
     return true
   end
 end
+
+def pbCut
+  if $PokemonBag.pbQuantity(:CHAINSAW)==0
+    pbMessage(_INTL("This tree looks like it can be cut down."))
+    return false
+  end
+  pbMessage(_INTL("This tree looks like it can be cut down!\1"))
+  if pbConfirmMessage(_INTL("Would you like to cut it?"))
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:CHAINSAW).name))
+    return true
+  end
+  return false
+end
+
+def pbRaiseEffortValues(pkmn, stat, evGain = 10, ev_limit = true)
+  stat = GameData::Stat.get(stat).id
+  return 0 if ev_limit && pkmn.ev[stat] >= 252
+  evTotal = 0
+  GameData::Stat.each_main { |s| evTotal += pkmn.ev[s.id] }
+  evGain = evGain.clamp(0, Pokemon::EV_STAT_LIMIT - pkmn.ev[stat])
+  evGain = evGain.clamp(0, 252 - pkmn.ev[stat]) if ev_limit
+  evGain = evGain.clamp(0, Pokemon::EV_LIMIT - evTotal)
+  if evGain > 0
+    pkmn.ev[stat] += evGain
+    pkmn.calc_stats
+  end
+  return evGain
+end
+
+def pbDive
+  return false if $game_player.pbFacingEvent
+  map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+  return false if !map_metadata || !map_metadata.dive_map_id
+  if $PokemonBag.pbQuantity(:SCUBATANK)==0
+    pbMessage(_INTL("The sea is deep here. A Pokémon may be able to go underwater."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("The sea is deep here. Would you like to use Dive?"))
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
+    pbFadeOutIn {
+       $game_temp.player_new_map_id    = map_metadata.dive_map_id
+       $game_temp.player_new_x         = $game_player.x
+       $game_temp.player_new_y         = $game_player.y
+       $game_temp.player_new_direction = $game_player.direction
+       $PokemonGlobal.surfing = false
+       $PokemonGlobal.diving  = true
+       pbUpdateVehicle
+       $scene.transfer_player(false)
+       $game_map.autoplay
+       $game_map.refresh
+    }
+    return true
+  end
+  return false
+end
+
+def pbSurfacing
+  return if !$PokemonGlobal.diving
+  return false if $game_player.pbFacingEvent
+  surface_map_id = nil
+  GameData::MapMetadata.each do |map_data|
+    next if !map_data.dive_map_id || map_data.dive_map_id != $game_map.map_id
+    surface_map_id = map_data.id
+    break
+  end
+  return if !surface_map_id
+  if $PokemonBag.pbQuantity(:SCUBATANK)==0
+    pbMessage(_INTL("Light is filtering down from above. A Pokémon may be able to surface here."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("Light is filtering down from above. Would you like to use Dive?"))
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
+    pbFadeOutIn {
+       $game_temp.player_new_map_id    = surface_map_id
+       $game_temp.player_new_x         = $game_player.x
+       $game_temp.player_new_y         = $game_player.y
+       $game_temp.player_new_direction = $game_player.direction
+       $PokemonGlobal.surfing = true
+       $PokemonGlobal.diving  = false
+       pbUpdateVehicle
+       $scene.transfer_player(false)
+       surfbgm = GameData::Metadata.get.surf_BGM
+       (surfbgm) ?  pbBGMPlay(surfbgm) : $game_map.autoplayAsCue
+       $game_map.refresh
+    }
+    return true
+  end
+  return false
+end
+
+def pbStrength
+  if $PokemonMap.strengthUsed
+    pbMessage(_INTL("Strength made it possible to move boulders around."))
+    return false
+  end
+  if $PokemonBag.pbQuantity(:FULCRUM)==0
+    pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside."))
+    return false
+  end
+  pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside.\1"))
+  if pbConfirmMessage(_INTL("Would you like to use Strength?"))
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:FULCRUM).name))
+    pbMessage(_INTL("{1}'s Strength made it possible to move boulders around!",$Trainer.name))
+    $PokemonMap.strengthUsed = true
+    return true
+  end
+  return false
+end
+
+def pbRockSmash
+  if $PokemonBag.pbQuantity(:HAMMER)==0
+    pbMessage(_INTL("It's a rugged rock, but a Pokémon may be able to smash it."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("This rock appears to be breakable. Would you like to use Rock Smash?"))
+    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:HAMMER).name))
+    return true
+  end
+  return false
+end
+
+def pbSurf
+  return false if $game_player.pbFacingEvent
+  return false if $game_player.pbHasDependentEvents?
+  if $PokemonBag.pbQuantity(:HOVERCRAFT)==0
+    return false
+  end
+  if pbConfirmMessage(_INTL("The water is a deep blue...\nWould you like to surf on it?"))
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
+    pbCancelVehicles
+    surfbgm = GameData::Metadata.get.surf_BGM
+    pbCueBGM(surfbgm,0.5) if surfbgm
+    pbStartSurfing
+    return true
+  end
+  return false
+end
+
+def pbWaterfall
+  if $PokemonBag.pbQuantity(:AQUAROCKET)==0
+    pbMessage(_INTL("A wall of water is crashing down with a mighty roar."))
+    return false
+  end
+  if pbConfirmMessage(_INTL("It's a large waterfall. Would you like to use Waterfall?"))
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:AQUAROCKET).name))
+    pbAscendWaterfall
+    return true
+  end
+  return false
+end
+
 def canUseMoveCut?
   showmsg = true
    return false if !$PokemonBag.pbHasItem?(:CHAINSAW)
@@ -272,7 +409,7 @@ end
 
 def canUseMoveRockSmash?
   showmsg = true
-  return false if !$PokemonBag.pbQuantity(:HAMMER)==0
+  return false if $PokemonBag.pbQuantity(:HAMMER)==0
   facingEvent = $game_player.pbFacingEvent
   if !facingEvent || !facingEvent.name[/smashrock/i]
     pbMessage(_INTL("Can't use that here.")) if showmsg
@@ -288,13 +425,14 @@ def useMoveRockSmash
   if facingEvent
     pbSmashEvent(facingEvent)
     pbRockSmashRandomEncounter
+    pbRockSmashRandomItem
   end
   return true
 end
 
 def canUseMoveStrength?
    showmsg = true
-   return false if !$PokemonBag.pbQuantity(:FULCRUM)==0
+   return false if $PokemonBag.pbQuantity(:FULCRUM)==0
    if $PokemonMap.strengthUsed
      pbMessage(_INTL("The Fulcrum is already being used.")) if showmsg
      return false
@@ -309,10 +447,9 @@ def useMoveStrength
   $PokemonMap.strengthUsed = true
   return true
 end
-
 def canUseMoveSurf?
    showmsg = true
-   return false if !$PokemonBag.pbQuantity(:HOVERCRAFT)==0
+   return false if $PokemonBag.pbQuantity(:HOVERCRAFT)==0
    if $PokemonGlobal.surfing
      pbMessage(_INTL("You're already surfing.")) if showmsg
      return false
@@ -333,6 +470,7 @@ def canUseMoveSurf?
    end
    return true
 end
+
 def useMoveSurf
   $game_temp.in_menu = false
   pbCancelVehicles
@@ -360,7 +498,6 @@ def useMoveWaterfall
   pbAscendWaterfall
   return true
 end
-
 module GameData
   class TerrainTag
     attr_reader :rock_climb
@@ -391,7 +528,7 @@ end
 
 def canUseMoveRockClimb?
   showmsg = true
-  return false if !$PokemonBag.pbQuantity(:HIKINGGEAR)==0
+  return false if $PokemonBag.pbQuantity(:HIKINGGEAR)==0
    if !$game_player.pbFacingTerrainTag.rock_climb
      pbMessage(_INTL("Can't use that here.")) if showmsg
      return false
