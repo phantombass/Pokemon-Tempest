@@ -965,3 +965,113 @@ ShowArea = true
 Weather = Rain,0
 MapPosition = 1,11,11
 SnapEdges = true
+#-------------------------------
+[172]
+# Isani Peninsula
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,28,0
+SnapEdges = true
+#-------------------------------
+[173]
+# Route 15
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,28,1
+SnapEdges = true
+#-------------------------------
+[174]
+# Route 16
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,28,3
+SnapEdges = true
+#-------------------------------
+[175]
+# Klinsper Gate
+ShowArea = false
+Weather = Rain,0
+MapPosition = 3,28,4
+SnapEdges = true
+#-------------------------------
+[176]
+# Klinsper
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,28,5
+SnapEdges = true
+#-------------------------------
+[177]
+# Route 17
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,26,5
+SnapEdges = true
+#-------------------------------
+[178]
+# Klinsper PMC
+MapPosition = 3,28,5
+SnapEdges = true
+#-------------------------------
+[179]
+# Ezgal
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,24,5
+SnapEdges = true
+#-------------------------------
+[180]
+# Ezgal PMC
+MapPosition = 3,24,5
+SnapEdges = true
+#-------------------------------
+[181]
+# Route 18
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,24,3
+SnapEdges = true
+#-------------------------------
+[182]
+# Thera Comet
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,26,3
+SnapEdges = true
+#-------------------------------
+[183]
+# Distortion World
+Outdoor = false
+ShowArea = true
+Weather = Rain,0
+MapPosition = 3,26,3
+SnapEdges = true
+#-------------------------------
+[188]
+# Reverb Mountain
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,1,5
+SnapEdges = true
+#-------------------------------
+[189]
+# Quarta Castle
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,1,1
+SnapEdges = true
+#-------------------------------
+[190]
+# Quarta Castle
+ShowArea = true
+MapPosition = 0,1,1
+SnapEdges = true
