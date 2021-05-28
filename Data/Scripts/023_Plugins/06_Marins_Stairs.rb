@@ -437,7 +437,7 @@ class Game_Character
       increase_steps
       moving_vertically(1)
     else
-      check_event_trigger_touch(@y,2)
+      check_event_trigger_touch(@y)
     end
   end
 
@@ -449,7 +449,7 @@ class Game_Character
       increase_steps
       moving_vertically(-1)
     else
-      check_event_trigger_touch(@y,8)
+      check_event_trigger_touch(@y)
     end
   end
 
