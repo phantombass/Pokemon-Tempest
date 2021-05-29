@@ -30,7 +30,7 @@ def pbCut
   end
   pbMessage(_INTL("This tree looks like it can be cut down!\1"))
   if pbConfirmMessage(_INTL("Would you like to cut it?"))
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:CHAINSAW).name))
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:CHAINSAW).name))
     return true
   end
   return false
@@ -60,7 +60,7 @@ def pbDive
     return false
   end
   if pbConfirmMessage(_INTL("The sea is deep here. Would you like to use Dive?"))
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
     pbFadeOutIn {
        $game_temp.player_new_map_id    = map_metadata.dive_map_id
        $game_temp.player_new_x         = $game_player.x
@@ -93,7 +93,7 @@ def pbSurfacing
     return false
   end
   if pbConfirmMessage(_INTL("Light is filtering down from above. Would you like to use Dive?"))
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:SCUBATANK).name))
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
     pbFadeOutIn {
        $game_temp.player_new_map_id    = surface_map_id
        $game_temp.player_new_x         = $game_player.x
@@ -137,7 +137,7 @@ def pbRockSmash
     return false
   end
   if pbConfirmMessage(_INTL("This rock appears to be breakable. Would you like to use Rock Smash?"))
-    pbMessage(_INTL("{1} used {2}!",speciesname,GameData::Item.get(:HAMMER).name))
+    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HAMMER).name))
     return true
   end
   return false

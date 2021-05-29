@@ -261,7 +261,7 @@ Pokemon = TURTWIG,18
 LoseText = "You're really good!"
 Pokemon = TROPIUS,19
 #-------------------------------
-# Rainbow Cliffs
+# Trail of Affliction
 #-------------------------------
 [BUGCATCHER,Antonio]
 LoseText = "Buzz!"
@@ -289,6 +289,32 @@ LoseText = "Sick!"
 Pokemon = PINSIR,22
   Form = 2
 #-------------------------------
+[BUGCATCHER,Antonio,1]
+LoseText = "Buzz!"
+Pokemon = YANMEGA,79
+Pokemon = YANMEGA,79
+#-------------------------------
+[BUGCATCHER,Anthony,1]
+LoseText = "Oh wow!"
+Pokemon = HERACROSS,79
+Pokemon = YANMEGA,79
+#-------------------------------
+[BUGCATCHER,Antoine,1]
+LoseText = "Isn't it awesome?"
+Pokemon = SCIZOR,80
+#-------------------------------
+[YOUNGSTER,Deacon,1]
+LoseText = "Oh you're strong!"
+Pokemon = NIDOKING,79
+  Form = 1
+Pokemon = NIDOQUEEN,79
+  Form = 1
+#-------------------------------
+[BLACKBELT,Freddie,1]
+LoseText = "Sick!"
+Pokemon = PINSIR,80
+  Form = 2
+#-------------------------------
 # Haunted Forest
 #-------------------------------
 [BUGCATCHER,Allan]
@@ -301,6 +327,25 @@ Pokemon = YANMA,22
 Pokemon = SPINARAK,20
   Form = 1
 Pokemon = HERACROSS,24
+#-------------------------------
+[CHANNELER,Athena,1]
+LoseText = "Woohoo!"
+Pokemon = BANETTE,78
+Pokemon = DUSKNOIR,78
+Pokemon = GENGAR,78
+  Form = 3
+#-------------------------------
+[BUGCATCHER,Allan,1]
+LoseText = "Woohoo!"
+Pokemon = SCIZOR,80
+  Item = SCIZORITE
+#-------------------------------
+[BUGCATCHER,Steve,1]
+LoseText = "It's freaky, man!"
+Pokemon = YANMEGA,78
+Pokemon = ARIADOS,78
+  Form = 1
+Pokemon = HERACROSS,78
 #-------------------------------
 [CHANNELER,Athena]
 LoseText = "Woohoo!"
@@ -336,6 +381,36 @@ Pokemon = HIPPOPOTAS,21
 Pokemon = CHINCHOU,21
 Pokemon = BARBOACH,21
 #-------------------------------
+[BLACKBELT,Michael]
+LoseText = "Ugh..."
+Pokemon = MEDITITE,22
+#-------------------------------
+[TUBER_F,Lola,1]
+LoseText = "Oh no! My cute Pokémon!"
+Pokemon = SIMISAGE,78
+  Form = 1
+Pokemon = SIMISEAR,78
+  Form = 1
+Pokemon = SIMIPOUR,78
+  Form = 1
+#-------------------------------
+[FISHERMAN,Barnie,1]
+LoseText = "Ah lost it!"
+Pokemon = SKRELP,79
+Pokemon = GYARADOS,80
+#-------------------------------
+[FISHERMAN,Sheldon,1]
+LoseText = "Ah lost it!"
+Pokemon = HIPPOPOTAS,78
+  Form = 2
+Pokemon = CHINCHOU,78
+Pokemon = BARBOACH,78
+#-------------------------------
+[BLACKBELT,Michael,1]
+LoseText = "Ugh..."
+Pokemon = MEDICHAM,80
+  Item = MEDICHAMITE
+#-------------------------------
 # Pixie Caverns
 #-------------------------------
 [PICNICKER,Faith]
@@ -357,6 +432,27 @@ Pokemon = CLEFAIRY,24
 [BLACKBELT,Tyler]
 LoseText = "Bruh!"
 Pokemon = MACHOP,22
+  Form = 2
+#-------------------------------
+[PICNICKER,Faith,1]
+LoseText = "My cuties!"
+Pokemon = GENGAR,80
+  Form = 3
+#-------------------------------
+[PICNICKER,Sophie,1]
+LoseText = "To think these are not their normal typings!"
+Pokemon = XATU,79
+Pokemon = DUNSPARCE,79
+#-------------------------------
+[PICNICKER,Megan,1]
+LoseText = "Oh my!"
+Pokemon = CHIMECHO,78
+Pokemon = AZUMARILL,78
+Pokemon = CLEFABLE,78
+#-------------------------------
+[BLACKBELT,Tyler,1]
+LoseText = "Bruh!"
+Pokemon = MACHAMP,80
   Form = 2
 #-------------------------------
 # Cinder Foothills
@@ -387,6 +483,32 @@ Pokemon = MONFERNO,34
 LoseText = "Too hot!"
 Pokemon = TURTONATOR,37
 #-------------------------------
+[JUGGLER,Kirk,1]
+LoseText = "Owowow!"
+Pokemon = MAGMAR,78
+Pokemon = MAGMAR,78
+Pokemon = MAGMORTAR,79
+#-------------------------------
+[FISHERMAN,Griffin,1]
+LoseText = "Ah lost it!"
+Pokemon = HIPPOWDON,80
+  Form = 2
+#-------------------------------
+[FISHERMAN,Tucker,1]
+LoseText = "Ah lost it!"
+Pokemon = GYARADOS,78
+Pokemon = LANTURN,78
+Pokemon = WHISCASH,78
+#-------------------------------
+[JUGGLER,Douglas,1]
+LoseText = "Bad pun, I know."
+Pokemon = HOUNDOOM,79
+Pokemon = INFERNAPE,79
+#-------------------------------
+[JUGGLER,Franklin,1]
+LoseText = "Too hot!"
+Pokemon = TURTONATOR,80
+#-------------------------------
 # Mt Sear Base South
 #-------------------------------
 [POKEMONBREEDER,April]
@@ -415,6 +537,32 @@ Pokemon = PANSEAR,36
 Pokemon = PANPOUR,36
   Form = 1
 #-------------------------------
+[POKEMONBREEDER,April,1]
+LoseText = "Oh wow!"
+Pokemon = AZUMARILL,78
+Pokemon = JYNX,78
+Pokemon = CORVIKNIGHT,78
+#-------------------------------
+[FISHERMAN,Isaac,1]
+LoseText = "Well done!"
+Pokemon = LANTURN,80
+  Ability = 2
+#-------------------------------
+[HIKER,John,1]
+LoseText = "Shoot!"
+Pokemon = GIGALITH,78
+Pokemon = EXCADRILL,78
+Pokemon = BASTIODON,78
+#-------------------------------
+[POKEMONBREEDER,Jane,1]
+LoseText = "Oh no! My cute Pokémon!"
+Pokemon = SIMISAGE,78
+  Form = 1
+Pokemon = SIMISEAR,78
+  Form = 1
+Pokemon = SIMIPOUR,78
+  Form = 1
+#-------------------------------
 # Torrential Slopes
 #-------------------------------
 [WORKER,Kirk]
@@ -440,12 +588,7 @@ Pokemon = AZUMARILL,36
 Pokemon = JYNX,36
 Pokemon = CORVISQUIRE,36
 #-------------------------------
-[FISHERMAN,Isaac]
-LoseText = "Well done!"
-Pokemon = LANTURN,38
-  Ability = 2
-#-------------------------------
-[HIKER,John]
+[HIKER,Jon]
 LoseText = "Shoot!"
 Pokemon = BOLDORE,36
 Pokemon = EXCADRILL,36
@@ -456,6 +599,25 @@ LoseText = "Oh no! My cute Pokémon!"
 Pokemon = MAGBY,36
 Pokemon = ELEKID,36
 Pokemon = SMOOCHUM,36
+#-------------------------------
+#-------------------------------
+[POKEMONBREEDER,May,1]
+LoseText = "Oh wow!"
+Pokemon = AZUMARILL,78
+Pokemon = JYNX,78
+Pokemon = CORVIKNIGHT,78
+#-------------------------------
+[HIKER,Jon,1]
+LoseText = "Shoot!"
+Pokemon = GIGALITH,78
+Pokemon = EXCADRILL,78
+Pokemon = RAMPARDOS,78
+#-------------------------------
+[POKEMONBREEDER,Jen,1]
+LoseText = "Oh no! My cute Pokémon!"
+Pokemon = MAGMORTAR,78
+Pokemon = ELECTIVIRE,78
+Pokemon = JYNX,78
 #-------------------------------
 # Dust-Ridden Pass
 #-------------------------------
