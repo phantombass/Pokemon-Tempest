@@ -82,7 +82,9 @@ module FollowerSettings
     # Gen VII
     :ROWLET, :DARTRIX, :PIKIPEK, :ORICORIO, :SILVALLY_2,
     # Gen VIII
-    :ROOKIDEE
+    :ROOKIDEE,
+    #Tempest
+    :ALTEMPER
   ]
 end
 #===============================================================================
