@@ -941,7 +941,7 @@ class PokemonWeatherScreen
         elsif cmdNone>=0 && cmd==cmdVolc
           pbPlayDecisionSE
 	  if $game_variables[73]>=1
-          pbMessage(_INTL("Weather: Distorted Ashfall"))
+          pbMessage(_INTL("Weather: Volcanic Ash"))
           pbMessage(_INTL("Weather Ball Type: Steel"))
           pbMessage(_INTL("Additional Effects: Removes Steel's weaknesses"))
           else
