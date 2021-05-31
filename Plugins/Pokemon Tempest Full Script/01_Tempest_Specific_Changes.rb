@@ -144,7 +144,7 @@ end
 Events.onMapChange += proc {| sender, e |
     $game_switches[ChapterRelease::Four] = true
     $game_switches[ChapterRelease::Five] = true
-    #$game_switches[ChapterRelease::Six] = true
+    $game_switches[ChapterRelease::Six] = true
 }
 
 def pbChapterRelease
