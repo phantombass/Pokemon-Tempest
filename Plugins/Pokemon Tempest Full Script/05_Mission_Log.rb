@@ -90,21 +90,21 @@ def pbNewMission(num)
     $game_variables[Mission::Mission1] = 1
     $Trainer.badges[0] = true
     $game_switches[Mission::One] = true
-    $game_variables[Chapter::Count] += 1
+    $game_variables[Chapter::Count] = 1
     $PokemonGlobal.quests.activateQuest(1)
   when 2
     $game_variables[Mission::Mission2] = 1
     $PokemonGlobal.quests.completeQuest(1)
     $Trainer.badges[1] = true
     $game_switches[Mission::Two] = true
-    $game_variables[Chapter::Count] += 1
+    $game_variables[Chapter::Count] = 2
     $PokemonGlobal.quests.activateQuest(3)
   when 3
     $game_variables[Mission::Mission3] = 1
     $Trainer.badges[2] = true
     $PokemonGlobal.quests.completeQuest(3)
     $game_switches[Mission::Three] = true
-    $game_variables[Chapter::Count] += 1
+    $game_variables[Chapter::Count] = 3
     if $game_switches[Mission::Vinny]
       $PokemonGlobal.quests.activateQuest(4)
     elsif $game_switches[Mission::Stella]
@@ -114,7 +114,7 @@ def pbNewMission(num)
     $game_variables[Mission::Mission4] = 1
     $Trainer.badges[3] = true
     $game_switches[Mission::Four] = true
-    $game_variables[Chapter::Count] += 1
+    $game_variables[Chapter::Count] = 4
     if $game_switches[Mission::Vinny]
       $PokemonGlobal.quests.activateQuest(6)
     elsif $game_switches[Mission::Stella]
@@ -129,7 +129,7 @@ def pbNewMission(num)
     $game_variables[Mission::Mission5] = 1
     $Trainer.badges[4] = true
     $game_switches[Mission::Five] = true
-    $game_variables[Chapter::Count] += 1
+    $game_variables[Chapter::Count] = 5
     if $game_switches[Mission::Vinny]
       $PokemonGlobal.quests.activateQuest(10)
     elsif $game_switches[Mission::Stella]
@@ -144,7 +144,7 @@ def pbNewMission(num)
     $game_variables[Mission::Mission6] = 1
     $Trainer.badges[5] = true
     $game_switches[Mission::Six] = true
-    $game_variables[Chapter::Count] += 1
+    $game_variables[Chapter::Count] = 6
     if $game_switches[Mission::Vinny]
       $PokemonGlobal.quests.activateQuest(12)
     elsif $game_switches[Mission::Stella]
