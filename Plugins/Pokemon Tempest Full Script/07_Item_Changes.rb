@@ -1263,3 +1263,18 @@ BattleHandlers::DamageCalcUserItem.add(:TEMPORALPLATE,
     mults[:base_damage_multiplier] *= 1.2 if type == :TIME
   }
 )
+
+class PokeBattle_Battle
+  def pbUsePokeBallInBattle(item,idxBattler,userBattler)
+    if $game_switches[81]
+      pbDisplay(_INTL("This Pokémon cannot be caught!"))
+      $PokemonBag.pbStoreItem(item)
+      return false
+    else
+      idxBattler = userBattler.index if idxBattler<0
+      battler = @battlers[idxBattler]
+      ItemHandlers.triggerUseInBattle(item,battler,self)
+      @choices[userBattler.index][1] = nil   # Delete item from choice
+    end
+  end
+end
