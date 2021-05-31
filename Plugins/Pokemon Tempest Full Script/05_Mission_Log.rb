@@ -55,7 +55,7 @@ def pbMissionUpdate
         $PokemonGlobal.quests.advanceQuestToStage(6,$game_variables[Mission::Mission4])
       end
     end
-  elsif $game_switches[Mission::Five] == true
+  elsif $game_switches[Mission::Five] == true && $game_switches[Mission::Six] == false
     if $game_variables[Mission::Mission5] == 9
       $game_variables[Mission::Mission5] += 0
     else
@@ -140,9 +140,9 @@ def pbNewMission(num)
     elsif $game_switches[Mission::Stella]
       $PokemonGlobal.quests.completeQuest(7)
     end
-  when 5
+  when 6
     $game_variables[Mission::Mission6] = 1
-    $Trainer.badges[4] = true
+    $Trainer.badges[5] = true
     $game_switches[Mission::Six] = true
     $game_variables[Chapter::Count] += 1
     if $game_switches[Mission::Vinny]
