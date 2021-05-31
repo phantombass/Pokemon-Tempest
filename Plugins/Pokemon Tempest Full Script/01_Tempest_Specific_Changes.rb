@@ -32,7 +32,7 @@ Events.onMapUpdate += proc {| sender, e |
   when 4
     if $game_variables[Mission::Mission4] <= 0
       $game_variables[Level::Cap] = 35
-    elsif $game_variables[Mission::Mission4]>=0 && $game_variables[Mission::Mission4]<=2
+    elsif $game_variables[Mission::Mission4]>0 && $game_variables[Mission::Mission4]<=2
       $game_variables[Level::Cap] = 42
     elsif $game_variables[Mission::Mission4]>=3 && $game_variables[Mission::Mission4]<=5
       $game_variables[Level::Cap] = 46
