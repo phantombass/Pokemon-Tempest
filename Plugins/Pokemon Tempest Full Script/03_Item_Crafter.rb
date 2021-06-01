@@ -137,9 +137,9 @@ def pbItemcraft(item)
     pbReceiveItem(:FULCRUM)
     $game_variables[Items::Fulcrum] = 1
   when "Hiking Gear"
-    $PokemonBag.pbDeleteItem(:DESTINYKNOT,1)
-    $PokemonBag.pbDeleteItem(:STICKYBARB,1)
-    $PokemonBag.pbDeleteItem(:IRON,1)
+    $PokemonBag.pbDeleteItem(:HIKE1,1)
+    $PokemonBag.pbDeleteItem(:HIKE2,1)
+    $PokemonBag.pbDeleteItem(:HIKE3,1)
     pbReceiveItem(:HIKINGGEAR)
     $game_variables[Items::HikingGear] = 1
   when "Escape Rope"
