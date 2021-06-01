@@ -401,10 +401,10 @@ Pokemon = GYARADOS,80
 #-------------------------------
 [FISHERMAN,Sheldon,1]
 LoseText = "Ah lost it!"
-Pokemon = HIPPOPOTAS,78
+Pokemon = HIPPOWDON,78
   Form = 2
-Pokemon = CHINCHOU,78
-Pokemon = BARBOACH,78
+Pokemon = LANTURN,78
+Pokemon = WHISCASH,78
 #-------------------------------
 [BLACKBELT,Michael,1]
 LoseText = "Ugh..."
