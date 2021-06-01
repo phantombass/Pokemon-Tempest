@@ -1115,8 +1115,7 @@ ItemHandlers::UseOnPokemon.add(:SERIOUSMINT,proc { |item,pkmn,scene|
 ItemHandlers::UseOnPokemon.add(:IVMAXSTONE,proc { |item,pkmn,scene|
   choices = []
   for i in 0...6
-    stat = PBStats
-    choices.push(_INTL(stat.getName(i)))
+    choices.push(_INTL(GameData::Stats.get(i).name))
   end
   choices.push(_INTL("Cancel"))
   command = pbMessage("Which IV would you like to max out?",choices,choices.length)
@@ -1136,8 +1135,7 @@ ItemHandlers::UseOnPokemon.add(:IVMAXSTONE,proc { |item,pkmn,scene|
 ItemHandlers::UseOnPokemon.add(:IVMINSTONE,proc { |item,pkmn,scene|
   choices = []
   for i in 0...6
-    stat = PBStats
-    choices.push(_INTL(stat.getName(i)))
+    choices.push(_INTL(GameData::Stats.get(i).name))
   end
   choices.push(_INTL("Cancel"))
   command = pbMessage("Which IV would you like to zero out?",choices,choices.length)
