@@ -679,7 +679,7 @@ module BattleScripts
         "turnStart0" => "Clearly you do not understand when to give up.",
         "lastOpp" => "Hmm. You appear to have gotten a little stronger."
       }
-      AARON2 = {
+      AARONLAST = {
         "turnStart0" => "You have interfered for the last time.",
         "lastOpp" => "Hmm. You appear to have gotten a little stronger."
       }

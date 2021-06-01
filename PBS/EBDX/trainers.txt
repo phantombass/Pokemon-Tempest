@@ -33,64 +33,99 @@ BattleVS         = trainerSM
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron]
-BattleEnv        = MAGMA
 BattleScript     = AARON
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,1]
-BattleEnv        = MAGMA
 BattleScript     = AARONLOSS
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,2]
-BattleEnv        = MAGMA
 BattleScript     = AARONLOSS
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,3]
-BattleEnv        = MAGMA
 BattleScript     = AARONLOSS
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,4]
-BattleEnv        = MAGMA
 BattleScript     = AARONLOSS
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,5]
-BattleEnv        = MAGMA
 BattleScript     = AARONLOSS
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,6]
-BattleEnv        = DIMENSION
-BattleScript     = AARON2
+BattleScript     = AARONLAST
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,7]
-BattleEnv        = DIMENSION
-BattleScript     = AARON2
+BattleScript     = AARONLAST
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,8]
-BattleEnv        = DIMENSION
-BattleScript     = AARON2
+BattleScript     = AARONLAST
 Ace              = 5
 #-------------------------------
-[MAELSTROMBOSS,Aaron,8]
-BattleEnv        = DIMENSION
-BattleScript     = AARON2
+[MAELSTROMBOSS,Aaron,9]
+BattleScript     = AARONLAST
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,10]
-BattleEnv        = DIMENSION
-BattleScript     = AARON2
+BattleScript     = AARONLAST
 Ace              = 5
 #-------------------------------
 [MAELSTROMBOSS,Aaron,11]
-BattleEnv        = DIMENSION
-BattleScript     = AARON2
+BattleScript     = AARONLAST
 Ace              = 5
+#-------------------------------
+[MAELSTROMBOSS,Aaron,12]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,13]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,14]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,15]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,16]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,17]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,18]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,19]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,20]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,21]
+BattleScript     = AARONLAST
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,22]
+Ace              = 6
+#-------------------------------
+[MAELSTROMBOSS,Aaron,23]
+BattleScript     = AARONLAST
+Ace              = 6
 #-------------------------------
 [RIVAL3]
 BattleBGM        = HGSS-138-RivalBattle.ogg

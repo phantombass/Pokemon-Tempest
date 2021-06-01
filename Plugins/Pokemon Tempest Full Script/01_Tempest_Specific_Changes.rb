@@ -173,7 +173,7 @@ def pbChapterRelease
     pbMessage(_INTL("\\me[{3}]<c2={1}>\\PN! It's {2}! Meet me at HQ for our next mission!</c2>",textColor,leader,meName))
     pbCommonEvent(7)
     $game_variables[ChapterRelease::Constant]=2
-  elsif $game_switches[ChapterRelease::Six] && $game_switches[555] && $game_variables[ChapterRelease::Constant] == 2
+  elsif $game_switches[ChapterRelease::Six] && $game_switches[577] && $game_variables[ChapterRelease::Constant] == 2
     textColor = "7FE00000"
     if $game_switches[Mission::Vinny]
       leader = "Vinny"
