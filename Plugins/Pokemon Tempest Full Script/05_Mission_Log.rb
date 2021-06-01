@@ -61,10 +61,10 @@ def pbMissionUpdate
     else
       if $game_switches[Mission::Stella] == true
         $game_variables[Mission::Mission5] += 1
-        $PokemonGlobal.quests.advanceQuestToStage(11,$game_variables[Mission::Mission4])
+        $PokemonGlobal.quests.advanceQuestToStage(11,$game_variables[Mission::Mission5])
       elsif $game_switches[Mission::Vinny] == true
         $game_variables[Mission::Mission5] += 1
-        $PokemonGlobal.quests.advanceQuestToStage(10,$game_variables[Mission::Mission4])
+        $PokemonGlobal.quests.advanceQuestToStage(10,$game_variables[Mission::Mission5])
       end
     end
   elsif $game_switches[Mission::Six] == true
@@ -73,10 +73,10 @@ def pbMissionUpdate
     else
       if $game_switches[Mission::Stella] == true
         $game_variables[Mission::Mission6] += 1
-        $PokemonGlobal.quests.advanceQuestToStage(13,$game_variables[Mission::Mission4])
+        $PokemonGlobal.quests.advanceQuestToStage(13,$game_variables[Mission::Mission6])
       elsif $game_switches[Mission::Vinny] == true
         $game_variables[Mission::Mission6] += 1
-        $PokemonGlobal.quests.advanceQuestToStage(12,$game_variables[Mission::Mission4])
+        $PokemonGlobal.quests.advanceQuestToStage(12,$game_variables[Mission::Mission6])
       end
     end
     #elsif
