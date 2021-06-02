@@ -1125,9 +1125,10 @@ ItemHandlers::UseOnPokemon.add(:IVMAXSTONE,proc { |item,pkmn,scene|
     scene.pbDisplay(_INTL("This stat is already maxed out!"))
     return false
   end
+  stat = GameData::Stat.get(statChoice).id
   statDisp = GameData::Stat.get(statChoice).name
-    pkmn.iv[statChoice] = 31
-    pkmn.calcStats
+    pkmn.iv[stat] = 31
+    pkmn.calc_stats
     scene.pbDisplay(_INTL("{1}'s {2} IVs were maxed out!",pkmn.name,statDisp))
   next true
 })
@@ -1145,9 +1146,10 @@ ItemHandlers::UseOnPokemon.add(:IVMINSTONE,proc { |item,pkmn,scene|
     scene.pbDisplay(_INTL("This stat is already zeroed out!"))
     return false
   end
+  stat = GameData::Stat.get(statChoice).id
   statDisp = GameData::Stat.get(statChoice).name
-    pkmn.iv[statChoice] = 0
-    pkmn.calcStats
+    pkmn.iv[stat] = 31
+    pkmn.calc_stats
     scene.pbDisplay(_INTL("{1}'s {2} IVs were zeroed out!",pkmn.name,statDisp))
   next true
 })
