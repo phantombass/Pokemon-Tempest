@@ -580,6 +580,21 @@ Pokemon = PRINPLUP,34
 LoseText = "Too hot!"
 Pokemon = POLITOED,37
 #-------------------------------
+[WORKER,Kirk,1]
+LoseText = "Owowow!"
+Pokemon = ELECTABUZZ,78
+Pokemon = ELECTABUZZ,78
+Pokemon = ELECTIVIRE,78
+#-------------------------------
+[GENTLEMAN,Douglas,1]
+LoseText = "Bad pun, I know."
+Pokemon = DRAGALGE,79
+Pokemon = PRINPLUP,79
+#-------------------------------
+[GENTLEMAN,Franklin,1]
+LoseText = "Too hot!"
+Pokemon = POLITOED,80
+#-------------------------------
 # Mt Sear Base East
 #-------------------------------
 [POKEMONBREEDER,May]
