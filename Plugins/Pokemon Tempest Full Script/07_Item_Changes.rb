@@ -1204,46 +1204,24 @@ ItemHandlers::UseOnPokemon.add(:TAMATOBERRY,proc { |item,pkmn,scene|
 
 ItemHandlers::UseOnPokemon.add(:ABILITYPATCH,proc { |item,pkmn,scene|
   abils = pkmn.getAbilityList
-  abil1 = 0; abil2 = 0; hAbil = 0
+  hiddenArr =[]
   for i in abils
-    abil1 = i[0] if i[1]==0
-    abil2 = i[0] if i[1]==1
-    hAbil = i[0] if i[1]==2
+    hiddenArr.push([i[1],i[0]]) if i[0] && i[1]>1 && pkmn.ability_index != i[1]
   end
-  if pkmn.isSpecies?(:HOPPALM) || pkmn.isSpecies?(:PAPYRUN) || pkmn.isSpecies?(:ALTEMPER) || pkmn.isSpecies?(:NEFLORA) || pkmn.isSpecies?(:CHARPHINCH) || pkmn.isSpecies?(:PHIRUNDO) || pkmn.isSpecies?(:PHIRENIX) || pkmn.isSpecies?(:BARBOL) || pkmn.isSpecies?(:BOWLTISIS) || pkmn.isSpecies?(:SATURABTU) || pkmn.isSpecies?(:APOPHICARY) || pkmn.isSpecies?(:FALKMUNRA) || pkmn.isSpecies?(:CASTFORM) || pkmn.isSpecies?(:FORMETEOS) || pkmn.isSpecies?(:UNOWN) || pkmn.isSpecies?(:EYEROGLYPH) || pkmn.isSpecies?(:SPOOKLOTH) || pkmn.isSpecies?(:RELICLOTH) || pkmn.isSpecies?(:CORPUSCUFF) || pkmn.isSpecies?(:YAMASK) || pkmn.isSpecies?(:COFAGRIGUS) || pkmn.isSpecies?(:RUNERIGUS)
+  if hiddenArr.length==0 || (pkmn.hasHiddenAbility? && hiddenArr.length == 1) || pkmn.isSpecies?(:ZYGARDE) || pkmn.isSpecies?(:HOPPALM) || pkmn.isSpecies?(:PAPYRUN) || pkmn.isSpecies?(:ALTEMPER) || pkmn.isSpecies?(:NEFLORA) || pkmn.isSpecies?(:CHARPHINCH) || pkmn.isSpecies?(:PHIRUNDO) || pkmn.isSpecies?(:PHIRENIX) || pkmn.isSpecies?(:BARBOL) || pkmn.isSpecies?(:BOWLTISIS) || pkmn.isSpecies?(:SATURABTU) || pkmn.isSpecies?(:APOPHICARY) || pkmn.isSpecies?(:FALKMUNRA) || pkmn.isSpecies?(:CASTFORM) || pkmn.isSpecies?(:FORMETEOS) || pkmn.isSpecies?(:UNOWN) || pkmn.isSpecies?(:EYEROGLYPH) || pkmn.isSpecies?(:SPOOKLOTH) || pkmn.isSpecies?(:RELICLOTH) || pkmn.isSpecies?(:CORPUSCUFF) || pkmn.isSpecies?(:YAMASK) || pkmn.isSpecies?(:COFAGRIGUS) || pkmn.isSpecies?(:RUNERIGUS)
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
-  if pkmn.hasHiddenAbility? && abil2 != nil
-    abilChoose = rand(2)+1
-    newabil = pkmn.abilityIndex-abilChoose
-    newabilname = GameData::Ability.get((newabil==0) ? abil1 : abil2).name
-      if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
-        pkmn.ability = newabil
-        scene.pbRefresh
-        scene.pbDisplay(_INTL("{1}'s Ability changed to {2}!",pkmn.name,newabilname))
-        next true
-      end
-  elsif pkmn.hasHiddenAbility? && abil2 == nil
-    newabil = pkmn.abilityIndex-2
-    newabilname = GameData::Ability.get((newabil==0) ? abil1 : abil2).name
-    if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
-      pkmn.setAbility(newabil)
-      scene.pbRefresh
-      scene.pbDisplay(_INTL("{1}'s Ability changed to {2}!",pkmn.name,newabilname))
-      next true
-    end
-  else
-    !pkmn.hasHiddenAbility?
-    newabilname = GameData::Ability.get(hAbil).name
-    if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
-      pkmn.ability = hAbil
-      scene.pbRefresh
-      scene.pbDisplay(_INTL("{1}'s Ability changed to {2}!",pkmn.name,newabilname))
-      next true
-    end
-    next false
+  newabil = hiddenArr[rand(hiddenArr.length)]
+  newabilname = GameData::Ability.get(newabil[1]).name
+  if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
+    pkmn.ability = nil
+    pkmn.ability_index = newabil[0]
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("{1}'s Ability changed to {2}!",pkmn.name,newabilname))
+    next true
   end
+  next false
 })
 
 BattleHandlers::DamageCalcUserItem.add(:STELLARPLATE,

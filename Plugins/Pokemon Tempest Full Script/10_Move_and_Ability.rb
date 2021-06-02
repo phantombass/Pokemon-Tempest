@@ -2335,6 +2335,8 @@ class PokeBattle_Battle
       else
         @battlers[idxBattler].form = 0
       end
+    else
+      @battlers[idxBattler].form = @battlers[idxBattler].pokemon.form
     end
     @scene.pbShowPartyLineup(idxBattler&1) if pbSideSize(idxBattler)==1
     pbMessagesOnReplace(idxBattler,idxParty) if !randomReplacement
@@ -2348,7 +2350,7 @@ class PokeBattle_Battle
     @scene.pbTrainerBattleSpeech(*opt)
     if !@replaced
       if !@battlers[index].isSpecies?(:ALTEMPER) && !@battlers[index].isSpecies?(:CASTFORM) && !@battlers[index].isSpecies?(:CHERRIM)
-        @battlers[index].form = @battlers[index].form
+        @battlers[index].form = @battlers[index].pokemon.form
       else
         if @battlers[index].form <= 20
           @battlers[index].form = 0
