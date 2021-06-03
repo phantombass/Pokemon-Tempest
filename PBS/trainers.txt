@@ -959,13 +959,13 @@ Pokemon = GENGAR,80
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,26]
 LoseText = "Hmmph. We'll let the boss handle you."
-Pokemon = ELECTRODE,63
-Pokemon = HYPNO,63
+Pokemon = ELECTRODE,79
+Pokemon = HYPNO,79
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,27]
 LoseText = "Hmmph. We'll let the boss handle you."
-Pokemon = SABLEYE,63
-Pokemon = MEDICHAM,63
+Pokemon = SABLEYE,79
+Pokemon = MEDICHAM,79
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,28]
 LoseText = "Hmmph. We'll let the boss handle you."
