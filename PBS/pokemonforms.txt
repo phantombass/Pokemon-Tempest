@@ -3835,7 +3835,7 @@ Evolutions = SCEPTILE,Level,36
 [SCEPTILE,2]
 Type1 = FIGHTING
 Type2 = GROUND
-BaseStats = 70,105,85,65,85,120
+BaseStats = 70,105,85,120,85,65
 GenderRate = FemaleOneEighth
 GrowthRate = Parabolic
 BaseEXP = 142
