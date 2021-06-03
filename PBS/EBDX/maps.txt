@@ -101,3 +101,9 @@ BattleEnv       = DIMENSION
 [183]
 BattleEnv       = DIMENSION
 #-------------------------------
+[188]
+BattleEnv       = CAVE
+#-------------------------------
+[190]
+BattleEnv       = INDOOR
+#-------------------------------
