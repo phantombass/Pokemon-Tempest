@@ -133,32 +133,26 @@ BattleVS         = integratedVS
 Scale            = 1
 #-------------------------------
 [RIVAL3,Akron]
-BattleEnv        = SNOW
 BattleScript     = RIVAL
 Ace              = 2
 #-------------------------------
 [RIVAL3,Akron,1]
-BattleEnv        = MOUNTAIN
 BattleScript     = RIVAL1
 Ace              = 5
 #-------------------------------
 [RIVAL3,Akron,2]
-BattleEnv        = MOUNTAIN
 BattleScript     = RIVAL2
 Ace              = 5
 #-------------------------------
 [RIVAL3,Akron,3]
-BattleEnv        = MOUNTAIN
 BattleScript     = RIVAL3
 Ace              = 5
 #-------------------------------
 [RIVAL3,Akron,4]
-BattleEnv        = MOUNTAIN
 BattleScript     = RIVAL3
 Ace              = 5
 #-------------------------------
 [RIVAL3,Akron,5]
-BattleEnv        = INDOOR
 BattleScript     = RIVAL4
 Ace              = 5
 #-------------------------------
