@@ -1006,7 +1006,7 @@ Pokemon = CHIMECHO,80
 LoseText = "Hmmph. We'll let the boss handle you."
 Pokemon = SALAMENCE,80
 Pokemon = SALAMENCE,80
-	Form = 3
+	Form = 2
 #-------------------------------
 [TEAMMAELSTROM_M,Grunt,36]
 LoseText = "Hmmph. We'll let the boss handle you."
