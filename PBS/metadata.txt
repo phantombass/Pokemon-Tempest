@@ -966,6 +966,14 @@ Weather = Rain,0
 MapPosition = 1,11,11
 SnapEdges = true
 #-------------------------------
+[170]
+# North Zharo Sea
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,9,14
+SnapEdges = true
+#-------------------------------
 [172]
 # Isani Peninsula
 Outdoor = true
@@ -1053,6 +1061,13 @@ Outdoor = false
 ShowArea = true
 Weather = Rain,0
 MapPosition = 3,26,3
+SnapEdges = true
+#-------------------------------
+[184]
+# Weather Lab
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,8,11
 SnapEdges = true
 #-------------------------------
 [188]
