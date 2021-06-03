@@ -219,7 +219,7 @@ class Pokemon
   def getMegaForm(checkItemOnly = false)
     ret = 0
     GameData::Species.each do |data|
-      if data.species != :ALTEMPER
+      if data.species != :ALTEMPER && data.species != :SALAMENCE && data.species != :PINSIR && data.species != :GENGAR && data.species != :GARCHOMP
         next if data.species != @species || data.unmega_form != form_simple
       end
       if data.mega_stone && hasItem?(data.mega_stone)

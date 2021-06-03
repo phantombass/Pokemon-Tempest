@@ -1192,7 +1192,7 @@ Pokemon = SALAMENCE,85
   Item = USALAMENCITE
   Moves = EARTHQUAKE,DRAGONCLAW,DRAGONDANCE,IRONHEAD
 #-------------------------------
-[PROFESSOR,Myrtle]
+[PROFESSOR2,Myrtle]
 LoseText = "But of course."
 Pokemon = FROSLASS,83
   Moves = HYPERVOICE,CHILLINGCRY,SPECTRALSHRIEK,WILLOWISP
@@ -1206,7 +1206,7 @@ Pokemon = METAGROSS,85
   Item = METAGROSSITE
   Moves = EARTHQUAKE,IRONHEAD,METEORMASH,BULLETPUNCH
 #-------------------------------
-[PROFESSOR,Metto]
+[PROFESSOR3,Metto]
 LoseText = "I really should have seen this coming."
 Pokemon = HIPPOWDON,83
   Form = 2
