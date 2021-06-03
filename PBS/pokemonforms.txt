@@ -2977,7 +2977,7 @@ Evolutions = VICTREEBEL,Item,LEAFSTONE
 [VICTREEBEL,1]
 FormName = Ufaran Form
 Type1 = GRASS
-Type2 = POISON
+Type2 = STEEL
 BaseStats = 80,105,65,70,100,70
 GenderRate = Female50Percent
 GrowthRate = Parabolic
