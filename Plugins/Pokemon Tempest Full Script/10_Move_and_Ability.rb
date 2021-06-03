@@ -51,7 +51,7 @@ class PokeBattle_Move
       # Record that Parental Bond applies, to weaken the second attack
       user.effects[PBEffects::ParentalBond] = 3
       return 2
-    elsif pbSoundMove? && @battle.field.weather == :Reverb &&
+    elsif pbSoundMove? && battle.field.weather == :Reverb &&
        !chargingTurnMove? && targets.length==1
       # Record that Parental Bond applies, to weaken the second attack
       user.effects[PBEffects::EchoChamber] = 3
@@ -1525,6 +1525,340 @@ BattleHandlers::DamageCalcTargetAbility.add(:ICESCALES,
 )
 
 class PokeBattle_Battler
+  def pbInitEffects(batonPass)
+    if batonPass
+      # These effects are passed on if Baton Pass is used, but they need to be
+      # reapplied
+      @effects[PBEffects::LaserFocus] = (@effects[PBEffects::LaserFocus]>0) ? 2 : 0
+      @effects[PBEffects::LockOn]     = (@effects[PBEffects::LockOn]>0) ? 2 : 0
+      if @effects[PBEffects::PowerTrick]
+        @attack,@defense = @defense,@attack
+      end
+      # These effects are passed on if Baton Pass is used, but they need to be
+      # cancelled in certain circumstances anyway
+      @effects[PBEffects::Telekinesis] = 0 if isSpecies?(:GENGAR) && mega?
+      @effects[PBEffects::GastroAcid]  = false if unstoppableAbility?
+    else
+      # These effects are passed on if Baton Pass is used
+      @stages[:ATTACK]          = 0
+      @stages[:DEFENSE]         = 0
+      @stages[:SPEED]           = 0
+      @stages[:SPECIAL_ATTACK]  = 0
+      @stages[:SPECIAL_DEFENSE] = 0
+      @stages[:ACCURACY]        = 0
+      @stages[:EVASION]         = 0
+      @effects[PBEffects::AquaRing]          = false
+      @effects[PBEffects::Confusion]         = 0
+      @effects[PBEffects::Curse]             = false
+      @effects[PBEffects::Embargo]           = 0
+      @effects[PBEffects::FocusEnergy]       = 0
+      @effects[PBEffects::GastroAcid]        = false
+      @effects[PBEffects::HealBlock]         = 0
+      @effects[PBEffects::Ingrain]           = false
+      @effects[PBEffects::LaserFocus]        = 0
+      @effects[PBEffects::LeechSeed]         = -1
+      @effects[PBEffects::LockOn]            = 0
+      @effects[PBEffects::LockOnPos]         = -1
+      @effects[PBEffects::MagnetRise]        = 0
+      @effects[PBEffects::PerishSong]        = 0
+      @effects[PBEffects::PerishSongUser]    = -1
+      @effects[PBEffects::PowerTrick]        = false
+      @effects[PBEffects::Substitute]        = 0
+      @effects[PBEffects::Telekinesis]       = 0
+    end
+    @fainted               = (@hp==0)
+    @initialHP             = 0
+    @lastAttacker          = []
+    @lastFoeAttacker       = []
+    @lastHPLost            = 0
+    @lastHPLostFromFoe     = 0
+    @tookDamage            = false
+    @tookPhysicalHit       = false
+    @lastMoveUsed          = nil
+    @lastMoveUsedType      = nil
+    @lastRegularMoveUsed   = nil
+    @lastRegularMoveTarget = -1
+    @lastRoundMoved        = -1
+    @lastMoveFailed        = false
+    @lastRoundMoveFailed   = false
+    @movesUsed             = []
+    @turnCount             = 0
+    @effects[PBEffects::Attract]             = -1
+    @battle.eachBattler do |b|   # Other battlers no longer attracted to self
+      b.effects[PBEffects::Attract] = -1 if b.effects[PBEffects::Attract]==@index
+    end
+    @effects[PBEffects::BanefulBunker]       = false
+    @effects[PBEffects::BeakBlast]           = false
+    @effects[PBEffects::Bide]                = 0
+    @effects[PBEffects::BideDamage]          = 0
+    @effects[PBEffects::BideTarget]          = -1
+    @effects[PBEffects::BurnUp]              = false
+    @effects[PBEffects::Charge]              = 0
+    @effects[PBEffects::ChoiceBand]          = nil
+    @effects[PBEffects::Counter]             = -1
+    @effects[PBEffects::CounterTarget]       = -1
+    @effects[PBEffects::Dancer]              = false
+    @effects[PBEffects::DefenseCurl]         = false
+    @effects[PBEffects::DestinyBond]         = false
+    @effects[PBEffects::DestinyBondPrevious] = false
+    @effects[PBEffects::DestinyBondTarget]   = -1
+    @effects[PBEffects::Disable]             = 0
+    @effects[PBEffects::DisableMove]         = nil
+    @effects[PBEffects::Electrify]           = false
+    @effects[PBEffects::Encore]              = 0
+    @effects[PBEffects::EncoreMove]          = nil
+    @effects[PBEffects::Endure]              = false
+    @effects[PBEffects::FirstPledge]         = 0
+    @effects[PBEffects::FlashFire]           = false
+    @effects[PBEffects::Flinch]              = false
+    @effects[PBEffects::FocusPunch]          = false
+    @effects[PBEffects::FollowMe]            = 0
+    @effects[PBEffects::Foresight]           = false
+    @effects[PBEffects::FuryCutter]          = 0
+    @effects[PBEffects::GemConsumed]         = nil
+    @effects[PBEffects::Grudge]              = false
+    @effects[PBEffects::HelpingHand]         = false
+    @effects[PBEffects::HyperBeam]           = 0
+    @effects[PBEffects::Illusion]            = nil
+    if hasActiveAbility?(:ILLUSION)
+      idxLastParty = @battle.pbLastInTeam(@index)
+      if idxLastParty >= 0 && idxLastParty != @pokemonIndex
+        @effects[PBEffects::Illusion]        = @battle.pbParty(@index)[idxLastParty]
+      end
+    end
+    @effects[PBEffects::Imprison]            = false
+    @effects[PBEffects::Instruct]            = false
+    @effects[PBEffects::Instructed]          = false
+    @effects[PBEffects::KingsShield]         = false
+    @battle.eachBattler do |b|   # Other battlers lose their lock-on against self
+      next if b.effects[PBEffects::LockOn]==0
+      next if b.effects[PBEffects::LockOnPos]!=@index
+      b.effects[PBEffects::LockOn]    = 0
+      b.effects[PBEffects::LockOnPos] = -1
+    end
+    @effects[PBEffects::MagicBounce]         = false
+    @effects[PBEffects::MagicCoat]           = false
+    @effects[PBEffects::MeanLook]            = -1
+    @battle.eachBattler do |b|   # Other battlers no longer blocked by self
+      b.effects[PBEffects::MeanLook] = -1 if b.effects[PBEffects::MeanLook]==@index
+    end
+    @effects[PBEffects::MeFirst]             = false
+    @effects[PBEffects::Metronome]           = 0
+    @effects[PBEffects::MicleBerry]          = false
+    @effects[PBEffects::Minimize]            = false
+    @effects[PBEffects::MiracleEye]          = false
+    @effects[PBEffects::MirrorCoat]          = -1
+    @effects[PBEffects::MirrorCoatTarget]    = -1
+    @effects[PBEffects::MoveNext]            = false
+    @effects[PBEffects::MudSport]            = false
+    @effects[PBEffects::Nightmare]           = false
+    @effects[PBEffects::Outrage]             = 0
+    @effects[PBEffects::ParentalBond]        = 0
+    @effects[PBEffects::EchoChamber]         = 0
+    @effects[PBEffects::PickupItem]          = nil
+    @effects[PBEffects::PickupUse]           = 0
+    @effects[PBEffects::Pinch]               = false
+    @effects[PBEffects::Powder]              = false
+    @effects[PBEffects::Prankster]           = false
+    @effects[PBEffects::PriorityAbility]     = false
+    @effects[PBEffects::PriorityItem]        = false
+    @effects[PBEffects::Protect]             = false
+    @effects[PBEffects::ProtectRate]         = 1
+    @effects[PBEffects::Pursuit]             = false
+    @effects[PBEffects::Quash]               = 0
+    @effects[PBEffects::Rage]                = false
+    @effects[PBEffects::RagePowder]          = false
+    @effects[PBEffects::Rollout]             = 0
+    @effects[PBEffects::Roost]               = false
+    @effects[PBEffects::SkyDrop]             = -1
+    @battle.eachBattler do |b|   # Other battlers no longer Sky Dropped by self
+      b.effects[PBEffects::SkyDrop] = -1 if b.effects[PBEffects::SkyDrop]==@index
+    end
+    @effects[PBEffects::SlowStart]           = 0
+    @effects[PBEffects::SmackDown]           = false
+    @effects[PBEffects::Snatch]              = 0
+    @effects[PBEffects::SpikyShield]         = false
+    @effects[PBEffects::Spotlight]           = 0
+    @effects[PBEffects::Stockpile]           = 0
+    @effects[PBEffects::StockpileDef]        = 0
+    @effects[PBEffects::StockpileSpDef]      = 0
+    @effects[PBEffects::Taunt]               = 0
+    @effects[PBEffects::ThroatChop]          = 0
+    @effects[PBEffects::Torment]             = false
+    @effects[PBEffects::Toxic]               = 0
+    @effects[PBEffects::Transform]           = false
+    @effects[PBEffects::TransformSpecies]    = 0
+    @effects[PBEffects::Trapping]            = 0
+    @effects[PBEffects::TrappingMove]        = nil
+    @effects[PBEffects::TrappingUser]        = -1
+    @battle.eachBattler do |b|   # Other battlers no longer trapped by self
+      next if b.effects[PBEffects::TrappingUser]!=@index
+      b.effects[PBEffects::Trapping]     = 0
+      b.effects[PBEffects::TrappingUser] = -1
+    end
+    @effects[PBEffects::Truant]              = false
+    @effects[PBEffects::TwoTurnAttack]       = nil
+    @effects[PBEffects::Type3]               = nil
+    @effects[PBEffects::Unburden]            = false
+    @effects[PBEffects::Uproar]              = 0
+    @effects[PBEffects::WaterSport]          = false
+    @effects[PBEffects::WeightChange]        = 0
+    @effects[PBEffects::Yawn]                = 0
+  end
+  def pbProcessMoveHit(move,user,targets,hitNum,skipAccuracyCheck)
+    return false if user.fainted?
+    # For two-turn attacks being used in a single turn
+    move.pbInitialEffect(user,targets,hitNum)
+    numTargets = 0   # Number of targets that are affected by this hit
+    targets.each { |b| b.damageState.resetPerHit }
+    # Count a hit for Parental Bond (if it applies)
+    user.effects[PBEffects::ParentalBond] -= 1 if user.effects[PBEffects::ParentalBond]>0
+    user.effects[PBEffects::EchoChamber] -= 1 if user.effects[PBEffects::EchoChamber]>0
+    # Accuracy check (accuracy/evasion calc)
+    if hitNum==0 || move.successCheckPerHit?
+      targets.each do |b|
+        next if b.damageState.unaffected
+        if pbSuccessCheckPerHit(move,user,b,skipAccuracyCheck)
+          numTargets += 1
+        else
+          b.damageState.missed     = true
+          b.damageState.unaffected = true
+        end
+      end
+      # If failed against all targets
+      if targets.length>0 && numTargets==0 && !move.worksWithNoTargets?
+        targets.each do |b|
+          next if !b.damageState.missed || b.damageState.magicCoat
+          pbMissMessage(move,user,b)
+        end
+        move.pbCrashDamage(user)
+        user.pbItemHPHealCheck
+        pbCancelMoves
+        return false
+      end
+    end
+    # If we get here, this hit will happen and do something
+    #---------------------------------------------------------------------------
+    # Calculate damage to deal
+    if move.pbDamagingMove?
+      targets.each do |b|
+        next if b.damageState.unaffected
+        # Check whether Substitute/Disguise will absorb the damage
+        move.pbCheckDamageAbsorption(user,b)
+        # Calculate the damage against b
+        # pbCalcDamage shows the "eat berry" animation for SE-weakening
+        # berries, although the message about it comes after the additional
+        # effect below
+        move.pbCalcDamage(user,b,targets.length)   # Stored in damageState.calcDamage
+        # Lessen damage dealt because of False Swipe/Endure/etc.
+        move.pbReduceDamage(user,b)   # Stored in damageState.hpLost
+      end
+    end
+    # Show move animation (for this hit)
+    move.pbShowAnimation(move.id,user,targets,hitNum)
+    # Type-boosting Gem consume animation/message
+    if user.effects[PBEffects::GemConsumed] && hitNum==0
+      # NOTE: The consume animation and message for Gems are shown now, but the
+      #       actual removal of the item happens in def pbEffectsAfterMove.
+      @battle.pbCommonAnimation("UseItem",user)
+      @battle.pbDisplay(_INTL("The {1} strengthened {2}'s power!",
+         GameData::Item.get(user.effects[PBEffects::GemConsumed]).name,move.name))
+    end
+    # Messages about missed target(s) (relevant for multi-target moves only)
+    targets.each do |b|
+      next if !b.damageState.missed
+      pbMissMessage(move,user,b)
+    end
+    # Deal the damage (to all allies first simultaneously, then all foes
+    # simultaneously)
+    if move.pbDamagingMove?
+      # This just changes the HP amounts and does nothing else
+      targets.each do |b|
+        next if b.damageState.unaffected
+        move.pbInflictHPDamage(b)
+      end
+      # Animate the hit flashing and HP bar changes
+      move.pbAnimateHitAndHPLost(user,targets)
+    end
+    # Self-Destruct/Explosion's damaging and fainting of user
+    move.pbSelfKO(user) if hitNum==0
+    user.pbFaint if user.fainted?
+    if move.pbDamagingMove?
+      targets.each do |b|
+        next if b.damageState.unaffected
+        # NOTE: This method is also used for the OKHO special message.
+        move.pbHitEffectivenessMessages(user,b,targets.length)
+        # Record data about the hit for various effects' purposes
+        move.pbRecordDamageLost(user,b)
+      end
+      # Close Combat/Superpower's stat-lowering, Flame Burst's splash damage,
+      # and Incinerate's berry destruction
+      targets.each do |b|
+        next if b.damageState.unaffected
+        move.pbEffectWhenDealingDamage(user,b)
+      end
+      # Ability/item effects such as Static/Rocky Helmet, and Grudge, etc.
+      targets.each do |b|
+        next if b.damageState.unaffected
+        pbEffectsOnMakingHit(move,user,b)
+      end
+      # Disguise/Endure/Sturdy/Focus Sash/Focus Band messages
+      targets.each do |b|
+        next if b.damageState.unaffected
+        move.pbEndureKOMessage(b)
+      end
+      # HP-healing held items (checks all battlers rather than just targets
+      # because Flame Burst's splash damage affects non-targets)
+      @battle.pbPriority(true).each { |b| b.pbItemHPHealCheck }
+      # Animate battlers fainting (checks all battlers rather than just targets
+      # because Flame Burst's splash damage affects non-targets)
+      @battle.pbPriority(true).each { |b| b.pbFaint if b && b.fainted? }
+    end
+    @battle.pbJudgeCheckpoint(user,move)
+    # Main effect (recoil/drain, etc.)
+    targets.each do |b|
+      next if b.damageState.unaffected
+      move.pbEffectAgainstTarget(user,b)
+    end
+    move.pbEffectGeneral(user)
+    targets.each { |b| b.pbFaint if b && b.fainted? }
+    user.pbFaint if user.fainted?
+    # Additional effect
+    if !user.hasActiveAbility?(:SHEERFORCE)
+      targets.each do |b|
+        next if b.damageState.calcDamage==0
+        chance = move.pbAdditionalEffectChance(user,b)
+        next if chance<=0
+        if @battle.pbRandom(100)<chance
+          move.pbAdditionalEffect(user,b)
+        end
+      end
+    end
+    # Make the target flinch (because of an item/ability)
+    targets.each do |b|
+      next if b.fainted?
+      next if b.damageState.calcDamage==0 || b.damageState.substitute
+      chance = move.pbFlinchChance(user,b)
+      next if chance<=0
+      if @battle.pbRandom(100)<chance
+        PBDebug.log("[Item/ability triggered] #{user.pbThis}'s King's Rock/Razor Fang or Stench")
+        b.pbFlinch(user)
+      end
+    end
+    # Message for and consuming of type-weakening berries
+    # NOTE: The "consume held item" animation for type-weakening berries occurs
+    #       during pbCalcDamage above (before the move's animation), but the
+    #       message about it only shows here.
+    targets.each do |b|
+      next if b.damageState.unaffected
+      next if !b.damageState.berryWeakened
+      @battle.pbDisplay(_INTL("The {1} weakened the damage to {2}!",b.itemName,b.pbThis(true)))
+      b.pbConsumeItem
+    end
+    targets.each { |b| b.pbFaint if b && b.fainted? }
+    user.pbFaint if user.fainted?
+    return true
+  end
   def pbFlinch(_user=nil)
     if hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
       @effects[PBEffects::Flinch] = false
@@ -1860,6 +2194,27 @@ end
 
 class PokeBattle_Move
     def beamMove?;          return @flags[/p/]; end
+    def pbHitEffectivenessMessages(user,target,numTargets=1)
+      return if target.damageState.disguise
+      if target.damageState.substitute
+        @battle.pbDisplay(_INTL("The substitute took damage for {1}!",target.pbThis(true)))
+      end
+      if target.damageState.critical
+        if numTargets>1
+          @battle.pbDisplay(_INTL("A critical hit on {1}!",target.pbThis(true)))
+        else
+          @battle.pbDisplay(_INTL("A critical hit!"))
+        end
+      end
+      # Effectiveness message, for moves with 1 hit
+      if !multiHitMove? && (user.effects[PBEffects::ParentalBond]==0 || user.effects[PBEffects::EchoChamber]==0)
+        pbEffectivenessMessage(user,target,numTargets)
+      end
+      if target.damageState.substitute && target.effects[PBEffects::Substitute]==0
+        target.effects[PBEffects::Substitute] = 0
+        @battle.pbDisplay(_INTL("{1}'s substitute faded!",target.pbThis))
+      end
+    end
 end
 
 class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
