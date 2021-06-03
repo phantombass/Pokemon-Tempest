@@ -1,4 +1,4 @@
-{6"RIVAL1{I"__pk__:ET{"BattleBGM["Battle Elite.mid"RIVAL1,Blue{@{"BattleVS["forestSM"RIVAL1,Blue,1{@{@["flamesSM"RIVAL1,Blue,2{@{@["wavesSM"LEADER_Brock{@{"TrainerPositionX[ió"BattleEnv["INDOOR@["classicVS"LEADER_Brock,Brock{@{"BattleScript["
+{7"RIVAL1{I"__pk__:ET{"BattleBGM["Battle Elite.mid"RIVAL1,Blue{@{"BattleVS["forestSM"RIVAL1,Blue,1{@{@["flamesSM"RIVAL1,Blue,2{@{@["wavesSM"LEADER_Brock{@{"TrainerPositionX[ió"BattleEnv["INDOOR@["classicVS"LEADER_Brock,Brock{@{"BattleScript["
 BROCK"TEAMMAELSTROM_M{@{"BattleIntro["evilTeam@["trainerSM"TEAMMAELSTROM_F{@{@0["evilTeam@["trainerSM"MAELSTROMBOSS{@{@0["evilTeam@["trainerSM"Ace[i
 "MAELSTROMBOSS,Aaron{@{@*["
 AARON@C[i
@@ -19,7 +19,8 @@ Scale[i"RIVAL3,Akron{@{@"["	SNOW@*["
 RIVAL@C[i"RIVAL3,Akron,1{@{@"["MOUNTAIN@*["RIVAL1@C[i
 "RIVAL3,Akron,2{@{@"["MOUNTAIN@*["RIVAL2@C[i
 "RIVAL3,Akron,3{@{@"["MOUNTAIN@*["RIVAL3@C[i
-"RIVAL3,Akron,4{@{@"["INDOOR@*["RIVAL4@C[i
+"RIVAL3,Akron,4{@{@"["MOUNTAIN@*["RIVAL3@C[i
+"RIVAL3,Akron,5{@{@"["INDOOR@*["RIVAL4@C[i
 "CHAMPION1{@{@
 ["giratinabattle.ogg@["integratedVS@Õ[i"ELITEFOUR_Barry{@{@
 ["B2W2-ColressBattle.ogg@["integratedVS@Õ[i"ELITEFOUR_Simon{@{@

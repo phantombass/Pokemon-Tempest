@@ -157,7 +157,7 @@ BattleEnv        = MOUNTAIN
 BattleScript     = RIVAL3
 Ace              = 5
 #-------------------------------
-[RIVAL3,Akron,4]
+[RIVAL3,Akron,5]
 BattleEnv        = INDOOR
 BattleScript     = RIVAL4
 Ace              = 5

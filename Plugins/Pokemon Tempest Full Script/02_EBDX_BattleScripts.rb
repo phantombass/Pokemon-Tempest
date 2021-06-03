@@ -704,7 +704,7 @@ module BattleScripts
           "lastOpp" => "Come on! Is that all you got?!?"
         }
 
-        RIVAL3 = {
+        RIVAL4 = {
           "turnStart0" => "I want to see the strongest trainer in Ufara's team!",
           "lastOpp" => "I knew you were strong. But not this strong..."
         }
