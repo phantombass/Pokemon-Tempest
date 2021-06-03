@@ -595,6 +595,20 @@ class PokeBattle_Battle
     end
     return @decision
   end
+  alias pbEndOfBattle_ebdx pbEndOfBattle unless self.method_defined?(:pbEndOfBattle_ebdx)
+  def pbEndOfBattle
+    # displays trainer dialogue if applicable
+    @scene.pbTrainerBattleSpeech("loss") if @decision == 2
+    ret = pbEndOfBattle_ebdx
+    # reset all the EBDX queues
+    EliteBattle.reset(:nextBattleScript, :wildSpecies, :wildLevel, :wildForm, :nextBattleBack, :nextUI, :nextBattleData,
+                     :wildSpecies, :wildLevel, :wildForm, :setBoss, :cachedBattler, :tviewport)
+    EliteBattle.set(:setBoss, false)
+    EliteBattle.set(:colorAlpha, 0)
+    EliteBattle.set(:smAnim, false)
+    # return final output
+    return ret
+  end
 
   def pbStartBattleCore
     # Set up the battlers on each side
