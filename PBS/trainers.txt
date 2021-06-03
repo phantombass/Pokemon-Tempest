@@ -936,6 +936,83 @@ LoseText = "Hmmph. We'll let the boss handle you."
 Pokemon = SABLEYE,63
 Pokemon = MEDICHAM,63
 #-------------------------------
+[TEAMMAELSTROM_M,Grunt,22]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = XATU,80
+Pokemon = CLEFABLE,80
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,23]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = ABSOL,81
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,24]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = MEDICHAM,79
+Pokemon = SALAMENCE,79
+Pokemon = CHIMECHO,80
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,25]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = JYNX,80
+Pokemon = GENGAR,80
+	Form = 3
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,26]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = ELECTRODE,63
+Pokemon = HYPNO,63
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,27]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = SABLEYE,63
+Pokemon = MEDICHAM,63
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,28]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = EXPLOUD,80
+Pokemon = CLEFABLE,80
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,29]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = ABSOL,81
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,30]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = MEDICHAM,79
+Pokemon = SALAMENCE,79
+Pokemon = CHIMECHO,80
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,31]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = ELECTRODE,80
+Pokemon = FROSLASS,80
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,32]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = XATU,80
+Pokemon = CHATOT,80
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,33]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = ABSOL,81
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,34]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = MEDICHAM,79
+Pokemon = SALAMENCE,79
+Pokemon = CHIMECHO,80
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,35]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = SALAMENCE,80
+Pokemon = SALAMENCE,80
+	Form = 3
+#-------------------------------
+[TEAMMAELSTROM_M,Grunt,36]
+LoseText = "Hmmph. We'll let the boss handle you."
+Pokemon = SABLEYE,81
+Pokemon = MEDICHAM,81
+#-------------------------------
 [TEAMMAELSTROM_M,Admin]
 LoseText = "Hmmph. We'll let the boss handle you."
 Pokemon = MUSHARNA,61
