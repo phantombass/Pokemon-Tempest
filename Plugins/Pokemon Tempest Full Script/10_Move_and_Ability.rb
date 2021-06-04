@@ -749,9 +749,9 @@ end
 BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
   proc { |ability,weather,battler,battle|
     next if battler.fainted?
-    newWeather = 0
     oldWeather = battle.pbWeather
     newForm = battler.form
+    newWeather = newForm
     if newForm >= 21
       if newForm >= 42
         newForm -= 42
@@ -931,31 +931,31 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
         end
       end
     end
-  if newWeather==newForm
+    case newWeather
+    when 1 then weatherChange = :Sun
+    when 2 then weatherChange = :Rain
+    when 3 then weatherChange = :Sleet
+    when 4 then weatherChange = :Fog
+    when 5 then weatherChange = :Overcast
+    when 6 then weatherChange = :Starstorm
+    when 7 then weatherChange = :Eclipse
+    when 8 then weatherChange = :Windy
+    when 9 then weatherChange = :HeatLight
+    when 10 then weatherChange = :StrongWinds
+    when 11 then weatherChange = :AcidRain
+    when 12 then weatherChange = :Sandstorm
+    when 13 then weatherChange = :Rainbow
+    when 14 then weatherChange = :DustDevil
+    when 15 then weatherChange = :DAshfall
+    when 16 then weatherChange = :VolcanicAsh
+    when 17 then weatherChange = :Borealis
+    when 18 then weatherChange = :Humid
+    when 19 then weatherChange = :TimeWarp
+    when 20 then weatherChange = :Reverb
+    end
+  if oldWeather==weatherChange
     weatherChange = battle.pbWeather
   else
-    case newWeather
-    when 1 then weatherChange = :Sun  if weather != :Sun
-    when 2 then weatherChange = :Rain  if weather != :Rain
-    when 3 then weatherChange = :Sleet  if weather != :Sleet
-    when 4 then weatherChange = :Fog  if weather != :Fog
-    when 5 then weatherChange = :Overcast  if weather != :Overcast
-    when 6 then weatherChange = :Starstorm  if weather != :Starstorm
-    when 7 then weatherChange = :Eclipse  if weather != :Eclipse
-    when 8 then weatherChange = :Windy  if weather != :Windy
-    when 9 then weatherChange = :HeatLight  if weather != :HeatLight
-    when 10 then weatherChange = :StrongWinds  if weather != :StrongWinds
-    when 11 then weatherChange = :AcidRain  if weather != :AcidRain
-    when 12 then weatherChange = :Sandstorm  if weather != :Sandstorm
-    when 13 then weatherChange = :Rainbow  if weather != :Rainbow
-    when 14 then weatherChange = :DustDevil  if weather != :DustDevil
-    when 15 then weatherChange = :DAshfall  if weather != :DAshfall
-    when 16 then weatherChange = :VolcanicAsh  if weather != :VolcanicAsh
-    when 17 then weatherChange = :Borealis  if weather != :Borealis
-    when 18 then weatherChange = :Humid  if weather != :Humid
-    when 19 then weatherChange = :TimeWarp  if weather != :TimeWarp
-    when 20 then weatherChange = :Reverb  if weather != :Reverb
-    end
     battle.pbShowAbilitySplash(battler)
     battle.field.weather = weatherChange
     battle.field.weatherDuration = 5
@@ -1013,27 +1013,27 @@ BattleHandlers::EORWeatherAbility.add(:ACCLIMATE,
       when 3 then                       battler.effects[PBEffects::Type3] = :ICE
       end
     elsif battler.isSpecies?(:FORMETEOS)
-        case newForm
-        when 4 then                       battler.type1 = :FAIRY
-        when 0 then                       battler.type1 = :NORMAL
-        when 5 then                       battler.type1 = :GHOST
-        when 7 then                       battler.type1 = :DARK
-        when 8 then                       battler.type1 = :FLYING
-        when 9 then                       battler.type1 = :ELECTRIC
-        when 10 then                      battler.type1 = :DRAGON
-        when 11 then                      battler.type1 = :POISON
-        when 12 then                      battler.type1 = :ROCK
-        when 13 then                      battler.type1 = :GRASS
-        when 14 then                      battler.type1 = :GROUND
-        when 15 then                      battler.type1 = :FIGHTING
-        when 16 then                      battler.type1 = :STEEL
-        when 17 then                      battler.type1 = :PSYCHIC
-        when 18 then                      battler.type1 = :BUG
-        when 20 then                      battler.type1 = :SOUND
-        when 1 then                       battler.type1 = :FIRE
-        when 2 then                       battler.type1 = :WATER
-        when 3 then                       battler.type1 = :ICE
-        end
+      case newForm
+      when 4 then                       battler.type1 = :FAIRY
+      when 0 then                       battler.type1 = :NORMAL
+      when 5 then                       battler.type1 = :GHOST
+      when 7 then                       battler.type1 = :DARK
+      when 8 then                       battler.type1 = :FLYING
+      when 9 then                       battler.type1 = :ELECTRIC
+      when 10 then                      battler.type1 = :DRAGON
+      when 11 then                      battler.type1 = :POISON
+      when 12 then                      battler.type1 = :ROCK
+      when 13 then                      battler.type1 = :GRASS
+      when 14 then                      battler.type1 = :GROUND
+      when 15 then                      battler.type1 = :FIGHTING
+      when 16 then                      battler.type1 = :STEEL
+      when 17 then                      battler.type1 = :PSYCHIC
+      when 18 then                      battler.type1 = :BUG
+      when 20 then                      battler.type1 = :SOUND
+      when 1 then                       battler.type1 = :FIRE
+      when 2 then                       battler.type1 = :WATER
+      when 3 then                       battler.type1 = :ICE
+      end
     end
   end
     if battler.form >= 21 && battler.isSpecies?(:ALTEMPER)
