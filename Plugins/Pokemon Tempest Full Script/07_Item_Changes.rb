@@ -1112,6 +1112,12 @@ ItemHandlers::UseOnPokemon.add(:SERIOUSMINT,proc { |item,pkmn,scene|
   next true
 })
 
+BattleHandlers::WeatherExtenderItem.add(:WEATHERROCK,
+  proc { |item,weather,duration,battler,battle|
+    next 8 if weather != :None
+  }
+)
+
 ItemHandlers::UseOnPokemon.add(:IVMAXSTONE,proc { |item,pkmn,scene|
   choices = []
   for i in 0...6
