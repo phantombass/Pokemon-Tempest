@@ -48,6 +48,8 @@ class PokemonPauseMenu_Scene
     @sprites["infowindow"].visible = false
     @sprites["helpwindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
     @sprites["helpwindow"].visible = false
+    @sprites["levelcapwindow"] = Window_UnformattedTextPokemon.newWithSize("Level Cap: #{$game_variables[LvlCap::LevelCap]}",0,0,200,64,@viewport)
+    @sprites["levelcapwindow"].visible = true
     @infostate = false
     @helpstate = false
     $viewport4 = @viewport
