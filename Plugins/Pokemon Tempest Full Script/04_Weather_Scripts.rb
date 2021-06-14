@@ -450,7 +450,7 @@ def pbReadout(text)
     if $game_variables[Readouts::Count] == 24
       meComplete = "Voltorb flip win"
       pbMessage(_INTL("\\me[{1}]\\PN has found all of the \\c[1]Weather Readouts\\c[0]!"))
-      completeQuest(0)
+      completeQuest(:Quest2,"26CC4B56",false)
     end
     pbSetSelfSwitch(@event_id,"A",true)
   end

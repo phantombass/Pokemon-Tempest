@@ -142,7 +142,8 @@ class PokemonPauseMenu
     cmdTrainer  = -1
     cmdSave     = -1
     cmdOption   = -1
-    cmdWeather = -1
+    cmdWeather  = -1
+    cmdQuest    = -1
     cmdDebug    = -1
     cmdQuit     = -1
     cmdEndGame  = -1
@@ -152,6 +153,7 @@ class PokemonPauseMenu
     commands[cmdPokemon = commands.length]   = _INTL("Pokémon") if $Trainer.party_count > 0
     commands[cmdBag = commands.length]       = _INTL("Bag") if !pbInBugContest?
     commands[cmdWeather = commands.length]  = _INTL("Weather Reader") if $game_switches[400]
+    commands[cmdQuest = commands.length]  = _INTL("Mission Log") if $game_switches[Mission::One]
     commands[cmdTrainer = commands.length]   = $Trainer.name
     if pbInSafari?
       if Settings::SAFARI_STEPS <= 0
@@ -239,6 +241,14 @@ class PokemonPauseMenu
         pbFadeOutIn {
           scene = PokemonWeather_Scene.new
           screen = PokemonWeatherScreen.new(scene)
+          screen.pbStartScreen
+          @scene.pbRefresh
+        }
+      elsif cmdQuest>=0 && command==cmdQuest
+        pbPlayDecisionSE
+        pbFadeOutIn {
+          scene = QuestList_Scene.new
+          screen = QuestList_Screen.new(scene,$PokemonGlobal.quests.active_quests)
           screen.pbStartScreen
           @scene.pbRefresh
         }

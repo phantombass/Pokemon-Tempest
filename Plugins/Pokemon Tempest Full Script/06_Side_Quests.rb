@@ -325,11 +325,11 @@ end
 
 def pbSideQuestUpdate
   typeAdv = $game_variables[SideQuest::Type] + 2
-  advanceQuestToStage(9,typeAdv)
+  advanceQuestToStage(:Quest9,typeAdv,"463F0000",false)
 end
 
 def pbSideQuestLast
-  advanceQuestToStage(9,5)
+  advanceQuestToStage(:Quest9,5,"463F0000",false)
 end
 
 def pbSideQuestComplete
@@ -415,5 +415,5 @@ def pbSideQuestComplete
   for j in 801..813
     $game_variables[j] = -1
   end
-  advanceQuestToStage(9,6)
+  advanceQuestToStage(:Quest9,6,"463F0000",false)
 end

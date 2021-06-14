@@ -121,6 +121,7 @@ BattleScript     = AARONLAST
 Ace              = 6
 #-------------------------------
 [MAELSTROMBOSS,Aaron,22]
+BattleScript     = AARONLAST
 Ace              = 6
 #-------------------------------
 [MAELSTROMBOSS,Aaron,23]
