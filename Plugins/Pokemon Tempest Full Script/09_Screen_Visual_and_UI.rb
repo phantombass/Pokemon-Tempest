@@ -249,9 +249,7 @@ class PokemonPauseMenu
       elsif cmdQuest>=0 && command==cmdQuest
         pbPlayDecisionSE
         pbFadeOutIn {
-          scene = QuestList_Scene.new
-          screen = QuestList_Screen.new(scene,$PokemonGlobal.quests.active_quests)
-          screen.pbStartScreen
+          pbViewQuests
           @scene.pbRefresh
         }
       elsif cmdTrainer>=0 && command==cmdTrainer

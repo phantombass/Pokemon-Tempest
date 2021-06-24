@@ -211,6 +211,197 @@ def pbHoneyTree
   end
 end
 
+#===================================
+# Nuzlocke Switch
+#===================================
+
+class PokemonStorageScreen
+  def pbStore(selected,heldpoke)
+    box = selected[0]
+    index = selected[1]
+    if box!=-1
+      raise _INTL("Can't deposit from box...")
+    end
+    if pbAbleCount<=1 && pbAble?(@storage[box,index]) && !heldpoke
+      pbPlayBuzzerSE
+      pbDisplay(_INTL("That's your last Pokémon!"))
+    elsif heldpoke && heldpoke.mail
+      pbDisplay(_INTL("Please remove the Mail."))
+    elsif !heldpoke && @storage[box,index].mail
+      pbDisplay(_INTL("Please remove the Mail."))
+    else
+      loop do
+        destbox = @scene.pbChooseBox(_INTL("Deposit in which Box?"))
+        if destbox>=0
+          firstfree = @storage.pbFirstFreePos(destbox)
+          if firstfree<0
+            pbDisplay(_INTL("The Box is full."))
+            next
+          end
+          if heldpoke || selected[0]==-1
+            p = (heldpoke) ? heldpoke : @storage[-1,index]
+            p.time_form_set = nil
+            p.form          = 0 if p.isSpecies?(:SHAYMIN)
+            p.heal if $game_switches[73] == false
+          end
+          @scene.pbStore(selected,heldpoke,destbox,firstfree)
+          if heldpoke
+            @storage.pbMoveCaughtToBox(heldpoke,destbox)
+            @heldpkmn = nil
+          else
+            @storage.pbMove(destbox,-1,-1,index)
+          end
+        end
+        break
+      end
+      @scene.pbRefresh
+    end
+  end
+
+  def pbHold(selected)
+    box = selected[0]
+    index = selected[1]
+    if box==-1 && pbAble?(@storage[box,index]) && pbAbleCount<=1
+      pbPlayBuzzerSE
+      pbDisplay(_INTL("That's your last Pokémon!"))
+      return
+    end
+    @scene.pbHold(selected)
+    @heldpkmn = @storage[box,index]
+    @storage.pbDelete(box,index)
+    @scene.pbRefresh
+  end
+
+  def pbPlace(selected)
+    box = selected[0]
+    index = selected[1]
+    if @storage[box,index]
+      raise _INTL("Position {1},{2} is not empty...",box,index)
+    end
+    if box!=-1 && index>=@storage.maxPokemon(box)
+      pbDisplay("Can't place that there.")
+      return
+    end
+    if box!=-1 && @heldpkmn.mail
+      pbDisplay("Please remove the mail.")
+      return
+    end
+    if box>=0
+      @heldpkmn.time_form_set = nil
+      @heldpkmn.form          = 0 if @heldpkmn.isSpecies?(:SHAYMIN)
+      @heldpkmn.heal if $game_switches[73] == false
+    end
+    @scene.pbPlace(selected,@heldpkmn)
+    @storage[box,index] = @heldpkmn
+    if box==-1
+      @storage.party.compact!
+    end
+    @scene.pbRefresh
+    @heldpkmn = nil
+  end
+
+  def pbSwap(selected)
+    box = selected[0]
+    index = selected[1]
+    if !@storage[box,index]
+      raise _INTL("Position {1},{2} is empty...",box,index)
+    end
+    if box==-1 && pbAble?(@storage[box,index]) && pbAbleCount<=1 && !pbAble?(@heldpkmn)
+      pbPlayBuzzerSE
+      pbDisplay(_INTL("That's your last Pokémon!"))
+      return false
+    end
+    if box!=-1 && @heldpkmn.mail
+      pbDisplay("Please remove the mail.")
+      return false
+    end
+    if box>=0
+      @heldpkmn.time_form_set = nil
+      @heldpkmn.form          = 0 if @heldpkmn.isSpecies?(:SHAYMIN)
+      @heldpkmn.heal if $game_switches[73] == false
+    end
+    @scene.pbSwap(selected,@heldpkmn)
+    tmp = @storage[box,index]
+    @storage[box,index] = @heldpkmn
+    @heldpkmn = tmp
+    @scene.pbRefresh
+    return true
+  end
+end
+
+def pbStartOver(gameover=false)
+  if pbInBugContest?
+    pbBugContestStartOver
+    return
+  end
+  $Trainer.heal_party
+  if $PokemonGlobal.pokecenterMapId && $PokemonGlobal.pokecenterMapId>=0
+    if gameover
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back to a Pokémon Center."))
+    else
+      if $game_switches[73] == true
+        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After losing the Nuzlocke, you scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
+      else
+        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
+      end
+    end
+    pbCancelVehicles
+    pbRemoveDependencies
+    $game_switches[Settings::STARTING_OVER_SWITCH] = true
+    $game_switches[73] = false
+    $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
+    $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
+    $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
+    $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
+    $scene.transfer_player if $scene.is_a?(Scene_Map)
+    $game_map.refresh
+  else
+    homedata = GameData::Metadata.get.home
+    if homedata && !pbRgssExists?(sprintf("Data/Map%03d.rxdata",homedata[0]))
+      if $DEBUG
+        pbMessage(_ISPRINTF("Can't find the map 'Map{1:03d}' in the Data folder. The game will resume at the player's position.",homedata[0]))
+      end
+      $Trainer.heal_party
+      return
+    end
+    if gameover
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back home."))
+    else
+      if $game_switches[73] == true
+        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After losing the Nuzlocke, you scurry back home, protecting your exhausted Pokémon from any further harm..."))
+      else
+        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back home, protecting your exhausted Pokémon from any further harm..."))
+      end
+    end
+    if homedata
+      pbCancelVehicles
+      pbRemoveDependencies
+      $game_switches[Settings::STARTING_OVER_SWITCH] = true
+      $game_switches[73] = false
+      $game_temp.player_new_map_id    = homedata[0]
+      $game_temp.player_new_x         = homedata[1]
+      $game_temp.player_new_y         = homedata[2]
+      $game_temp.player_new_direction = homedata[3]
+      $scene.transfer_player if $scene.is_a?(Scene_Map)
+      $game_map.refresh
+    else
+      $Trainer.heal_party
+    end
+  end
+  pbEraseEscapePoint
+end
+
+class Trainer
+  def heal_party
+    if $game_switches[73] == true
+      @party.each { |pkmn| pkmn.heal if !pkmn.fainted? }
+    else
+      @party.each { |pkmn| pkmn.heal }
+    end
+  end
+end
+
+
 #=======================
 #Various Modifications to fit Tempest specifically
 #=======================
@@ -676,6 +867,8 @@ class PokeBattle_Battle
     isPartic    = defeatedBattler.participants.include?(idxParty)
     hasExpShare = expShare.include?(idxParty)
     level = defeatedBattler.level
+    level_cap = $game_variables[106]
+    level_cap_gap = growth_rate.exp_values[level_cap] - pkmn.exp
     # Main Exp calculation
     exp = 0
     a = level*defeatedBattler.pokemon.base_exp
@@ -686,26 +879,14 @@ class PokeBattle_Battle
         exp = a/(2*numPartic) if isPartic
         exp += a/(2*expShare.length) if hasExpShare
       else   # Gain from participating and/or Exp Share (Exp not split)
-        if pkmn.level >= $game_variables[106]
-          exp = a/1000
-        else
-          exp = (isPartic) ? a : a/2
-        end
+        exp = (isPartic) ? a : a/2
       end
     elsif isPartic   # Participated in battle, no Exp Shares held by anyone
-      if pkmn.level >= $game_variables[106]
-        exp = a/1000
-      else
-        exp = a / (Settings::SPLIT_EXP_BETWEEN_GAINERS ? numPartic : 1)
-      end
+      exp = a / (Settings::SPLIT_EXP_BETWEEN_GAINERS ? numPartic : 1)
     elsif expAll   # Didn't participate in battle, gaining Exp due to Exp All
       # NOTE: Exp All works like the Exp Share from Gen 6+, not like the Exp All
       #       from Gen 1, i.e. Exp isn't split between all Pokémon gaining it.
-      if pkmn.level >= $game_variables[106]
-        exp = a/1000
-      else
-        exp = a/2
-      end
+      exp = a/2
     end
     return if exp<=0
     # Pokémon gain more Exp from trainer battles
@@ -719,8 +900,18 @@ class PokeBattle_Battle
       exp *= levelAdjust
       exp = exp.floor
       exp += 1 if isPartic || hasExpShare
+      if pkmn.level >= level_cap
+        exp /= 250
+      end
+      if exp >= level_cap_gap
+        exp = level_cap_gap + 1
+      end
     else
-      exp /= 7
+      if a = level_cap_gap
+        exp = a
+      else
+        exp /= 7
+      end
     end
     # Foreign Pokémon gain more Exp
     isOutsider = (pkmn.owner.id != pbPlayer.id ||

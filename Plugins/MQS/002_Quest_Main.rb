@@ -1,7 +1,6 @@
 #===============================================================================
 # This class holds the information for an individual quest
 #===============================================================================
-
 class Quest
   attr_accessor :id
   attr_accessor :stage
@@ -14,11 +13,11 @@ class Quest
   def initialize(id,color,story)
     self.id       = id
     self.stage    = 1
-	self.time     = Time.now
-	self.location = $game_map.name
-	self.new      = true
-	self.color    = color
-	self.story    = story
+    self.time     = Time.now
+    self.location = $game_map.name
+    self.new      = true
+    self.color    = color
+    self.story    = story
   end
   
   def stage=(value)
@@ -32,7 +31,6 @@ end
 #===============================================================================
 # This class holds all the trainers quests
 #===============================================================================
-
 class Player_Quests
   attr_accessor :active_quests
   attr_accessor :completed_quests
@@ -70,8 +68,7 @@ class Player_Quests
       end
     end
     @active_quests.push(Quest.new(quest,color,story))
-	seName = "Mining found all.ogg"
-	pbMessage(_INTL("\\se[{1}]<ac><c2=089D5EBF>New quest discovered!</c2>\nCheck your quest log for more details!</ac>",seName))
+    pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New quest discovered!</c2>\nCheck your quest log for more details!</ac>",QUEST_JINGLE))
   end
   
   def failQuest(quest,color,story)
@@ -93,15 +90,19 @@ class Player_Quests
     end 
     for i in 0...@active_quests.length
       if @active_quests[i].id == quest
-        @failed_quests.push(@active_quests[i])
+        temp_quest = @active_quests[i]
+        temp_quest.color = color if color != nil
+        temp_quest.new = true # Setting this back to true makes the "!" icon appear when the quest updates
+        temp_quest.time = Time.now
+        @failed_quests.push(temp_quest)
         @active_quests.delete_at(i)
         found = true
-		seName = "GUI sel buzzer.ogg"
-		pbMessage(_INTL("\\se[{1}]<ac><c2=089D5EBF>Quest failed!</c2>\nYour quest log has been updated!</ac>",seName))
+        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Quest failed!</c2>\nYour quest log has been updated!</ac>",QUEST_FAIL))
         break
       end
     end
     if !found
+      color = colorQuest(nil) if color == nil
       @failed_quests.push(Quest.new(quest,color,story))
     end
   end
@@ -125,15 +126,19 @@ class Player_Quests
     end  
     for i in 0...@active_quests.length
       if @active_quests[i].id == quest
-        @completed_quests.push(@active_quests[i])
+        temp_quest = @active_quests[i]
+        temp_quest.color = color if color != nil
+        temp_quest.new = true # Setting this back to true makes the "!" icon appear when the quest updates
+        temp_quest.time = Time.now
+        @completed_quests.push(temp_quest)
         @active_quests.delete_at(i)
         found = true
-		seName = "Mining found all.ogg"
-		pbMessage(_INTL("\\se[{1}]<ac><c2=089D5EBF>Quest completed!</c2>\nYour quest log has been updated!</ac>",seName))
+        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Quest completed!</c2>\nYour quest log has been updated!</ac>",QUEST_JINGLE))
         break
       end
     end
     if !found
+      color = colorQuest(nil) if color == nil
       @completed_quests.push(Quest.new(quest,color,story))
     end
   end
@@ -146,13 +151,15 @@ class Player_Quests
     for i in 0...@active_quests.length
       if @active_quests[i].id == quest
         @active_quests[i].stage = stageNum
+        @active_quests[i].color = color if color != nil
+        @active_quests[i].new = true # Setting this back to true makes the "!" icon appear when the quest updates
         found = true
-		seName = "Mining found all.ogg"
-		pbMessage(_INTL("\\se[{1}]<ac><c2=089D5EBF>New task added!</c2>\nYour quest log has been updated!</ac>",seName))
+        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New task added!</c2>\nYour quest log has been updated!</ac>",QUEST_JINGLE))
       end
       return if found
     end
     if !found
+      color = colorQuest(nil) if color == nil
       questNew = Quest.new(quest,color,story)
       questNew.stage = stageNum
       @active_quests.push(questNew)
@@ -160,7 +167,9 @@ class Player_Quests
   end
 end
 
+#===============================================================================
 # Initiate quest data
+#===============================================================================
 class PokemonGlobalMetadata  
   def quests
     @quests = Player_Quests.new if !@quests
@@ -174,26 +183,30 @@ class PokemonGlobalMetadata
   end
 end
 
+#===============================================================================
+# Helper and utility functions for managing quests
+#===============================================================================
+
 # Helper function for activating quests
-def activateQuest(quest,color="2D4A5694",story=false)
+def activateQuest(quest,color=colorQuest(nil),story=false)
   return if !$PokemonGlobal
   $PokemonGlobal.quests.activateQuest(quest,color,story)
 end
 
 # Helper function for marking quests as completed
-def completeQuest(quest,color="2D4A5694",story=false)
+def completeQuest(quest,color=nil,story=false)
   return if !$PokemonGlobal
   $PokemonGlobal.quests.completeQuest(quest,color,story)
 end
 
 # Helper function for marking quests as failed
-def failQuest(quest,color="2D4A5694",story=false)
+def failQuest(quest,color=nil,story=false)
   return if !$PokemonGlobal
   $PokemonGlobal.quests.failQuest(quest,color,story)
 end
 
 # Helper function for advancing quests to given stage
-def advanceQuestToStage(quest,stageNum,color="2D4A5694",story=false)
+def advanceQuestToStage(quest,stageNum,color=nil,story=false)
   return if !$PokemonGlobal
   $PokemonGlobal.quests.advanceQuestToStage(quest,stageNum,color,story)
 end
@@ -231,7 +244,6 @@ end
 #===============================================================================
 # Class that contains utility methods to return quest properties
 #===============================================================================
-
 class QuestData
 
   # Get ID number for quest
@@ -263,12 +275,6 @@ class QuestData
     return "#{QuestModule.const_get(quest)[:RewardString]}"
   end
 
-  # Get quest reward description
-  # Unused
-  def getQuestRewardDescription(quest)
-    return "#{QuestModule.const_get(quest)[:RewardDescription]}"
-  end
-
   # Get overall quest description
   def getQuestDescription(quest)
     return "#{QuestModule.const_get(quest)[:QuestDescription]}"
@@ -291,20 +297,22 @@ class QuestData
     quests = getQuestStages(quest)
     return quests.length
   end
-
-  # Get quest completed message
-  # Unused
-  def getCompletedMessage(quest)
-    return "#{QuestModule.const_get(quest)[:CompletedMessage]}"
-  end 
-
-  # Get quest failed message
-  # Unused
-  def getFailedMessage(quest)
-    return "#{QuestModule.const_get(quest)[:FailedMessage]}"
-  end
   
 end
 
 # Global variable to make it easier to refer to methods in above class
 $quest_data = QuestData.new
+
+#===============================================================================
+# Class that contains utility methods to return quest properties
+#===============================================================================
+
+# Utility function to check whether the player current has any quests
+def hasAnyQuests?
+  if $PokemonGlobal.quests.active_quests.length >0 || 
+    $PokemonGlobal.quests.completed_quests.length >0 ||
+    $PokemonGlobal.quests.failed_quests.length >0
+    return true
+  end
+  return false      
+end
