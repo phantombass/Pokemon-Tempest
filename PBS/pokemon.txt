@@ -12218,7 +12218,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = GLALIE,Level,42,FROSLASS,ItemFemale,DAWNSTONE
+Evolutions = GLALIE,Level,42,FROSLASS,Item,ICESTONE
 #-------------------------------
 [362]
 Name = Glalie
@@ -17565,7 +17565,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 30
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = GIGALITH,Trade,
+Evolutions = GIGALITH,Item,LINKSTONE
 #-------------------------------
 [526]
 Name = Gigalith
