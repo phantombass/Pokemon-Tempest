@@ -828,3 +828,4 @@
 967,CHILLINGCRY,Chilling Cry,000,85,ICE,Special,100,10,0,AllNearFoes,0,befk,"The user looses a cold shriek with the power to inflict damage."
 968,SNEAKATTACK,Sneak Attack,000,40,DARK,Physical,100,30,0,NearOther,1,abef,"The user sneaks up behind the target before they notice. This move usually goes first."
 969,TEMPOBLAST,TempoBlast,000,95,TIME,Special,100,15,0,NearOther,0,bef,"The target is hit with a burst of temporal energy."
+970,SIMPLERAY,Simple Ray,000,90,NORMAL,Special,100,10,10,NearOther,0,befp,"A beam of energy is fired at the opponent."
