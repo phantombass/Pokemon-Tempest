@@ -71,8 +71,8 @@ Events.onStepTaken += proc { |_sender,_e|
 }
 
 def pbSideQuestStart
-  completeQuest(8)
-  activateQuest(9)
+  $PokemonGlobal.quests.completeQuest(8,"26CC4B56",false)
+  $PokemonGlobal.quests.activateQuest(9,"26CC4B56",false)
   $game_switches[SideQuest::Available] = false
   $game_switches[SideQuest::Switch] = false
   $game_variables[SideQuest::Steps] = 0
@@ -325,11 +325,11 @@ end
 
 def pbSideQuestUpdate
   typeAdv = $game_variables[SideQuest::Type] + 2
-  advanceQuestToStage(:Quest9,typeAdv,"463F0000",false)
+  $PokemonGlobal.quests.advanceQuestToStage(:Quest9,typeAdv,"463F0000",false)
 end
 
 def pbSideQuestLast
-  advanceQuestToStage(:Quest9,5,"463F0000",false)
+  $PokemonGlobal.quests.advanceQuestToStage(:Quest9,5,"463F0000",false)
 end
 
 def pbSideQuestComplete
@@ -415,5 +415,5 @@ def pbSideQuestComplete
   for j in 801..813
     $game_variables[j] = -1
   end
-  advanceQuestToStage(:Quest9,6,"463F0000",false)
+  $PokemonGlobal.quests.advanceQuestToStage(:Quest9,6,"463F0000",false)
 end
