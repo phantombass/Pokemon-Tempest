@@ -71,8 +71,8 @@ Events.onStepTaken += proc { |_sender,_e|
 }
 
 def pbSideQuestStart
-  $PokemonGlobal.quests.completeQuest(8,"26CC4B56",false)
-  $PokemonGlobal.quests.activateQuest(9,"26CC4B56",false)
+  $PokemonGlobal.quests.completeQuest(:Quest8,"26CC4B56",false)
+  $PokemonGlobal.quests.activateQuest(:Quest9,"26CC4B56",false)
   $game_switches[SideQuest::Available] = false
   $game_switches[SideQuest::Switch] = false
   $game_variables[SideQuest::Steps] = 0
