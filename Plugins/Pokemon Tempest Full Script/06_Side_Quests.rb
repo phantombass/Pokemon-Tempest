@@ -252,33 +252,33 @@ def pbSideQuestGen
       case pkmnSQ
       # Comet Side Quests Only
       when 0
-        pkmnID = getConst(PBSpecies,:CLEFAIRY)
+        pkmnID = :CLEFAIRY
       when 1
-        pkmnID = getConst(PBSpecies,:SABLEYE)
+        pkmnID = :SABLEYE
       when 2
-        pkmnID = getConst(PBSpecies,:MUNNA)
+        pkmnID = :MUNNA
       when 3
-        pkmnID = getConst(PBSpecies,:TURTWIG)
+        pkmnID = :TURTWIG
       when 4
-        pkmnID = getConst(PBSpecies,:PIPLUP)
+        pkmnID = :PIPLUP
       end
     end
     if $game_switches[Mission::Vinny]
       case pkmnSQ
       # Venom Side Quests Only
       when 0
-        pkmnID = getConst(PBSpecies,:SNEASEL)
+        pkmnID = :SNEASEL
       when 1
-        pkmnID = getConst(PBSpecies,:CHATOT)
+        pkmnID = :CHATOT
       when 2
-        pkmnID = getConst(PBSpecies,:SEVIPER)
+        pkmnID = :SEVIPER
       when 3
-        pkmnID = getConst(PBSpecies,:TURTWIG)
+        pkmnID = :TURTWIG
       when 4
-        pkmnID = getConst(PBSpecies,:PIPLUP)
+        pkmnID = :PIPLUP
       end
     end
-    pkmnName = PBSpecies.getName(pkmnID)
+    pkmnName = GameData::Species.get(pkmnID).name
     pbCallBub(2,@event_id)
     pbMessage(_INTL("<c2={1}>There's been a report of a {2} that's causing trouble.</c2>",textColor,pkmnName))
     pbCallBub(2,@event_id)
@@ -291,17 +291,17 @@ def pbSideQuestGen
     itemSQ = rand(5)
     case itemSQ
     when 0
-      itemID = getConst(PBItems,:LIGHTBALL)
+      itemID = :LIGHTBALL
     when 1
-      itemID = getConst(PBItems,:LUCKYPUNCH)
+      itemID = :LUCKYPUNCH
     when 2
-      itemID = getConst(PBItems,:QUICKPOWDER)
+      itemID = :QUICKPOWDER
     when 3
-      itemID = getConst(PBItems,:RINGTARGET)
+      itemID = :RINGTARGET
     when 4
-      itemID = getConst(PBItems,:LEEK)
+      itemID = :LEEK
     end
-    itemName = PBItems.getName(itemID)
+    itemName = GameData::Item.get(itemID).name
     pbCallBub(2,@event_id)
     pbMessage(_INTL("<c2={1}>There's been a report of someone losing their {2}.</c2>",textColor,itemName))
     pbCallBub(2,@event_id)
@@ -349,25 +349,25 @@ def pbSideQuestComplete
   textColor = "7FE00000"
   case itemRand
   when 0
-    itemReward1 = getConst(PBItems,:HYPERPOTION)
-    itemReward2 = getConst(PBItems,:SITRUSBERRY)
-    itemReward3 = getConst(PBItems,:NUGGET)
+    itemReward1 = :HYPERPOTION
+    itemReward2 = :SITRUSBERRY
+    itemReward3 = :NUGGET
   when 1
-    itemReward1 = getConst(PBItems,:FULLHEAL)
-    itemReward2 = getConst(PBItems,:SITRUSBERRY)
-    itemReward3 = getConst(PBItems,:NUGGET)
+    itemReward1 = :FULLHEAL
+    itemReward2 = :SITRUSBERRY
+    itemReward3 = :NUGGET
   when 2
-    itemReward1 = getConst(PBItems,:SUPERREPEL)
-    itemReward2 = getConst(PBItems,:LUMBERRY)
-    itemReward3 = getConst(PBItems,:RARECANDY)
+    itemReward1 = :SUPERREPEL
+    itemReward2 = :LUMBERRY
+    itemReward3 = :RARECANDY
   when 3
-    itemReward1 = getConst(PBItems,:HYPERPOTION)
-    itemReward2 = getConst(PBItems,:FULLHEAL)
-    itemReward3 = getConst(PBItems,:NUGGET)
+    itemReward1 = :HYPERPOTION
+    itemReward2 = :FULLHEAL
+    itemReward3 = :NUGGET
   when 4
-    itemReward1 = getConst(PBItems,:HYPERPOTION)
-    itemReward2 = getConst(PBItems,:SUPERREPEL)
-    itemReward3 = getConst(PBItems,:NUGGET)
+    itemReward1 = :HYPERPOTION
+    itemReward2 = :SUPERREPEL
+    itemReward3 = :NUGGET
   end
   case type
   when 0
@@ -379,15 +379,15 @@ def pbSideQuestComplete
   end
   case item2
   when 0
-    itemID = getConst(PBItems,:LIGHTBALL)
+    itemID = :LIGHTBALL
   when 1
-    itemID = getConst(PBItems,:LUCKYPUNCH)
+    itemID = :LUCKYPUNCH
   when 2
-    itemID = getConst(PBItems,:QUICKPOWDER)
+    itemID = :QUICKPOWDER
   when 3
-    itemID = getConst(PBItems,:RINGTARGET)
+    itemID = :RINGTARGET
   when 4
-    itemID = getConst(PBItems,:LEEK)
+    itemID = :LEEK
   end
   pbCallBub(2,@event_id)
   pbMessage(_INTL("<c2={1}>Thank you for helping find the {2}!</c2>",textColor,msg))
