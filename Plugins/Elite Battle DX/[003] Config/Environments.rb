@@ -64,7 +64,7 @@ module EnvironmentEBDX
   }
   #-----------------------------------------------------------------------------
   INDOOR = {
-    "backdrop" => "IndoorB", "img001" => {
+    "backdrop" => "IndoorA", "img001" => {
       :bitmap => "decor007",
       :oy => 0, :z => 1, :flat => true, :scrolling => true, :speed => 0.5
     }, "img002" => {
@@ -116,13 +116,7 @@ module EnvironmentEBDX
     }, "img001" => {
       :bitmap => "mountainC",
       :x => 192, :y => 107
-    },
-    "img002" => { :bitmap => "rocks", :x => 228, :y => 148, :colorize => true, :zx => 0.5, :zy => 0.5, :z => 5, :mirror => true },
-    "img003" => { :bitmap => "rocks", :x => 124, :y => 142, :colorize => true, :zx => 0.4, :zy => 0.4, :z => 5 },
-    "img004" => { :bitmap => "rocks", :x => 65, :y => 148, :colorize => true, :zx => 0.7, :zy => 0.7, :z => 5, :mirror => true },
-    "img005" => { :bitmap => "rocks", :x => 292, :y => 150, :colorize => true, :zx => 0.7, :zy => 0.7, :z => 10, :mirror => true },
-    "img006" => { :bitmap => "rocks", :x => 162, :y => 187, :colorize => true, :zx => 0.9, :zy => 0.9, :z => 10 },
-    "img007" => { :bitmap => "rocks", :x => 320, :y => 218, :colorize => true, :zx => 1, :zy => 1, :z => 10 }
+    }
   }
   #-----------------------------------------------------------------------------
   MOUNTAINLAKE = {
