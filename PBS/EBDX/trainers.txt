@@ -139,23 +139,23 @@ Ace              = 2
 #-------------------------------
 [RIVAL3,Akron,1]
 BattleScript     = RIVAL1
-Ace              = 5
+Ace              = 6
 #-------------------------------
 [RIVAL3,Akron,2]
 BattleScript     = RIVAL2
-Ace              = 5
+Ace              = 6
 #-------------------------------
 [RIVAL3,Akron,3]
 BattleScript     = RIVAL3
-Ace              = 5
+Ace              = 6
 #-------------------------------
 [RIVAL3,Akron,4]
 BattleScript     = RIVAL3
-Ace              = 5
+Ace              = 66
 #-------------------------------
 [RIVAL3,Akron,5]
 BattleScript     = RIVAL4
-Ace              = 5
+Ace              = 6
 #-------------------------------
 [CHAMPION1]
 BattleBGM        = giratinabattle.ogg
