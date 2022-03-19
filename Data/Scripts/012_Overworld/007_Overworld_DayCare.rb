@@ -51,6 +51,8 @@ def pbDayCareDeposit(index)
   for i in 0...2
     next if $PokemonGlobal.daycare[i][0]
     $PokemonGlobal.daycare[i][0] = $Trainer.party[index]
+    $PokemonGlobal.daycare[i][0].time_form_set = nil
+    $PokemonGlobal.daycare[i][0].form = 0 if p.isSpecies?(:SHAYMIN)
     $PokemonGlobal.daycare[i][1] = $Trainer.party[index].level
     $PokemonGlobal.daycare[i][0].heal
     $Trainer.party[index] = nil
@@ -198,11 +200,19 @@ def pbDayCareGenerateEgg
     egg.form = newForm
   end
   # Inheriting Alolan form
-  if [:RATTATA, :SANDSHREW, :VULPIX, :DIGLETT, :MEOWTH, :GEODUDE, :GRIMER].include?(babyspecies)
-    if mother.form==1
+  if [:RATTATA, :SANDSHREW, :VULPIX, :DIGLETT,
+      :MEOWTH, :GEODUDE, :GRIMER, :PONYTA,
+      :SLOWPOKE, :FARFETCHD, :MRMIME, :CORSOLA,
+      :ZIGZAGOON, :DARUMAKA, :YAMASK, :STUNFISK].include?(babyspecies)
+    if mother.form == 1
       egg.form = 1 if mother.hasItem?(:EVERSTONE)
     elsif father.species_data.get_baby_species(true, mother.item_id, father.item_id) == babyspecies
-      egg.form = 1 if father.form==1 && father.hasItem?(:EVERSTONE)
+      egg.form = 1 if father.form == 1 && father.hasItem?(:EVERSTONE)
+    end
+    if mother.form == 2
+      egg.form = 2 if mother.hasItem?(:EVERSTONE)
+    elsif pbGetBabySpecies(father.species,mother.item,father.item)==babyspecies
+      egg.form = 2 if father.form == 2 && father.hasItem?(:EVERSTONE)
     end
   end
   # Inheriting Moves
@@ -319,6 +329,7 @@ def pbDayCareGenerateEgg
   if shinyretries>0
     shinyretries.times do
       break if egg.shiny?
+      genwildpoke.shiny = nil
       egg.personalID = rand(2**16) | rand(2**16) << 16
     end
   end

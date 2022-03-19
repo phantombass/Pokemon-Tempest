@@ -107,6 +107,14 @@ module PokeBattle_BattleCommon
     PBDebug.log("[Threw Poké Ball] #{itemName}, #{numShakes} shakes (4=capture)")
     # Animation of Ball throw, absorb, shake and capture/burst out
     @scene.pbThrow(ball,numShakes,@criticalCapture,battler.index,showPlayer)
+    # Ball Fetch
+    if numShakes != 4 && ![:SAFARIBALL,:MASTERBALL].include?(ball)
+      eachBattler do |b|
+        next if !b.hasActiveAbility?(:BALLFETCH) || b.item
+        b.effects[PBEffects::BallFetch] = ball
+        break
+      end
+    end
     # Outcome message
     case numShakes
     when 0
@@ -150,6 +158,7 @@ module PokeBattle_BattleCommon
       @peer.pbOnLeavingBattle(self,pkmn,true,true)
       # Make the Poké Ball and data box disappear
       @scene.pbHideCaptureBall(idxBattler)
+      pbSetBattled(battler)
       # Save the Pokémon for storage at the end of battle
       @caughtPokemon.push(pkmn)
     end
@@ -198,10 +207,13 @@ module PokeBattle_BattleCommon
       elsif numOwned>30;  c = x/12
       end
       # Calculate the number of shakes
-      if c>0 && pbRandom(256)<c
-        @criticalCapture = true
-        return 4 if pbRandom(65536)<y
-        return 0
+      rolls = GameData::Item.exists?(:CATCHINGCHARM) && $PokemonBag.pbHasItem?(:CATCHINGCHARM) ? 3 : 1
+      rolls.times do
+        if c>0 && pbRandom(256)<c
+          @criticalCapture = true
+          return 4 if pbRandom(65536)<y
+          return 0
+        end
       end
     end
     # Calculate the number of shakes

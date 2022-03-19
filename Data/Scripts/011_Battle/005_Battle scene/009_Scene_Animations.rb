@@ -3,6 +3,7 @@ class PokeBattle_Scene
   # Animates the battle intro
   #=============================================================================
   def pbBattleIntroAnimation
+    @squareShinyAnim = pbCommonAnimationExists?("SquareShiny")
     # Make everything appear
     introAnim = BattleIntroAnimation.new(@sprites,@viewport,@battle)
     loop do
@@ -43,7 +44,11 @@ class PokeBattle_Scene
       for i in 0...@battle.sideSizes[1]
         idxBattler = 2*i+1
         next if !@battle.battlers[idxBattler] || !@battle.battlers[idxBattler].shiny?
-        pbCommonAnimation("Shiny",@battle.battlers[idxBattler])
+        if Settings::SQUARE_SHINY && @battle.battlers[idxBattler].square_shiny? && @squareShinyAnim
+          pbCommonAnimation("SquareShiny", @battle.battlers[idxBattler])
+        else
+          pbCommonAnimation("Shiny", @battle.battlers[idxBattler])
+        end
       end
     end
   end
@@ -130,7 +135,11 @@ class PokeBattle_Scene
     # Play shininess animations for shiny Pokémon
     sendOuts.each do |b|
       next if !@battle.showAnims || !@battle.battlers[b[0]].shiny?
-      pbCommonAnimation("Shiny",@battle.battlers[b[0]])
+      if Settings::SQUARE_SHINY && @battle.battlers[b[0]].square_shiny? && @squareShinyAnim
+        pbCommonAnimation("SquareShiny", @battle.battlers[b[0]])
+      else
+        pbCommonAnimation("Shiny", @battle.battlers[b[0]])
+      end
     end
   end
 
@@ -160,11 +169,12 @@ class PokeBattle_Scene
   #=============================================================================
   # Ability splash bar animations
   #=============================================================================
-  def pbShowAbilitySplash(battler)
+  def pbShowAbilitySplash(battler,ability=nil)
     return if !PokeBattle_SceneConstants::USE_ABILITY_SPLASH
     side = battler.index%2
     pbHideAbilitySplash(battler) if @sprites["abilityBar_#{side}"].visible
     @sprites["abilityBar_#{side}"].battler = battler
+    @sprites["abilityBar_#{side}"].ability = ability
     abilitySplashAnim = AbilitySplashAppearAnimation.new(@sprites,@viewport,side)
     loop do
       abilitySplashAnim.update
@@ -185,6 +195,7 @@ class PokeBattle_Scene
       break if abilitySplashAnim.animDone?
     end
     abilitySplashAnim.dispose
+    @sprites["abilityBar_#{side}"].ability = nil
   end
 
   def pbReplaceAbilitySplash(battler)
@@ -489,6 +500,15 @@ class PokeBattle_Scene
       pbAnimationCore(a,user,(target!=nil) ? target : user)
       return
     end
+  end
+
+  def pbCommonAnimationExists?(animName)
+    animations = pbLoadBattleAnimations
+    animations.each do |a|
+      next if !a || a.name!="Common:"+animName
+      return true
+    end
+    return false
   end
 
   def pbAnimationCore(animation,user,target,oppMove=false)

@@ -34,7 +34,7 @@ class PokeBattle_Battler
       if target.effects[PBEffects::BeakBlast]
         PBDebug.log("[Lingering effect] #{target.pbThis}'s Beak Blast")
         if move.pbContactMove?(user) && user.affectedByContactEffect?
-          target.pbBurn(user) if target.pbCanBurn?(user,false,self)
+          user.pbBurn(user) if user.pbCanBurn?(target,false,self)
         end
       end
       # Shell Trap (make the trapper move next if the trap was triggered)
@@ -139,11 +139,16 @@ class PokeBattle_Battler
     # Target's held item (Eject Button, Red Card)
     switchByItem = []
     @battle.pbPriority(true).each do |b|
-      next if !targets.any? { |targetB| targetB.index==b.index }
-      next if b.damageState.unaffected || b.damageState.calcDamage==0 ||
-         switchedBattlers.include?(b.index)
+      next if switchedBattlers.include?(b.index)
       next if !b.itemActive?
-      BattleHandlers.triggerTargetItemAfterMoveUse(b.item,b,user,move,switchByItem,@battle)
+      next if switchByItem.length > 0 # Only one switch per move (Gen 8)
+      next if switchedBattlers.length > 0 # Only one switch per move (Gen 8)
+      if targets.any? { |targetB| targetB.index == b.index } # Eject Button, Red Card
+        if !b.damageState.unaffected && b.damageState.calcDamage != 0
+          BattleHandlers.triggerTargetItemAfterMoveUse(b.item,b,user,move,switchByItem,@battle)
+        end
+      end
+      BattleHandlers.triggerItemOnStatLoss(b.item,b,user,move,switchByItem,@battle) if b.statsLowered
     end
     @battle.moldBreaker = false if switchByItem.include?(user.index)
     @battle.pbPriority(true).each do |b|
