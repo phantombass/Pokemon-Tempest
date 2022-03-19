@@ -18,6 +18,9 @@ module Settings
   MORE_TYPE_EFFECTS                           = (MECHANICS_GENERATION >= 6)
   # Whether weather caused by an ability lasts 5 rounds (true) or forever (false).
   FIXED_DURATION_WEATHER_FROM_ABILITY         = (MECHANICS_GENERATION >= 6)
+  # Whether the fog weather behave like its Gen 8 counterpart (true)
+  # or Gen 4 counterpart (false)
+  SWSH_FOG_IN_BATTLES                         = (MECHANICS_GENERATION >= 8)
 
   #=============================================================================
 
@@ -30,6 +33,9 @@ module Settings
   # Whether Soul Dew powers up Psychic and Dragon-type moves by 20% (true) or
   # raises the holder's Special Attack and Special Defense by 50% (false).
   SOUL_DEW_POWERS_UP_TYPES         = (MECHANICS_GENERATION >= 7)
+  # Whether a Pokémon holding a Power item gains 8 (true) or 4 (false) EVs in
+  # the relevant stat.
+  MORE_EVS_FROM_POWER_ITEMS        = (MECHANICS_GENERATION >= 7)
 
   #=============================================================================
 
