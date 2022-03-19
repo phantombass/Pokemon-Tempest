@@ -289,7 +289,7 @@ class PokemonDataBox < SpriteWrapper
     w = exp_fraction * @expBarBitmap.width
     # NOTE: The line below snaps the bar's width to the nearest 2 pixels, to
     #       fit in with the rest of the graphics which are doubled in size.
-    w = ((w/2).round)*2
+    w = ((w/2).round) * 2 rescue 0
     @expBar.src_rect.width = w
   end
 
@@ -378,6 +378,7 @@ end
 #===============================================================================
 class AbilitySplashBar < SpriteWrapper
   attr_reader :battler
+  attr_accessor :ability
 
   TEXT_BASE_COLOR   = Color.new(0,0,0)
   TEXT_SHADOW_COLOR = Color.new(248,248,248)
@@ -386,6 +387,7 @@ class AbilitySplashBar < SpriteWrapper
     super(viewport)
     @side    = side
     @battler = nil
+    @ability = ability
     # Create sprite wrapper that displays background graphic
     @bgBitmap = AnimatedBitmap.new(_INTL("Graphics/Pictures/Battle/ability_bar"))
     @bgSprite = SpriteWrapper.new(viewport)
@@ -445,6 +447,11 @@ class AbilitySplashBar < SpriteWrapper
     refresh
   end
 
+  def ability=(value)
+    @ability = value
+    refresh
+  end
+
   def refresh
     self.bitmap.clear
     return if !@battler
@@ -454,7 +461,7 @@ class AbilitySplashBar < SpriteWrapper
     textPos.push([_INTL("{1}'s",@battler.name),textX,-4,@side==1,
        TEXT_BASE_COLOR,TEXT_SHADOW_COLOR,true])
     # Draw Pokémon's ability
-    textPos.push([@battler.abilityName,textX,26,@side==1,
+    textPos.push([(@ability.is_a?(String))? @ability : @battler.abilityName,textX,32,@side==1,
        TEXT_BASE_COLOR,TEXT_SHADOW_COLOR,true])
     pbDrawTextPositions(self.bitmap,textPos)
   end

@@ -1,6 +1,6 @@
 class PokeBattle_Move
   attr_reader   :battle
-  attr_reader   :realMove
+  attr_accessor :realMove
   attr_accessor :id
   attr_reader   :name
   attr_reader   :function

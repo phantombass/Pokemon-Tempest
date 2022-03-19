@@ -165,8 +165,14 @@ class PokeBattle_Move
     end
     # Disguise will take the damage
     if !@battle.moldBreaker && target.isSpecies?(:MIMIKYU) &&
-       target.form==0 && target.ability == :DISGUISE
+       target.form == 0 && target.ability == :DISGUISE
       target.damageState.disguise = true
+      return
+    end
+    # Ice Face will take the damage
+    if !@battle.moldBreaker && target.isSpecies?(:EISCUE) &&
+       target.form == 0 && target.ability == :ICEFACE && physicalMove?
+      target.damageState.iceface = true
       return
     end
   end
@@ -182,6 +188,8 @@ class PokeBattle_Move
     end
     # Disguise takes the damage
     return if target.damageState.disguise
+    # Ice Face takes the damage
+    return if target.damageState.iceface
     # Target takes the damage
     if damage>=target.hp
       damage = target.hp
@@ -251,6 +259,7 @@ class PokeBattle_Move
   #=============================================================================
   def pbEffectivenessMessage(user,target,numTargets=1)
     return if target.damageState.disguise
+    return if target.damageState.iceface
     if Effectiveness.super_effective?(target.damageState.typeMod)
       if numTargets>1
         @battle.pbDisplay(_INTL("It's super effective on {1}!",target.pbThis(true)))
@@ -268,6 +277,7 @@ class PokeBattle_Move
 
   def pbHitEffectivenessMessages(user,target,numTargets=1)
     return if target.damageState.disguise
+    return if target.damageState.iceface
     if target.damageState.substitute
       @battle.pbDisplay(_INTL("The substitute took damage for {1}!",target.pbThis(true)))
     end
@@ -277,6 +287,7 @@ class PokeBattle_Move
       else
         @battle.pbDisplay(_INTL("A critical hit!"))
       end
+     user.critical_hits += 1
     end
     # Effectiveness message, for moves with 1 hit
     if !multiHitMove? && user.effects[PBEffects::ParentalBond]==0
@@ -298,6 +309,11 @@ class PokeBattle_Move
       end
       @battle.pbHideAbilitySplash(target)
       target.pbChangeForm(1,_INTL("{1}'s disguise was busted!",target.pbThis))
+      target.pbReduceHP(target.totalhp/8)
+    elsif target.damageState.iceface
+      @battle.pbShowAbilitySplash(target)
+      target.pbChangeForm(1,_INTL("{1} transformed!",target.pbThis))
+      @battle.pbHideAbilitySplash(target)
     elsif target.damageState.endured
       @battle.pbDisplay(_INTL("{1} endured the hit!",target.pbThis))
     elsif target.damageState.sturdy
@@ -321,6 +337,7 @@ class PokeBattle_Move
   # Used by Counter/Mirror Coat/Metal Burst/Revenge/Focus Punch/Bide/Assurance.
   def pbRecordDamageLost(user,target)
     damage = target.damageState.hpLost
+    target.damage_done += damage
     # NOTE: In Gen 3 where a move's category depends on its type, Hidden Power
     #       is for some reason countered by Counter rather than Mirror Coat,
     #       regardless of its calculated type. Hence the following two lines of
