@@ -144,8 +144,6 @@ class PokeBattle_Battle
         exp = (exp*1.5).floor
       end
     end
-    # Modify Exp gain based on EXP Charm's Presence
-    exp = (exp * 1.5).floor if GameData::Item.exists?(:EXPCHARM) && $PokemonBag.pbHasItem?(:EXPCHARM)
     # Modify Exp gain based on pkmn's held item
     i = BattleHandlers.triggerExpGainModifierItem(pkmn.item,pkmn,exp)
     if i<0

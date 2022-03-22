@@ -1435,7 +1435,7 @@ class PokeBattle_AI
         if !target.ability || user.ability==target.ability ||
            [:MULTITYPE, :RKSSYSTEM].include?(user.ability_id) ||
            [:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-            :TRACE, :WONDERGUARD, :ZENMODE, :GULPMISSILE, :ICEFACE, :NEUTRALIZINGGAS].include?(target.ability_id)
+            :TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
           score -= 90
         end
       end
@@ -1455,7 +1455,7 @@ class PokeBattle_AI
         if !user.ability || user.ability==target.ability ||
           [:MULTITYPE, :RKSSYSTEM, :TRUANT].include?(target.ability_id) ||
           [:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-           :TRACE, :ZENMODE, :ICEFACE, :GULPMISSILE, :NEUTRALIZINGGAS].include?(user.ability_id)
+           :TRACE, :ZENMODE].include?(user.ability_id)
           score -= 90
         end
         if skill>=PBTrainerAI.highSkill
@@ -1472,8 +1472,8 @@ class PokeBattle_AI
       if skill>=PBTrainerAI.mediumSkill
         if (!user.ability && !target.ability) ||
            user.ability==target.ability ||
-           [:ILLUSION, :MULTITYPE, :RKSSYSTEM, :WONDERGUARD, :ICEFACE, :GULPMISSILE, :NEUTRALIZINGGAS].include?(user.ability_id) ||
-           [:ILLUSION, :MULTITYPE, :RKSSYSTEM, :WONDERGUARD, :ICEFACE, :GULPMISSILE, :NEUTRALIZINGGAS].include?(target.ability_id)
+           [:ILLUSION, :MULTITYPE, :RKSSYSTEM, :WONDERGUARD].include?(user.ability_id) ||
+           [:ILLUSION, :MULTITYPE, :RKSSYSTEM, :WONDERGUARD].include?(target.ability_id)
           score -= 90
         end
       end
@@ -2187,14 +2187,6 @@ class PokeBattle_AI
         score -= 90
       elsif @battle.pbWeather == :Sandstorm
         score -= 90
-      end
-      if skill>=PBTrainerAI.highSkill
-        user.eachOpposing do |b|
-          score -= 40 if b.ability == :ICEFACE && b.form == 0
-        end
-        user.eachAlly do |b|
-          score += 40 if b.ability == :ICEFACE && b.form == 0
-        end
       end
     #---------------------------------------------------------------------------
     when "102"
@@ -3030,7 +3022,7 @@ class PokeBattle_AI
       elsif skill>=PBTrainerAI.highSkill && reserves==0 && foes==0
         score += 80   # want to draw
       else
-        score -= (user.totalhp-user.hp)*75/user.totalhp
+        score -= (user.total.hp-user.hp)*75/user.totalhp
       end
     #---------------------------------------------------------------------------
     when "171"

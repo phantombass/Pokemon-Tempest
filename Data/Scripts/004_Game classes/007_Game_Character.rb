@@ -363,7 +363,6 @@ class Game_Character
     @real_x = @x * Game_Map::REAL_RES_X
     @real_y = @y * Game_Map::REAL_RES_Y
     @prelock_direction = 0
-    calculate_bush_depth
     triggerLeaveTile
   end
 

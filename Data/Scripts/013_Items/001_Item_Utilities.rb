@@ -117,8 +117,7 @@ end
 #===============================================================================
 # Change a Pokémon's level
 #===============================================================================
-def pbChangeLevel(pkmn,newlevel,scene,checkmoves = false)
-  oldlevel = pkmn.level
+def pbChangeLevel(pkmn,newlevel,scene)
   newlevel = newlevel.clamp(1, GameData::GrowthRate.max_level)
   if pkmn.level==newlevel
     pbMessage(_INTL("{1}'s level remained unchanged.",pkmn.name))
@@ -172,12 +171,8 @@ def pbChangeLevel(pkmn,newlevel,scene,checkmoves = false)
     # Learn new moves upon level up
     movelist = pkmn.getMoveList
     for i in movelist
-      if checkmoves
-        next if i[0] <= oldlevel || i[0] > pkmn.level
-      else
-        next if i[0] != pkmn.level
-      end
-      pbLearnMove(pkmn, i[1], true) { scene.pbUpdate }
+      next if i[0]!=pkmn.level
+      pbLearnMove(pkmn,i[1],true) { scene.pbUpdate }
     end
     # Check for evolution
     newspecies = pkmn.check_evolution_on_level_up
@@ -221,19 +216,10 @@ def pbItemRestoreHP(pkmn,restoreHP)
   return hpGain
 end
 
-def pbHPItem(pkmn,restoreHP,scene,item = nil)
+def pbHPItem(pkmn,restoreHP,scene)
   if !pkmn.able? || pkmn.hp==pkmn.totalhp
     scene.pbDisplay(_INTL("It won't have any effect."))
     return false
-  end
-  if item
-    maxhp = ((pkmn.totalhp - pkmn.hp)/restoreHP.to_f).ceil
-    maximum = [maxhp,$PokemonBag.pbQuantity(item)].min
-    qty = scene.pbChooseNumber(
-      _INTL("How many {1} do you want to use?", GameData::Item.get(item).name_plural), maximum, 1)
-    restoreHP *= qty
-    return false if qty == 0
-    $PokemonBag.pbDeleteItem(item, qty - 1)
   end
   hpGain = pbItemRestoreHP(pkmn,restoreHP)
   scene.pbRefresh
@@ -306,34 +292,6 @@ def pbRaiseEffortValues(pkmn, stat, evGain = 10, ev_limit = true)
   return evGain
 end
 
-def pbItemRaiseEV(pkmn, stat, scene, evGain = 10, item = nil, happiness = "")
-  qty = 1
-  if Settings::NO_VITAMIN_EV_CAP && pkmn.ev[stat] >= 100
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    return false
-  end
-  if item
-    evTotal = 0
-    GameData::Stat.each_main { |s| evTotal += pkmn.ev[s.id] }
-    maxEvGain = [Pokemon::EV_STAT_LIMIT - pkmn.ev[stat],Pokemon::EV_LIMIT - evTotal].min
-    maxEV = (maxEvGain/evGain.to_f).ceil
-    maximum = [maxEV,$PokemonBag.pbQuantity(item)].min
-    qty = scene.pbChooseNumber(
-      _INTL("How many {1} do you want to use?", GameData::Item.get(item).name_plural), maximum, 1)
-    return false if qty == 0
-    $PokemonBag.pbDeleteItem(item, qty - 1)
-  end
-  if pbJustRaiseEffortValues(pkmn,stat,evGain * qty) == 0
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    return false
-  end
-  scene.pbRefresh
-  statName = GameData::Stat.get(stat).id
-  scene.pbDisplay(_INTL("{1}'s {2} increased.",pkmn.name,statName))
-  qty.times do; pkmn.changeHappiness(happiness); end
-  return true
-end
-
 def pbRaiseHappinessAndLowerEV(pkmn,scene,stat,messages)
   h = pkmn.happiness<255
   e = pkmn.ev[stat]>0
@@ -341,7 +299,9 @@ def pbRaiseHappinessAndLowerEV(pkmn,scene,stat,messages)
     scene.pbDisplay(_INTL("It won't have any effect."))
     return false
   end
-  pkmn.changeHappiness("evberry") if h
+  if h
+    pkmn.changeHappiness("evberry")
+  end
   if e
     pkmn.ev[stat] -= 10
     pkmn.ev[stat] = 0 if pkmn.ev[stat]<0
@@ -352,83 +312,6 @@ def pbRaiseHappinessAndLowerEV(pkmn,scene,stat,messages)
   return true
 end
 
-#===============================================================================
-# Change Nature
-#===============================================================================
-def pbChangeNature(pkmn,nature)
-  return false if !GameData::Nature.exists?(nature)
-  pkmn.nature_for_stats = nature
-  pkmn.calc_stats
-  return true
-end
-
-def pbNatureChangeItem(pkmn,nature,item,scene)
-  if [pkmn.nature_for_stats, pkmn.nature].include?(nature)
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    return false
-  else
-    return false if !scene.pbConfirm(_INTL("It might affect {1}'s stats.\nAre you sure you want to use it?",pkmn.name))
-    ret = pbChangeNature(pkmn,nature)
-    if ret
-      scene.pbDisplay(_INTL("{1}'s stats changed due to the effects of the {2}!",pkmn.name,
-                                                                    GameData::Item.get(item).name))
-    else
-      scene.pbDisplay(_INTL("It won't have any effect."))
-    end
-    return ret
-  end
-end
-
-#===============================================================================
-# Add EXP
-#===============================================================================
-def pbAddEXP(pkmn,exp)
-  new_exp = pkmn.growth_rate.add_exp(pkmn.exp,exp)
-  new_level = pkmn.growth_rate.level_from_exp(new_exp)
-  pkmn.setExp(new_exp)
-  pkmn.calc_stats
-  return new_level
-end
-
-def pbEXPAdditionItem(pkmn,exp,item,scene)
-  current_lv = pkmn.level
-  current_exp = pkmn.exp
-  if pkmn.level >= GameData::GrowthRate.max_level || pkmn.shadowPokemon?
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    return false
-  else
-    maxlv = ((pkmn.growth_rate.maximum_exp - current_exp) / exp.to_f).ceil
-    maximum = [maxlv,$PokemonBag.pbQuantity(item)].min
-    qty = scene.pbChooseNumber(
-       _INTL("How many {1} do you want to use?", GameData::Item.get(item).name_plural), maximum, 1)
-    return false if qty < 1
-    $PokemonBag.pbDeleteItem(item, qty - 1)
-    new_level = pbAddEXP(pkmn,exp * qty)
-    display_exp = (exp * qty)
-    if pkmn.growth_rate.maximum_exp < (current_exp + (exp * qty))
-      display_exp = pkmn.growth_rate.maximum_exp - current_exp
-    end
-    scene.pbDisplay(_INTL("{1} gained {2} Exp. Points!",pkmn.name,display_exp))
-    if new_level == current_lv
-      scene.pbRefresh
-    else
-      attackdiff  = pkmn.attack
-      defensediff = pkmn.defense
-      speeddiff   = pkmn.speed
-      spatkdiff   = pkmn.spatk
-      spdefdiff   = pkmn.spdef
-      totalhpdiff = pkmn.totalhp
-      level_diff = new_level - current_lv
-      leftover_exp = pkmn.exp - pkmn.growth_rate.minimum_exp_for_level(new_level)
-      leftover_exp.clamp(0,(pkmn.growth_rate.minimum_exp_for_level(new_level + 1) - 1))
-      pbChangeLevel(pkmn,new_level,scene,true)
-      pkmn.changeHappiness("vitamin")
-      pkmn.setExp(pkmn.growth_rate.minimum_exp_for_level(new_level) + leftover_exp)
-      scene.pbHardRefresh
-    end
-    return true
-  end
-end
 #===============================================================================
 # Battle items
 #===============================================================================

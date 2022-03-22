@@ -11,7 +11,10 @@ class PokeBattle_Battle
                    BattleHandlers.triggerRunFromBattleAbility(battler.ability,battler)
     return true if battler.itemActive? &&
                    BattleHandlers.triggerRunFromBattleItem(battler.item,battler)
-    return false if battler.trappedInBattle?
+    return false if battler.effects[PBEffects::Trapping]>0 ||
+                    battler.effects[PBEffects::MeanLook]>=0 ||
+                    battler.effects[PBEffects::Ingrain] ||
+                    @field.effects[PBEffects::FairyLock]>0
     eachOtherSideBattler(idxBattler) do |b|
       return false if b.abilityActive? &&
                       BattleHandlers.triggerTrappingTargetAbility(b.ability,battler,b,self)
@@ -96,7 +99,10 @@ class PokeBattle_Battle
         end
       end
       # Other certain trapping effects
-      if battler.trappedInBattle?
+      if battler.effects[PBEffects::Trapping]>0 ||
+         battler.effects[PBEffects::MeanLook]>=0 ||
+         battler.effects[PBEffects::Ingrain] ||
+         @field.effects[PBEffects::FairyLock]>0
         pbDisplayPaused(_INTL("You can't escape!"))
         return 0
       end
