@@ -512,7 +512,7 @@ module Compiler
     end
     return nil if battles.length<=0
     # Run trainer check now, except in editor
-    trainerChecker.pbTrainerBattleCheck(trtype,trname,battleid)
+    trainerChecker.pbTrainerBattleCheck(trtype,trname,battleid) if !$INEDITOR
     # Set the event's charset to one depending on the trainer type if the event
     # doesn't have a charset
     if firstpage.graphic.character_name=="" && GameData::TrainerType.exists?(trtype)
@@ -570,7 +570,7 @@ module Compiler
     # Write rematch and last pages
     for i in 1...battles.length
       # Run trainer check now, except in editor
-      trainerChecker.pbTrainerBattleCheck(trtype,trname,battleid+i)
+      trainerChecker.pbTrainerBattleCheck(trtype,trname,battleid+i) if !$INEDITOR
       if i==battles.length-1
         push_branch(rematchpage.list,sprintf("pbPhoneBattleCount(%s)>=%d",safetrcombo,i))
         push_branch(lastpage.list,sprintf("pbPhoneBattleCount(%s)>%d",safetrcombo,i))

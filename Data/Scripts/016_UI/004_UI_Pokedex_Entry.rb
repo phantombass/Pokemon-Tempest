@@ -171,7 +171,7 @@ class PokemonPokedexInfo_Scene
         when 0 then entry[0] = _INTL("Male")
         when 1 then entry[0] = _INTL("Female")
         else
-          entry[0] = (multiple_forms) ? _INTL("Base Form") : _INTL("Genderless")
+          entry[0] = (multiple_forms) ? _INTL("One Form") : _INTL("Genderless")
         end
       end
       entry[1] = 0 if entry[1] == 2   # Genderless entries are treated as male
@@ -216,32 +216,25 @@ class PokemonPokedexInfo_Scene
       indexText = sprintf("%03d", indexNumber)
     end
     textpos = [
-      [_INTL("{1}{2} {3}", indexText, " ", species_data.name),
-        246, 36, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)]]
-    if !@checkingNumberBattled
-      textpos.push([_INTL("Height"), 314, 152, 0, base, shadow])
-      textpos.push([_INTL("Weight"), 314, 184, 0, base, shadow])
-    else
-      textpos.push([_INTL("Number Battled:"), 314, 152, 0, base, shadow])
-    end
+       [_INTL("{1}{2} {3}", indexText, " ", species_data.name),
+          246, 36, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)],
+       [_INTL("Height"), 314, 152, 0, base, shadow],
+       [_INTL("Weight"), 314, 184, 0, base, shadow]
+    ]
     if $Trainer.owned?(@species)
       # Write the category
       textpos.push([_INTL("{1} Pokémon", species_data.category), 246, 68, 0, base, shadow])
-      if !@checkingNumberBattled
-        # Write the height and weight
-        height = species_data.height
-        weight = species_data.weight
-        if System.user_language[3..4] == "US"   # If the user is in the United States
-          inches = (height / 0.254).round
-          pounds = (weight / 0.45359).round
-          textpos.push([_ISPRINTF("{1:d}'{2:02d}\"", inches / 12, inches % 12), 460, 152, 1, base, shadow])
-          textpos.push([_ISPRINTF("{1:4.1f} lbs.", pounds / 10.0), 494, 184, 1, base, shadow])
-        else
-          textpos.push([_ISPRINTF("{1:.1f} m", height / 10.0), 470, 152, 1, base, shadow])
-          textpos.push([_ISPRINTF("{1:.1f} kg", weight / 10.0), 482, 184, 1, base, shadow])
-        end
+      # Write the height and weight
+      height = species_data.height
+      weight = species_data.weight
+      if System.user_language[3..4] == "US"   # If the user is in the United States
+        inches = (height / 0.254).round
+        pounds = (weight / 0.45359).round
+        textpos.push([_ISPRINTF("{1:d}'{2:02d}\"", inches / 12, inches % 12), 460, 152, 1, base, shadow])
+        textpos.push([_ISPRINTF("{1:4.1f} lbs.", pounds / 10.0), 494, 184, 1, base, shadow])
       else
-        textpos.push([(_ISPRINTF("{1:03d}",$Trainer.pokedex.number_battled(@species))), 472, 184, 1, base, shadow])
+        textpos.push([_ISPRINTF("{1:.1f} m", height / 10.0), 470, 152, 1, base, shadow])
+        textpos.push([_ISPRINTF("{1:.1f} kg", weight / 10.0), 482, 184, 1, base, shadow])
       end
       # Draw the Pokédex entry text
       drawTextEx(overlay, 40, 244, Graphics.width - (40 * 2), 4,   # overlay, x, y, width, num lines
@@ -267,17 +260,13 @@ class PokemonPokedexInfo_Scene
     else
       # Write the category
       textpos.push([_INTL("????? Pokémon"), 246, 68, 0, base, shadow])
-      if !@checkingNumberBattled
-        # Write the height and weight
-        if System.user_language[3..4] == "US"   # If the user is in the United States
-          textpos.push([_INTL("???'??\""), 460, 152, 1, base, shadow])
-          textpos.push([_INTL("????.? lbs."), 494, 184, 1, base, shadow])
-        else
-          textpos.push([_INTL("????.? m"), 470, 152, 1, base, shadow])
-          textpos.push([_INTL("????.? kg"), 482, 184, 1, base, shadow])
-        end
+      # Write the height and weight
+      if System.user_language[3..4] == "US"   # If the user is in the United States
+        textpos.push([_INTL("???'??\""), 460, 152, 1, base, shadow])
+        textpos.push([_INTL("????.? lbs."), 494, 184, 1, base, shadow])
       else
-        textpos.push([_INTL("???"), 472, 184, 1, base, shadow])
+        textpos.push([_INTL("????.? m"), 470, 152, 1, base, shadow])
+        textpos.push([_INTL("????.? kg"), 482, 184, 1, base, shadow])
       end
     end
     # Draw all text
@@ -466,9 +455,8 @@ class PokemonPokedexInfo_Scene
         pbPlayCloseMenuSE
         break
       elsif Input.trigger?(Input::USE)
-        if @page==1    # Info
-          @checkingNumberBattled = !@checkingNumberBattled
-          dorefresh = true
+        if @page==2   # Area
+#          dorefresh = true
         elsif @page==3   # Forms
           if @available.length>1
             pbPlayDecisionSE

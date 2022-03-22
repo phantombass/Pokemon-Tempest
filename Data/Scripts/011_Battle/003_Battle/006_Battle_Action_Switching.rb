@@ -66,7 +66,10 @@ class PokeBattle_Battle
     # Other certain switching effects
     return true if Settings::MORE_TYPE_EFFECTS && battler.pbHasType?(:GHOST)
     # Other certain trapping effects
-    if battler.trappedInBattle?
+    if battler.effects[PBEffects::Trapping]>0 ||
+       battler.effects[PBEffects::MeanLook]>=0 ||
+       battler.effects[PBEffects::Ingrain] ||
+       @field.effects[PBEffects::FairyLock]>0
       partyScene.pbDisplay(_INTL("{1} can't be switched out!",battler.pbThis)) if partyScene
       return false
     end
@@ -305,8 +308,6 @@ class PokeBattle_Battle
   #=============================================================================
   # Called at the start of battle only.
   def pbOnActiveAll
-    # Neutralizing Gas activates before anything.
-	  pbPriorityNeutralizingGas
     # Weather-inducing abilities, Trace, Imposter, etc.
     pbCalculatePriority(true)
     pbPriority(true).each { |b| b.pbEffectsOnSwitchIn(true) }
@@ -329,88 +330,6 @@ class PokeBattle_Battle
     end
     # Update battlers' participants (who will gain Exp/EVs when a battler faints)
     eachBattler { |b| b.pbUpdateParticipants }
-	  # Healing Wish / Lunar Dance
-	  pbActivateHealingWish(battler)
-    # Entry hazards
-    # Stealth Rock
-    if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
-       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage?
-      bTypes = battler.pbTypes(true)
-      eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
-      if !Effectiveness.ineffective?(eff)
-        eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
-        oldHP = battler.hp
-        battler.pbReduceHP(battler.totalhp*eff/8,false)
-        pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
-        battler.pbItemHPHealCheck
-        if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
-          return pbOnActiveOne(battler)   # For replacement battler
-        end
-      end
-    end
-    # Spikes
-    if battler.pbOwnSide.effects[PBEffects::Spikes]>0 && battler.takesIndirectDamage? &&
-       !battler.airborne? && battler.takesEntryHazardDamage?
-      spikesDiv = [8,6,4][battler.pbOwnSide.effects[PBEffects::Spikes]-1]
-      oldHP = battler.hp
-      battler.pbReduceHP(battler.totalhp/spikesDiv,false)
-      pbDisplay(_INTL("{1} is hurt by the spikes!",battler.pbThis))
-      battler.pbItemHPHealCheck
-      if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
-        return pbOnActiveOne(battler)   # For replacement battler
-      end
-    end
-    # Toxic Spikes
-    if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 && !battler.fainted? &&
-       !battler.airborne?
-      if battler.pbHasType?(:POISON)
-        battler.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
-        pbDisplay(_INTL("{1} absorbed the poison spikes!",battler.pbThis))
-      elsif battler.pbCanPoison?(nil,false) && battler.takesEntryHazardDamage?
-        if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]==2
-          battler.pbPoison(nil,_INTL("{1} was badly poisoned by the poison spikes!",battler.pbThis),true)
-        else
-          battler.pbPoison(nil,_INTL("{1} was poisoned by the poison spikes!",battler.pbThis))
-        end
-      end
-    end
-    # Sticky Web
-    if battler.pbOwnSide.effects[PBEffects::StickyWeb] && !battler.fainted? &&
-       !battler.airborne? && battler.takesEntryHazardDamage?
-      pbDisplay(_INTL("{1} was caught in a sticky web!",battler.pbThis))
-      if battler.pbCanLowerStatStage?(:SPEED)
-        stickyuser = (battler.pbOwnSide.effects[PBEffects::StickyWebUser] > -1 ?
-  		    battlers[battler.pbOwnSide.effects[PBEffects::StickyWebUser]] : nil)
-        battler.pbLowerStatStage(:SPEED,1,stickyuser)
-        battler.pbItemStatRestoreCheck
-      end
-    end
-    # Battler faints if it is knocked out because of an entry hazard above
-    if battler.fainted?
-      battler.pbFaint
-      pbGainExp
-      pbJudge
-      return false
-    end
-    battler.pbCheckForm
-    return true
-  end
-
-  # Called at the start of battle only; Neutralizing Gas activates before anything.
-  def pbPriorityNeutralizingGas
-    eachBattler do |b|
-      next if !b || b.fainted?
-      # neutralizing gas can be blocked with gastro acid, ending the effect.
-      if b.ability == :NEUTRALIZINGGAS && !b.effects[PBEffects::GastroAcid]
-        BattleHandlers.triggerAbilityOnSwitchIn(:NEUTRALIZINGGAS,b,self)
-        return
-      end
-    end
-  end
-
-  # Called when a Pokémon switches in + after using Ally Switch (Gen 8 mechanics)
-  def pbActivateHealingWish(battler)
-    return if !battler.canTakeHealingWish?
     # Healing Wish
     if @positions[battler.index].effects[PBEffects::HealingWish]
       pbCommonAnimation("HealingWish",battler)
@@ -428,5 +347,66 @@ class PokeBattle_Battle
       battler.eachMove { |m| m.pp = m.total_pp }
       @positions[battler.index].effects[PBEffects::LunarDance] = false
     end
+    # Entry hazards
+    # Stealth Rock
+    if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
+       GameData::Type.exists?(:ROCK)
+      bTypes = battler.pbTypes(true)
+      eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
+      if !Effectiveness.ineffective?(eff)
+        eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
+        oldHP = battler.hp
+        battler.pbReduceHP(battler.totalhp*eff/8,false)
+        pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
+        battler.pbItemHPHealCheck
+        if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+          return pbOnActiveOne(battler)   # For replacement battler
+        end
+      end
+    end
+    # Spikes
+    if battler.pbOwnSide.effects[PBEffects::Spikes]>0 && battler.takesIndirectDamage? &&
+       !battler.airborne?
+      spikesDiv = [8,6,4][battler.pbOwnSide.effects[PBEffects::Spikes]-1]
+      oldHP = battler.hp
+      battler.pbReduceHP(battler.totalhp/spikesDiv,false)
+      pbDisplay(_INTL("{1} is hurt by the spikes!",battler.pbThis))
+      battler.pbItemHPHealCheck
+      if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+        return pbOnActiveOne(battler)   # For replacement battler
+      end
+    end
+    # Toxic Spikes
+    if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 && !battler.fainted? &&
+       !battler.airborne?
+      if battler.pbHasType?(:POISON)
+        battler.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
+        pbDisplay(_INTL("{1} absorbed the poison spikes!",battler.pbThis))
+      elsif battler.pbCanPoison?(nil,false)
+        if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]==2
+          battler.pbPoison(nil,_INTL("{1} was badly poisoned by the poison spikes!",battler.pbThis),true)
+        else
+          battler.pbPoison(nil,_INTL("{1} was poisoned by the poison spikes!",battler.pbThis))
+        end
+      end
+    end
+    # Sticky Web
+    if battler.pbOwnSide.effects[PBEffects::StickyWeb] && !battler.fainted? &&
+       !battler.airborne?
+      pbDisplay(_INTL("{1} was caught in a sticky web!",battler.pbThis))
+      if battler.pbCanLowerStatStage?(:SPEED)
+        battler.pbLowerStatStage(:SPEED,1,nil)
+        battler.pbItemStatRestoreCheck
+      end
+    end
+    # Battler faints if it is knocked out because of an entry hazard above
+    if battler.fainted?
+      battler.pbFaint
+      pbGainExp
+      pbJudge
+      return false
+    end
+    battler.pbCheckForm
+    return true
   end
 end

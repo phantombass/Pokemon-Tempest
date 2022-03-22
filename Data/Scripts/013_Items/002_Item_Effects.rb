@@ -34,8 +34,6 @@ ItemHandlers::UseFromBag.add(:ESCAPEROPE,proc { |item|
   next 0
 })
 
-ItemHandlers::UseFromBag.copy(:ESCAPEROPE,:INFINITEROPE)
-
 ItemHandlers::UseFromBag.add(:BICYCLE,proc { |item|
   next (pbBikeCheck) ? 2 : 0
 })
@@ -77,8 +75,6 @@ ItemHandlers::ConfirmUseInField.add(:ESCAPEROPE,proc { |item|
   mapname = pbGetMapNameFromId(escape[0])
   next pbConfirmMessage(_INTL("Want to escape from here and return to {1}?",mapname))
 })
-
-ItemHandlers::ConfirmUseInField.copy(:ESCAPEROPE,:INFINITEROPE)
 
 #===============================================================================
 # UseInField handlers
@@ -183,8 +179,6 @@ ItemHandlers::UseInField.add(:ESCAPEROPE,proc { |item|
   pbEraseEscapePoint
   next 3
 })
-
-ItemHandlers::UseInField.copy(:ESCAPEROPE,:INFINITEROPE)
 
 ItemHandlers::UseInField.add(:SACREDASH,proc { |item|
   if $Trainer.pokemon_count == 0
@@ -365,20 +359,18 @@ ItemHandlers::UseOnPokemon.addIf(proc { |item| GameData::Item.get(item).is_evolu
 )
 
 ItemHandlers::UseOnPokemon.add(:POTION,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,20,scene,item)
+  next pbHPItem(pkmn,20,scene)
 })
 
 ItemHandlers::UseOnPokemon.copy(:POTION,:BERRYJUICE,:SWEETHEART)
 ItemHandlers::UseOnPokemon.copy(:POTION,:RAGECANDYBAR) if !Settings::RAGE_CANDY_BAR_CURES_STATUS_PROBLEMS
 
 ItemHandlers::UseOnPokemon.add(:SUPERPOTION,proc { |item,pkmn,scene|
-  healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 60 : 50
-  next pbHPItem(pkmn,healAmt,scene,item)
+  next pbHPItem(pkmn,50,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:HYPERPOTION,proc { |item,pkmn,scene|
-  healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 120 : 200
-  next pbHPItem(pkmn,healAmt,scene,item)
+  next pbHPItem(pkmn,200,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:MAXPOTION,proc { |item,pkmn,scene|
@@ -386,30 +378,27 @@ ItemHandlers::UseOnPokemon.add(:MAXPOTION,proc { |item,pkmn,scene|
 })
 
 ItemHandlers::UseOnPokemon.add(:FRESHWATER,proc { |item,pkmn,scene|
-  healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 30 : 50
-  next pbHPItem(pkmn,healAmt,scene,item)
+  next pbHPItem(pkmn,50,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:SODAPOP,proc { |item,pkmn,scene|
-  healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 50 : 60
-  next pbHPItem(pkmn,healAmt,scene,item)
+  next pbHPItem(pkmn,60,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:LEMONADE,proc { |item,pkmn,scene|
-  healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 70 : 80
-  next pbHPItem(pkmn,healAmt,scene,item)
+  next pbHPItem(pkmn,80,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:MOOMOOMILK,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,100,scene,item)
+  next pbHPItem(pkmn,100,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:ORANBERRY,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,10,scene,item)
+  next pbHPItem(pkmn,10,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:SITRUSBERRY,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,pkmn.totalhp/4,scene,item)
+  next pbHPItem(pkmn,pkmn.totalhp/4,scene)
 })
 
 ItemHandlers::UseOnPokemon.add(:AWAKENING,proc { |item,pkmn,scene|
@@ -490,7 +479,7 @@ ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc { |item,pkmn,scene|
 
 ItemHandlers::UseOnPokemon.copy(:FULLHEAL,
    :LAVACOOKIE,:OLDGATEAU,:CASTELIACONE,:LUMIOSEGALETTE,:SHALOURSABLE,
-   :BIGMALASADA,:LUMBERRY,:PEWTERCRUNCHIES)
+   :BIGMALASADA,:LUMBERRY)
 ItemHandlers::UseOnPokemon.copy(:FULLHEAL,:RAGECANDYBAR) if Settings::RAGE_CANDY_BAR_CURES_STATUS_PROBLEMS
 
 ItemHandlers::UseOnPokemon.add(:FULLRESTORE,proc { |item,pkmn,scene|
@@ -534,11 +523,8 @@ ItemHandlers::UseOnPokemon.add(:MAXREVIVE,proc { |item,pkmn,scene|
   next true
 })
 
-ItemHandlers::UseOnPokemon.copy(:MAXREVIVE,:MAXHONEY)
-
 ItemHandlers::UseOnPokemon.add(:ENERGYPOWDER,proc { |item,pkmn,scene|
-  healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 60 : 50
-  if pbHPItem(pkmn,healAmt,scene,item)
+  if pbHPItem(pkmn,50,scene)
     pkmn.changeHappiness("powder")
     next true
   end
@@ -546,8 +532,7 @@ ItemHandlers::UseOnPokemon.add(:ENERGYPOWDER,proc { |item,pkmn,scene|
 })
 
 ItemHandlers::UseOnPokemon.add(:ENERGYROOT,proc { |item,pkmn,scene|
-  healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 120 : 200
-  if pbHPItem(pkmn,healAmt,scene,item)
+  if pbHPItem(pkmn,200,scene)
     pkmn.changeHappiness("energyroot")
     next true
   end
@@ -660,88 +645,133 @@ ItemHandlers::UseOnPokemon.add(:PPMAX,proc { |item,pkmn,scene|
 })
 
 ItemHandlers::UseOnPokemon.add(:HPUP,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:HP,scene,10,item,"vitamin")
+  if pbRaiseEffortValues(pkmn,:HP)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbRefresh
+  scene.pbDisplay(_INTL("{1}'s HP increased.",pkmn.name))
+  pkmn.changeHappiness("vitamin")
+  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:PROTEIN,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:ATTACK,scene,10,item,"vitamin")
+  if pbRaiseEffortValues(pkmn,:ATTACK)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Attack increased.",pkmn.name))
+  pkmn.changeHappiness("vitamin")
+  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:IRON,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:DEFENSE,scene,10,item,"vitamin")
+  if pbRaiseEffortValues(pkmn,:DEFENSE)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Defense increased.",pkmn.name))
+  pkmn.changeHappiness("vitamin")
+  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:CALCIUM,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:SPECIAL_ATTACK,scene,10,item,"vitamin")
+  if pbRaiseEffortValues(pkmn,:SPECIAL_ATTACK)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Special Attack increased.",pkmn.name))
+  pkmn.changeHappiness("vitamin")
+  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:ZINC,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:SPECIAL_DEFENSE,scene,10,item,"vitamin")
+  if pbRaiseEffortValues(pkmn,:SPECIAL_DEFENSE)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Special Defense increased.",pkmn.name))
+  pkmn.changeHappiness("vitamin")
+  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:CARBOS,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:SPEED,scene,10,item,"vitamin")
+  if pbRaiseEffortValues(pkmn,:SPEED)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Speed increased.",pkmn.name))
+  pkmn.changeHappiness("vitamin")
+  next true
 })
 
-ItemHandlers::UseOnPokemon.add(:HEALTHFEATHER,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:HP,scene,1,item,"wing")
+ItemHandlers::UseOnPokemon.add(:HEALTHWING,proc { |item,pkmn,scene|
+  if pbRaiseEffortValues(pkmn,:HP,1,false)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbRefresh
+  scene.pbDisplay(_INTL("{1}'s HP increased.",pkmn.name))
+  pkmn.changeHappiness("wing")
+  next true
 })
 
-ItemHandlers::UseOnPokemon.copy(:HEALTHFEATHER,:HEALTHWING)
-
-ItemHandlers::UseOnPokemon.add(:MUSCLEFEATHER,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:ATTACK,scene,1,item,"wing")
+ItemHandlers::UseOnPokemon.add(:MUSCLEWING,proc { |item,pkmn,scene|
+  if pbRaiseEffortValues(pkmn,:ATTACK,1,false)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Attack increased.",pkmn.name))
+  pkmn.changeHappiness("wing")
+  next true
 })
 
-ItemHandlers::UseOnPokemon.copy(:MUSCLEFEATHER,:MUSCLEWING)
-
-ItemHandlers::UseOnPokemon.add(:RESISTFEATHER,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:DEFENSE,scene,1,item,"wing")
+ItemHandlers::UseOnPokemon.add(:RESISTWING,proc { |item,pkmn,scene|
+  if pbRaiseEffortValues(pkmn,:DEFENSE,1,false)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Defense increased.",pkmn.name))
+  pkmn.changeHappiness("wing")
+  next true
 })
 
-ItemHandlers::UseOnPokemon.copy(:RESISTFEATHER,:RESISTWING)
-
-ItemHandlers::UseOnPokemon.add(:GENIUSFEATHER,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:SPECIAL_ATTACK,scene,1,item,"wing")
+ItemHandlers::UseOnPokemon.add(:GENIUSWING,proc { |item,pkmn,scene|
+  if pbRaiseEffortValues(pkmn,:SPECIAL_ATTACK,1,false)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Special Attack increased.",pkmn.name))
+  pkmn.changeHappiness("wing")
+  next true
 })
 
-ItemHandlers::UseOnPokemon.copy(:GENIUSFEATHER,:GENIUSWING)
-
-ItemHandlers::UseOnPokemon.add(:CLEVERFEATHER,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:SPECIAL_DEFENSE,scene,1,item,"wing")
+ItemHandlers::UseOnPokemon.add(:CLEVERWING,proc { |item,pkmn,scene|
+  if pbRaiseEffortValues(pkmn,:SPECIAL_DEFENSE,1,false)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Special Defense increased.",pkmn.name))
+  pkmn.changeHappiness("wing")
+  next true
 })
 
-ItemHandlers::UseOnPokemon.copy(:CLEVERFEATHER,:CLEVERWING)
-
-ItemHandlers::UseOnPokemon.add(:SWIFTFEATHER,proc { |item,pkmn,scene|
-  next pbItemRaiseEV(pkmn,:SPEED,scene,1,item,"wing")
+ItemHandlers::UseOnPokemon.add(:SWIFTWING,proc { |item,pkmn,scene|
+  if pbRaiseEffortValues(pkmn,:SPEED,1,false)==0
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  scene.pbDisplay(_INTL("{1}'s Speed increased.",pkmn.name))
+  pkmn.changeHappiness("wing")
+  next true
 })
-
-ItemHandlers::UseOnPokemon.copy(:SWIFTFEATHER,:SWIFTWING)
 
 ItemHandlers::UseOnPokemon.add(:RARECANDY,proc { |item,pkmn,scene|
-  if pkmn.level >= GameData::GrowthRate.max_level
-    newspecies = pkmn.check_evolution_on_level_up
-    if newspecies && !pkmn.shadowPokemon? && Settings::RARE_CANDY_USABLE_AT_MAX_LEVEL
-      pbFadeOutInWithMusic {
-        evo = PokemonEvolutionScene.new
-        evo.pbStartScreen(pkmn,newspecies)
-        evo.pbEvolution
-        evo.pbEndScreen
-        scene.pbRefresh
-      }
-      next true
-    else
-      scene.pbDisplay(_INTL("It won't have any effect."))
-      next false
-    end
+  if pkmn.level>=GameData::GrowthRate.max_level || pkmn.shadowPokemon?
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
   end
-  maximum = [(GameData::GrowthRate.max_level - pkmn.level),$PokemonBag.pbQuantity(item)].min
-  qty = scene.pbChooseNumber(
-     _INTL("How many {1} do you want to use?", GameData::Item.get(item).name_plural), maximum, 1)
-  next false if qty < 1
-  $PokemonBag.pbDeleteItem(item, qty - 1)
-  pbChangeLevel(pkmn,pkmn.level + 1 + (qty - 1),scene,true)
+  pbChangeLevel(pkmn,pkmn.level+1,scene)
   scene.pbHardRefresh
   next true
 })
@@ -917,11 +947,23 @@ ItemHandlers::UseOnPokemon.add(:DNASPLICERS,proc { |item,pkmn,scene|
   end
   # Fusing
   if pkmn.fused.nil?
-    chosen = scene.pbChooseAblePokemonHelp(_INTL("Fuse with which Pokémon?"), proc {|pkmn2|
-        (pkmn2.isSpecies?(:ZEKROM) || pkmn2.isSpecies?(:RESHIRAM)) && pkmn2.able?
-      })
-    next false if chosen < 0
+    chosen = scene.pbChoosePokemon(_INTL("Fuse with which Pokémon?"))
+    next false if chosen<0
     poke2 = $Trainer.party[chosen]
+    if pkmn==poke2
+      scene.pbDisplay(_INTL("It cannot be fused with itself."))
+      next false
+    elsif poke2.egg?
+      scene.pbDisplay(_INTL("It cannot be fused with an Egg."))
+      next false
+    elsif poke2.fainted?
+      scene.pbDisplay(_INTL("It cannot be fused with that fainted Pokémon."))
+      next false
+    elsif !poke2.isSpecies?(:RESHIRAM) &&
+          !poke2.isSpecies?(:ZEKROM)
+      scene.pbDisplay(_INTL("It cannot be fused with that Pokémon."))
+      next false
+    end
     newForm = 0
     newForm = 1 if poke2.isSpecies?(:RESHIRAM)
     newForm = 2 if poke2.isSpecies?(:ZEKROM)
@@ -958,11 +1000,22 @@ ItemHandlers::UseOnPokemon.add(:NSOLARIZER,proc { |item,pkmn,scene|
   end
   # Fusing
   if pkmn.fused.nil?
-    chosen = scene.pbChooseAblePokemonHelp(_INTL("Fuse with which Pokémon?"), proc {|pkmn2|
-        pkmn2.isSpecies?(:SOLGALEO) && pkmn2.able?
-      })
+    chosen = scene.pbChoosePokemon(_INTL("Fuse with which Pokémon?"))
     next false if chosen<0
     poke2 = $Trainer.party[chosen]
+    if pkmn==poke2
+      scene.pbDisplay(_INTL("It cannot be fused with itself."))
+      next false
+    elsif poke2.egg?
+      scene.pbDisplay(_INTL("It cannot be fused with an Egg."))
+      next false
+    elsif poke2.fainted?
+      scene.pbDisplay(_INTL("It cannot be fused with that fainted Pokémon."))
+      next false
+    elsif !poke2.isSpecies?(:SOLGALEO)
+      scene.pbDisplay(_INTL("It cannot be fused with that Pokémon."))
+      next false
+    end
     pkmn.setForm(1) {
       pkmn.fused = poke2
       $Trainer.remove_pokemon_at_index(chosen)
@@ -996,11 +1049,22 @@ ItemHandlers::UseOnPokemon.add(:NLUNARIZER,proc { |item,pkmn,scene|
   end
   # Fusing
   if pkmn.fused.nil?
-    chosen = scene.pbChooseAblePokemonHelp(_INTL("Fuse with which Pokémon?"), proc {|pkmn2|
-        pkmn2.isSpecies?(:LUNALA) && pkmn2.able?
-      })
+    chosen = scene.pbChoosePokemon(_INTL("Fuse with which Pokémon?"))
     next false if chosen<0
     poke2 = $Trainer.party[chosen]
+    if pkmn==poke2
+      scene.pbDisplay(_INTL("It cannot be fused with itself."))
+      next false
+    elsif poke2.egg?
+      scene.pbDisplay(_INTL("It cannot be fused with an Egg."))
+      next false
+    elsif poke2.fainted?
+      scene.pbDisplay(_INTL("It cannot be fused with that fainted Pokémon."))
+      next false
+    elsif !poke2.isSpecies?(:LUNALA)
+      scene.pbDisplay(_INTL("It cannot be fused with that Pokémon."))
+      next false
+    end
     pkmn.setForm(2) {
       pkmn.fused = poke2
       $Trainer.remove_pokemon_at_index(chosen)
@@ -1044,251 +1108,4 @@ ItemHandlers::UseOnPokemon.add(:ABILITYCAPSULE,proc { |item,pkmn,scene|
     next true
   end
   next false
-})
-
-ItemHandlers::UseOnPokemon.add(:EXPCANDYXS,proc { |item,pkmn,scene|
-  pbEXPAdditionItem(pkmn,100,item,scene)
-})
-
-ItemHandlers::UseOnPokemon.add(:EXPCANDYS,proc { |item,pkmn,scene|
-  pbEXPAdditionItem(pkmn,800,item,scene)
-})
-
-ItemHandlers::UseOnPokemon.add(:EXPCANDYM,proc { |item,pkmn,scene|
-  pbEXPAdditionItem(pkmn,3000,item,scene)
-})
-
-ItemHandlers::UseOnPokemon.add(:EXPCANDYL,proc { |item,pkmn,scene|
-  pbEXPAdditionItem(pkmn,10000,item,scene)
-})
-
-ItemHandlers::UseOnPokemon.add(:EXPCANDYXL,proc { |item,pkmn,scene|
-  pbEXPAdditionItem(pkmn,30000,item,scene)
-})
-
-ItemHandlers::UseOnPokemon.add(:LONELYMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:LONELY,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:ADAMANTMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:ADAMANT,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:NAUGHTYMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:NAUGHTY,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:BRAVEMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:BRAVE,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:BOLDMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:BOLD,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:IMPISHMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:IMPISH,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:LAXMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:LAX,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:RELAXEDMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:RELAXED,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:MODESTMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:MODEST,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:MILDMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:MILD,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:RASHMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:RASH,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:QUIETMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:QUIET,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:CALMMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:CALM,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:GENTLEMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:GENTLE,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:CAREFULMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:CAREFUL,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:SASSYMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:SASSY,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:TIMIDMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:TIMID,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:HASTYMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:HASTY,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:JOLLYMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:JOLLY,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:NAIVEMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:NAIVEM,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:SERIOUSMINT,proc { |item,pkmn,scene|
-  ret = pbNatureChangeItem(pkmn,:SERIOUS,item,scene)
-  next ret
-})
-
-ItemHandlers::UseOnPokemon.add(:MELTANCANDY,proc { |item,pkmn,scene|
-  if !pkmn.isSpecies?(:MELTAN) || pkmn.shadowPokemon?
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
-  end
-  maximum = [(400 - pkmn.candies_fed),$PokemonBag.pbQuantity(item)].min
-  itemName = GameData::Item.get(item).name_plural
-  qty = scene.pbChooseNumber(_INTL("How many {1} do you want to feed {2}? (Candies Fed: {3})",itemName, pkmn.name, pkmn.candies_fed), maximum, 1)
-  next false if qty < 1
-  $PokemonBag.pbDeleteItem(item, qty - 1)
-  pkmn.candies_fed += qty
-  scene.pbDisplay(_INTL("You fed {1} {2} {3}.", qty, pkmn.name, itemName))
-  newspecies = pkmn.check_evolution_on_use_item(item)
-  if newspecies
-    pbFadeOutInWithMusic {
-      evo = PokemonEvolutionScene.new
-      evo.pbStartScreen(pkmn,newspecies)
-      evo.pbEvolution
-      evo.pbEndScreen
-      scene.pbRefresh
-    }
-  end
-  scene.pbHardRefresh
-  next true
-})
-
-ItemHandlers::UseOnPokemon.add(:ROTOMCATALOG,proc{|item,pkmn,scene|
-  if pkmn.isSpecies?(:ROTOM)
-    if pkmn.hp>0
-      scene.pbDisplay(_INTL("The Catalogue contains a list of appliances for {1} to possess!",pkmn.name))
-      cmd=0
-      msg = _INTL("Which appliance would you like to order?")
-      cmd = scene.pbShowCommands(msg,[
-        _INTL("Light Bulb"),
-        _INTL("Microwave Oven"),
-        _INTL("Washing Machine"),
-        _INTL("Refrigerator"),
-        _INTL("Electric Fan"),
-        _INTL("Lawn Mower"),
-        _INTL("Cancel")],cmd)
-      if cmd>=0 && cmd<6
-        scene.pbDisplay(_INTL("{1} transformed!",pkmn.name))
-        scene.pbRefresh
-        pkmn.form = cmd
-        scene.pbRefresh
-      else
-        scene.pbDisplay(_INTL("No appliance was ordered"))
-      end
-      scene.pbRefresh
-      next true
-    else
-      scene.pbDisplay(_INTL("This can't be used on the fainted Pokémon."))
-    end
-  else
-    scene.pbDisplay(_INTL("It had no effect."))
-    next false
-  end
-})
-
-ItemHandlers::UseOnPokemon.add(:ABILITYPATCH,proc { |item,pkmn,scene|
-  abils = pkmn.getAbilityList
-  hiddenArr =[]
-  for i in abils
-    hiddenArr.push([i[1],i[0]]) if i[0] && i[1]>1 && pkmn.ability_index != i[1]
-  end
-  if hiddenArr.length==0 || (pkmn.hasHiddenAbility? && hiddenArr.length == 1) || pkmn.isSpecies?(:ZYGARDE)
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
-  end
-  newabil = hiddenArr.sample
-  newabilname = GameData::Ability.get(newabil[1]).name
-  if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))
-    pkmn.ability = nil
-    pkmn.ability_index = newabil[0]
-    scene.pbRefresh
-    scene.pbDisplay(_INTL("{1}'s Ability changed to {2}!",pkmn.name,newabilname))
-    next true
-  end
-  next false
-})
-
-ItemHandlers::UseOnPokemon.add(:REINSOFUNITY,proc { |item,pkmn,scene|
-  if !pkmn.isSpecies?(:CALYREX)
-    scene.pbDisplay(_INTL("It had no effect."))
-    next false
-  end
-  if pkmn.fainted?
-    scene.pbDisplay(_INTL("This can't be used on the fainted Pokémon."))
-    next false
-  end
-  # Fusing
-  if pkmn.fused.nil?
-    chosen = scene.pbChooseAblePokemonHelp(_INTL("Fuse with which Pokémon?"), proc {|pkmn2|
-        (pkmn2.isSpecies?(:GLASTRIER) || pkmn2.isSpecies?(:SPECTRIER)) && pkmn2.able?
-      })
-    next false if chosen<0
-    poke2 = $Trainer.party[chosen]
-    newForm = 0
-    newForm = 1 if poke2.isSpecies?(:GLASTRIER)
-    newForm = 2 if poke2.isSpecies?(:SPECTRIER)
-    pkmn.setForm(newForm) {
-      pkmn.fused = poke2
-      $Trainer.remove_pokemon_at_index(chosen)
-      scene.pbHardRefresh
-      scene.pbDisplay(_INTL("{1} changed Forme!",pkmn.name))
-    }
-    next true
-  end
-  # Unfusing
-  if $Trainer.party_full?
-    scene.pbDisplay(_INTL("You have no room to separate the Pokémon."))
-    next false
-  end
-  pkmn.setForm(0) {
-    $Trainer.party[$Trainer.party.length] = pkmn.fused
-    pkmn.fused = nil
-    scene.pbHardRefresh
-    scene.pbDisplay(_INTL("{1} changed Forme!",pkmn.name))
-  }
-  next true
 })

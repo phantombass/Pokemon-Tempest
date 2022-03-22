@@ -44,7 +44,7 @@ class PokeBattle_Battler
     if @effects[PBEffects::ChoiceBand]
       if hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF]) &&
          pbHasMove?(@effects[PBEffects::ChoiceBand])
-        if move.id != @effects[PBEffects::ChoiceBand]
+        if move.id!=@effects[PBEffects::ChoiceBand]
           if showMessages
             msg = _INTL("{1} allows the use of only {2}!",itemName,
                GameData::Move.get(@effects[PBEffects::ChoiceBand]).name)
@@ -54,20 +54,6 @@ class PokeBattle_Battler
         end
       else
         @effects[PBEffects::ChoiceBand] = nil
-      end
-    end
-    # Gorilla Tactics
-    if @effects[PBEffects::GorillaTactics]
-      if hasActiveAbility?(:GORILLATACTICS)
-        if move.id != @effects[PBEffects::GorillaTactics]
-          if showMessages
-            msg = _INTL("{1} allows the use of only {2} !",abilityName,GameData::Move.get(@effects[PBEffects::GorillaTactics]).name)
-            (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
-          end
-          return false
-        end
-      else
-        @effects[PBEffects::GorillaTactics] = nil
       end
     end
     # Taunt
@@ -98,7 +84,7 @@ class PokeBattle_Battler
     end
     # Assault Vest (prevents choosing status moves but doesn't prevent
     # executing them)
-    if hasActiveItem?(:ASSAULTVEST) && move.statusMove? && move.id != :MEFIRST && commandPhase
+    if hasActiveItem?(:ASSAULTVEST) && move.statusMove? && commandPhase
       if showMessages
         msg = _INTL("The effects of the {1} prevent status moves from being used!",
            itemName)
@@ -214,26 +200,23 @@ class PokeBattle_Battler
     return true if skipAccuracyCheck
     # Check status problems and continue their effects/cure them
     case @status
-#    when :SLEEP
-#      self.statusCount -= 1
-#      if @statusCount<=0
-#        pbCureStatus
-#      else
-#        pbContinueStatus
-#        if !move.usableWhenAsleep?   # Snore/Sleep Talk
-#          @lastMoveFailed = true
-#          return false
-#        end
-#      end
     when :SLEEP
       self.statusCount -= 1
-      if @battle.pbRandom(100)<20
+      if @statusCount<=0
         pbCureStatus
-        @battle.pbDisplay(_INTL("{1} shook off the drowsiness.",pbThis))
       else
         pbContinueStatus
-        if @battle.pbRandom(100)<50
-          @battle.pbDisplay(_INTL("{1} is too drowsy to move.",pbThis))
+        if !move.usableWhenAsleep?   # Snore/Sleep Talk
+          @lastMoveFailed = true
+          return false
+        end
+      end
+    when :FROZEN
+      if !move.thawsUser?
+        if @battle.pbRandom(100)<20
+          pbCureStatus
+        else
+          pbContinueStatus
           @lastMoveFailed = true
           return false
         end
@@ -305,8 +288,6 @@ class PokeBattle_Battler
   # Includes move-specific failure conditions, protections and type immunities.
   #=============================================================================
   def pbSuccessCheckAgainstTarget(move,user,target)
-    # Unseen Fist
-    unseenfist = user.hasActiveAbility?(:UNSEENFIST) && move.contactMove?
     typeMod = move.pbCalcTypeMod(move.calcType,user,target)
     target.damageState.typeMod = typeMod
     # Two-turn attacks can't fail here in the charging turn
@@ -321,7 +302,7 @@ class PokeBattle_Battler
     end
     # Crafty Shield
     if target.pbOwnSide.effects[PBEffects::CraftyShield] && user.index!=target.index &&
-       move.statusMove? && !move.pbTarget(user).targets_all && !unseenfist && move.function != "18E"
+       move.statusMove? && !move.pbTarget(user).targets_all
       @battle.pbCommonAnimation("CraftyShield",target)
       @battle.pbDisplay(_INTL("Crafty Shield protected {1}!",target.pbThis(true)))
       target.damageState.protected = true
@@ -330,8 +311,8 @@ class PokeBattle_Battler
     end
     # Wide Guard
     if target.pbOwnSide.effects[PBEffects::WideGuard] && user.index!=target.index &&
-       move.pbTarget(user).num_targets > 1 && move.function != "17C" &&
-       (Settings::MECHANICS_GENERATION >= 7 || move.damagingMove?) && !unseenfist
+       move.pbTarget(user).num_targets > 1 &&
+       (Settings::MECHANICS_GENERATION >= 7 || move.damagingMove?)
       @battle.pbCommonAnimation("WideGuard",target)
       @battle.pbDisplay(_INTL("Wide Guard protected {1}!",target.pbThis(true)))
       target.damageState.protected = true
@@ -341,7 +322,7 @@ class PokeBattle_Battler
     if move.canProtectAgainst?
       # Quick Guard
       if target.pbOwnSide.effects[PBEffects::QuickGuard] &&
-         @battle.choices[user.index][4]>0 && !unseenfist   # Move priority saved from pbCalculatePriority
+         @battle.choices[user.index][4]>0   # Move priority saved from pbCalculatePriority
         @battle.pbCommonAnimation("QuickGuard",target)
         @battle.pbDisplay(_INTL("Quick Guard protected {1}!",target.pbThis(true)))
         target.damageState.protected = true
@@ -349,40 +330,28 @@ class PokeBattle_Battler
         return false
       end
       # Protect
-      if target.effects[PBEffects::Protect] && !unseenfist
+      if target.effects[PBEffects::Protect]
         @battle.pbCommonAnimation("Protect",target)
         @battle.pbDisplay(_INTL("{1} protected itself!",target.pbThis))
         target.damageState.protected = true
         @battle.successStates[user.index].protected = true
         return false
       end
-      if target.effects[PBEffects::Obstruct] && !unseenfist
-        @battle.pbCommonAnimation("Obstruct",target)
-        @battle.pbDisplay(_INTL("{1} protected itself!",target.pbThis))
-        target.damageState.protected = true
-        @battle.successStates[user.index].protected = true
-        if move.pbContactMove?(user) && user.affectedByContactEffect?
-          if user.pbCanLowerStatStage?(:DEFENSE)
-            user.pbLowerStatStage(:DEFENSE,2,nil)
-          end
-        end
-        return false
-      end
       # King's Shield
-      if target.effects[PBEffects::KingsShield] && move.damagingMove? && !unseenfist
+      if target.effects[PBEffects::KingsShield] && move.damagingMove?
         @battle.pbCommonAnimation("KingsShield",target)
         @battle.pbDisplay(_INTL("{1} protected itself!",target.pbThis))
         target.damageState.protected = true
         @battle.successStates[user.index].protected = true
         if move.pbContactMove?(user) && user.affectedByContactEffect?
           if user.pbCanLowerStatStage?(:ATTACK)
-            user.pbLowerStatStage(:ATTACK, (Settings::MECHANICS_GENERATION >= 8) ? 1 : 2, nil)
+            user.pbLowerStatStage(:ATTACK,2,nil)
           end
         end
         return false
       end
       # Spiky Shield
-      if target.effects[PBEffects::SpikyShield] && !unseenfist
+      if target.effects[PBEffects::SpikyShield]
         @battle.pbCommonAnimation("SpikyShield",target)
         @battle.pbDisplay(_INTL("{1} protected itself!",target.pbThis))
         target.damageState.protected = true
@@ -396,7 +365,7 @@ class PokeBattle_Battler
         return false
       end
       # Baneful Bunker
-      if target.effects[PBEffects::BanefulBunker] && !unseenfist
+      if target.effects[PBEffects::BanefulBunker]
         @battle.pbCommonAnimation("BanefulBunker",target)
         @battle.pbDisplay(_INTL("{1} protected itself!",target.pbThis))
         target.damageState.protected = true
@@ -407,7 +376,7 @@ class PokeBattle_Battler
         return false
       end
       # Mat Block
-      if target.pbOwnSide.effects[PBEffects::MatBlock] && move.damagingMove? && !unseenfist
+      if target.pbOwnSide.effects[PBEffects::MatBlock] && move.damagingMove?
         # NOTE: Confirmed no common animation for this effect.
         @battle.pbDisplay(_INTL("{1} was blocked by the kicked-up mat!",move.name))
         target.damageState.protected = true
@@ -565,6 +534,5 @@ class PokeBattle_Battler
     elsif !move.pbMissMessage(user,target)
       @battle.pbDisplay(_INTL("{1}'s attack missed!",user.pbThis))
     end
-    BattleHandlers.triggerUserItemOnMiss(user.item,user,target,move,@battle)
   end
 end

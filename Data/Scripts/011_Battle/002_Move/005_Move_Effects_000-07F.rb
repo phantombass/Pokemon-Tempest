@@ -47,7 +47,7 @@ class PokeBattle_Move_003 < PokeBattle_SleepMove
     return if @id != :RELICSONG
     return if !user.isSpecies?(:MELOETTA)
     return if user.hasActiveAbility?(:SHEERFORCE) && @addlEffect>0
-    newForm = (user.form+1)%2
+    newForm = (user.Form+1)%2
     user.pbChangeForm(newForm,_INTL("{1} transformed!",user.pbThis))
   end
 end
@@ -68,7 +68,7 @@ class PokeBattle_Move_004 < PokeBattle_Move
   end
 
   def pbEffectAgainstTarget(user,target)
-    target.effects[PBEffects::Yawn] = 1
+    target.effects[PBEffects::Yawn] = 2
     @battle.pbDisplay(_INTL("{1} made {2} drowsy!",user.pbThis,target.pbThis(true)))
   end
 end
@@ -130,7 +130,6 @@ class PokeBattle_Move_008 < PokeBattle_ParalysisMove
   def hitsFlyingTargets?; return true; end
 
   def pbBaseAccuracy(user,target)
-    return super if target.hasUtilityUmbrella?
     case @battle.pbWeather
     when :Sun, :HarshSun
       return 50
@@ -308,7 +307,6 @@ class PokeBattle_Move_015 < PokeBattle_ConfuseMove
   def hitsFlyingTargets?; return true; end
 
   def pbBaseAccuracy(user,target)
-    return super if target.hasUtilityUmbrella?
     case @battle.pbWeather
     when :Sun, :HarshSun
       return 50
@@ -733,7 +731,7 @@ class PokeBattle_Move_028 < PokeBattle_MultiStatUpMove
 
   def pbOnStartUse(user,targets)
     increment = 1
-    increment = 2 if [:Sun, :HarshSun].include?(@battle.pbWeather) && !user.hasUtilityUmbrella?
+    increment = 2 if [:Sun, :HarshSun].include?(@battle.pbWeather)
     @statUp[1] = @statUp[3] = increment
   end
 end
@@ -1032,12 +1030,10 @@ class PokeBattle_Move_03A < PokeBattle_Move
     user.pbReduceHP(hpLoss,false)
     if user.hasActiveAbility?(:CONTRARY)
       user.stages[:ATTACK] = -6
-      user.statsLowered    = true
       @battle.pbCommonAnimation("StatDown",user)
       @battle.pbDisplay(_INTL("{1} cut its own HP and minimized its Attack!",user.pbThis))
     else
       user.stages[:ATTACK] = 6
-      user.statsRaised     = true
       @battle.pbCommonAnimation("StatUp",user)
       @battle.pbDisplay(_INTL("{1} cut its own HP and maximized its Attack!",user.pbThis))
     end
@@ -1339,9 +1335,7 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
        (Settings::MECHANICS_GENERATION >= 6 &&
        target.pbOpposingSide.effects[PBEffects::StickyWeb])
       target.pbOwnSide.effects[PBEffects::StickyWeb]      = false
-      target.pbOwnSide.effects[PBEffects::StickyWebUser]  = -1
       target.pbOpposingSide.effects[PBEffects::StickyWeb] = false if Settings::MECHANICS_GENERATION >= 6
-      target.pbOpposingSide.effects[PBEffects::StickyWebUser] = -1 if Settings::MECHANICS_GENERATION >= 6
       @battle.pbDisplay(_INTL("{1} blew away sticky webs!",user.pbThis))
     end
     if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
@@ -1356,10 +1350,6 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
         @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
       end
       @battle.field.terrain = :None
-    end
-    if @battle.field.weather == :Fog
-      @battle.pbDisplay(_INTL("{1} blew away the deep fog!",user.pbThis))
-      @battle.field.weather = :None
     end
   end
 end
@@ -1515,13 +1505,6 @@ class PokeBattle_Move_052 < PokeBattle_Move
 
   def pbEffectAgainstTarget(user,target)
     [:ATTACK,:SPECIAL_ATTACK].each do |s|
-      if user.stages[s] > target.stages[s]
-        user.statsLowered = true
-        target.statsRaised = true
-      elsif user.stages[s] < target.stages[s]
-        user.statsRaised = true
-        target.statsLowered = true
-      end
       user.stages[s],target.stages[s] = target.stages[s],user.stages[s]
     end
     @battle.pbDisplay(_INTL("{1} switched all changes to its Attack and Sp. Atk with the target!",user.pbThis))
@@ -1538,13 +1521,6 @@ class PokeBattle_Move_053 < PokeBattle_Move
 
   def pbEffectAgainstTarget(user,target)
     [:DEFENSE,:SPECIAL_DEFENSE].each do |s|
-      if user.stages[s] > target.stages[s]
-        user.statsLowered = true
-        target.statsRaised = true
-      elsif user.stages[s] < target.stages[s]
-        user.statsRaised = true
-        target.statsLowered = true
-      end
       user.stages[s],target.stages[s] = target.stages[s],user.stages[s]
     end
     @battle.pbDisplay(_INTL("{1} switched all changes to its Defense and Sp. Def with the target!",user.pbThis))
@@ -1561,13 +1537,6 @@ class PokeBattle_Move_054 < PokeBattle_Move
 
   def pbEffectAgainstTarget(user,target)
     GameData::Stat.each_battle do |s|
-      if user.stages[s.id] > target.stages[s.id]
-        user.statsLowered = true
-        target.statsRaised = true
-      elsif user.stages[s.id] < target.stages[s.id]
-        user.statsRaised = true
-        target.statsLowered = true
-      end
       user.stages[s.id],target.stages[s.id] = target.stages[s.id],user.stages[s.id]
     end
     @battle.pbDisplay(_INTL("{1} switched stat changes with the target!",user.pbThis))
@@ -1583,14 +1552,7 @@ class PokeBattle_Move_055 < PokeBattle_Move
   def ignoresSubstitute?(user); return true; end
 
   def pbEffectAgainstTarget(user,target)
-    GameData::Stat.each_battle do |s|
-      if user.stages[s.id] > target.stages[s.id]
-        user.statsLowered = true
-      elsif user.stages[s.id] < target.stages[s.id]
-        user.statsRaised = true
-      end
-      user.stages[s.id] = target.stages[s.id]
-    end
+    GameData::Stat.each_battle { |s| user.stages[s.id] = target.stages[s.id] }
     if Settings::NEW_CRITICAL_HIT_RATE_MECHANICS
       user.effects[PBEffects::FocusEnergy] = target.effects[PBEffects::FocusEnergy]
       user.effects[PBEffects::LaserFocus]  = target.effects[PBEffects::LaserFocus]
@@ -2556,17 +2518,6 @@ class PokeBattle_Move_075 < PokeBattle_Move
   def pbModifyDamage(damageMult,user,target)
     damageMult *= 2 if target.inTwoTurnAttack?("0CB")   # Dive
     return damageMult
-  end
-
-  def pbEffectAfterAllHits(user,target)
-    return if target.damageState.unaffected ||
-              target.damageState.protected ||
-              target.damageState.missed
-    return if !user.isSpecies?(:CRAMORANT) ||
-              user.ability != :GULPMISSILE ||
-              user.form != 0
-    newForm = (user.hp > (user.totalhp/2)) ? 1 : 2
-    user.pbChangeForm(newForm,"")
   end
 end
 
