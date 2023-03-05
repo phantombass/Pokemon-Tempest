@@ -435,8 +435,6 @@ end
 # Pokémon party visuals
 #===============================================================================
 class PokemonParty_Scene
-  attr_accessor :allowBox
-
   def pbStartScene(party,starthelptext,annotations=nil,multiselect=false)
     @sprites = {}
     @party = party
@@ -593,13 +591,6 @@ class PokemonParty_Scene
     end
   end
 
-  def pbChooseNumber(helptext, maximum, initnum)
-    oldtext = @sprites["helpwindow"].text
-    ret = UIHelper.pbChooseNumber(@sprites["helpwindow"], helptext, maximum, initnum) { update }
-    pbSetHelpText(oldtext)
-    return ret
-  end
-
   def pbPreSelect(item)
     @activecmd = item
   end
@@ -720,19 +711,6 @@ class PokemonParty_Scene
         return [1,@activecmd]
       elsif Input.trigger?(Input::ACTION) && canswitch==2
         return -1
-      elsif Input.trigger?(Input::SPECIAL) &&
-        GameData::Item.exists?(:POKEMONBOXLINK) &&
-        $PokemonBag.pbHasItem?(:POKEMONBOXLINK) &&
-        @allowBox                               &&
-        (Settings::POKEMON_BOX_LINK_SWITCH < 0  ||
-         !$game_switches[Settings::POKEMON_BOX_LINK_SWITCH])
-         pbPlayDecisionSE
-         pbFadeOutIn(99999) {
-           scene = PokemonStorageScene.new
-           screen = PokemonStorageScreen.new(scene,$PokemonStorage)
-           screen.pbStartScreen(0)
-         }
-         pbHardRefresh
       elsif Input.trigger?(Input::BACK)
         pbPlayCloseMenuSE if !switching
         return -1
@@ -773,7 +751,7 @@ class PokemonParty_Scene
         currentsel -= 1
         while currentsel > 0 && currentsel < Settings::MAX_PARTY_SIZE && !@party[currentsel]
           currentsel -= 1
-        end
+        end 
       else
         begin
           currentsel -= 2
@@ -928,10 +906,6 @@ class PokemonPartyScreen
 
   def pbConfirm(text)
     return @scene.pbDisplayConfirm(text)
-  end
-
-  def pbChooseNumber(helptext, maximum, initnum = 1)
-    return @scene.pbChooseNumber(helptext, maximum, initnum)
   end
 
   def pbShowCommands(helptext,commands,index=0)
@@ -1113,31 +1087,6 @@ class PokemonPartyScreen
     return ret
   end
 
-  def pbChooseAblePokemonHelp(helptext,ableProc,allowIneligible=false)
-    annot = []
-    eligibility = []
-    for pkmn in @party
-      elig = ableProc.call(pkmn)
-      eligibility.push(elig)
-      annot.push((elig) ? _INTL("ABLE") : _INTL("NOT ABLE"))
-    end
-    ret = -1
-    @scene.pbSetHelpText(helptext)
-    @scene.pbAnnotate(annot)
-    loop do
-      pkmnid = @scene.pbChoosePokemon
-      break if pkmnid < 0
-      if !eligibility[pkmnid] && !allowIneligible
-        pbDisplay(_INTL("This Pokémon can't be chosen."))
-      else
-        ret = pkmnid
-        break
-      end
-    end
-    pbClearAnnotations
-    return ret
-  end
-
   def pbChooseTradablePokemon(ableProc,allowIneligible=false)
     annot = []
     eligibility = []
@@ -1171,9 +1120,7 @@ class PokemonPartyScreen
        (@party.length>1) ? _INTL("Choose a Pokémon.") : _INTL("Choose Pokémon or cancel."),nil)
     loop do
       @scene.pbSetHelpText((@party.length>1) ? _INTL("Choose a Pokémon.") : _INTL("Choose Pokémon or cancel."))
-      @scene.allowBox = true if @scene.respond_to?(:allowBox)
       pkmnid = @scene.pbChoosePokemon(false,-1,1)
-      @scene.allowBox = false if @scene.respond_to?(:allowBox)
       break if (pkmnid.is_a?(Numeric) && pkmnid<0) || (pkmnid.is_a?(Array) && pkmnid[1]<0)
       if pkmnid.is_a?(Array) && pkmnid[0]==1   # Switch
         @scene.pbSetHelpText(_INTL("Move to where?"))
@@ -1405,7 +1352,7 @@ def pbChoosePokemon(variableNumber,nameVarNumber,ableProc=nil,allowIneligible=fa
     scene = PokemonParty_Scene.new
     screen = PokemonPartyScreen.new(scene,$Trainer.party)
     if ableProc
-      chosen = screen.pbChooseAblePokemon(ableProc,allowIneligible)
+      chosen=screen.pbChooseAblePokemon(ableProc,allowIneligible)
     else
       screen.pbStartScene(_INTL("Choose a Pokémon."),false)
       chosen = screen.pbChoosePokemon

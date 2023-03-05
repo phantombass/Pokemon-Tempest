@@ -40,8 +40,6 @@ class PokeBattle_Battler
   attr_accessor :currentMove   # ID of multi-turn move currently being used
   attr_accessor :tookDamage    # Boolean for whether self took damage this round
   attr_accessor :tookPhysicalHit
-  attr_accessor :statsRaised   # Stats have been raised this round
-  attr_accessor :statsLowered  # Stats have been lowered this round
   attr_accessor :damageState
   attr_accessor :initialHP     # Set at the start of each move's usage
 
@@ -124,20 +122,6 @@ class PokeBattle_Battler
     @battle.scene.pbRefreshOne(@index)
   end
 
-  attr_reader :critical_hits
-
-  def critical_hits=(value)
-    @critical_hits = value
-    @pokemon.critical_hits = value if @pokemon
-  end
-
-  attr_reader :damage_done
-
-  def damage_done=(value)
-    @damage_done = value
-    @pokemon.damage_done = value if @pokemon
-  end
-
   #=============================================================================
   # Properties from Pokémon
   #=============================================================================
@@ -204,10 +188,6 @@ class PokeBattle_Battler
     return @pokemon && @pokemon.shiny?
   end
   alias isShiny? shiny?
-
-  def square_shiny?
-    return @pokemon && @pokemon.square_shiny?
-  end
 
   def owned?
     return false if !@battle.wildBattle?
@@ -355,9 +335,8 @@ class PokeBattle_Battler
   #       active, and the code for the two combined would cause an infinite loop
   #       (regardless of whether any Pokémon actualy has either the ability or
   #       the item - the code existing is enough to cause the loop).
-  def abilityActive?(ignoreFainted = false)
-    return false if fainted? && !ignoreFainted
-    return false if @battle.field.effects[PBEffects::NeutralizingGas]
+  def abilityActive?(ignore_fainted = false)
+    return false if fainted? && !ignore_fainted
     return false if @effects[PBEffects::GastroAcid]
     return true
   end
@@ -387,13 +366,9 @@ class PokeBattle_Battler
       :SHIELDSDOWN,
       :STANCECHANGE,
       :ZENMODE,
-      :ICEFACE,
       # Abilities intended to be inherent properties of a certain species
       :COMATOSE,
-      :RKSSYSTEM,
-      :GULPMISSILE,
-      :ASONEICE,
-      :ASONEGHOST
+      :RKSSYSTEM
     ]
     return ability_blacklist.include?(abil.id)
   end
@@ -420,11 +395,7 @@ class PokeBattle_Battler
       :IMPOSTER,
       # Abilities intended to be inherent properties of a certain species
       :COMATOSE,
-      :RKSSYSTEM,
-      :ASONEICE,
-      :ASONEGHOST,
-      :NEUTRALIZINGGAS,
-      :HUNGERSWITCH
+      :RKSSYSTEM
     ]
     return ability_blacklist.include?(abil.id)
   end
@@ -434,14 +405,13 @@ class PokeBattle_Battler
     return false if @effects[PBEffects::Embargo]>0
     return false if @battle.field.effects[PBEffects::MagicRoom]>0
     return false if hasActiveAbility?(:KLUTZ,ignoreFainted)
-    #return false if itemCorroded?
     return true
   end
 
   def hasActiveItem?(check_item, ignore_fainted = false)
     return false if !itemActive?(ignore_fainted)
     return check_item.include?(@item_id) if check_item.is_a?(Array)
-    return self.item == check_item
+    return check_item == self.item
   end
   alias hasWorkingItem hasActiveItem?
 
@@ -450,7 +420,6 @@ class PokeBattle_Battler
     return false if !check_item
     return true if GameData::Item.get(check_item).is_mail?
     return false if @effects[PBEffects::Transform]
-    #return true if itemCorroded?
     # Items that change a Pokémon's form
     if mega?   # Check if item was needed for this Mega Evolution
       return true if @pokemon.species_data.mega_stone == check_item
@@ -501,11 +470,6 @@ class PokeBattle_Battler
     return ![:MULTITYPE, :RKSSYSTEM].include?(@ability_id)
   end
 
-  def canChangeMoveTargets?
-    return false if hasActiveAbility?([:STALWART, :PROPELLERTAIL])
-    return true
-  end
-
   def airborne?
     return false if hasActiveItem?(:IRONBALL)
     return false if @effects[PBEffects::Ingrain]
@@ -519,22 +483,10 @@ class PokeBattle_Battler
     return false
   end
 
-  def affectedByIronBall?
-    return false if @effects[PBEffects::Ingrain]
-    return false if @effects[PBEffects::SmackDown]
-    return false if @battle.field.effects[PBEffects::Gravity] > 0
-    return true
-  end
-
   def affectedByTerrain?
     return false if airborne?
     return false if semiInvulnerable?
     return true
-  end
-
-  def hasUtilityUmbrella?
-    return true if hasActiveItem?(:UTILITYUMBRELLA)
-    return false
   end
 
   def takesIndirectDamage?(showMsg=false)
@@ -578,11 +530,6 @@ class PokeBattle_Battler
     return true
   end
 
-  def takesEntryHazardDamage?
-    return false if hasActiveItem?(:HEAVYDUTYBOOTS)
-    return true
-  end
-
   def affectedByPowder?(showMsg=false)
     return false if fainted?
     if pbHasType?(:GRASS) && Settings::MORE_TYPE_EFFECTS
@@ -618,11 +565,6 @@ class PokeBattle_Battler
     return true
   end
 
-  def canTakeHealingWish?
-    # Also works with Lunar Dance.
-    return canHeal? || pbHasAnyStatus?
-  end
-
   def affectedByContactEffect?(showMsg=false)
     return false if fainted?
     if hasActiveItem?(:PROTECTIVEPADS)
@@ -643,18 +585,6 @@ class PokeBattle_Battler
     return true if @effects[PBEffects::Outrage]>0
     return true if @effects[PBEffects::Uproar]>0
     return true if @effects[PBEffects::Bide]>0
-    return false
-  end
-
-  def trappedInBattle?
-    return true if @effects[PBEffects::Trapping] > 0
-    return true if @effects[PBEffects::MeanLook] >= 0
-    return true if @effects[PBEffects::JawLock] >= 0
-    @battle.eachBattler { |b| return true if b.effects[PBEffects::JawLock] == @index }
-    return true if @effects[PBEffects::Octolock] >= 0
-    return true if @effects[PBEffects::Ingrain]
-    return true if @effects[PBEffects::NoRetreat]
-    return true if @battle.field.effects[PBEffects::FairyLock] > 0
     return false
   end
 
@@ -703,14 +633,6 @@ class PokeBattle_Battler
   def setBelched
     @battle.belch[@index&1][@pokemonIndex] = true
   end
-
-  #def itemCorroded?
-  #  return @battle.corrodedItem[@index&1][@pokemonIndex]
-  #end
-
-  #def setCorrodedItem
-  #  @battle.corrodedItem[@index&1][@pokemonIndex] = true
-#  end
 
   #=============================================================================
   # Methods relating to this battler's position on the battlefield

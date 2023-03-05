@@ -3,9 +3,6 @@ $VERBOSE = nil
 Font.default_shadow = false if Font.respond_to?(:default_shadow)
 Graphics.frame_rate = 60
 
-Encoding.default_internal = Encoding::UTF_8
-Encoding.default_external = Encoding::UTF_8
-
 def pbSetWindowText(string)
   System.set_window_title(string || System.game_title)
 end
@@ -37,8 +34,4 @@ def pbSetResizeFactor(factor)
     Graphics.scale = (factor + 1) * 0.5
     Graphics.center
   end
-end
-
-module Essentials
-  GEN_8_VERSION = "1.1.0"
 end

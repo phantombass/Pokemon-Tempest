@@ -76,7 +76,7 @@ IceGod64<s>SoundSpawn
 Jacob O. Wobbrock<s>the__end
 KitsuneKouta<s>Venom12
 Lisa Anthony<s>Wachunga
-Luka S.J.<s> 
+Luka S.J.<s>
 and everyone else who helped out
 
 "mkxp-z" by:

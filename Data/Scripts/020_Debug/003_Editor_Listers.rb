@@ -481,11 +481,7 @@ class TrainerTypeLister
     @sprite.bitmap.dispose if @sprite.bitmap
     return if index < 0
     begin
-      if @ids[index].is_a?(Symbol)
-        @sprite.setBitmap(GameData::TrainerType.front_sprite_filename(@ids[index]), 0)
-      else
-        @sprite.setBitmap(nil)
-      end
+      @sprite.setBitmap(GameData::TrainerType.front_sprite_filename(@ids[index]), 0)
     rescue
       @sprite.setBitmap(nil)
     end

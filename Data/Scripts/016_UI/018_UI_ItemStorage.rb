@@ -295,7 +295,6 @@ module UIHelper
       Input.update
       numwindow.update
       helpwindow.update
-      yield if block_given?
       if Input.trigger?(Input::BACK)
         ret = 0
         pbPlayCancelSE

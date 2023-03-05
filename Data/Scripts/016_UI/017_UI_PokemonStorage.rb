@@ -540,12 +540,7 @@ class PokemonBoxPartySprite < SpriteWrapper
       yvalues.push(2 + 16 * (i % 2) + 64 * (i / 2))
     end
     for j in 0...Settings::MAX_PARTY_SIZE
-      next if !@pokemonsprites[j]
-      if @pokemonsprites[j].disposed?
-        @pokemonsprites[j] = nil
-      else
-        @pokemonsprites[j].refresh
-      end
+      @pokemonsprites[j] = nil if @pokemonsprites[j] && @pokemonsprites[j].disposed?
     end
     @pokemonsprites.compact!
     for j in 0...Settings::MAX_PARTY_SIZE
@@ -1690,11 +1685,6 @@ class PokemonStorageScreen
       pbDisplay(_INTL("Your party's full!"))
       return false
     end
-    if (heldpoke || selected[0]==-1) && Settings::MECHANICS_GENERATION >= 8
-      p = (heldpoke) ? heldpoke : @storage[-1,index]
-      p.time_form_set = nil
-      p.form          = 0 if p.isSpecies?(:SHAYMIN) || p.isSpecies?(:HOOPA)
-    end
     @scene.pbWithdraw(selected,heldpoke,@storage.party.length)
     if heldpoke
       @storage.pbMoveCaughtToParty(heldpoke)
@@ -1730,11 +1720,9 @@ class PokemonStorageScreen
           end
           if heldpoke || selected[0]==-1
             p = (heldpoke) ? heldpoke : @storage[-1,index]
-            if Settings::MECHANICS_GENERATION < 8
-              p.time_form_set = nil
-              p.form          = 0 if p.isSpecies?(:SHAYMIN) || p.isSpecies?(:HOOPA)
-            end
-            p.heal if Settings::HEAL_STORED_POKEMON
+            p.time_form_set = nil
+            p.form          = 0 if p.isSpecies?(:SHAYMIN)
+            p.heal
           end
           @scene.pbStore(selected,heldpoke,destbox,firstfree)
           if heldpoke
@@ -1779,16 +1767,9 @@ class PokemonStorageScreen
       return
     end
     if box>=0
-      if Settings::MECHANICS_GENERATION < 8
-        @heldpkmn.time_form_set = nil
-        @heldpkmn.form          = 0 if @heldpkmn.isSpecies?(:SHAYMIN) ||
-                                       @heldpkmn.isSpecies?(:HOOPA)
-      end
-      @heldpkmn.heal if Settings::HEAL_STORED_POKEMON
-    elsif Settings::MECHANICS_GENERATION >= 8
       @heldpkmn.time_form_set = nil
-      @heldpkmn.form          = 0 if @heldpkmn.isSpecies?(:SHAYMIN) ||
-                                     @heldpkmn.isSpecies?(:HOOPA)
+      @heldpkmn.form          = 0 if @heldpkmn.isSpecies?(:SHAYMIN)
+      @heldpkmn.heal
     end
     @scene.pbPlace(selected,@heldpkmn)
     @storage[box,index] = @heldpkmn
@@ -1815,11 +1796,9 @@ class PokemonStorageScreen
       return false
     end
     if box>=0
-      if Settings::MECHANICS_GENERATION < 8
-        @heldpkmn.time_form_set = nil
-        @heldpkmn.form          = 0 if @heldpkmn.isSpecies?(:SHAYMIN) || @heldpkmn.isSpecies?(:HOOPA)
-      end
-      @heldpkmn.heal if Settings::HEAL_STORED_POKEMON
+      @heldpkmn.time_form_set = nil
+      @heldpkmn.form          = 0 if @heldpkmn.isSpecies?(:SHAYMIN)
+      @heldpkmn.heal
     end
     @scene.pbSwap(selected,@heldpkmn)
     tmp = @storage[box,index]

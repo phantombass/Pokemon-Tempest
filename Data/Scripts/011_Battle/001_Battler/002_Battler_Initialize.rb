@@ -72,44 +72,32 @@ class PokeBattle_Battler
 
   def pbInitPokemon(pkmn,idxParty)
     raise _INTL("An egg can't be an active Pokémon.") if pkmn.egg?
-    @name          = pkmn.name
-    @species       = pkmn.species
-    @form          = pkmn.form
-    @level         = pkmn.level
-    @hp            = pkmn.hp
-    @totalhp       = pkmn.totalhp
-    @type1         = pkmn.type1
-    @type2         = pkmn.type2
-    @ability_id    = pkmn.ability_id
-    @item_id       = pkmn.item_id
-    @gender        = pkmn.gender
-    @attack        = pkmn.attack
-    @defense       = pkmn.defense
-    @spatk         = pkmn.spatk
-    @spdef         = pkmn.spdef
-    @speed         = pkmn.speed
-    @status        = pkmn.status
-    @statusCount   = pkmn.statusCount
-    @pokemon       = pkmn
-    @pokemonIndex  = idxParty
-    @participants  = []   # Participants earn Exp. if this battler is defeated
-    @moves         = []
-    @damage_done   = 0
-    @critical_hits = 0
+    @name         = pkmn.name
+    @species      = pkmn.species
+    @form         = pkmn.form
+    @level        = pkmn.level
+    @hp           = pkmn.hp
+    @totalhp      = pkmn.totalhp
+    @type1        = pkmn.type1
+    @type2        = pkmn.type2
+    @ability_id   = pkmn.ability_id
+    @item_id      = pkmn.item_id
+    @gender       = pkmn.gender
+    @attack       = pkmn.attack
+    @defense      = pkmn.defense
+    @spatk        = pkmn.spatk
+    @spdef        = pkmn.spdef
+    @speed        = pkmn.speed
+    @status       = pkmn.status
+    @statusCount  = pkmn.statusCount
+    @pokemon      = pkmn
+    @pokemonIndex = idxParty
+    @participants = []   # Participants earn Exp. if this battler is defeated
+    @moves        = []
     pkmn.moves.each_with_index do |m,i|
-      if (isSpecies?(:ZACIAN) || isSpecies?(:ZAMAZENTA)) && @form == 1 && m.id == :IRONHEAD
-        moveID = isSpecies?(:ZACIAN) ? :BEHEMOTHBLADE : :BEHEMOTHBASH
-        @moves[i] = PokeBattle_Move.from_pokemon_move(@battle,Pokemon::Move.new(moveID))
-        @moves[i].realMove = m
-        maxPP =  GameData::Move.get(moveID).total_pp
-        @moves[i].total_pp =  maxPP + (maxPP * m.ppup / 5)
-        calcPP = ((m.pp/m.total_pp.to_f) * @moves[i].total_pp).to_i
-        pbSetPP(@moves[i],calcPP)
-      else
-        @moves[i] = PokeBattle_Move.from_pokemon_move(@battle,m)
-      end
+      @moves[i] = PokeBattle_Move.from_pokemon_move(@battle,m)
     end
-    @iv          = {}
+    @iv           = {}
     GameData::Stat.each_main { |s| @iv[s.id] = pkmn.iv[s.id] }
   end
 
@@ -153,7 +141,6 @@ class PokeBattle_Battler
       @effects[PBEffects::PowerTrick]        = false
       @effects[PBEffects::Substitute]        = 0
       @effects[PBEffects::Telekinesis]       = 0
-      @effects[PBEffects::NoRetreat]         = false
     end
     @fainted               = (@hp==0)
     @initialHP             = 0
@@ -163,8 +150,6 @@ class PokeBattle_Battler
     @lastHPLostFromFoe     = 0
     @tookDamage            = false
     @tookPhysicalHit       = false
-    @statsRaised           = false
-    @statsLowered          = false
     @lastMoveUsed          = nil
     @lastMoveUsedType      = nil
     @lastRegularMoveUsed   = nil
@@ -222,18 +207,10 @@ class PokeBattle_Battler
     @effects[PBEffects::Instructed]          = false
     @effects[PBEffects::KingsShield]         = false
     @battle.eachBattler do |b|   # Other battlers lose their lock-on against self
-      next if !b.effects[PBEffects::LockOn]
-      next if b.effects[PBEffects::LockOnPos] != @index
+      next if b.effects[PBEffects::LockOn]==0
+      next if b.effects[PBEffects::LockOnPos]!=@index
       b.effects[PBEffects::LockOn]    = 0
       b.effects[PBEffects::LockOnPos] = -1
-    end
-    @effects[PBEffects::Octolock]            = -1
-    @battle.eachBattler do |b|   # Other battlers no longer locked by self
-      b.effects[PBEffects::Octolock] = -1 if b.effects[PBEffects::Octolock] == @index
-    end
-    @effects[PBEffects::JawLock]             = -1
-    @battle.eachBattler do |b|   # Other battlers no longer blocked by self
-      b.effects[PBEffects::JawLock] = -1 if b.effects[PBEffects::JawLock] == @index
     end
     @effects[PBEffects::MagicBounce]         = false
     @effects[PBEffects::MagicCoat]           = false
@@ -302,10 +279,6 @@ class PokeBattle_Battler
     @effects[PBEffects::WaterSport]          = false
     @effects[PBEffects::WeightChange]        = 0
     @effects[PBEffects::Yawn]                = 0
-    @effects[PBEffects::GorillaTactics]      = nil
-    @effects[PBEffects::BallFetch]           = nil
-    @effects[PBEffects::Obstruct]            = false
-    @effects[PBEffects::TarShot]             = false
   end
 
   #=============================================================================

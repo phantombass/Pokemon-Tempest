@@ -27,7 +27,6 @@ class Player < Trainer
       @seen_forms      = {}
       @last_seen_forms = {}
       @owned_shadow    = {}
-      @number_battled  = {}
       self.refresh_accessible_dexes
     end
 
@@ -257,84 +256,6 @@ class Player < Trainer
             @accessible_dexes.push(dex_list_to_check)
           end
         end
-      end
-    end
-
-    #===========================================================================
-
-    # Return the Number of Pokemon of this species that the player has
-    # caught or defeated
-    # @param species [Symbol, GameData::Species] species to check
-    # @return [Integer] amount of pokemon of the species battled
-    def number_battled(species)
-      species_id = GameData::Species.try_get(species)&.species
-      return false if species_id.nil?
-      @number_battled[species_id] = 0 if !@number_battled[species_id]
-      return @number_battled[species_id]
-    end
-
-    # Increase the Number of Pokemon of this species that the player has
-    # caught or defeated
-    # @param species [Symbol, GameData::Species] species to increase
-    def register_battled(species)
-      species_id = GameData::Species.try_get(species)&.species
-      return if species_id.nil?
-      @number_battled[species_id] = 0 if !@number_battled[species_id]
-      @number_battled[species_id] += 1
-    end
-
-    # Return the array of tries and chance of boosted shiny odds from the
-    # number of Pokemon of this species that the player has caught or defeated
-    # @param species [Symbol, GameData::Species] species to increase
-    # @return [Array]
-    def number_battled_shiny_tier(species)
-      number = number_battled(species)
-      if number >= 500
-        return [5,30]
-      elsif number >= 300
-        return [4,30]
-      elsif number >= 200
-        return [3,25]
-      elsif number >= 100
-        return [2,20]
-      elsif number >= 50
-        return [1,15]
-      else
-        return [0,0]
-      end
-    end
-
-    # Return the boosted odds for encountering Brilliant Pokemon from
-    # the number of Pokemon of this species that the player has caught
-    # or defeated
-    # @return [Float]
-    def number_battled_brilliant_tier(species)
-      number = number_battled(species)
-      if number >= 200
-        return 2.0
-      elsif number >= 50
-        return 1.6
-      elsif number >= 20
-        return 1.3
-      else
-        return 1.0
-      end
-    end
-
-    # Return the boosted odds for encountering shiny Brilliant Pokemon from
-    # the number of Pokemon of this species that the player has caught
-    # or defeated
-    # @return [Integer]
-    def number_battled_brilliant_shiny(species)
-      number = number_battled(species)
-      if number >= 100
-        ret = 2 + (number/100)
-        ret.clamp(0,6)
-        return ret
-      elsif number >= 50
-        return 2
-      else
-        return 1
       end
     end
 
